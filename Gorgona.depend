@@ -1,0 +1,3162 @@
+# depslib dependency file v1.0
+1493015651 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp
+	<FXGameItem.h>
+	<iostream>
+
+1493015651 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXGameItem.h
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+
+1532450375 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp
+	<FXGameLauncher.h>
+
+1502016658 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXGameLauncher.h
+	<cstdio>
+	<unistd.h>
+	<sys/types.h>
+	<sys/time.h>
+	<sys/resource.h>
+	<sys/wait.h>
+	<lua5.1/lualib.h>
+	<lua5.1/lauxlib.h>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<IconsTheme.h>
+	<FXGameItem.h>
+	<GorgonaProcess/Process.h>
+	<FXLaunchEditor.h>
+	<FXLauncherLua.h>
+	<FXListPane.h>
+	<GO_Keywords.h>
+
+1469265876 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/Utils.h
+	<fx.h>
+
+1532452581 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/IconsTheme.h
+	<fx.h>
+	<iostream>
+
+1428154197 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXLaunchEditor.h
+	<fx.h>
+	<FXGameItem.h>
+	<Utils.h>
+	<IconsTheme.h>
+
+1469265922 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXLauncherLua.h
+	<lua5.1/lualib.h>
+	<lua5.1/lauxlib.h>
+	<fx.h>
+	<iostream>
+	<cstring>
+
+1428162480 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXListPane.h
+	<fx.h>
+	<tinyxml.h>
+	<iostream>
+	<IconsTheme.h>
+	<FXGameItem.h>
+	<FXLaunchEditor.h>
+	<Utils.h>
+
+1411722418 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGenericGui.cpp
+	<FXGenericGui.h>
+
+1423419579 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXGenericGui.h
+	<fx.h>
+
+1449859116 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLaunchEditor.cpp
+	<FXLaunchEditor.h>
+	<FXGameLauncher.h>
+	<FXLauncherLua.h>
+	<iostream>
+	<cstring>
+
+1469722970 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLauncherLua.cpp
+	<FXLauncherLua.h>
+	<FXGameLauncher.h>
+	<FXGameItem.h>
+	<Utils.h>
+
+1428162182 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXListPane.cpp
+	<FXListPane.h>
+	<FXGameLauncher.h>
+
+1423660324 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/IconsTheme.cpp
+	<IconsTheme.h>
+
+1423649808 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/main.cpp
+	<fx.h>
+	<FXGameLauncher.h>
+
+1439918126 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Utils.cpp
+	<Utils.h>
+	<iostream>
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fx.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<math.h>
+	<string.h>
+	"fxver.h"
+	"fxdefs.h"
+	"fxkeys.h"
+	"fxendian.h"
+	"fxascii.h"
+	"fxunicode.h"
+	"fxcpuid.h"
+	"FXhalf.h"
+	"FXException.h"
+	"FXAtomic.h"
+	"FXRefPtr.h"
+	"FXElement.h"
+	"FXArray.h"
+	"FXHash.h"
+	"FXRandom.h"
+	"FXMutex.h"
+	"FXCondition.h"
+	"FXBarrier.h"
+	"FXSpinLock.h"
+	"FXSemaphore.h"
+	"FXCompletion.h"
+	"FXReadWriteLock.h"
+	"FXAutoThreadStorageKey.h"
+	"FXRunnable.h"
+	"FXThread.h"
+	"FXScopedThread.h"
+	"FXStream.h"
+	"FXPtrList.h"
+	"FXPtrQueue.h"
+	"FXIO.h"
+	"FXIOBuffer.h"
+	"FXIODevice.h"
+	"FXFile.h"
+	"FXPipe.h"
+	"FXSocket.h"
+	"FXMemMap.h"
+	"FXFileStream.h"
+	"FXMemoryStream.h"
+	"FXProcess.h"
+	"FXString.h"
+	"FXVariant.h"
+	"FXVariantArray.h"
+	"FXVariantMap.h"
+	"FXDictionary.h"
+	"FXJSON.h"
+	"FXJSONFile.h"
+	"FXDLL.h"
+	"FXSize.h"
+	"FXPoint.h"
+	"FXRectangle.h"
+	"FXColors.h"
+	"FXObject.h"
+	"FXDelegator.h"
+	"FXPath.h"
+	"FXSystem.h"
+	"FXStat.h"
+	"FXDir.h"
+	"FXDirVisitor.h"
+	"FXDate.h"
+	"FXURL.h"
+	"FXStringDictionary.h"
+	"FXSettings.h"
+	"FXRegistry.h"
+	"FXObjectList.h"
+	"FXAccelTable.h"
+	"FXRecentFiles.h"
+	"FXWorker.h"
+	"FXSemaQueue.h"
+	"FXLFQueue.h"
+	"FXThreadPool.h"
+	"FXCompletion.h"
+	"FXTaskGroup.h"
+	"FXParallel.h"
+	"FXFont.h"
+	"FXCursor.h"
+	"FXVisual.h"
+	"FXEvent.h"
+	"FXId.h"
+	"FXDrawable.h"
+	"FXBitmap.h"
+	"FXImage.h"
+	"FXIcon.h"
+	"FXWindow.h"
+	"FXApp.h"
+	"FXMessageChannel.h"
+	"FXCURCursor.h"
+	"FXGIFCursor.h"
+	"FXBMPImage.h"
+	"FXGIFImage.h"
+	"FXICOImage.h"
+	"FXIFFImage.h"
+	"FXJPGImage.h"
+	"FXPCXImage.h"
+	"FXPNGImage.h"
+	"FXPPMImage.h"
+	"FXRASImage.h"
+	"FXRGBImage.h"
+	"FXTGAImage.h"
+	"FXTIFImage.h"
+	"FXXBMImage.h"
+	"FXXPMImage.h"
+	"FXDDSImage.h"
+	"FXJP2Image.h"
+	"FXWEBPImage.h"
+	"FXEXEImage.h"
+	"FXBMPIcon.h"
+	"FXGIFIcon.h"
+	"FXICOIcon.h"
+	"FXIFFIcon.h"
+	"FXJPGIcon.h"
+	"FXPCXIcon.h"
+	"FXPNGIcon.h"
+	"FXPPMIcon.h"
+	"FXRASIcon.h"
+	"FXRGBIcon.h"
+	"FXTGAIcon.h"
+	"FXTIFIcon.h"
+	"FXXBMIcon.h"
+	"FXXPMIcon.h"
+	"FXDDSIcon.h"
+	"FXJP2Icon.h"
+	"FXWEBPIcon.h"
+	"FXEXEIcon.h"
+	"FXRegion.h"
+	"FXDC.h"
+	"FXDCWindow.h"
+	"FXDCPrint.h"
+	"FXIconSource.h"
+	"FXIconCache.h"
+	"FXFileAssociations.h"
+	"FXFrame.h"
+	"FXSeparator.h"
+	"FXLabel.h"
+	"FX7Segment.h"
+	"FXDial.h"
+	"FXKnob.h"
+	"FXGauge.h"
+	"FXColorBar.h"
+	"FXColorRing.h"
+	"FXColorWell.h"
+	"FXColorWheel.h"
+	"FXTextField.h"
+	"FXButton.h"
+	"FXPicker.h"
+	"FXToggleButton.h"
+	"FXTriStateButton.h"
+	"FXCheckButton.h"
+	"FXRadioButton.h"
+	"FXArrowButton.h"
+	"FXMenuButton.h"
+	"FXComposite.h"
+	"FXPacker.h"
+	"FXHorizontalFrame.h"
+	"FXVerticalFrame.h"
+	"FXSpring.h"
+	"FXMatrix.h"
+	"FXSpinner.h"
+	"FXRealSpinner.h"
+	"FXRootWindow.h"
+	"FXCanvas.h"
+	"FXGroupBox.h"
+	"FXShell.h"
+	"FXToolTip.h"
+	"FXPopup.h"
+	"FXTopWindow.h"
+	"FXDialogBox.h"
+	"FXMainWindow.h"
+	"FXMenuPane.h"
+	"FXScrollPane.h"
+	"FXMenuCaption.h"
+	"FXMenuSeparator.h"
+	"FXMenuTitle.h"
+	"FXMenuCascade.h"
+	"FXMenuCommand.h"
+	"FXMenuCheck.h"
+	"FXMenuRadio.h"
+	"FXMenuBar.h"
+	"FXOptionMenu.h"
+	"FXSwitcher.h"
+	"FXTabBar.h"
+	"FXTabBook.h"
+	"FXTabItem.h"
+	"FXScrollBar.h"
+	"FXScrollArea.h"
+	"FXScrollWindow.h"
+	"FXList.h"
+	"FXComboBox.h"
+	"FXListBox.h"
+	"FXTreeList.h"
+	"FXTreeListBox.h"
+	"FXFoldingList.h"
+	"FXBitmapView.h"
+	"FXBitmapFrame.h"
+	"FXImageView.h"
+	"FXImageFrame.h"
+	"FXHeader.h"
+	"FXTable.h"
+	"FXDragCorner.h"
+	"FXStatusBar.h"
+	"FXStatusLine.h"
+	"FXChoiceBox.h"
+	"FXMessageBox.h"
+	"FXDirList.h"
+	"FXSlider.h"
+	"FXRealSlider.h"
+	"FXRangeSlider.h"
+	"FXSplitter.h"
+	"FX4Splitter.h"
+	"FXShutter.h"
+	"FXIconList.h"
+	"FXFileList.h"
+	"FXDirBox.h"
+	"FXDriveBox.h"
+	"FXDirSelector.h"
+	"FXDirDialog.h"
+	"FXFileSelector.h"
+	"FXFileDialog.h"
+	"FXColorSelector.h"
+	"FXColorDialog.h"
+	"FXFontSelector.h"
+	"FXFontDialog.h"
+	"FXUndoList.h"
+	"FXRex.h"
+	"FXExpression.h"
+	"FXText.h"
+	"FXDataTarget.h"
+	"FXProgressBar.h"
+	"FXReplaceDialog.h"
+	"FXRuler.h"
+	"FXRulerView.h"
+	"FXSearchDialog.h"
+	"FXInputDialog.h"
+	"FXProgressDialog.h"
+	"FXWizard.h"
+	"FXMDIButton.h"
+	"FXMDIClient.h"
+	"FXMDIChild.h"
+	"FXDocument.h"
+	"FXDockSite.h"
+	"FXDockBar.h"
+	"FXToolBar.h"
+	"FXDockHandler.h"
+	"FXDockTitle.h"
+	"FXToolBarGrip.h"
+	"FXToolBarShell.h"
+	"FXToolBarTab.h"
+	"FXPrintDialog.h"
+	"FXDebugTarget.h"
+	"FXCalendarView.h"
+	"FXCalendar.h"
+	"FXGradientBar.h"
+	"FXConsole.h"
+	"FXSplashWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxver.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxdefs.h
+	<new>
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxkeys.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxendian.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxascii.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxunicode.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/fxcpuid.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXhalf.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXException.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXAtomic.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRefPtr.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXElement.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXArray.h
+	"FXElement.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXHash.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRandom.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMutex.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCondition.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBarrier.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSpinLock.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSemaphore.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCompletion.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXReadWriteLock.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXAutoThreadStorageKey.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRunnable.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXThread.h
+	"FXRunnable.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXScopedThread.h
+	"FXThread.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXStream.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPtrList.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPtrQueue.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIO.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIOBuffer.h
+	"FXIO.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIODevice.h
+	"FXIO.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFile.h
+	"FXIODevice.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPipe.h
+	"FXIODevice.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSocket.h
+	"FXIODevice.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMemMap.h
+	"FXFile.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFileStream.h
+	"FXStream.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMemoryStream.h
+	"FXStream.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXProcess.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXString.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXVariant.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXVariantArray.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXVariantMap.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDictionary.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJSON.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJSONFile.h
+	"FXJSON.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDLL.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSize.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPoint.h
+	"FXSize.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRectangle.h
+	"FXPoint.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColors.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXObject.h
+	"FXMetaClass.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMetaClass.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDelegator.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPath.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSystem.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXStat.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDir.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDirVisitor.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDate.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXURL.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXStringDictionary.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSettings.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRegistry.h
+	"FXSettings.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXObjectList.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXAccelTable.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRecentFiles.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXWorker.h
+	"FXThread.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSemaQueue.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXLFQueue.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXThreadPool.h
+	"FXRunnable.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTaskGroup.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXParallel.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFont.h
+	"FXId.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXId.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCursor.h
+	"FXId.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXVisual.h
+	"FXId.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXEvent.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDrawable.h
+	"FXId.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBitmap.h
+	"FXDrawable.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXImage.h
+	"FXDrawable.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIcon.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXWindow.h
+	"FXDrawable.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXApp.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXMessageChannel.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCURCursor.h
+	"FXCursor.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGIFCursor.h
+	"FXCursor.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBMPImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGIFImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXICOImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIFFImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJPGImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPCXImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPNGImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPPMImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRASImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRGBImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTGAImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTIFImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXXBMImage.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXXPMImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDDSImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJP2Image.h
+	"FXImage.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXWEBPImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXEXEImage.h
+	"FXImage.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBMPIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGIFIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXICOIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIFFIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJPGIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPCXIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPNGIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPPMIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRASIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRGBIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTGAIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTIFIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXXBMIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXXPMIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDDSIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXJP2Icon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXWEBPIcon.h
+	"FXIcon.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXEXEIcon.h
+	"FXIcon.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRegion.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDC.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDCWindow.h
+	"FXDC.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDCPrint.h
+	"FXDC.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIconSource.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIconCache.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFileAssociations.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFrame.h
+	"FXWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSeparator.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXLabel.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FX7Segment.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDial.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXKnob.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGauge.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorBar.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorRing.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorWell.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorWheel.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTextField.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXButton.h
+	"FXLabel.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPicker.h
+	"FXButton.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToggleButton.h
+	"FXLabel.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTriStateButton.h
+	"FXToggleButton.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCheckButton.h
+	"FXLabel.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRadioButton.h
+	"FXLabel.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXArrowButton.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuButton.h
+	"FXLabel.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXComposite.h
+	"FXWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPacker.h
+	"FXComposite.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXHorizontalFrame.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXVerticalFrame.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSpring.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMatrix.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSpinner.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRealSpinner.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRootWindow.h
+	"FXComposite.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCanvas.h
+	"FXWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGroupBox.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXShell.h
+	"FXComposite.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToolTip.h
+	"FXShell.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPopup.h
+	"FXShell.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTopWindow.h
+	"FXShell.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDialogBox.h
+	"FXTopWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMainWindow.h
+	"FXTopWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuPane.h
+	"FXPopup.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXScrollPane.h
+	"FXMenuPane.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuCaption.h
+	"FXWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuSeparator.h
+	"FXWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuTitle.h
+	"FXMenuCaption.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuCascade.h
+	"FXMenuCaption.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuCommand.h
+	"FXMenuCaption.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuCheck.h
+	"FXMenuCommand.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuRadio.h
+	"FXMenuCommand.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMenuBar.h
+	"FXToolBar.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToolBar.h
+	"FXDockBar.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDockBar.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXOptionMenu.h
+	"FXLabel.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSwitcher.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTabBar.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTabBook.h
+	"FXTabBar.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTabItem.h
+	"FXLabel.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXScrollBar.h
+	"FXWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXScrollArea.h
+	"FXComposite.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXScrollWindow.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXList.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXComboBox.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXListBox.h
+	"FXPacker.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTreeList.h
+	"FXScrollArea.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTreeListBox.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFoldingList.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBitmapView.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXBitmapFrame.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXImageView.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXImageFrame.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXHeader.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXTable.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDragCorner.h
+	"FXWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXStatusBar.h
+	"FXHorizontalFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXStatusLine.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXChoiceBox.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMessageBox.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDirList.h
+	"FXTreeList.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSlider.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRealSlider.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRangeSlider.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSplitter.h
+	"FXComposite.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FX4Splitter.h
+	"FXComposite.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXShutter.h
+	"FXVerticalFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXIconList.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFileList.h
+	"FXIconList.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDirBox.h
+	"FXTreeListBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDriveBox.h
+	"FXListBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDirSelector.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDirDialog.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFileSelector.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFileDialog.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorSelector.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXColorDialog.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFontSelector.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXFontDialog.h
+	"FXDialogBox.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXUndoList.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRex.h
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXExpression.h
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXText.h
+	"FXScrollArea.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDataTarget.h
+	"FXObject.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXProgressBar.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXReplaceDialog.h
+	"FXDialogBox.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRuler.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXRulerView.h
+	"FXScrollArea.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSearchDialog.h
+	"FXReplaceDialog.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXInputDialog.h
+	"FXDialogBox.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXProgressDialog.h
+	"FXDialogBox.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXWizard.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMDIButton.h
+	"FXButton.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMDIClient.h
+	"FXComposite.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXMDIChild.h
+	"FXComposite.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDocument.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDockSite.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDockHandler.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDockTitle.h
+	"FXDockHandler.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToolBarGrip.h
+	"FXDockHandler.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToolBarShell.h
+	"FXTopWindow.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXToolBarTab.h
+	"FXFrame.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXPrintDialog.h
+	"FXDialogBox.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXDebugTarget.h
+	"FXObject.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCalendarView.h
+	"FXWindow.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXCalendar.h
+	"FXPacker.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXGradientBar.h
+	"FXFrame.h"
+
+1423400522 /opt/fox/1.7.50/include/fox-1.7/FXConsole.h
+	"FXScrollArea.h"
+	"FXArray.h"
+
+1423400523 /opt/fox/1.7.50/include/fox-1.7/FXSplashWindow.h
+	"FXTopWindow.h"
+
+1439908789 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp
+	<GO_Keywords.h>
+
+1439908959 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/GO_Keywords.h
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+
+1450392709 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/FXGameProcess.h
+	<iostream>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<FXGameItem.h>
+
+1469349592 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GProcess.cpp
+	<GorgonaProcess/GProcess.h>
+
+1469441690 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/GorgonaProcess/GProcess.h
+	<iostream>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<FXGameItem.h>
+	<FXLauncherLua.h>
+
+1470248841 source:/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Process.cpp
+	<GorgonaProcess/Process.h>
+
+1470255394 /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/include/GorgonaProcess/Process.h
+	<iostream>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<FXGameItem.h>
+	<FXLauncherLua.h>
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fx.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<math.h>
+	<string.h>
+	"fxver.h"
+	"fxdefs.h"
+	"fxkeys.h"
+	"fxmath.h"
+	"fxendian.h"
+	"fxascii.h"
+	"fxunicode.h"
+	"fxcpuid.h"
+	"FXhalf.h"
+	"FXException.h"
+	"FXAtomic.h"
+	"FXRefPtr.h"
+	"FXElement.h"
+	"FXArray.h"
+	"FXHash.h"
+	"FXCallback.h"
+	"FXRandom.h"
+	"FXMutex.h"
+	"FXCondition.h"
+	"FXBarrier.h"
+	"FXSpinLock.h"
+	"FXSemaphore.h"
+	"FXCompletion.h"
+	"FXReadWriteLock.h"
+	"FXAutoThreadStorageKey.h"
+	"FXRunnable.h"
+	"FXThread.h"
+	"FXScopedThread.h"
+	"FXStream.h"
+	"FXPtrList.h"
+	"FXPtrQueue.h"
+	"FXIO.h"
+	"FXIOBuffer.h"
+	"FXIODevice.h"
+	"FXFile.h"
+	"FXPipe.h"
+	"FXSocket.h"
+	"FXMemMap.h"
+	"FXFileStream.h"
+	"FXMemoryStream.h"
+	"FXProcess.h"
+	"FXString.h"
+	"FXVariant.h"
+	"FXVariantArray.h"
+	"FXVariantMap.h"
+	"FXDictionary.h"
+	"FXDLL.h"
+	"FXSize.h"
+	"FXPoint.h"
+	"FXRectangle.h"
+	"FXColors.h"
+	"FXObject.h"
+	"FXDelegator.h"
+	"FXPath.h"
+	"FXSystem.h"
+	"FXStat.h"
+	"FXDir.h"
+	"FXDirVisitor.h"
+	"FXDate.h"
+	"FXURL.h"
+	"FXStringDictionary.h"
+	"FXJSON.h"
+	"FXJSONFile.h"
+	"FXXML.h"
+	"FXXMLFile.h"
+	"FXSettings.h"
+	"FXRegistry.h"
+	"FXObjectList.h"
+	"FXAccelTable.h"
+	"FXRecentFiles.h"
+	"FXWorker.h"
+	"FXSemaQueue.h"
+	"FXLFQueue.h"
+	"FXThreadPool.h"
+	"FXCompletion.h"
+	"FXTaskGroup.h"
+	"FXParallel.h"
+	"FXFont.h"
+	"FXCursor.h"
+	"FXVisual.h"
+	"FXEvent.h"
+	"FXId.h"
+	"FXDrawable.h"
+	"FXBitmap.h"
+	"FXImage.h"
+	"FXIcon.h"
+	"FXWindow.h"
+	"FXApp.h"
+	"FXMessageChannel.h"
+	"FXCURCursor.h"
+	"FXGIFCursor.h"
+	"FXBMPImage.h"
+	"FXGIFImage.h"
+	"FXICOImage.h"
+	"FXIFFImage.h"
+	"FXJPGImage.h"
+	"FXPCXImage.h"
+	"FXPNGImage.h"
+	"FXPPMImage.h"
+	"FXRASImage.h"
+	"FXRGBImage.h"
+	"FXTGAImage.h"
+	"FXTIFImage.h"
+	"FXXBMImage.h"
+	"FXXPMImage.h"
+	"FXDDSImage.h"
+	"FXJP2Image.h"
+	"FXWEBPImage.h"
+	"FXEXEImage.h"
+	"FXBMPIcon.h"
+	"FXGIFIcon.h"
+	"FXICOIcon.h"
+	"FXIFFIcon.h"
+	"FXJPGIcon.h"
+	"FXPCXIcon.h"
+	"FXPNGIcon.h"
+	"FXPPMIcon.h"
+	"FXRASIcon.h"
+	"FXRGBIcon.h"
+	"FXTGAIcon.h"
+	"FXTIFIcon.h"
+	"FXXBMIcon.h"
+	"FXXPMIcon.h"
+	"FXDDSIcon.h"
+	"FXJP2Icon.h"
+	"FXWEBPIcon.h"
+	"FXEXEIcon.h"
+	"FXRegion.h"
+	"FXDC.h"
+	"FXDCWindow.h"
+	"FXDCPrint.h"
+	"FXIconSource.h"
+	"FXIconCache.h"
+	"FXFileAssociations.h"
+	"FXFrame.h"
+	"FXSeparator.h"
+	"FXLabel.h"
+	"FX7Segment.h"
+	"FXDial.h"
+	"FXKnob.h"
+	"FXGauge.h"
+	"FXColorBar.h"
+	"FXColorRing.h"
+	"FXColorWell.h"
+	"FXColorWheel.h"
+	"FXTextField.h"
+	"FXButton.h"
+	"FXPicker.h"
+	"FXToggleButton.h"
+	"FXTriStateButton.h"
+	"FXCheckButton.h"
+	"FXRadioButton.h"
+	"FXArrowButton.h"
+	"FXMenuButton.h"
+	"FXComposite.h"
+	"FXPacker.h"
+	"FXHorizontalFrame.h"
+	"FXVerticalFrame.h"
+	"FXSpring.h"
+	"FXMatrix.h"
+	"FXSpinner.h"
+	"FXRealSpinner.h"
+	"FXRootWindow.h"
+	"FXCanvas.h"
+	"FXGroupBox.h"
+	"FXShell.h"
+	"FXToolTip.h"
+	"FXPopup.h"
+	"FXTopWindow.h"
+	"FXDialogBox.h"
+	"FXMainWindow.h"
+	"FXMenuPane.h"
+	"FXScrollPane.h"
+	"FXMenuCaption.h"
+	"FXMenuSeparator.h"
+	"FXMenuTitle.h"
+	"FXMenuCascade.h"
+	"FXMenuCommand.h"
+	"FXMenuCheck.h"
+	"FXMenuRadio.h"
+	"FXMenuBar.h"
+	"FXOptionMenu.h"
+	"FXSwitcher.h"
+	"FXTabBar.h"
+	"FXTabBook.h"
+	"FXTabItem.h"
+	"FXScrollBar.h"
+	"FXScrollArea.h"
+	"FXScrollWindow.h"
+	"FXList.h"
+	"FXComboBox.h"
+	"FXListBox.h"
+	"FXTreeList.h"
+	"FXTreeListBox.h"
+	"FXFoldingList.h"
+	"FXBitmapView.h"
+	"FXBitmapFrame.h"
+	"FXImageView.h"
+	"FXImageFrame.h"
+	"FXHeader.h"
+	"FXTable.h"
+	"FXDragCorner.h"
+	"FXStatusBar.h"
+	"FXStatusLine.h"
+	"FXChoiceBox.h"
+	"FXMessageBox.h"
+	"FXDirList.h"
+	"FXSlider.h"
+	"FXRealSlider.h"
+	"FXRangeSlider.h"
+	"FXSplitter.h"
+	"FX4Splitter.h"
+	"FXShutter.h"
+	"FXIconList.h"
+	"FXFileList.h"
+	"FXDirBox.h"
+	"FXDriveBox.h"
+	"FXDirSelector.h"
+	"FXDirDialog.h"
+	"FXFileSelector.h"
+	"FXFileDialog.h"
+	"FXColorSelector.h"
+	"FXColorDialog.h"
+	"FXFontSelector.h"
+	"FXFontDialog.h"
+	"FXUndoList.h"
+	"FXRex.h"
+	"FXExpression.h"
+	"FXText.h"
+	"FXDataTarget.h"
+	"FXProgressBar.h"
+	"FXReplaceDialog.h"
+	"FXRuler.h"
+	"FXRulerView.h"
+	"FXSearchDialog.h"
+	"FXInputDialog.h"
+	"FXProgressDialog.h"
+	"FXWizard.h"
+	"FXMDIButton.h"
+	"FXMDIClient.h"
+	"FXMDIChild.h"
+	"FXDocument.h"
+	"FXDockSite.h"
+	"FXDockBar.h"
+	"FXToolBar.h"
+	"FXDockHandler.h"
+	"FXDockTitle.h"
+	"FXToolBarGrip.h"
+	"FXToolBarShell.h"
+	"FXToolBarTab.h"
+	"FXPrintDialog.h"
+	"FXDebugTarget.h"
+	"FXCalendarView.h"
+	"FXCalendar.h"
+	"FXGradientBar.h"
+	"FXConsole.h"
+	"FXSplashWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxver.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxdefs.h
+	<new>
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxkeys.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxmath.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxendian.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxascii.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxunicode.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/fxcpuid.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXhalf.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXException.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXAtomic.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRefPtr.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXElement.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXArray.h
+	"FXElement.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXHash.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCallback.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRandom.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMutex.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCondition.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBarrier.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSpinLock.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSemaphore.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCompletion.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXReadWriteLock.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXAutoThreadStorageKey.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRunnable.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXThread.h
+	"FXRunnable.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXScopedThread.h
+	"FXThread.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXStream.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPtrList.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPtrQueue.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIO.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIOBuffer.h
+	"FXIO.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIODevice.h
+	"FXIO.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFile.h
+	"FXIODevice.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPipe.h
+	"FXIODevice.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSocket.h
+	"FXIODevice.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMemMap.h
+	"FXFile.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFileStream.h
+	"FXStream.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMemoryStream.h
+	"FXStream.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXProcess.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXString.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXVariant.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXVariantArray.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXVariantMap.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDictionary.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDLL.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSize.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPoint.h
+	"FXSize.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRectangle.h
+	"FXPoint.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColors.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXObject.h
+	"FXMetaClass.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMetaClass.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDelegator.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPath.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSystem.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXStat.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDir.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDirVisitor.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDate.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXURL.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXStringDictionary.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJSON.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJSONFile.h
+	"FXJSON.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXML.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXMLFile.h
+	"FXXML.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSettings.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRegistry.h
+	"FXSettings.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXObjectList.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXAccelTable.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRecentFiles.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXWorker.h
+	"FXThread.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSemaQueue.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXLFQueue.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXThreadPool.h
+	"FXRunnable.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTaskGroup.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXParallel.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFont.h
+	"FXId.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXId.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCursor.h
+	"FXId.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXVisual.h
+	"FXId.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXEvent.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDrawable.h
+	"FXId.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBitmap.h
+	"FXDrawable.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXImage.h
+	"FXDrawable.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIcon.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXWindow.h
+	"FXDrawable.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXApp.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMessageChannel.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCURCursor.h
+	"FXCursor.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGIFCursor.h
+	"FXCursor.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBMPImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGIFImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXICOImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIFFImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJPGImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPCXImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPNGImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPPMImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRASImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRGBImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTGAImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTIFImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXBMImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXPMImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDDSImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJP2Image.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXWEBPImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXEXEImage.h
+	"FXImage.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBMPIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGIFIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXICOIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIFFIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJPGIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPCXIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPNGIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPPMIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRASIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRGBIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTGAIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTIFIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXBMIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXXPMIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDDSIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXJP2Icon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXWEBPIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXEXEIcon.h
+	"FXIcon.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRegion.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDC.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDCWindow.h
+	"FXDC.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDCPrint.h
+	"FXDC.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIconSource.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIconCache.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFileAssociations.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFrame.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSeparator.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXLabel.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FX7Segment.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDial.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXKnob.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGauge.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorBar.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorRing.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorWell.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorWheel.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTextField.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXButton.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPicker.h
+	"FXButton.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToggleButton.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTriStateButton.h
+	"FXToggleButton.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCheckButton.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRadioButton.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXArrowButton.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuButton.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXComposite.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPacker.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXHorizontalFrame.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXVerticalFrame.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSpring.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMatrix.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSpinner.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRealSpinner.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRootWindow.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCanvas.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGroupBox.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXShell.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToolTip.h
+	"FXShell.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPopup.h
+	"FXShell.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTopWindow.h
+	"FXShell.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDialogBox.h
+	"FXTopWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMainWindow.h
+	"FXTopWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuPane.h
+	"FXPopup.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXScrollPane.h
+	"FXMenuPane.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuCaption.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuSeparator.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuTitle.h
+	"FXMenuCaption.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuCascade.h
+	"FXMenuCaption.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuCommand.h
+	"FXMenuCaption.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuCheck.h
+	"FXMenuCommand.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuRadio.h
+	"FXMenuCommand.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMenuBar.h
+	"FXToolBar.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToolBar.h
+	"FXDockBar.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDockBar.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXOptionMenu.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSwitcher.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTabBar.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTabBook.h
+	"FXTabBar.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTabItem.h
+	"FXLabel.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXScrollBar.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXScrollArea.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXScrollWindow.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXList.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXComboBox.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXListBox.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTreeList.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTreeListBox.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFoldingList.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBitmapView.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXBitmapFrame.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXImageView.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXImageFrame.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXHeader.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXTable.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDragCorner.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXStatusBar.h
+	"FXHorizontalFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXStatusLine.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXChoiceBox.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMessageBox.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDirList.h
+	"FXTreeList.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSlider.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRealSlider.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRangeSlider.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSplitter.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FX4Splitter.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXShutter.h
+	"FXVerticalFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXIconList.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFileList.h
+	"FXIconList.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDirBox.h
+	"FXTreeListBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDriveBox.h
+	"FXListBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDirSelector.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDirDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFileSelector.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFileDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorSelector.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXColorDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFontSelector.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXFontDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXUndoList.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRex.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXExpression.h
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXText.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDataTarget.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXProgressBar.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXReplaceDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRuler.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXRulerView.h
+	"FXScrollArea.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSearchDialog.h
+	"FXReplaceDialog.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXInputDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXProgressDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXWizard.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMDIButton.h
+	"FXButton.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMDIClient.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXMDIChild.h
+	"FXComposite.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDocument.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDockSite.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDockHandler.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDockTitle.h
+	"FXDockHandler.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToolBarGrip.h
+	"FXDockHandler.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToolBarShell.h
+	"FXTopWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXToolBarTab.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXPrintDialog.h
+	"FXDialogBox.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXDebugTarget.h
+	"FXObject.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCalendarView.h
+	"FXWindow.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXCalendar.h
+	"FXPacker.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXGradientBar.h
+	"FXFrame.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXConsole.h
+	"FXScrollArea.h"
+	"FXArray.h"
+
+1507147094 /opt/libfox/1.7/56/include/fox-1.7/FXSplashWindow.h
+	"FXTopWindow.h"
+
+1553462725 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp
+	<FXGameItem.h>
+	<iostream>
+
+1553461747 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/FXGameItem.h
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+
+1553460928 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/Utils.h
+	<fx.h>
+
+1553464186 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp
+	<FXGameLauncher.h>
+
+1553461887 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/FXGameLauncher.h
+	<cstdio>
+	<unistd.h>
+	<sys/types.h>
+	<sys/time.h>
+	<sys/resource.h>
+	<sys/wait.h>
+	<lua5.1/lualib.h>
+	<lua5.1/lauxlib.h>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<IconsTheme.h>
+	<FXGameItem.h>
+	<GorgonaProcess/Process.h>
+	<FXLaunchEditor.h>
+	<FXLauncherLua.h>
+	<FXListPane.h>
+	<GO_Keywords.h>
+
+1553461748 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/IconsTheme.h
+	<fx.h>
+	<iostream>
+
+1553460304 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/GorgonaProcess/Process.h
+	<iostream>
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+	<FXGameItem.h>
+	<FXLauncherLua.h>
+
+1553461616 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/FXLauncherLua.h
+	<lua5.1/lualib.h>
+	<lua5.1/lauxlib.h>
+	<fx.h>
+	<iostream>
+	<cstring>
+
+1553461747 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/FXLaunchEditor.h
+	<fx.h>
+	<FXGameItem.h>
+	<Utils.h>
+	<IconsTheme.h>
+
+1553461748 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/FXListPane.h
+	<fx.h>
+	<tinyxml.h>
+	<iostream>
+	<IconsTheme.h>
+	<FXGameItem.h>
+	<FXLaunchEditor.h>
+	<Utils.h>
+
+1553461748 /home/regis/Projects/Fox/Gorgona/ALFA.01.00/include/GO_Keywords.h
+	<fx.h>
+	<tinyxml.h>
+	<Utils.h>
+
+1553462725 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/FXLaunchEditor.cpp
+	<FXLaunchEditor.h>
+	<FXGameLauncher.h>
+	<FXLauncherLua.h>
+	<iostream>
+	<cstring>
+
+1553462725 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/FXLauncherLua.cpp
+	<FXLauncherLua.h>
+	<FXGameLauncher.h>
+	<FXGameItem.h>
+	<Utils.h>
+
+1553462725 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/FXListPane.cpp
+	<FXListPane.h>
+	<FXGameLauncher.h>
+
+1553463384 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp
+	<GO_Keywords.h>
+
+1553462726 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/IconsTheme.cpp
+	<IconsTheme.h>
+
+1553462163 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/main.cpp
+	<fx.h>
+	<FXGameLauncher.h>
+
+1553462726 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/Process.cpp
+	<GorgonaProcess/Process.h>
+
+1553463385 source:/home/regis/Projects/Fox/Gorgona/ALFA.01.00/src/Utils.cpp
+	<Utils.h>
+	<iostream>
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fx.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<math.h>
+	<string.h>
+	"fxver.h"
+	"fxdefs.h"
+	"fxkeys.h"
+	"fxmath.h"
+	"fxendian.h"
+	"fxascii.h"
+	"fxunicode.h"
+	"fxcpuid.h"
+	"FXhalf.h"
+	"FXException.h"
+	"FXAtomic.h"
+	"FXRefPtr.h"
+	"FXElement.h"
+	"FXArray.h"
+	"FXHash.h"
+	"FXCallback.h"
+	"FXRandom.h"
+	"FXMutex.h"
+	"FXCondition.h"
+	"FXBarrier.h"
+	"FXSpinLock.h"
+	"FXSemaphore.h"
+	"FXCompletion.h"
+	"FXReadWriteLock.h"
+	"FXAutoThreadStorageKey.h"
+	"FXRunnable.h"
+	"FXThread.h"
+	"FXScopedThread.h"
+	"FXStream.h"
+	"FXPtrList.h"
+	"FXPtrQueue.h"
+	"FXIO.h"
+	"FXIOBuffer.h"
+	"FXIODevice.h"
+	"FXFile.h"
+	"FXPipe.h"
+	"FXSocket.h"
+	"FXMemMap.h"
+	"FXFileStream.h"
+	"FXMemoryStream.h"
+	"FXProcess.h"
+	"FXString.h"
+	"FXVariant.h"
+	"FXVariantArray.h"
+	"FXVariantMap.h"
+	"FXDictionary.h"
+	"FXDLL.h"
+	"FXSize.h"
+	"FXPoint.h"
+	"FXRectangle.h"
+	"FXColors.h"
+	"FXObject.h"
+	"FXDelegator.h"
+	"FXPath.h"
+	"FXSystem.h"
+	"FXStat.h"
+	"FXDir.h"
+	"FXDirVisitor.h"
+	"FXDate.h"
+	"FXURL.h"
+	"FXStringDictionary.h"
+	"FXJSON.h"
+	"FXJSONFile.h"
+	"FXXML.h"
+	"FXXMLFile.h"
+	"FXSettings.h"
+	"FXRegistry.h"
+	"FXObjectList.h"
+	"FXAccelTable.h"
+	"FXRecentFiles.h"
+	"FXWorker.h"
+	"FXSemaQueue.h"
+	"FXLFQueue.h"
+	"FXThreadPool.h"
+	"FXCompletion.h"
+	"FXTaskGroup.h"
+	"FXParallel.h"
+	"FXFont.h"
+	"FXCursor.h"
+	"FXVisual.h"
+	"FXEvent.h"
+	"FXId.h"
+	"FXDrawable.h"
+	"FXBitmap.h"
+	"FXImage.h"
+	"FXIcon.h"
+	"FXWindow.h"
+	"FXApp.h"
+	"FXMessageChannel.h"
+	"FXCURCursor.h"
+	"FXGIFCursor.h"
+	"FXBMPImage.h"
+	"FXGIFImage.h"
+	"FXICOImage.h"
+	"FXIFFImage.h"
+	"FXJPGImage.h"
+	"FXPCXImage.h"
+	"FXPNGImage.h"
+	"FXPPMImage.h"
+	"FXRASImage.h"
+	"FXRGBImage.h"
+	"FXTGAImage.h"
+	"FXTIFImage.h"
+	"FXXBMImage.h"
+	"FXXPMImage.h"
+	"FXDDSImage.h"
+	"FXJP2Image.h"
+	"FXWEBPImage.h"
+	"FXEXEImage.h"
+	"FXBMPIcon.h"
+	"FXGIFIcon.h"
+	"FXICOIcon.h"
+	"FXIFFIcon.h"
+	"FXJPGIcon.h"
+	"FXPCXIcon.h"
+	"FXPNGIcon.h"
+	"FXPPMIcon.h"
+	"FXRASIcon.h"
+	"FXRGBIcon.h"
+	"FXTGAIcon.h"
+	"FXTIFIcon.h"
+	"FXXBMIcon.h"
+	"FXXPMIcon.h"
+	"FXDDSIcon.h"
+	"FXJP2Icon.h"
+	"FXWEBPIcon.h"
+	"FXEXEIcon.h"
+	"FXRegion.h"
+	"FXDC.h"
+	"FXDCWindow.h"
+	"FXDCPrint.h"
+	"FXIconSource.h"
+	"FXIconCache.h"
+	"FXFileAssociations.h"
+	"FXFrame.h"
+	"FXSeparator.h"
+	"FXLabel.h"
+	"FX7Segment.h"
+	"FXDial.h"
+	"FXKnob.h"
+	"FXGauge.h"
+	"FXColorBar.h"
+	"FXColorRing.h"
+	"FXColorWell.h"
+	"FXColorWheel.h"
+	"FXTextField.h"
+	"FXButton.h"
+	"FXPicker.h"
+	"FXToggleButton.h"
+	"FXTriStateButton.h"
+	"FXCheckButton.h"
+	"FXRadioButton.h"
+	"FXArrowButton.h"
+	"FXMenuButton.h"
+	"FXComposite.h"
+	"FXPacker.h"
+	"FXHorizontalFrame.h"
+	"FXVerticalFrame.h"
+	"FXSpring.h"
+	"FXMatrix.h"
+	"FXSpinner.h"
+	"FXRealSpinner.h"
+	"FXRootWindow.h"
+	"FXCanvas.h"
+	"FXGroupBox.h"
+	"FXShell.h"
+	"FXToolTip.h"
+	"FXPopup.h"
+	"FXTopWindow.h"
+	"FXDialogBox.h"
+	"FXMainWindow.h"
+	"FXMenuPane.h"
+	"FXScrollPane.h"
+	"FXMenuCaption.h"
+	"FXMenuSeparator.h"
+	"FXMenuTitle.h"
+	"FXMenuCascade.h"
+	"FXMenuCommand.h"
+	"FXMenuCheck.h"
+	"FXMenuRadio.h"
+	"FXMenuBar.h"
+	"FXOptionMenu.h"
+	"FXSwitcher.h"
+	"FXTabBar.h"
+	"FXTabBook.h"
+	"FXTabItem.h"
+	"FXScrollBar.h"
+	"FXScrollArea.h"
+	"FXScrollWindow.h"
+	"FXList.h"
+	"FXComboBox.h"
+	"FXListBox.h"
+	"FXTreeList.h"
+	"FXTreeListBox.h"
+	"FXFoldingList.h"
+	"FXBitmapView.h"
+	"FXBitmapFrame.h"
+	"FXImageView.h"
+	"FXImageFrame.h"
+	"FXHeader.h"
+	"FXTable.h"
+	"FXDragCorner.h"
+	"FXStatusBar.h"
+	"FXStatusLine.h"
+	"FXChoiceBox.h"
+	"FXMessageBox.h"
+	"FXDirList.h"
+	"FXSlider.h"
+	"FXRealSlider.h"
+	"FXRangeSlider.h"
+	"FXSplitter.h"
+	"FX4Splitter.h"
+	"FXShutter.h"
+	"FXIconList.h"
+	"FXFileList.h"
+	"FXDirBox.h"
+	"FXDriveBox.h"
+	"FXDirSelector.h"
+	"FXDirDialog.h"
+	"FXFileSelector.h"
+	"FXFileDialog.h"
+	"FXColorSelector.h"
+	"FXColorDialog.h"
+	"FXFontSelector.h"
+	"FXFontDialog.h"
+	"FXUndoList.h"
+	"FXRex.h"
+	"FXExpression.h"
+	"FXText.h"
+	"FXDataTarget.h"
+	"FXProgressBar.h"
+	"FXReplaceDialog.h"
+	"FXRuler.h"
+	"FXRulerView.h"
+	"FXSearchDialog.h"
+	"FXInputDialog.h"
+	"FXProgressDialog.h"
+	"FXWizard.h"
+	"FXMDIButton.h"
+	"FXMDIClient.h"
+	"FXMDIChild.h"
+	"FXDocument.h"
+	"FXDockSite.h"
+	"FXDockBar.h"
+	"FXToolBar.h"
+	"FXDockHandler.h"
+	"FXDockTitle.h"
+	"FXToolBarGrip.h"
+	"FXToolBarShell.h"
+	"FXToolBarTab.h"
+	"FXPrintDialog.h"
+	"FXDebugTarget.h"
+	"FXCalendarView.h"
+	"FXCalendar.h"
+	"FXGradientBar.h"
+	"FXConsole.h"
+	"FXSplashWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxver.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxdefs.h
+	<new>
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxkeys.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxmath.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxendian.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxascii.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxunicode.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/fxcpuid.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXhalf.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXException.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXAtomic.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRefPtr.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXElement.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXArray.h
+	"FXElement.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXHash.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCallback.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRandom.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMutex.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCondition.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBarrier.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSpinLock.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSemaphore.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCompletion.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXReadWriteLock.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXAutoThreadStorageKey.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRunnable.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXThread.h
+	"FXRunnable.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXScopedThread.h
+	"FXThread.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXStream.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPtrList.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPtrQueue.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIO.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIOBuffer.h
+	"FXIO.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIODevice.h
+	"FXIO.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFile.h
+	"FXIODevice.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPipe.h
+	"FXIODevice.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSocket.h
+	"FXIODevice.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMemMap.h
+	"FXFile.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFileStream.h
+	"FXStream.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMemoryStream.h
+	"FXStream.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXProcess.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXString.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXVariant.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXVariantArray.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXVariantMap.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDictionary.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDLL.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSize.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPoint.h
+	"FXSize.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRectangle.h
+	"FXPoint.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColors.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXObject.h
+	"FXMetaClass.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMetaClass.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDelegator.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPath.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSystem.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXStat.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDir.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDirVisitor.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDate.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXURL.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXStringDictionary.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJSON.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJSONFile.h
+	"FXJSON.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXML.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXMLFile.h
+	"FXXML.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSettings.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRegistry.h
+	"FXSettings.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXObjectList.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXAccelTable.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRecentFiles.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXWorker.h
+	"FXThread.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSemaQueue.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXLFQueue.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXThreadPool.h
+	"FXRunnable.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTaskGroup.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXParallel.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFont.h
+	"FXId.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXId.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCursor.h
+	"FXId.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXVisual.h
+	"FXId.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXEvent.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDrawable.h
+	"FXId.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBitmap.h
+	"FXDrawable.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXImage.h
+	"FXDrawable.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIcon.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXWindow.h
+	"FXDrawable.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXApp.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMessageChannel.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCURCursor.h
+	"FXCursor.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGIFCursor.h
+	"FXCursor.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBMPImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGIFImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXICOImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIFFImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJPGImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPCXImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPNGImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPPMImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRASImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRGBImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTGAImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTIFImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXBMImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXPMImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDDSImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJP2Image.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXWEBPImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXEXEImage.h
+	"FXImage.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBMPIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGIFIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXICOIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIFFIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJPGIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPCXIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPNGIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPPMIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRASIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRGBIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTGAIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTIFIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXBMIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXXPMIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDDSIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXJP2Icon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXWEBPIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXEXEIcon.h
+	"FXIcon.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRegion.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDC.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDCWindow.h
+	"FXDC.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDCPrint.h
+	"FXDC.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIconSource.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIconCache.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFileAssociations.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFrame.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSeparator.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXLabel.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FX7Segment.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDial.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXKnob.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGauge.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorBar.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorRing.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorWell.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorWheel.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTextField.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXButton.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPicker.h
+	"FXButton.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToggleButton.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTriStateButton.h
+	"FXToggleButton.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCheckButton.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRadioButton.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXArrowButton.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuButton.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXComposite.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPacker.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXHorizontalFrame.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXVerticalFrame.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSpring.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMatrix.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSpinner.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRealSpinner.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRootWindow.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCanvas.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGroupBox.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXShell.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToolTip.h
+	"FXShell.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPopup.h
+	"FXShell.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTopWindow.h
+	"FXShell.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDialogBox.h
+	"FXTopWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMainWindow.h
+	"FXTopWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuPane.h
+	"FXPopup.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXScrollPane.h
+	"FXMenuPane.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuCaption.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuSeparator.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuTitle.h
+	"FXMenuCaption.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuCascade.h
+	"FXMenuCaption.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuCommand.h
+	"FXMenuCaption.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuCheck.h
+	"FXMenuCommand.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuRadio.h
+	"FXMenuCommand.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMenuBar.h
+	"FXToolBar.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToolBar.h
+	"FXDockBar.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDockBar.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXOptionMenu.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSwitcher.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTabBar.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTabBook.h
+	"FXTabBar.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTabItem.h
+	"FXLabel.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXScrollBar.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXScrollArea.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXScrollWindow.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXList.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXComboBox.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXListBox.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTreeList.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTreeListBox.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFoldingList.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBitmapView.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXBitmapFrame.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXImageView.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXImageFrame.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXHeader.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXTable.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDragCorner.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXStatusBar.h
+	"FXHorizontalFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXStatusLine.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXChoiceBox.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMessageBox.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDirList.h
+	"FXTreeList.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSlider.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRealSlider.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRangeSlider.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSplitter.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FX4Splitter.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXShutter.h
+	"FXVerticalFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXIconList.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFileList.h
+	"FXIconList.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDirBox.h
+	"FXTreeListBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDriveBox.h
+	"FXListBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDirSelector.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDirDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFileSelector.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFileDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorSelector.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXColorDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFontSelector.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXFontDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXUndoList.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRex.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXExpression.h
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXText.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDataTarget.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXProgressBar.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXReplaceDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRuler.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXRulerView.h
+	"FXScrollArea.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSearchDialog.h
+	"FXReplaceDialog.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXInputDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXProgressDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXWizard.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMDIButton.h
+	"FXButton.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMDIClient.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXMDIChild.h
+	"FXComposite.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDocument.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDockSite.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDockHandler.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDockTitle.h
+	"FXDockHandler.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToolBarGrip.h
+	"FXDockHandler.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToolBarShell.h
+	"FXTopWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXToolBarTab.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXPrintDialog.h
+	"FXDialogBox.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXDebugTarget.h
+	"FXObject.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCalendarView.h
+	"FXWindow.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXCalendar.h
+	"FXPacker.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXGradientBar.h
+	"FXFrame.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXConsole.h
+	"FXScrollArea.h"
+	"FXArray.h"
+
+1539382140 /opt/foxlib/1.7/64/include/fox-1.7/FXSplashWindow.h
+	"FXTopWindow.h"
+

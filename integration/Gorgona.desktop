@@ -1,0 +1,15 @@
+[Desktop Entry]
+Comment=Spravce her s moznosti vytvaret univerzalni spoustece
+Exec=/opt/Gorgona/gorgona
+GenericName=Spravce her
+Icon=/usr/share/pixmaps/medusa-head.png
+Name=Gorgona
+Categories=Game
+NoDisplay=false
+Path[$e]=
+StartupNotify=true
+Terminal=0
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

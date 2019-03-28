@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Gorgona build log</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+<body>
+<tt>
+Build started on: <u>24-07-2018 at 19:53.58</u><br />
+Build ended on: <u>24-07-2018 at 19:54.07</u><p />
+<b>-------------- Build: Debug in Gorgona (compiler: GNU GCC Compiler)---------------</b><br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp -o obj/src/FXGameItem.o<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp: In member function ‘FX::FXbool FXGameItem::parse(TiXmlElement*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp:93:25: warning: comparison with string literal results in unspecified behavior [-Waddress]</font><br />
+   if( myel-&gt;Value( ) != "Game" ) { return false; }<br />
+                         ^~~~~~<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp:102:14: warning: statement has no effect [-Wunused-value]</font><br />
+       for( at; at; at = at-&gt;Next( ) ) {<br />
+              ^<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp: In member function ‘void FXGameItem::load(TiXmlElement*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp:140:12: warning: statement has no effect [-Wunused-value]</font><br />
+   for( elem; elem; elem = elem-&gt;NextSiblingElement( ) ){<br />
+            ^<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameItem.cpp:150:14: warning: statement has no effect [-Wunused-value]</font><br />
+     for( attr; attr; attr = attr-&gt;Next( ) ) {<br />
+              ^<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp -o obj/src/FXGameLauncher.o<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In constructor ‘FXGameLauncher::FXGameLauncher(FX::FXApp*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:36:11: warning: unused variable ‘ic_quit’ [-Wunused-variable]</font><br />
+   FXIcon *ic_quit   = gl_iconstheme-&gt;getIcon( "Actions/window-close.png" );<br />
+           ^~~~~~~<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘long int FXGameLauncher::OnCmd_List(FX::FXObject*, FX::FXSelector, void*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:185:13: warning: operation on ‘resh’ may be undefined [-Wsequence-point]</font><br />
+        resh = resh = ( ( this-&gt;run( ) == true ) ? 1 : 0 );<br />
+        ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘long int FXGameLauncher::OnSig_ExitChild(FX::FXObject*, FX::FXSelector, void*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:279:1: warning: no return statement in function returning non-void [-Wreturn-type]</font><br />
+ }<br />
+ ^<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘void FXGameLauncher::load()’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:294:18: warning: statement has no effect [-Wunused-value]</font><br />
+       for( xegame; xegame; xegame = xegame-&gt;NextSiblingElement( "Game" ) ) {<br />
+                  ^<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘void FXGameLauncher::read_Keywords(const FX::FXString&amp;, const FX::FXString&amp;)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:427:17: warning: statement has no effect [-Wunused-value]</font><br />
+      for( kwelem; kwelem; kwelem = kwelem-&gt;NextSiblingElement( "Keyword" ) ) {<br />
+                 ^<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:429:14: warning: unused variable ‘n’ [-Wunused-variable]</font><br />
+        FXint n = kwl-&gt;read( kwelem );<br />
+              ^<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:415:26: warning: unused variable ‘klist’ [-Wunused-variable]</font><br />
+    GO_Keywords          *klist;<br />
+                          ^~~~~<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘FX::FXbool FXGameLauncher::exec(const FX::FXArray&lt;const char*&gt;&amp;, FX::FXbool, FX::FXbool)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:463:15: warning: unused variable ‘it’ [-Wunused-variable]</font><br />
+   FXGameItem *it = this-&gt;get_ActiveItem( );<br />
+               ^~<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp: In member function ‘FX::FXint FXGameLauncher::WaitOnGame(FX::FXProcess*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXGameLauncher.cpp:618:1: warning: control reaches end of non-void function [-Wreturn-type]</font><br />
+ }<br />
+ ^<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLaunchEditor.cpp -o obj/src/FXLaunchEditor.o<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLaunchEditor.cpp: In member function ‘long int FXLaunchEditor::onCmd_Icon(FX::FXObject*, FX::FXSelector, void*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLaunchEditor.cpp:151:9: warning: unused variable ‘resulth’ [-Wunused-variable]</font><br />
+    long resulth = 0;<br />
+         ^~~~~~~<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXLauncherLua.cpp -o obj/src/FXLauncherLua.o<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/FXListPane.cpp -o obj/src/FXListPane.o<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp -o obj/src/GO_Keywords.o<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp: In member function ‘FX::FXint GO_Keywords::read(TiXmlElement*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp:24:15: warning: statement has no effect [-Wunused-value]</font><br />
+     for( telem; telem; telem = telem-&gt;NextSiblingElement( "Tag" ) ) {<br />
+               ^<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp: In member function ‘FX::FXbool GO_Keywords::write(TiXmlElement*)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/GO_Keywords.cpp:42:1: warning: no return statement in function returning non-void [-Wreturn-type]</font><br />
+ }<br />
+ ^<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/IconsTheme.cpp -o obj/src/IconsTheme.o<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/main.cpp -o obj/src/main.o<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Process.cpp -o obj/src/Process.o<br />
+g++ -Wall -g -I/opt/libfox/1.7/56/include/fox-1.7 -Iinclude -c /home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Utils.cpp -o obj/src/Utils.o<br />
+/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Utils.cpp: In function ‘FX::FXint pack(FX::FXArray&lt;FX::FXString&gt;*, FX::FXString*, const FX::FXString&amp;)’:<br />
+<font color="#0000ff">/home/gabriel/Projects/Fox/Gorgona/ALFA.01.00/src/Utils.cpp:32:1: warning: no return statement in function returning non-void [-Wreturn-type]</font><br />
+ }<br />
+ ^<br />
+g++ -L/opt/libfox/1.7/56/lib -o bin/debug/Gorgona obj/src/FXGameItem.o obj/src/FXGameLauncher.o obj/src/FXLaunchEditor.o obj/src/FXLauncherLua.o obj/src/FXListPane.o obj/src/GO_Keywords.o obj/src/IconsTheme.o obj/src/main.o obj/src/Process.o obj/src/Utils.o   /opt/libfox/1.7/56/lib/libFOX-1.7.a /opt/libfox/1.7/56/lib/libCHART-1.7.a -ltinyxml -llua5.1 -lGL -lGLU -lXfixes -lxcb -lxcb-shm -lXrender -lXrandr -lXft -lXcursor -lXi -lXext -lfontconfig -lX11 -lpthread -ljpeg -lpng -ltiff<br />
+Output file is bin/debug/Gorgona with size 10,47 MB<br />
+<font color="#0000ff">Process terminated with status 0 (0 minute(s), 9 second(s))</font><br />
+<font color="#0000ff">0 error(s), 17 warning(s) (0 minute(s), 9 second(s))</font><br />
+</tt>
+</body>
+</html>
