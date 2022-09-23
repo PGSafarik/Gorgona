@@ -1,5 +1,5 @@
-# Gorgona - Game collection manager and game launcher for Linux OS 
--08/09/2022-
+# Gorgona - Game collection manager and launcher for Linux OS 
+-23/09/2022-
 
 *Content:*
   1. [General info](#1-general-info)
@@ -14,6 +14,14 @@
 ## 1. GENERAL INFO:
 !THIS PROJECT IS STOPPED! - see on the part 4
 
+The Gorgona project is intended as a manager and launcher of games under the Linux OS. It is written in C++ using the Fox GUI framework. Its primary task was to replace the Java application JGameLauncher by Parallel Realities. The main motivation was the need to write shell launchers for many games, or the impossibility of sorting games according to certain criteria (e.g. genre).
+
+At this point, the Gorgon has more or less fulfilled its original goals and in some ways surpassed its original design. It includes a Lua interpreter and several built-in functions that allow you to write universal game launchers. At the moment, it only allows you to manually insert the game into the list and enter the necessary data about the game. Gorgona then places the game in the corresponding section, from where it can then also be launched. The list of games can be displayed in two variants (icons and a detailed list). 
+
+For this project and its parts, names from Greek mythology are used
+  Gorgona – Game manager
+  Morfeus – Univerzal GUI game launch.
+  
 ## 2. COMPILATION AND INSTALLATION:
 *Dependecies:*
   * [Foxtoolkit 1.7.76](http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz)
@@ -33,6 +41,16 @@ After downloading the project from Github (and possibly unzipping it), go to the
 ```
 After successfully compiling and building the project, the resulting program, including the Lua language launcher, 
 will be installed in the directory /opt/Gorgona
+
+Note:
+The foxlib library MUST be installed on your system at compile time. Version 1.7 is a development version, so it is possible that you will not have it on your system and it will not be available in the repository, so you will have to install it manually. More information on how to do this can be found on the foxtoolkit website. The following lines refer to any CMakeLists modifications.
+
+If you have the library installed in a location other than the standard one, this fact must be entered in the CMakeLists.txt file in the project directory. Find and change the lines setting the library path:
+```
+    INCLUDE_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/include" )   #Foxlib headers
+    LINK_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/lib" )          #Foxlib library
+```
+These lines are commented out by default, so remove the leading '#' characters after editing, and then save the file. Next, follow the instructions for building and installing the project above as normal.
 
 ## 3. KNOWN ERRORS AND BUGS
 * ### 28/03/2019 - Bad return value from lua launchers - opened   
