@@ -53,9 +53,17 @@ If you have the library installed in a location other than the standard one, thi
 These lines are commented out by default, so remove the leading '#' characters after editing, and then save the file. Next, follow the instructions for building and installing the project above as normal.
 
 ## 3. KNOWN ERRORS AND BUGS
-* ### 28/03/2019 - Bad return value from lua launchers - opened   
+* ### 28/03/2019 - Bad return value from lua launchers - opened 
+Lua launchers do not correctly return a return value after a game launched in this way ends. It is probably a wrongly fetched value from the lua buffer.
     
 ## 4. PROJECT STATE AND PLANS FOR THE FUTHURE
+PROJECT STOPPED
+
+In 2019/2020, more similar programs, such as Gorgona, appeared on the Linux scene. First of all, it was Lutris, then, for example, GameHub, which at that time were already much further than Gorgona in terms of services and functions and have (IMHO) a larger developer and community base. Considering this fact and the fact that I liked the GameHub project myself, I decided to stop work on Gorgon and not continue its development (at least for now). All modifications in the project are of a maintenance nature at the moment.
+
+However, the repository of the project on Github will be preserved for any interested parties, or for future generations to know that such a project ever existed...
+
+Project Morfeus, which was developed in parallel with Gorgon, was separated from it as an independent utility and continues to be developed independently
 
 ## 5. AUTHOR AND PROJECT LICENCION:
 Copyright (C) 2015 - 2022 Pavel Šafařík <drakarax@seznam.cz>
@@ -78,4 +86,5 @@ You should have received a copy of the GNU General Public License along with fox
   * [Lutris (EN)](https://lutris.net/)
   * [GameHub (EN)](https://tkashkin.github.io/projects/gamehub/)
 
-## === END ===  
+=== END ===
+

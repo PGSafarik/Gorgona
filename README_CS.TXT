@@ -75,7 +75,7 @@ době po stránce nabízených služeb a funkcí mnohem dál než Gorgona a maj�
 že jsem si sám oblíbil projekt GameHub, jsem se rozhodl práce na Gorgoně zastavit a v jejím vývoji (alespoň pro zatím) nepokračovat. Veškeré úpravy v 
 projektu mají v tuto chvíli pouze udržovací charakter. 
 
-Repositář projektu na Githubu však zůstane pro případné zájemce, či pro budoucí generace, aby věděli, že takový projekt kdy existoval... 
+Repositář projektu na Githubu však zůstane zachován pro případné zájemce, či pro budoucí generace, aby věděli, že takový projekt kdy existoval... 
 
 Projekt Morfeus, který se vyvíjel souběžně s Gorgonou, byl od ní oddělen, jako nezávislá utilita a je nadále vyvíjen samostatně. 
 
@@ -97,6 +97,7 @@ Spolu s Gorgonou byste měli obdržet kopii GNU General Public License. Pokud ne
 
 6. INTERNET: 
 ===============
+  Muj blog:                http://bfuplusplus.blogspot.cz/
   Morfeus:
   Parallel Realities (EN): https://www.parallelrealities.co.uk/
   Lutris (EN):             https://lutris.net/
