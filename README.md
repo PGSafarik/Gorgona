@@ -17,8 +17,8 @@
 ## 2. COMPILATION AND INSTALLATION:
 *Dependecies:*
   * [Foxtoolkit 1.7.76](http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz)
-  * [TinyXml]          (https://sourceforge.net/projects/tinyxml)
-  * [Lua 5.1]          (https://www.lua.org)
+  * [TinyXml](https://sourceforge.net/projects/tinyxml)
+  * [Lua 5.1](https://www.lua.org)
 
 *Aditional dependencies for compilation:*
   * cmake >= 3.10
