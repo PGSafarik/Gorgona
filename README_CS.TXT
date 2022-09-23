@@ -14,13 +14,19 @@ Obsah:
 =======================
 PROJEKT ZASTAVEN – viz. Kapitola 4. 
 
-Projekt Gorgona je určený jako správce a spouštěč her pod OS Linux. Je vytvořen v jazyce C++ s použitím GUI frameworku Fox. Jeho primárním úkolem bylo náhradit za Java aplikaci JGameLauncher od společnosti Parallel Realities. Hlavní motivací byla nutnost psát pro mnoho her shellove spouštěče, nebo nemožnost třídit hry podle určitých kritérií (např. podle žánru).  
+Projekt Gorgona je určený jako správce a spouštěč her pod OS Linux. Je vytvořen v jazyce C++ s použitím GUI frameworku Fox. Jeho primárním úkolem bylo 
+náhradit za Java aplikaci JGameLauncher od společnosti Parallel Realities. Hlavní motivací byla nutnost psát pro mnoho her shellove spouštěče, nebo 
+nemožnost třídit hry podle určitých kritérií (např. podle žánru).  
 
-Gorgona v teto chvíli víceméně své původní cíle splnila a v některých ohledech svůj původní vzor předběhla. Obsahuje interpretr jazyka Lua a několik vložených funkcí, které umožňují psát univerzální spouštěče her. V tuto chvíli umožňuje pouze ruční vložení hry do seznamu, a zadáni potřebných údajů o hře. Gorgona potom zařadí hru do odpovídající sekce, odkud ji lze poté také spouštět. Seznam her je možno zobrazit ve dvou variantách (ikony a podrobný výpis). Pro tento projekt a jeho části, jsou použity názvy z řecké mytologie :
+Gorgona v teto chvíli víceméně své původní cíle splnila a v některých ohledech svůj původní vzor předběhla. Obsahuje interpretr jazyka Lua a několik 
+vložených funkcí, které umožňují psát univerzální spouštěče her. V tuto chvíli umožňuje pouze ruční vložení hry do seznamu, a zadáni potřebných údajů o 
+hře. Gorgona potom zařadí hru do odpovídající sekce, odkud ji lze poté také spouštět. Seznam her je možno zobrazit ve dvou variantách (ikony a podrobný 
+výpis). Pro tento projekt a jeho části, jsou použity názvy z řecké mytologie :
   Gorgona – Správce her
   Morfeus – Univerzální GUI pro spouštění her (tzv. launcher).  
 
 Screenshot: 
+docs/images/screenshot.png
 
 2. PŘEKLAD A INSTALACE
 ========================
@@ -43,13 +49,17 @@ sekvenci příkazu:
 Po úspěšné kompilaci a sestaveni projektu bude výsledný program, včetně spouštěcích modulu v jazyce Lua, nainstalovány do adresáře /opt/gorgona
 
 pozn.:
-Knihovna foxlib MUSÍ být v době kompilace nainstalována na vašem systému. Verze 1.7 je vývojová verze, je proto možné, ze ji nebudete mít v systému a nebude ani dostupná v repositáři, proto ji budete muset doinstalovat ručně. Více informací jak to udělat najdete na stránkách foxtoolkitu. Následující řádky se týkají případných úprav CMakeLists.
+Knihovna foxlib MUSÍ být v době kompilace nainstalována na vašem systému. Verze 1.7 je vývojová verze, je proto možné, ze ji nebudete mít v systému a 
+nebude ani dostupná v repositáři, proto ji budete muset doinstalovat ručně. Více informací jak to udělat najdete na stránkách foxtoolkitu. Následující 
+řádky se týkají případných úprav CMakeLists.
 
-Mate-li knihovnu nainstalovanou na jiném, než standardním umístění, je nutno tuto skutečnost zanést v souboru CMakeLists.txt v adresáři projektu. Vyhledejte a změňte řádky nastavující cestu ke knihovně:
+Mate-li knihovnu nainstalovanou na jiném, než standardním umístění, je nutno tuto skutečnost zanést v souboru CMakeLists.txt v adresáři projektu. 
+Vyhledejte a změňte řádky nastavující cestu ke knihovně:
     INCLUDE_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/include" )   #Foxlib headers
     LINK_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/lib" )          #Foxlib library
 
-Tyto řádky jsou ve výchozím stavu zakomentovány, po úpravě tedy ještě odstraňte počáteční znaky '#', a poté soubor uložte. Dále normálně postupujte podle instrukci pro sestavení a instalaci projektu výše.     
+Tyto řádky jsou ve výchozím stavu zakomentovány, po úpravě tedy ještě odstraňte počáteční znaky '#', a poté soubor uložte. Dále normálně postupujte podle 
+instrukci pro sestavení a instalaci projektu výše.     
 
 3. ZNÁME CHYBY A BUGY
 ======================
@@ -60,7 +70,10 @@ Tyto řádky jsou ve výchozím stavu zakomentovány, po úpravě tedy ještě o
 ======================================
 PROJEKT ZASTAVEN!
 
-V letech 2019/2020 se objevilo na Linuxové scéně více podobných programů, jako Gorgona. Především to byl Lutris, dále např. GameHub, které byly už v té době po stránce nabízených služeb a funkcí mnohem dál než Gorgona a mají (IMHO) větší vývojářskou a komunitní základnu. Vzhledem k tomuto faktu a k tomu, že jsem si sám oblíbil projekt GameHub, jsem se rozhodl práce na Gorgoně zastavit a v jejím vývoji (alespoň pro zatím) nepokračovat. Veškeré úpravy v projektu mají v tuto chvíli pouze udržovací charakter. 
+V letech 2019/2020 se objevilo na Linuxové scéně více podobných programů, jako Gorgona. Především to byl Lutris, dále např. GameHub, které byly už v té 
+době po stránce nabízených služeb a funkcí mnohem dál než Gorgona a mají (IMHO) větší vývojářskou a komunitní základnu. Vzhledem k tomuto faktu a k tomu, 
+že jsem si sám oblíbil projekt GameHub, jsem se rozhodl práce na Gorgoně zastavit a v jejím vývoji (alespoň pro zatím) nepokračovat. Veškeré úpravy v 
+projektu mají v tuto chvíli pouze udržovací charakter. 
 
 Repositář projektu na Githubu však zůstane pro případné zájemce, či pro budoucí generace, aby věděli, že takový projekt kdy existoval... 
 
@@ -73,10 +86,12 @@ všechna práva vyhrazena.
 
 Tento soubor je součástí Gorgona.
 
-Gorgona je svobodný software: můžete jej redistribuovat a/nebo upravovat za podmínek GNU General Public License, jak byla zveřejněna Free Software Foundation, buď verze 3 licence, nebo (dle vašeho uvážení) jakékoli 
+Gorgona je svobodný software: můžete jej redistribuovat a/nebo upravovat za podmínek GNU General Public License, jak byla zveřejněna Free Software 
+Foundation, buď verze 3 licence, nebo (dle vašeho uvážení) jakékoli 
 pozdější verze.
 
-Projekt Gorgona je distribuován v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; dokonce bez předpokládané záruky PRODEJNOSTI nebo VHODNOSTI PRO KONKRÉTNÍ ÚČEL. Další podrobnosti najdete v GNU General Public License.
+Projekt Gorgona je distribuován v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; dokonce bez předpokládané záruky PRODEJNOSTI nebo VHODNOSTI PRO 
+KONKRÉTNÍ ÚČEL. Další podrobnosti najdete v GNU General Public License.
 
 Spolu s Gorgonou byste měli obdržet kopii GNU General Public License. Pokud ne, podívejte se na <https://www.gnu.org/licenses/>.
 
