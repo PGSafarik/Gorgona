@@ -19,8 +19,8 @@ The Gorgona project is intended as a manager and launcher of games under the Lin
 At this point, the Gorgon has more or less fulfilled its original goals and in some ways surpassed its original design. It includes a Lua interpreter and several built-in functions that allow you to write universal game launchers. At the moment, it only allows you to manually insert the game into the list and enter the necessary data about the game. Gorgona then places the game in the corresponding section, from where it can then also be launched. The list of games can be displayed in two variants (icons and a detailed list). 
 
 For this project and its parts, names from Greek mythology are used
-  Gorgona – Game manager
-  Morfeus – Univerzal GUI game launch.
+  * Gorgona – Game manager
+  * Morfeus – Univerzal GUI game launch.
   
 ## 2. COMPILATION AND INSTALLATION:
 *Dependecies:*
