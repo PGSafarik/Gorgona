@@ -9,7 +9,7 @@
   5. [Author and project licencion](#5-Author-and-project-licencion)
   6. [Internet](#6-internet)
   
-<p align="center"><img src="doc/images/screenshot.png?raw=true" width="50%" />  
+<p align="center"><img src="docs/images/screenshot.png?raw=true" width="50%" />  
 
 ## 1. GENERAL INFO:
 !THIS PROJECT IS STOPPED! - see on the part 4
