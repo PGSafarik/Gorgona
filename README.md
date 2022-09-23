@@ -16,13 +16,13 @@
 
 ## 2. COMPILATION AND INSTALLATION:
 *Dependecies:*
-  [Foxtoolkit 1.7.76](http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz)
-  [TinyXml]          (https://sourceforge.net/projects/tinyxml)
-  [Lua 5.1]          (https://www.lua.org)
+  * [Foxtoolkit 1.7.76](http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz)
+  * [TinyXml]          (https://sourceforge.net/projects/tinyxml)
+  * [Lua 5.1]          (https://www.lua.org)
 
 *Aditional dependencies for compilation:*
-  cmake >= 3.10
-  g++
+  * cmake >= 3.10
+  * g++
   
 After downloading the project from Github (and possibly unzipping it), go to the folder with the project and enter the following command sequence:
 ```
