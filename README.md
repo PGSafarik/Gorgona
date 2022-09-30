@@ -82,7 +82,7 @@ You should have received a copy of the GNU General Public License along with Gor
 ## 6. INTERNET
   * [Author's blog (CZ)](http://bfuplusplus.blogspot.cz/)
   * [Foxtoolkitu home page](http://fox-toolkit.org/)
-  * [Morfeus]
+  * [Morfeus](https://github.com/PGSafarik/Morfeus)
   * [Parallel Realities (EN)](https://www.parallelrealities.co.uk/)
   * [Lutris (EN)](https://lutris.net/)
   * [GameHub (EN)](https://tkashkin.github.io/projects/gamehub/)
