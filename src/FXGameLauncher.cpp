@@ -14,11 +14,11 @@ FXDEFMAP( FXGameLauncher ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_SIGNAL, FXGameLauncher::SIGNAL_CHLD,  FXGameLauncher::OnSig_ExitChild )
 };
 
-FXIMPLEMENT( FXGameLauncher, FXMainWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
+FXIMPLEMENT( FXGameLauncher, FXGWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
 
 /**************************************************************************************************/
 FXGameLauncher::FXGameLauncher( FXApp *a )
-              : FXMainWindow( a, "Gorgona", NULL, NULL, DECOR_ALL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
+              : FXGWindow( a, "Gorgona", NULL, NULL, WINDOW_PRIMARY | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
 {
   std::cout << "=== Gorgona ========================================" << std::endl;
   this->version( );
@@ -45,22 +45,6 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
 
   FXVerticalFrame *contend = new FXVerticalFrame( this, FRAME_NONE | LAYOUT_FILL );
 
-  // Window menu frame ( Window header ) in Gnome 3 style
-  FXHorizontalFrame *btnfr = new FXHorizontalFrame( contend, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0,  3, 0 );
-  FXHorizontalFrame *_menufr = new FXHorizontalFrame( btnfr, FRAME_SUNKEN | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
-  FXVerticalSeparator *sepleft = new FXVerticalSeparator( btnfr, FRAME_SUNKEN | LAYOUT_FILL_Y );
-  FXHorizontalFrame *_leftfr = new FXHorizontalFrame( btnfr, FRAME_SUNKEN | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
-  FXVerticalFrame *_titlefr = new FXVerticalFrame( btnfr, FRAME_NONE | LAYOUT_CENTER_X | LAYOUT_FILL | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
-  FXHorizontalFrame *_windowfr = new FXHorizontalFrame( btnfr, FRAME_SUNKEN | LAYOUT_RIGHT | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
-  FXVerticalSeparator *sepright = new FXVerticalSeparator( btnfr, FRAME_SUNKEN | LAYOUT_RIGHT | LAYOUT_FILL_Y );
-  FXHorizontalFrame *_rightfr = new FXHorizontalFrame( btnfr, FRAME_SUNKEN | LAYOUT_RIGHT | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
-
-  sepleft->setBackColor( getApp( )->getShadowColor( ) );
-  sepright->setBackColor( getApp( )->getShadowColor( ) );
-  _menufr->setBackColor( getApp( )->getShadowColor( ) );
-  _leftfr->setBackColor( getApp( )->getShadowColor( ) );
-  _rightfr->setBackColor( getApp( )->getShadowColor( ) );
-  _windowfr->setBackColor( getApp( )->getShadowColor( ) );
 
   // Create Pane Switcher
   gl_switcher = new FXSwitcher( contend, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
@@ -82,7 +66,8 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
 
   // Aplication menu
   FXMenuPane *gl_menu = new FXMenuPane( this );
-  FXMenuButton *menubutton = new FXMenuButton( _menufr, "Menu",  gl_iconstheme->getIcon( "Actions_big/run-build-install-root.png" ), gl_menu, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
+  FXMenuButton *menubutton = new FXMenuButton( getHeader( ), "\t\tMenu",  gl_iconstheme->getIcon( "Actions_big/run-build-install-root.png" ), gl_menu, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_LEFT );
+  new FXVerticalSeparator( getHeader( ) );  
 
   gl_mGorgona = new FXMenuPane( gl_menu );
     new FXMenuCommand( gl_mGorgona, "Pohled Detaily", gl_iconstheme->getIcon( "Actions/view-list-details.png" ), gl_pane, FXListPane::LIST_DETAIL );
@@ -116,13 +101,13 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
   // Tools buttons for window Header
   gl_actions.append( menubutton );
 
-  gl_actions.append( new FXButton( _leftfr,  "Spustit", gl_iconstheme->getIcon( "Actions_big/system-run.png" ),    this, FXGameLauncher::SYSTEM_RUN, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y ) );
-  gl_actions.append( new FXLabel(  _titlefr, "Gorgona \nThe Games manager",  NULL, FRAME_NONE|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_CENTER_X ) );
-  gl_actions.append( new FXButton( _rightfr, "Pridat",  gl_iconstheme->getIcon( "Actions_big/list-add.png" ),      gl_pane, FXListPane::GAME_INSERT, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y ) );
-  gl_actions.append( new FXButton( _rightfr,  "Upravit", gl_iconstheme->getIcon( "Actions_big/document-edit.png" ), gl_pane,  FXListPane::GAME_EDIT, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y ) );
-  gl_actions.append( new FXButton( _rightfr, "Odebrat", gl_iconstheme->getIcon( "Actions_big/list-remove.png" ),   gl_pane, FXListPane::GAME_REMOVE, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y ) );
+  gl_actions.append( new FXButton( getHeader( ),  "\t\tSpustit", gl_iconstheme->getIcon( "Actions_big/system-run.png" ),    this, FXGameLauncher::SYSTEM_RUN, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_FILL_Y ) );
+  //gl_actions.append( new FXLabel(  _titlefr, "Gorgona \nThe Games manager",  NULL, FRAME_NONE|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_CENTER_X ) );
+  gl_actions.append( new FXButton( getHeader( ), "\t\tPridat",  gl_iconstheme->getIcon( "Actions_big/list-add.png" ),      gl_pane, FXListPane::GAME_INSERT, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
+  gl_actions.append( new FXButton( getHeader( ), "\t\tUpravit", gl_iconstheme->getIcon( "Actions_big/document-edit.png" ), gl_pane,  FXListPane::GAME_EDIT, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
+  gl_actions.append( new FXButton( getHeader( ), "\t\tOdebrat", gl_iconstheme->getIcon( "Actions_big/list-remove.png" ),   gl_pane, FXListPane::GAME_REMOVE, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
 
-  gl_actions.append( new FXButton( _windowfr, "Zavrit",  gl_iconstheme->getIcon( "Actions_big/window-close.png" ),   getApp( ), FXApp::ID_QUIT, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_RIGHT ) );
+  //gl_actions.append( new FXButton( _windowfr, "Zavrit",  gl_iconstheme->getIcon( "Actions_big/window-close.png" ),   getApp( ), FXApp::ID_QUIT, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_RIGHT ) );
 
   // - lua initialize
   if( l_open( this ) ) { std::cout << "Lua initialized" << std::endl; }
@@ -140,7 +125,7 @@ FXGameLauncher::~FXGameLauncher( )
 
 void FXGameLauncher::create( )
 {
-  FXMainWindow::create( );
+  FXGWindow::create( );
   gl_pane->create( );
   show( PLACEMENT_SCREEN );
   checkWindowState( );
@@ -601,7 +586,7 @@ FXbool FXGameLauncher::run( FXGameItem *it )
 void FXGameLauncher::layout( )
 {
   //std::cout << "{ layout }" << std::endl;
-  FXMainWindow::layout( );
+  FXGWindow::layout( );
   if( ( gl_created != false ) && (this->isMinimized( ) != true ) ) {
   // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
   // predevsim tvorby samotneho okna. Dale nema smysl provadet kontrolu v pripade ze je hlavni

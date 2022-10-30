@@ -19,7 +19,8 @@
 * FXGameLauncher.h                                                       *
 *                                                                        *
 * Hlavni okno aplikace                                                   *
-* Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                    *
+* Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
+* ./FoxGHICP --name Gorgona --vendor FXGameLauncher                      * 
 *************************************************************************/
 // Syscalls and system types
 #include <cstdio>
@@ -35,6 +36,7 @@
 
 // Foxlib, the GUI library
 #include<fx.h>
+#include<fxghi.h>
 
 // Tiny xml - xml support
 #include<tinyxml.h>
@@ -52,7 +54,7 @@
 #include<../version.h>
 
 
-class FXGameLauncher : public FXMainWindow {
+class FXGameLauncher : public FXGWindow {
 FXDECLARE( FXGameLauncher )
   // Window Objects
   //FXMenuBar          *gl_menubar;       // Menu
@@ -125,7 +127,7 @@ public :
   ///
   ///
   enum {
-    MAIN_ABOUT = FXMainWindow::ID_LAST,
+    MAIN_ABOUT = FXGWindow::ID_LAST,
     MAIN_CONFIG,
 
     DATA_LOAD,         // Nacist seznam her
