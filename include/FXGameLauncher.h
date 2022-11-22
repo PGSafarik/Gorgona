@@ -54,7 +54,7 @@
 #include<../version.h>
 
 
-class FXGameLauncher : public FXGWindow {
+class FXGameLauncher : public FXPrimaryWindow {
 FXDECLARE( FXGameLauncher )
   // Window Objects
   //FXMenuBar          *gl_menubar;       // Menu
@@ -127,7 +127,7 @@ public :
   ///
   ///
   enum {
-    MAIN_ABOUT = FXGWindow::ID_LAST,
+    MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
 
     DATA_LOAD,         // Nacist seznam her

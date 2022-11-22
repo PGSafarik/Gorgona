@@ -4,21 +4,21 @@
 using namespace GORGONA;
 
 FXDEFMAP( FXGameLauncher ) LAUNCHERMAP[ ] = {
-  FXMAPFUNC( SEL_COMMAND, FXGameLauncher::SYSTEM_RUN, FXGameLauncher::OnCmd_System ),
-  FXMAPFUNC( SEL_COMMAND, FXGameLauncher::LIST_EVENT, FXGameLauncher::OnCmd_List ),
-  FXMAPFUNC( SEL_CHANGED, FXGameLauncher::LIST_EVENT, FXGameLauncher::OnCmd_List ),
+  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::SYSTEM_RUN,  FXGameLauncher::OnCmd_System ),
+  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::LIST_EVENT,  FXGameLauncher::OnCmd_List ),
+  FXMAPFUNC( SEL_CHANGED,   FXGameLauncher::LIST_EVENT,  FXGameLauncher::OnCmd_List ),
   FXMAPFUNC( SEL_CONFIGURE, FXGameLauncher::MAIN_CONFIG, FXGameLauncher::OnCmd_Main ),
-  FXMAPFUNC( SEL_COMMAND, FXGameLauncher::CONF_SETUP, FXGameLauncher::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND, FXGameLauncher::CONF_FOX,   FXGameLauncher::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND, FXGameLauncher::DATA_SAVE,  FXGameLauncher::OnCmd_Data ),
-  FXMAPFUNC( SEL_SIGNAL, FXGameLauncher::SIGNAL_CHLD,  FXGameLauncher::OnSig_ExitChild )
+  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::CONF_SETUP,  FXGameLauncher::OnCmd_Config ),
+  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::CONF_FOX,    FXGameLauncher::OnCmd_Config ),
+  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::DATA_SAVE,   FXGameLauncher::OnCmd_Data ),
+  FXMAPFUNC( SEL_SIGNAL,    FXGameLauncher::SIGNAL_CHLD, FXGameLauncher::OnSig_ExitChild )
 };
 
-FXIMPLEMENT( FXGameLauncher, FXGWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
+FXIMPLEMENT( FXGameLauncher, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
 
 /**************************************************************************************************/
 FXGameLauncher::FXGameLauncher( FXApp *a )
-              : FXGWindow( a, "Gorgona", NULL, NULL, WINDOW_PRIMARY | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
+              : FXPrimaryWindow( a, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
 {
   std::cout << "=== Gorgona ========================================" << std::endl;
   this->version( );
@@ -125,7 +125,7 @@ FXGameLauncher::~FXGameLauncher( )
 
 void FXGameLauncher::create( )
 {
-  FXGWindow::create( );
+  FXPrimaryWindow::create( );
   gl_pane->create( );
   show( PLACEMENT_SCREEN );
   checkWindowState( );
@@ -586,7 +586,7 @@ FXbool FXGameLauncher::run( FXGameItem *it )
 void FXGameLauncher::layout( )
 {
   //std::cout << "{ layout }" << std::endl;
-  FXGWindow::layout( );
+  FXPrimaryWindow::layout( );
   if( ( gl_created != false ) && (this->isMinimized( ) != true ) ) {
   // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
   // predevsim tvorby samotneho okna. Dale nema smysl provadet kontrolu v pripade ze je hlavni
