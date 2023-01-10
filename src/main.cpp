@@ -18,7 +18,7 @@
 * Gorgona - spravce her                                                  *
 * Copyright (c) 08/02/2015 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fx.h>
+#include<fox-1.7/fx.h>
 #include<FXGameLauncher.h>
 
 int main( int argc, char **argv )
