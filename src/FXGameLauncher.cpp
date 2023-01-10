@@ -19,18 +19,13 @@ FXIMPLEMENT( FXGameLauncher, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHER
 /**************************************************************************************************/
 FXGameLauncher::FXGameLauncher( FXApp *a )
               : FXPrimaryWindow( a, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
-{
-  std::cout << "=== Gorgona ========================================" << std::endl;
-  this->version( );
-  std::cout << "=== Message =========================================" << std::endl;
-  std::cout.flush( );
-
+{  
   StringList arglist;
   get_arguments( &arglist );
 
-   getApp( )->addSignal( SIGCHLD, this, FXGameLauncher::SIGNAL_CHLD, false, 0 );
-  //this->setX( ( a->getRootWindow( )->getWidth( ) / 2 ) - ( this->getWidth( ) / 2 ) );
-  //this->setY( ( a->getRootWindow( )->getHeight( ) / 2 ) - ( this->getHeight( ) / 2 ) );
+  this->version( );
+
+  getApp( )->addSignal( SIGCHLD, this, FXGameLauncher::SIGNAL_CHLD, false, 0 );
   gl_created= false;
 
   gl_iconstheme = new IconsTheme( getApp( ), "/usr/share/icons/oxygen/base/" );
@@ -39,26 +34,20 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
   gl_iconstheme->insert( "Places", "16x16/places" );
   gl_iconstheme->insert( "Status", "16x16/status" );
   FXIcon *ic_run    = gl_iconstheme->getIcon( "Actions/system-run.png" );
-  //FXIcon *ic_quit   = gl_iconstheme->getIcon( "Actions/window-close.png" );
   if( !ic_run ) { std::cout << "Icon nothing" << std::endl; }
-  //gl_iconstheme->dump( );
 
   FXVerticalFrame *contend = new FXVerticalFrame( this, FRAME_NONE | LAYOUT_FILL );
 
-
   // Create Pane Switcher
   gl_switcher = new FXSwitcher( contend, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
+
   // Create the item list
   gl_pane = new FXListPane( gl_switcher, gl_iconstheme, this, FXGameLauncher::LIST_EVENT );
   gl_pane->setClosedFolderIc( gl_iconstheme->getIcon( "Places/folder.png" ) );
   gl_pane->setOpenFolderIc(   gl_iconstheme->getIcon( "Status/folder-open.png" ) );
   gl_pane->setSmallItemIc(    gl_iconstheme->getIcon( "Actions/roll.png" ) );
   gl_pane->setBigItemIc(      gl_iconstheme->getIcon( "Actions_big/roll.png" ) );
-  gl_pane->folder( "Game List" );
-
-  // Infobox
-  FXGroupBox *infogroup = new FXGroupBox( contend, "", GROUPBOX_NORMAL| FRAME_LINE | LAYOUT_FILL_X | LAYOUT_FIX_HEIGHT, 0, 0, 0, 150,  0, 0, 0, 0 );
-  gl_text = new FXText( infogroup, NULL, 0, FRAME_NONE | TEXT_WORDWRAP | TEXT_READONLY | LAYOUT_FILL );
+  gl_pane->folder( "Genre List" );
 
   // Status bar
   gl_statusbar = new FXStatusBar( contend, FRAME_NONE | LAYOUT_SIDE_BOTTOM | LAYOUT_FILL_X );
@@ -66,9 +55,6 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
 
   // Aplication menu
   FXMenuPane *gl_menu = new FXMenuPane( this );
-  FXMenuButton *menubutton = new FXMenuButton( getHeader( ), "\t\tMenu",  gl_iconstheme->getIcon( "Actions_big/run-build-install-root.png" ), gl_menu, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_LEFT );
-  new FXVerticalSeparator( getHeader( ) );  
-
   gl_mGorgona = new FXMenuPane( gl_menu );
     new FXMenuCommand( gl_mGorgona, "Pohled Detaily", gl_iconstheme->getIcon( "Actions/view-list-details.png" ), gl_pane, FXListPane::LIST_DETAIL );
     new FXMenuCommand( gl_mGorgona, "Pohled Ikony", gl_iconstheme->getIcon( "Actions/view-list-icons.png" ), gl_pane, FXListPane::LIST_ICONS );
@@ -97,17 +83,22 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
   new FXMenuCascade( gl_menu, "Napoveda", NULL, gl_mHelp );
   new FXMenuCommand( gl_menu, "O aplikaci", NULL /*gl_iconstheme->getIcon( "Actions/window-close.png" )*/, getApp( ), FXApp::ID_QUIT );
 
+  new MainBar( getHeader( ), gl_iconstheme, gl_menu );
 
-  // Tools buttons for window Header
-  gl_actions.append( menubutton );
-
-  gl_actions.append( new FXButton( getHeader( ),  "\t\tSpustit", gl_iconstheme->getIcon( "Actions_big/system-run.png" ),    this, FXGameLauncher::SYSTEM_RUN, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_FILL_Y ) );
-  //gl_actions.append( new FXLabel(  _titlefr, "Gorgona \nThe Games manager",  NULL, FRAME_NONE|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_CENTER_X ) );
-  gl_actions.append( new FXButton( getHeader( ), "\t\tPridat",  gl_iconstheme->getIcon( "Actions_big/list-add.png" ),      gl_pane, FXListPane::GAME_INSERT, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
-  gl_actions.append( new FXButton( getHeader( ), "\t\tUpravit", gl_iconstheme->getIcon( "Actions_big/document-edit.png" ), gl_pane,  FXListPane::GAME_EDIT, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
-  gl_actions.append( new FXButton( getHeader( ), "\t\tOdebrat", gl_iconstheme->getIcon( "Actions_big/list-remove.png" ),   gl_pane, FXListPane::GAME_REMOVE, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_RIGHT ) );
-
-  //gl_actions.append( new FXButton( _windowfr, "Zavrit",  gl_iconstheme->getIcon( "Actions_big/window-close.png" ),   getApp( ), FXApp::ID_QUIT, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y | LAYOUT_RIGHT ) );
+  /* Tool bars */ 
+  ToolBar *mb = new ToolBar( getHeader( ), gl_iconstheme );
+  //mb->makeSeparator( );
+  mb->makeButton( "\t\tPridat",  "Actions_big/list-add.png",      gl_pane, FXListPane::GAME_INSERT    );
+  mb->makeButton( "\t\tUpravit", "Actions_big/document-edit.png", gl_pane, FXListPane::GAME_EDIT      );
+  mb->makeButton( "\t\tOdebrat", "Actions_big/list-remove.png",   gl_pane, FXListPane::GAME_REMOVE    );
+  mb->makeSeparator( );
+  mb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
+  mb->makeButton( "\t\tPohled Ikony",   "Actions_big/view-list-icons.png",   gl_pane, FXListPane::LIST_ICONS ); 
+  mb->makeSeparator( ); 
+  mb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, FXGameLauncher::SYSTEM_RUN );
+  
+  /* Search Bar */
+  m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
 
   // - lua initialize
   if( l_open( this ) ) { std::cout << "Lua initialized" << std::endl; }
@@ -134,6 +125,8 @@ void FXGameLauncher::create( )
   load( );
 
   gl_created= true;
+
+  std::cout.flush( );
 }
 
 /*************************************************************************************************/
@@ -159,8 +152,8 @@ long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
     case SEL_COMMAND :
     {
       //std::cout << "[FXGameLauncher::OnCmd_List]New Select item in list ..." << std::endl;
-      FXGameItem *gl_selected = gl_pane->getCurrentItem( );
-      if( ( gl_selected ) != NULL ) { gl_text->setText( gl_selected->read( "Description" ) ); }
+      //FXGameItem *gl_selected = gl_pane->getCurrentItem( );
+      //if( ( gl_selected ) != NULL ) { gl_text->setText( gl_selected->read( "Description" ) ); }
       resh = 1;
       break;
     }
@@ -443,44 +436,67 @@ void FXGameLauncher::read_Keywords( const FXString &listfile, const FXString &ro
 
 }
 
-FXbool FXGameLauncher::exec( const FXArray<const FXchar*> &args, FXbool wait, FXbool ver )
+
+void FXGameLauncher::checkWindowState( )
 {
-  /// Cesta k spoustenemu souboru (args[0]) nesmi zacinat a koncit mezerou (" ")
-  /// Cesta ke spoustenemu souboru musi byt absolutni (tedy od korenoveho adresare)
-  /// Navratovy kod spousteneho procesu lze zatim ziskat pouze pri wait = true
-  /// Hodnota true parametru wait zablokuje celou aplikaci launcheru!
-
-  FXint     resh   = false;
-  FXint     pid    = 0;
-  FXint     status = 0;
-  FXProcess proc;
-
-  if( ver == true ) {
-    std::cout << "Run the process:";
-    FXint num = args.no( );
-    for( FXint i = 0; i != num; i++ ) { std::cout << " " << args[ i ]; }
-    std::cout << "\n========================================================" << std::endl;
-    std::cout << "\n";
-
+  std::cout << "{ checkWindowState }" << std::endl;
+  if( gl_winmode == "window" ) {
+    std::cout << "Application Gorgona starting in window mode" << std::endl;
+    gl_WinPos.x = getApp( )->reg( ).readIntEntry( "Window", "Position_X", 0 );
+    gl_WinPos.y = getApp( )->reg( ).readIntEntry( "Window", "Position_Y", 0 );
+    gl_WinSize.w = getApp( )->reg( ).readIntEntry( "Window", "Size_W", 800 );
+    gl_WinSize.h = getApp( )->reg( ).readIntEntry( "Window", "Size_H", 700 );
+    this->position( gl_WinPos.x, gl_WinPos.y, gl_WinSize.w, gl_WinSize.h );
+    std::cout << "Window config: x = " << gl_WinPos.x << " y = " << gl_WinPos.y << " w = " << gl_WinSize.h << " h = " << gl_WinSize.h << std::endl;
   }
-
-  if( ( resh = proc.start( args[ 0 ], args.data( ) ) ) == true ) {
-    pid = proc.id( );
-    status = WaitOnGame( &proc );
+  if( gl_winmode == "maximize" )   {
+    std::cout << "Application Gorgona starting in mximize window mode" << std::endl;
+    if( this->maximize( true ) != true ) { std::cout << "Window mode maximize is not possible" << std::endl; }
   }
-
-  if( ver == true ) {
-    if( resh == true ) {
-      std::cout << "process running of " << pid << std::endl;
-      std::cout << "Process exited with " << status << " exit status" << std::endl;
-    }
-    else { std::cout << "RUN FATAL ERROR: Process is not running!" << std::endl;}
-    std::cout << "\n";
-    std::cout.flush( );
+  if( gl_winmode == "fullscreen" ) {
+    std::cout << "Application Gorgona starting in fullscreen mode" << std::endl;
+    if( this->fullScreen( true ) != true ) { std::cout << "Window mode fullscreen is not possible" << std::endl;}
   }
-
-  return resh;
 }
+
+void FXGameLauncher::layout( )
+{
+  //std::cout << "{ layout }" << std::endl;
+  FXPrimaryWindow::layout( );
+  if( ( gl_created != false ) && (this->isMinimized( ) != true ) ) {
+  // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
+  // predevsim tvorby samotneho okna. Dale nema smysl provadet kontrolu v pripade ze je hlavni
+  // okno aplikace minimalizovano. Pri obnoveni sveho stavu se stejne (vetsinou) navrati do
+  // sveho puvodniho stavu...
+    if( this->isMaximized( ) == true ) { gl_winmode = "maximize"; }
+    else if( this->isFullScreen( ) == true ) { gl_winmode = "fullscreen"; }
+    else { gl_winmode = "window"; }
+  }
+  //std::cout << "winmode:" << gl_winmode.text( ) << std::endl;
+}
+
+/**************************************************************************************************/
+void FXGameLauncher::get_arguments( StringList *list )
+{
+  if( list != NULL ) {
+    const char *const *__args = getApp( )->getArgv( );
+    for( FXint i = 0; i != getApp( )->getArgc( ); i++ ) { list->push( __args[ i ] ); }
+  }
+}
+
+
+void FXGameLauncher::version( )
+{
+  Welcome( getApp( ) );
+  /*
+  std::cout << "Copyright " << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR << "  D.A.Tiger <drakarax@seznam.cz>, GNU GPL 3" << std::endl;
+  std::cout << "App version: "<< AutoVersion::MAJOR<< "."<< AutoVersion::MINOR << "." << AutoVersion::REVISION;
+  std::cout << " [" << AutoVersion::STATUS << "]" << std::endl;
+  std::cout << "lib Fox    : " << FOX_MAJOR << "." << FOX_MINOR << "." << FOX_LEVEL << std::endl;
+  */
+}
+
+/**************************************************************************************************/
 
 FXbool FXGameLauncher::parse_params( FXArray<const FXchar*> *buffer, const FXString &ar, FXbool dump ) { // Rozparsovani retezce argumentu
   /// Parametry se oddeluji znakem mezery (" ")
@@ -520,55 +536,44 @@ FXbool FXGameLauncher::parse_params( FXArray<const FXchar*> *buffer, const FXStr
   return ( ( nargs == start ) ? true : false );
 }
 
-void FXGameLauncher::checkWindowState( )
+FXbool FXGameLauncher::exec( const FXArray<const FXchar*> &args, FXbool wait, FXbool ver )
 {
-  std::cout << "{ checkWindowState }" << std::endl;
-  if( gl_winmode == "window" ) {
-    std::cout << "Application Gorgona starting in window mode" << std::endl;
-    gl_WinPos.x = getApp( )->reg( ).readIntEntry( "Window", "Position_X", 0 );
-    gl_WinPos.y = getApp( )->reg( ).readIntEntry( "Window", "Position_Y", 0 );
-    gl_WinSize.w = getApp( )->reg( ).readIntEntry( "Window", "Size_W", 800 );
-    gl_WinSize.h = getApp( )->reg( ).readIntEntry( "Window", "Size_H", 700 );
-    this->position( gl_WinPos.x, gl_WinPos.y, gl_WinSize.w, gl_WinSize.h );
-    std::cout << "Window config: x = " << gl_WinPos.x << " y = " << gl_WinPos.y << " w = " << gl_WinSize.h << " h = " << gl_WinSize.h << std::endl;
-  }
-  if( gl_winmode == "maximize" )   {
-    std::cout << "Application Gorgona starting in mximize window mode" << std::endl;
-    if( this->maximize( true ) != true ) { std::cout << "Window mode maximize is not possible" << std::endl; }
-  }
-  if( gl_winmode == "fullscreen" ) {
-    std::cout << "Application Gorgona starting in fullscreen mode" << std::endl;
-    if( this->fullScreen( true ) != true ) { std::cout << "Window mode fullscreen is not possible" << std::endl;}
-  }
-}
+  /// Cesta k spoustenemu souboru (args[0]) nesmi zacinat a koncit mezerou (" ")
+  /// Cesta ke spoustenemu souboru musi byt absolutni (tedy od korenoveho adresare)
+  /// Navratovy kod spousteneho procesu lze zatim ziskat pouze pri wait = true
+  /// Hodnota true parametru wait zablokuje celou aplikaci launcheru!
 
-void FXGameLauncher::get_arguments( StringList *list )
-{
-  if( list != NULL ) {
-    const char *const *__args = getApp( )->getArgv( );
-    for( FXint i = 0; i != getApp( )->getArgc( ); i++ ) { list->push( __args[ i ] ); }
-  }
-}
-/*
-/// FIXME: SMAZAT
-FXbool FXGameLauncher::__exec( )
-{
-  FXGameProcess *proc;
-  FXbool resh = false;
+  FXint     resh   = false;
+  FXint     pid    = 0;
+  FXint     status = 0;
+  FXProcess proc;
 
-  // Novy proces a jeho spusteni
-  if( ( proc = new FXGameProcess( this->get_ActiveItem( ), NULL, 0 ) ) != NULL ) {
-    if( ( resh = proc->start( true ) ) == true ) {
-      proc->counter( );
-      gl_processlist.append( proc );
-      gl_change = true;
+  if( ver == true ) {
+    std::cout << "Run the process:";
+    FXint num = args.no( );
+    for( FXint i = 0; i != num; i++ ) { std::cout << " " << args[ i ]; }
+    std::cout << "\n========================================================" << std::endl;
+    std::cout << "\n";
+
+  }
+
+  if( ( resh = proc.start( args[ 0 ], args.data( ) ) ) == true ) {
+    pid = proc.id( );
+    status = WaitOnGame( &proc );
+  }
+
+  if( ver == true ) {
+    if( resh == true ) {
+      std::cout << "process running of " << pid << std::endl;
+      std::cout << "Process exited with " << status << " exit status" << std::endl;
     }
-    else { delete proc; }
+    else { std::cout << "RUN FATAL ERROR: Process is not running!" << std::endl;}
+    std::cout << "\n";
+    std::cout.flush( );
   }
 
   return resh;
 }
-*/
 
 FXbool FXGameLauncher::run( FXGameItem *it )
 {
@@ -577,26 +582,11 @@ FXbool FXGameLauncher::run( FXGameItem *it )
   if( item != NULL ) {
     GameProcess proc( item, NULL, 0 );
     resh = proc.start( );
+    gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
     gl_change = true;
   }
   else { std::cerr << "Neplatny odkaz na hru" << std::endl; }
   return resh;
-}
-
-void FXGameLauncher::layout( )
-{
-  //std::cout << "{ layout }" << std::endl;
-  FXPrimaryWindow::layout( );
-  if( ( gl_created != false ) && (this->isMinimized( ) != true ) ) {
-  // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
-  // predevsim tvorby samotneho okna. Dale nema smysl provadet kontrolu v pripade ze je hlavni
-  // okno aplikace minimalizovano. Pri obnoveni sveho stavu se stejne (vetsinou) navrati do
-  // sveho puvodniho stavu...
-    if( this->isMaximized( ) == true ) { gl_winmode = "maximize"; }
-    else if( this->isFullScreen( ) == true ) { gl_winmode = "fullscreen"; }
-    else { gl_winmode = "window"; }
-  }
-  //std::cout << "winmode:" << gl_winmode.text( ) << std::endl;
 }
 
 FXint FXGameLauncher::WaitOnGame( FXProcess *proc )
@@ -610,13 +600,8 @@ FXint FXGameLauncher::WaitOnGame( FXProcess *proc )
   return status;
 }
 
-void FXGameLauncher::version( )
-{
-  std::cout << "Copyright " << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR << "  D.A.Tiger <drakarax@seznam.cz>, GNU GPL 3" << std::endl;
-  std::cout << "App version: "<< AutoVersion::MAJOR<< "."<< AutoVersion::MINOR << "." << AutoVersion::REVISION;
-  std::cout << " [" << AutoVersion::STATUS << "]" << std::endl;
-  std::cout << "lib Fox    : " << FOX_MAJOR << "." << FOX_MINOR << "." << FOX_LEVEL << std::endl;
-}
+
+
 
 /*** END ******************************************************************************************/
 

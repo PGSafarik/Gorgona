@@ -35,7 +35,7 @@
 #include<lua5.1/lauxlib.h>
 
 // Foxlib, the GUI library
-#include<fx.h>
+#include<fox-1.7/fx.h>
 #include<fxghi.h>
 
 // Tiny xml - xml support
@@ -43,6 +43,7 @@
 
 // Internal headers
 #include<Utils.h>
+#include<Boxes.h>
 #include<IconsTheme.h>
 #include<FXGameItem.h>
 #include<GorgonaProcess/Process.h>
@@ -51,16 +52,15 @@
 #include<FXListPane.h>
 #include<GO_Keywords.h>
 
-#include<../version.h>
+
 
 
 class FXGameLauncher : public FXPrimaryWindow {
 FXDECLARE( FXGameLauncher )
   // Window Objects
-  //FXMenuBar          *gl_menubar;       // Menu
+  FindBar            *m_findbar;        // Vyhledavaci panel
   FXSwitcher         *gl_switcher;      // Prepinac aktivnich panelu
   FXListPane         *gl_pane;          // Panel seznamu polozek
-  FXArray<FXLabel*>   gl_actions;       // Seznam tlacitek
   FXText             *gl_text;          // Pole pro popisek
   FXStatusBar        *gl_statusbar;     // Status bar
   IconsTheme         *gl_iconstheme;    // Tema icon
@@ -161,14 +161,15 @@ protected :
   void read_config( );
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );
-  FXbool run( FXGameItem *it = NULL );
-  FXbool __exec( );
-  void get_arguments( StringList *list );
-  void read_argument( );
-  static FXbool parse_params( FXArray<const FXchar*> *buffer, const FXString &str, FXbool dump = false );
   void checkWindowState( );
-  FXint WaitOnGame( FXProcess *proc );
+
+  void get_arguments( StringList *list );
   void version( );
+  
+  /* Process */
+  FXint WaitOnGame( FXProcess *proc );
+  FXbool run( FXGameItem *it = NULL );
+  static FXbool parse_params( FXArray<const FXchar*> *buffer, const FXString &str, FXbool dump = false );
 };
 
 #endif /* __FXGAMELAUNCHER_H */
