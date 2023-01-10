@@ -21,7 +21,10 @@
 * Knihovna jednoduchych funkci pro ruzne uziti v ramci projektu          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fx.h>
+#include<../version.h>
+
+#include<fox-1.7/fx.h>
+#include<iostream>
 
 /////////////////////////////////////////////////
 // Global types
@@ -36,11 +39,23 @@ extern FXint   pack( FXArray<FXString> *buffer, FXString *str, const FXString &s
 extern FXchar* convert_str( const FXString &str );                   // Konverze retezce FXString na FXchar[] vcetne alokace pameti
 extern void    clear_string_buffer( FXArray<const FXchar*> *buffer ); // Dealokace retezcu v bufferu, alokovanych pomoci convert_str( )
 
+//////////////////////////////////////////////////
+/* Aditional string (conversion) operators      */
+extern FX::FXString& operator <<( FX::FXString &dest, const std::string &source );
+extern std::string&  operator <<( std::string &dest, const FX::FXString &source );
+extern std::ostream& operator <<( std::ostream &store, const FX::FXString &str );
+extern std::istream& operator >>( std::istream &store, FX::FXString &str );
+//extern FX::FXString& operator =( const std::string &str );      
+
 /////////////////////////////////////////////////
 // External Icons
 //
 extern FXIcon* loadExternIcon( FXApp *a, const FXString &file, FXint width = 16, FXint height = 16 );
 extern FXIcon* createIconType( FXApp *a, const FXString &type, FXuint opts = IMAGE_DITHER | IMAGE_SHMI | IMAGE_SHMP /*| IMAGE_ALPHAGUESS*/ );
+
+//////////////////////////////////////////////////
+/* More helpers function                        */
+extern void Welcome( FXApp *app );
 
 #endif /* __UTILS_H */
 /*** END ****************************************************************/

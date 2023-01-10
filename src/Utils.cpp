@@ -53,6 +53,43 @@ void clear_string_buffer( FXArray<const FXchar*> *buffer )
   }
 }
 
+/**************************************************************************************************/
+FX::FXString& operator <<( FX::FXString &dest, const std::string &source ) {
+  if( !source.empty( ) ) {
+    int len = source.size( );
+    dest.length( len );
+    source.copy( dest.text( ), len ); 
+  }   
+  else { dest = FXString::null; }
+
+  return dest;
+}
+
+std::string& operator <<( std::string &dest, const FX::FXString &source ) {
+  if( !source.empty( ) ) { dest.assign( source.text( ) ); } 
+  else { dest = ""; }
+  
+  return dest;
+}
+
+std::ostream& operator <<( std::ostream &store, const FX::FXString &str  ) {
+  return store << str.text( );
+}
+
+std::istream& operator >>( std::istream &store, FX::FXString &str  ) {
+  std::string s;
+
+  store >> s;
+  str << s;
+
+  return store;
+}
+/*
+FX::FXString& operator =( const std::string &str ) {
+
+
+}
+*/
 /*************************************************************************************************/
 FXIcon* loadExternIcon( FXApp *a, const FXString &file, FXint width, FXint height )
 {
@@ -107,5 +144,18 @@ FXIcon* createIconType( FXApp *a, const FXString &type, FXuint opts )
 
    return resulth;
 }
+
+/**************************************************************************************************/
+void Welcome( FXApp *app )
+{
+  std::cout << "=== " << app->getAppName( ) << " ========================================" << std::endl;
+  std::cout << "Copyright " << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR << "  D.A.Tiger <drakarax@seznam.cz>, GNU GPL 3" << std::endl;
+  std::cout << "Version    : " << AutoVersion::MAJOR<< "."<< AutoVersion::MINOR << "." << AutoVersion::REVISION;
+  std::cout << " [" << AutoVersion::STATUS << "]" << std::endl;
+  std::cout << "lib Fox    : " << FOX_MAJOR << "." << FOX_MINOR << "." << FOX_LEVEL << std::endl;
+  std::cout << "lib FoxGHI : " << 0 << "." << 4 << "." << 1 << std::endl;
+  std::cout << "=== Message =========================================" << std::endl;
+}
+
 
 /*** END ******************************************************************************************/
