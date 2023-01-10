@@ -7,9 +7,6 @@ FXDEFMAP( FXListPane ) LISTPANE_MAP[ ] = {
   FXMAPFUNC( SEL_COMMAND, FXListPane::TREE_COLAPS, FXListPane::OnCmd_tree ),
   FXMAPFUNC( SEL_COMMAND, FXListPane::TREE_EXPAND, FXListPane::OnCmd_tree ),
   FXMAPFUNC( SEL_COMMAND, FXListPane::ITEM_SELECT, FXListPane::OnCmd_item ),
-//  FXMAPFUNC( SEL_COMMAND, FXListPane::LIST_REFRESH, FXListPane::OnCmd_list ),
-//  FXMAPFUNC( SEL_COMMAND, FXListPane::LIST_DETAIL, FXListPane::OnCmd_list ),
-//  FXMAPFUNC( SEL_COMMAND, FXListPane::LIST_ICONS, FXListPane::OnCmd_list ),
   FXMAPFUNCS( SEL_COMMAND, FXListPane::LIST_REFRESH, FXListPane::LIST_FIND, FXListPane::OnCmd_list ),
   FXMAPFUNCS( SEL_COMMAND, FXListPane::GAME_INSERT, FXListPane::GAME_EDIT, FXListPane::OnCmd_game )
 };
@@ -18,7 +15,7 @@ FXIMPLEMENT( FXListPane, FXHorizontalFrame, LISTPANE_MAP, ARRAYNUMBER( LISTPANE_
 
 /*************************************************************************************************/
 FXListPane::FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSelector sel )
-          : FXHorizontalFrame( p, FRAME_GROOVE | LAYOUT_FILL, 0, 0, 0, 0,  DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING,  1, 1 )
+          : FXHorizontalFrame( p, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING,  1, 1 )
 {
   gl_icth    = icons;
   ic_search  = gl_icth->getIcon( "Actions/system-search.png" );
@@ -30,38 +27,19 @@ FXListPane::FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSele
   ic_gremove = gl_icth->getIcon( "Actions/list-remove.png" );
   ic_gedit   = gl_icth->getIcon( "Actions/document-edit.png" );
 
-  // Game Tree
+  /* Game Tree */
   gl_folderframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL_Y, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
   gl_foldertree  = new FXTreeList( gl_folderframe, this, FXListPane::TREE_SELECT, TREELIST_SHOWS_BOXES | TREELIST_SHOWS_LINES | LAYOUT_FILL_Y| LAYOUT_FIX_WIDTH, 0, 0, 200, 0 );
   gl_foldertree->setSortFunc( FXTreeList::ascending );
-  /*
-  new FXSeparator( gl_folderframe, SEPARATOR_GROOVE|LAYOUT_FILL_X );
-  gl_folderbar   = new FXToolBar( gl_folderframe, FRAME_NONE | LAYOUT_FILL_X );
-  new FXButton( gl_folderbar, "\t\t Rozbalit strom", ic_texpand, this, FXListPane::TREE_EXPAND, BUTTON_TOOLBAR | FRAME_RAISED );
-  new FXButton( gl_folderbar, "\t\t Sbalit strom", ic_tcolaps, this, FXListPane::TREE_COLAPS, BUTTON_TOOLBAR | FRAME_RAISED );
-  */
-  // Game list
+ 
+  /* Game list */
   gl_listframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
   gl_itemslist = new FXIconList( gl_listframe, this, FXListPane::ITEM_SELECT, LAYOUT_FILL_X | LAYOUT_FILL_Y | ICONLIST_DETAILED/* ICONLIST_BIG_ICONS */ | ICONLIST_EXTENDEDSELECT |  ICONLIST_BROWSESELECT );
-  new FXSeparator( gl_listframe, SEPARATOR_GROOVE|LAYOUT_FILL_X );
-  gl_listbar   = new FXToolBar( gl_listframe, FRAME_NONE | LAYOUT_FILL_X );
   gl_itemslist->appendHeader("Titul",    NULL, 350);
   gl_itemslist->appendHeader("Spusteno", NULL, 100);
   gl_itemslist->appendHeader("Naposled", NULL, 125);
+  gl_itemslist->appendHeader("Zanr",     NULL, 125);
   gl_itemslist->setSortFunc( FXIconList::ascending );
-  /*
-  new FXButton( gl_listbar, "\t\t Detaily", ic_ldetail, this, FXListPane::LIST_DETAIL, BUTTON_TOOLBAR | FRAME_RAISED );
-  new FXButton( gl_listbar, "\t\t Ikony", ic_licons, this, FXListPane::LIST_ICONS, BUTTON_TOOLBAR | FRAME_RAISED );
-  new FXSeparator( gl_listbar, SEPARATOR_GROOVE|LAYOUT_FILL_Y );
-  new FXButton( gl_listbar, "\t\t Pridat novou hru", ic_ginsert, this, FXListPane::GAME_INSERT, BUTTON_TOOLBAR | FRAME_RAISED );
-  new FXButton( gl_listbar, "\t\t Editovat existujici hru", ic_gedit, this, FXListPane::GAME_EDIT, BUTTON_TOOLBAR | FRAME_RAISED );
-  new FXButton( gl_listbar, "\t\t Odstarnit hru ze seznamu", ic_gremove, this, FXListPane::GAME_REMOVE, BUTTON_TOOLBAR | FRAME_RAISED );
-  */
-  // search
-  FXHorizontalFrame *searchbar = new FXHorizontalFrame( gl_listbar, FRAME_NONE | LAYOUT_RIGHT | LAYOUT_SIDE_RIGHT, 0, 0, 0, 0,  1, 1, 1, 1,  1, 0  );
-  //new FXLabel( searchbar, " ", ic_search, LABEL_NORMAL  );
-  new FXButton( searchbar, "\t\t Hledat", ic_search, this, FXListPane::LIST_FIND, BUTTON_TOOLBAR | FRAME_RAISED );
-  gl_searchfield = new FXTextField( searchbar, 25, NULL, 0, TEXTFIELD_NORMAL );
 
   gl_rootfd   = NULL;
   gl_activefd = NULL;
@@ -93,7 +71,6 @@ void FXListPane::create( )
   if( ic_cfolder != NULL ) { ic_cfolder->create( ); }
   if( ic_bitem   != NULL ) { ic_bitem->create( ); }
   if( ic_sitem   != NULL ) { ic_sitem->create( ); }
-  //if( ic_search   != NULL ) { ic_search->create( ); }
 }
 
 FXGameItem* FXListPane::getCurrentItem( )
@@ -168,6 +145,8 @@ void FXListPane::showItem( FXGameItem *item )
   FXString text = item->read( "Basic:title" );
   text += sep + FXString::value( item->nop );
   text += sep + item->read( "Extra:lastPlayed" );
+  text += sep + item->read( "Basic:genre" );
+
   ic_small = ic_big = NULL;
   ic_small = ( ( item->SmallIcon == NULL ) ? ic_sitem : item->SmallIcon );
   ic_big   = ( ( item->BigIcon == NULL ) ? ic_bitem : item->BigIcon );
@@ -245,6 +224,14 @@ void FXListPane::aktiveItem( FXint id )
     gl_itemslist->makeItemVisible( id );
   }
 }
+
+void FXListPane::signedItem( FXint id, FXint state ) 
+{
+
+
+
+}
+
 
 /*************************************************************************************************/
 FXint FXListPane::numItems( FXTreeItem *folder, FXbool sub )
@@ -358,7 +345,9 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
       FXint    pos  = -1;
       //FXint    curr = gl_itemslist->getCurrentItem( );
 
-      FXString text = gl_searchfield->getText( );
+      //FXString text = gl_searchfield->getText( );
+      FXString text = (char *) data;
+      std::cout << "Search text " << text << std::endl; 
       if( !text.empty( ) ) {
         pos = gl_itemslist->findItem( text );
         if( pos > -1 ) { /*/ Nalezeno
@@ -373,7 +362,7 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
           FXString _msg = "Nelze najit polozku s pozadovanym textem ";
           FXMessageBox::information( this, MBOX_OK, "Vyhledavani", ( _msg + text ).text( ) );
         }
-        gl_searchfield->setText( FXString::null );
+        //gl_searchfield->setText( FXString::null );
       }
       else { FXMessageBox::question( this, MBOX_OK, "EHM...", "Coze to mam hledat?" ); }
       break;

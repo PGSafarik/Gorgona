@@ -21,7 +21,7 @@
 * Panel zobrazujici herni polozky                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fx.h>
+#include<fox-1.7/fx.h>
 #include<tinyxml.h>
 #include<iostream>
 
@@ -81,6 +81,7 @@ public :
   void showItem( FXGameItem *item );                                                    // Zobrazi polozku v seznamu (nezavisle na stromu )
   void showFolder( FXTreeItem *folder, FXbool sub = false );                            // Zobrazi polozky vybrane slozky stromu
   void aktiveItem( FXint id = 0 );
+  void signedItem( FXint id = 0, FXint state = 0 );                                     // Oznaci polozku
 
   //void showActiveFolder( FXbool sub = false ) { showFolder( ( ( gl_activefd != NULL ) ? gl_activefd : gl_rootfd ), sub ); }
   FXTreeItem* folder( const FXString &name = "Game list", FXTreeItem *parent = NULL );  // Vrati (vytvori) polozku ve stromu slozek
