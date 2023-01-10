@@ -9,18 +9,19 @@
 /*************************************************************************************************/
 FXDEFMAP( FXLaunchEditor ) LAUNCHEDITORMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ID_ACCEPT, FXLaunchEditor::onCmdAccept ),
-  FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ID_STORNO, FXDialogBox::onCmdCancel ),
+  FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ID_STORNO, FXSecondaryWindow::onCmdCancel ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::SECTION_SELECT, FXLaunchEditor::onCmdSection ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::OPEN_FILE, FXLaunchEditor::onCmd_Dialog ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::OPEN_DIR,  FXLaunchEditor::onCmd_Dialog ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ICON_BIG,  FXLaunchEditor::onCmd_Icon ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ICON_SMALL,  FXLaunchEditor::onCmd_Icon )
 };
-FXIMPLEMENT( FXLaunchEditor, FXDialogBox, LAUNCHEDITORMAP, ARRAYNUMBER( LAUNCHEDITORMAP ) )
+FXIMPLEMENT( FXLaunchEditor, FXSecondaryWindow /*FXDialogBox*/, LAUNCHEDITORMAP, ARRAYNUMBER( LAUNCHEDITORMAP ) )
 
 /*************************************************************************************************/
 FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
-              : FXDialogBox( p, "Edit item", DECOR_ALL, 0, 0, 660, 320 )
+              /*: FXDialogBox( p, "Edit item", DECOR_ALL, 0, 0, 660, 320 )*/
+                : FXSecondaryWindow( p, "Edit Game", WINDOW_STATIC, 0, 0, 660, 320  )
 {
   le_item     = it;
   values_text = new FXDictionary;
@@ -32,8 +33,8 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   FXIcon *ic_basic  = icth->getIcon( "Actions/run-build-install.png" );
   FXIcon *ic_descr  = icth->getIcon( "Actions/documentation.png" );
   FXIcon *ic_advan  = icth->getIcon( "Actions/games-highscores.png" );
-  FXIcon *ic_accept = icth->getIcon( "Actions/dialog-ok-apply.png" );
-  FXIcon *ic_storno = icth->getIcon( "Actions/dialog-cancel.png" );
+  FXIcon *ic_accept = icth->getIcon( "Actions_big/dialog-ok-apply.png" );
+  FXIcon *ic_storno = icth->getIcon( "Actions_big/dialog-cancel.png" );
   FXIcon *ic_bicon = ( ( it->BigIcon != NULL ) ? it->BigIcon : icth->getIcon( "Actions_big/roll.png" ) );
   FXIcon *ic_micon = ( ( it->SmallIcon != NULL ) ? it->SmallIcon : icth->getIcon( "Actions/roll.png" ) );
   //FXIcon *ic_find   = icth->getIcon( "Actions/edit-find.png" );
@@ -46,7 +47,7 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   le_switcher = new FXSwitcher( content_sect, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
   make_sect( "Zakladni",  "Zakladni nastaveni spoustece", ic_basic );
   make_sect( "Popis",     "Informace",                    ic_descr );
-  make_sect( "Pokrocile", "Specificke volby",             ic_advan );
+  make_sect( "Statistiky","Statistiky a informace",       ic_advan );
 
   makevalue_text( "Zakladni", "Titul" );
   makevalue_text( "Zakladni", "Zanr" );
@@ -69,10 +70,13 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   FXVerticalFrame *textfr = new FXVerticalFrame( get_sect( "Popis" ), FRAME_LINE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0 );
   le_text = new FXText( textfr, NULL, 0, TEXT_WORDWRAP | LAYOUT_FILL );
 
+  makeinfo_Value( "Statistiky", "Pocet spusteni",               FXString::null );
+  makeinfo_Value( "Statistiky", "Naposled",                     FXString::null );
+  makeinfo_Value( "Statistiky", "Celkova doba", FXString::null );
+
   /// vytvoreni tlacitkove listy dialogu
-  FXHorizontalFrame *content_butt = new FXHorizontalFrame( content, FRAME_NONE | LAYOUT_FILL_X );
-  new FXButton( content_butt, "OK",     ic_accept, this, FXLaunchEditor::ID_ACCEPT, BUTTON_NORMAL | LAYOUT_FIX_WIDTH, 0, 0, 100 );
-  new FXButton( content_butt, "Storno", ic_storno, this, FXLaunchEditor::ID_STORNO, BUTTON_NORMAL | LAYOUT_RIGHT | LAYOUT_FIX_WIDTH, 0, 0, 100  );
+  new FXButton( getHeader( ), "\t\t OK",     ic_accept, this, FXLaunchEditor::ID_ACCEPT, BUTTON_TOOLBAR ); 
+  new FXButton( getHeader( ), "\t\t Storno", ic_storno, this, FXLaunchEditor::ID_STORNO, BUTTON_TOOLBAR ); 
 
   this->load( );
 }
@@ -86,8 +90,8 @@ FXLaunchEditor::~FXLaunchEditor( )
 /*************************************************************************************************/
 void FXLaunchEditor::create( )
 {
-  FXDialogBox::create( );
-
+  //FXDialogBox::create( );
+  FXSecondaryWindow::create( ); 
 
 }
 
@@ -96,7 +100,7 @@ void FXLaunchEditor::create( )
 long FXLaunchEditor::onCmdAccept( FXObject *sender, FXSelector sel, void *data )
 {
   this->save( );
-  return FXDialogBox::onCmdAccept( sender, sel, data );
+  return FXSecondaryWindow::onCmdAccept( sender, sel, data );
 }
 
 long FXLaunchEditor::onCmdSection( FXObject *sender, FXSelector sel, void *data )
@@ -214,6 +218,17 @@ void FXLaunchEditor::makevalue_text( const FXString &sect, const FXString &label
 
     values_text->insert( label.text( ), static_cast<void*>( w_value ) );
   }
+}
+
+void FXLaunchEditor::makeinfo_Value( const FXString &sect, const FXString &label, const FXString &value )
+{
+  FXVerticalFrame *f_sect = get_sect( sect );
+
+  if( f_sect ) {
+    FXHorizontalFrame *f = new FXHorizontalFrame( f_sect, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
+    new FXLabel( f, label + ":", NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, value, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+  }  
 }
 
 void FXLaunchEditor::makevalue_combo( const FXString &sect, const FXString &label, const FXString &value, FXArray<FXString> *t )

@@ -21,7 +21,9 @@
 * Dialog herni polozky (pridani, editace)                                *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fx.h>
+#include<fox-1.7/fx.h>
+#include<fxghi.h>
+
 #include<FXGameItem.h>
 #include<Utils.h>
 #include<IconsTheme.h>
@@ -51,7 +53,7 @@ enum {
   VALUE_LAST
 };
 
-class FXLaunchEditor : public FXDialogBox {
+class FXLaunchEditor : public FXSecondaryWindow /*FXDialogBox*/ {
 FXDECLARE( FXLaunchEditor )
   //FXGameLauncher *le_parent;
 
@@ -119,6 +121,8 @@ protected :
   void     makevalue_combo( const FXString &sect, const FXString &label, const FXString &value = FXString::null, FXArray<FXString> *t = NULL );
   void     makevalue_file( const FXString &sect, const FXString &label, const FXString &value = FXString::null );
   void     makevalue_dir( const FXString &sect, const FXString &label, const FXString &value = FXString::null );
+  void     makeinfo_Value( const FXString &sect, const FXString &label, const FXString &value );
+
   void     setvalue_text( const FXString &name, const FXString &value = FXString::null );
   FXString getvalue_text( const FXString &name );
   void     setvalue_combo( const FXString &name, const FXString &value = FXString::null );
