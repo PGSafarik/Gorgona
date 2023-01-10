@@ -23,7 +23,7 @@
 *************************************************************************/
 #include<lua5.1/lualib.h>
 #include<lua5.1/lauxlib.h>
-#include<fx.h>
+#include<fox-1.7/fx.h>
 #include<iostream>
 #include<cstring>
 

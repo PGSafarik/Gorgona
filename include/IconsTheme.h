@@ -21,7 +21,7 @@
 * Trida obsluhujici nacitani ikon                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fx.h>  /// version 1.7.50 and higher
+#include<fox-1.7/fx.h>  /// version 1.7.50 and higher
 #include<iostream>
 
 

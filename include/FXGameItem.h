@@ -21,7 +21,7 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 
-#include<fx.h>
+#include<fox-1.7/fx.h>
 #include<tinyxml.h>
 
 #include<Utils.h>
