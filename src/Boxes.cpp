@@ -10,7 +10,7 @@ FXDEFMAP( FindBar ) FB_MAP[ ] = {
 FXIMPLEMENT( FindBar, FXHeaderBox, FB_MAP, ARRAYNUMBER( FB_MAP ) )
 
 FindBar::FindBar( FXWindowHeader *p, IconsTheme *ict,  FXObject *tgt, FXSelector sel, FXuint opts )
-       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y  ) 
+       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y | FRAME_GROOVE ) 
 {
   m_target   = tgt;
   m_message  = sel;
@@ -54,5 +54,56 @@ long FindBar::Notify( )
   return resh; 
 }
 
+
+/*** Tool Bar *************************************************************************************/
+FXIMPLEMENT( ToolBar, FXHeaderBox, NULL, 0 )
+
+ToolBar::ToolBar( FXWindowHeader *p, IconsTheme *ict, FXuint opts )
+       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y | FRAME_GROOVE, 0, 0 ) 
+{
+  m_ict = ict;
+}
+
+void ToolBar::create( )
+{
+  FXHeaderBox::create( );
+}
+
+void ToolBar::makeSeparator( )
+{
+  new FXVerticalSeparator( this, SEPARATOR_GROOVE | LAYOUT_CENTER_Y | LAYOUT_FILL_Y );
+}
+
+void ToolBar::makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel )
+{
+  new FXButton( this, Title, m_ict->getIcon( icon ), tgt,  sel, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_CENTER_Y );
+}
+
+
+/*** Main Bar *************************************************************************************/
+FXIMPLEMENT( MainBar, ToolBar, NULL, 0 )
+
+MainBar::MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts )
+       : ToolBar( p, ict, opts ) 
+{
+  
+  m_button = new FXMenuButton( this, "\t\tMenu", ict->getIcon( "Actions_big/run-build-install-root.png" ), menu, BUTTON_TOOLBAR | FRAME_RAISED | ICON_ABOVE_TEXT | LAYOUT_LEFT | LAYOUT_CENTER_Y );
+}
+
+void MainBar::create( )
+{
+  ToolBar::create( );
+}
+/*
+void MainBar::makeSeparator( )
+{
+  new FXVerticalSeparator( this, SEPARATOR_GROOVE | LAYOUT_CENTER_Y | LAYOUT_FILL_Y );
+}
+
+void MainBar::makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel )
+{
+  new FXButton( this, Title, m_ict->getIcon( icon ), tgt,  sel, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_CENTER_Y );
+}
+*/
 /*** END ******************************************************************************************/
 

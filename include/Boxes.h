@@ -57,6 +57,55 @@ protected:
   long Notify( );
 };
 
+/*** ToolBar **************************************************************************************/
+class ToolBar : public FXHeaderBox {
+FXDECLARE( ToolBar )
+  FXObject   *m_target;
+  FXSelector  m_message;
+  IconsTheme *m_ict;
+
+  FXMenuButton *m_button;
+  
+public:
+  ToolBar( FXWindowHeader *p, IconsTheme *ict, FXuint opts = 0 );
+  virtual ~ToolBar( ) { }
+
+  /* Operations */
+  virtual void create( );
+  void makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel );
+  void makeSeparator( );
+
+  /* Access methods */
+  
+  /* Messages & handlers */
+
+protected:
+  ToolBar( ) { }  
+};
+
+/*** MainBar **************************************************************************************/
+class MainBar : public ToolBar {
+FXDECLARE( MainBar )
+  FXMenuButton *m_button;
+  
+public:
+  MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts = 0 );
+  virtual ~MainBar( ) { }
+
+  /* Operations */
+  virtual void create( );
+//  void makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel );
+//  void makeSeparator( );
+
+  /* Access methods */
+  
+  /* Messages & handlers */
+
+protected:
+  MainBar( ) { }  
+};
+
+
 #endif /*__BOXES_H */
 
 /*** END ****************************************************************/
