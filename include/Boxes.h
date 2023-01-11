@@ -29,9 +29,9 @@
 class FindBar : public FXHeaderBox {
 FXDECLARE( FindBar )
   FXTextField *m_field;
-
-  FXObject   *m_target;
-  FXSelector  m_message;
+  FXButton    *m_find_btn;  
+  FXObject    *m_target;
+  FXSelector   m_message;
    
 public:
   FindBar( FXWindowHeader *p, IconsTheme *ict, FXObject *tgt, FXSelector sel, FXuint opts );
@@ -50,7 +50,7 @@ public:
     ID_LAST
   };
   long onCmd_Action( FXObject *sender, FXSelector sel, void *data );
-  //long onCmd_Clean(  FXObject *sender, FXSelector sel, void *data );
+  
 
 protected:
   FindBar( ) { }
@@ -94,8 +94,6 @@ public:
 
   /* Operations */
   virtual void create( );
-//  void makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel );
-//  void makeSeparator( );
 
   /* Access methods */
   
@@ -108,4 +106,4 @@ protected:
 
 #endif /*__BOXES_H */
 
-/*** END ****************************************************************/
+/*** END ******************************************************************************************/

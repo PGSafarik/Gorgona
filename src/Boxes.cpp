@@ -10,18 +10,21 @@ FXDEFMAP( FindBar ) FB_MAP[ ] = {
 FXIMPLEMENT( FindBar, FXHeaderBox, FB_MAP, ARRAYNUMBER( FB_MAP ) )
 
 FindBar::FindBar( FXWindowHeader *p, IconsTheme *ict,  FXObject *tgt, FXSelector sel, FXuint opts )
-       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y | FRAME_GROOVE ) 
+       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y, 1, 2 ) 
 {
   m_target   = tgt;
   m_message  = sel;
+  
+  setColorize( false );
 
-  new FXButton( this, "\t\t Hledat", ict->getIcon( "Actions_big/system-search.png" ), this, FindBar::ID_ACTION, BUTTON_TOOLBAR | FRAME_RAISED );
+  m_find_btn = new FXButton( this, "\t\t Hledat", ict->getIcon( "Actions_big/system-search.png" ), this, FindBar::ID_ACTION, BUTTON_TOOLBAR | FRAME_RAISED );
   m_field = new FXTextField( this, 25, NULL, 0, TEXTFIELD_NORMAL | LAYOUT_CENTER_Y );
 }
 
 void FindBar::create( )
 {
   FXHeaderBox::create( );
+  getBoxFrame( )->_recolorize( m_find_btn );
 }
 
 
@@ -94,16 +97,6 @@ void MainBar::create( )
 {
   ToolBar::create( );
 }
-/*
-void MainBar::makeSeparator( )
-{
-  new FXVerticalSeparator( this, SEPARATOR_GROOVE | LAYOUT_CENTER_Y | LAYOUT_FILL_Y );
-}
 
-void MainBar::makeButton( const FXString &Title, const FXString &icon, FXObject *tgt, FXSelector sel )
-{
-  new FXButton( this, Title, m_ict->getIcon( icon ), tgt,  sel, BUTTON_TOOLBAR | ICON_ABOVE_TEXT | LAYOUT_CENTER_Y );
-}
-*/
 /*** END ******************************************************************************************/
 
