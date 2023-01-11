@@ -39,6 +39,8 @@ struct FXGameItem {
   FXint   numist;    // Pocet spusteni ( bezicich instanci hry )
   FXbool  one;       // Spoustet jen jednu instanci
 
+  FXbool  m_valid;     // 
+
   FXGameItem( );
   FXGameItem( const FXString &name, const FXString &type = "native" );
   virtual ~FXGameItem( );
@@ -48,6 +50,7 @@ struct FXGameItem {
   ///
   void dump( FXbool force = false );
   void clear( const FXString &name, const FXString &type = FXString::null );
+  FXbool validate( );
 
   void   checkIcons( FXApp *app );
   const FXString read( const FXString &k ) const;

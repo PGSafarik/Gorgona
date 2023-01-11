@@ -56,9 +56,31 @@ void FXGameItem::dump( FXbool force )
       if( k.empty( ) ) { continue; }
       else { std::cout << k.text( ) << ": " << this->property.at( k ).text( ) << std::endl; }
     }
-    std::cout << std::endl;
+    
   }
 
+}
+
+FXbool FXGameItem::validate( )
+{
+  FXString text =  "[ERROR - VALIDATION] The entry " + property[ "Basic:title" ]; 
+           text += " is corrupted: "; 
+  
+  if( property[ "Basic:type" ] == "native" ) {
+    FXString exec = property[ "Basic:exec" ];
+    if( !exec.empty( ) ) {
+      if( !FXStat::exists( exec ) ) {
+        std::cout << text << "The exec command " << exec << " NOT exists!" << std::endl;
+        m_valid = false;
+      } 
+    }
+    else {
+      std::cout << text << " Not have set a exec command!" << std::endl;
+      m_valid = false;
+    }
+  }
+
+  return m_valid;
 }
 
 FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
@@ -174,6 +196,12 @@ void FXGameItem::load( TiXmlElement *eitem )
   }
   // Defaultni nastaveni typu spoustece
   if( _set_of_type == false ) { this->write( "Basic:type", "native", false ); }
+  
+  #ifdef DEBUG
+  dump( true );
+  #endif 
+  validate( );
+  std::cout << std::endl;
 }
 
 const FXString FXGameItem::read( const FXString &k ) const
