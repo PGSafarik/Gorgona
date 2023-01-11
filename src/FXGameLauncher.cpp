@@ -87,15 +87,19 @@ FXGameLauncher::FXGameLauncher( FXApp *a )
 
   /* Tool bars */ 
   ToolBar *mb = new ToolBar( getHeader( ), gl_iconstheme );
-  //mb->makeSeparator( );
   mb->makeButton( "\t\tPridat",  "Actions_big/list-add.png",      gl_pane, FXListPane::GAME_INSERT    );
   mb->makeButton( "\t\tUpravit", "Actions_big/document-edit.png", gl_pane, FXListPane::GAME_EDIT      );
   mb->makeButton( "\t\tOdebrat", "Actions_big/list-remove.png",   gl_pane, FXListPane::GAME_REMOVE    );
-  mb->makeSeparator( );
-  mb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
-  mb->makeButton( "\t\tPohled Ikony",   "Actions_big/view-list-icons.png",   gl_pane, FXListPane::LIST_ICONS ); 
-  mb->makeSeparator( ); 
-  mb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, FXGameLauncher::SYSTEM_RUN );
+  //mb->makeSeparator( );
+  
+  ToolBar *lb = new ToolBar( getHeader( ), gl_iconstheme );
+  lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, FXGameLauncher::SYSTEM_RUN );
+
+  ToolBar *vb = new ToolBar( getHeader( ), gl_iconstheme );
+  vb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
+  vb->makeButton( "\t\tPohled Ikony",   "Actions_big/view-list-icons.png",   gl_pane, FXListPane::LIST_ICONS ); 
+  //vb->makeSeparator( ); 
+  
   
   /* Search Bar */
   m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
