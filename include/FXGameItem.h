@@ -40,6 +40,7 @@ struct FXGameItem {
   FXbool  one;       // Spoustet jen jednu instanci
 
   FXbool  m_valid;     // 
+  
 
   FXGameItem( );
   FXGameItem( const FXString &name, const FXString &type = "native" );

@@ -38,48 +38,43 @@ void FXGameItem::clear( const FXString &name, const FXString &type )
 void FXGameItem::dump( FXbool force )
 {
   if( force == false ) {
-    std::cout << "Game entry [" << this->property.find( "Basic:type" ) << "] = " << this->property.find( "Basic:title" ) << std::endl;
+    std::cout << "Game entry [" << this->property[ "Basic:type" ] << "] = " << this->property[ "Basic:title" ] << std::endl;
     std::cout.flush( );
   }
   else {
-    std::cout << "Game entry "         << this->property.find( "Basic:title" ) << std::endl;
-    std::cout << "Change: "            << this->change << std::endl;
+    std::cout << "Game entry "          << this->property[ "Basic:title" ] << std::endl;
+    std::cout << "Change: "             << this->change << std::endl;
     std::cout << "Hide GUI ON: "        << this->hidel << std::endl;
     std::cout << "Nuber of execution: " << this->nop << std::endl;
-    /*
-    for( FXint i = this->property.first( ); i <= this->property.last( ); i = this->property.next( i  ) ) {
-       std::cout << this->property.key( i ) << ": " << this->property.data( i ) << std::endl;
-    }
-    */
+
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       FXString k = this->property.key( i );
       if( k.empty( ) ) { continue; }
       else { std::cout << k.text( ) << ": " << this->property.at( k ).text( ) << std::endl; }
     }
-    
   }
-
 }
 
 FXbool FXGameItem::validate( )
 {
-  FXString text =  "[ERROR - VALIDATION] The entry " + property[ "Basic:title" ]; 
-           text += " is corrupted: "; 
-  
+  FXString text =  "VALIDATION: The entry \"" + property[ "Basic:title" ]; 
+           text += "\" ";
+
   if( property[ "Basic:type" ] == "native" ) {
     FXString exec = property[ "Basic:exec" ];
     if( !exec.empty( ) ) {
       if( !FXStat::exists( exec ) ) {
-        std::cout << text << "The exec command " << exec << " NOT exists!" << std::endl;
+        std::cout << text << "corrupted: The exec command " << exec << " NOT exists!" << std::endl;
         m_valid = false;
       } 
     }
     else {
-      std::cout << text << " Not have set a exec command!" << std::endl;
+      std::cout << text << "corrupted: Not have set a exec command!" << std::endl;
       m_valid = false;
     }
   }
-
+  
+  if( m_valid ) { std::cout << text << "OK." << std::endl; }
   return m_valid;
 }
 
@@ -197,7 +192,7 @@ void FXGameItem::load( TiXmlElement *eitem )
   // Defaultni nastaveni typu spoustece
   if( _set_of_type == false ) { this->write( "Basic:type", "native", false ); }
   
-  #ifdef DEBUG
+  #ifdef __DEBUG
   dump( true );
   #endif 
   validate( );
@@ -269,25 +264,24 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
 
 void FXGameItem::checkIcons( FXApp *app )
 {
-  //std::cout << "[ FXGameitem ] Checking external icon..." << std::endl;
-   FXString file;
-   FXint sms = 22; // smal size
-   FXint bis = 32; // big size
+  FXString file;
+  FXint sms = 22; // smal size
+  FXint bis = 32; // big size
 
-   if( this->BigIcon != NULL ) { delete this->BigIcon; }
-   if( this->SmallIcon != NULL ) { delete this->SmallIcon; }
+  if( this->BigIcon != NULL ) { delete this->BigIcon; }
+  if( this->SmallIcon != NULL ) { delete this->SmallIcon; }
 
-   if( ( file = this->read( "Icon:all" ) ) != FXString::null ){
-     this->SmallIcon = loadExternIcon( app, file, sms, sms );
-     this->BigIcon   = loadExternIcon( app, file, bis, bis );
-     return;
-   }
-   if( ( file = this->read( "Icon:small" ) ) != FXString::null ){
-     this->SmallIcon = loadExternIcon( app, file, sms, sms );
-   }
-   if( ( file = this->read( "Icon:big" ) ) != FXString::null ){
-     this->BigIcon = loadExternIcon( app, file, bis, bis );
-   }
+  if( ( file = this->read( "Icon:all" ) ) != FXString::null ){
+    this->SmallIcon = loadExternIcon( app, file, sms, sms );
+    this->BigIcon   = loadExternIcon( app, file, bis, bis );
+    return;
+  }
+  if( ( file = this->read( "Icon:small" ) ) != FXString::null ){
+    this->SmallIcon = loadExternIcon( app, file, sms, sms );
+  }
+  if( ( file = this->read( "Icon:big" ) ) != FXString::null ){
+    this->BigIcon = loadExternIcon( app, file, bis, bis );
+  }
 }
 
 /*** END ******************************************************************************************/
