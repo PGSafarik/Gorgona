@@ -43,8 +43,8 @@ function Mod_Initialize( )
 	if Modules == nil then Modules = { } end 
 	if ltable == nil then ltable = { } end 
 	
-	--Mod_Load( "/opt/Gorgona/modules" )
-	Mod_Load( "/home/gabriel/Projects/Fox/sources/Gorgona/modules/" )
+	-- FIXME MOD_01 : Get this path from Gorgona !!!
+	Mod_Load( "/usr/share/Gorgona/modules/" )
     
 	print( "List of Launchers id: " )
   for i = 1, #ltable do print( ltable[ i ] ) end 
