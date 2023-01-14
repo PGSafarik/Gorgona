@@ -192,11 +192,7 @@ void FXGameItem::load( TiXmlElement *eitem )
   // Defaultni nastaveni typu spoustece
   if( _set_of_type == false ) { this->write( "Basic:type", "native", false ); }
   
-  #ifdef __DEBUG
-  dump( true );
-  #endif 
   validate( );
-  std::cout << std::endl;
 }
 
 const FXString FXGameItem::read( const FXString &k ) const
