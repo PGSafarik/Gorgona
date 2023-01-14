@@ -277,22 +277,27 @@ long FXGameLauncher::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *da
 void FXGameLauncher::load( )
 {
   TiXmlDocument  xdoc;
-  TiXmlElement  *xegame;
   FXGameItem    *it;
 
   std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
 
   if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) != false ) ) {
-    if( ( xegame = xdoc.RootElement( )->FirstChildElement( "Game" ) ) != NULL ) {
-      for( xegame; xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
-         if( ( it = new FXGameItem( ) ) != NULL ) {
-           it->load( xegame );
-           it->checkIcons( getApp( ) );
-           gl_pane->insertItem( it );
-         }
-         else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
-      }
-    }
+
+    /* read Games Library */
+    TiXmlElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
+    if( xlibrary )  {
+      TiXmlElement  *xegame = xlibrary->FirstChildElement( "Game" );
+      if( xegame ) {
+        for( xegame; xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
+          if( ( it = new FXGameItem( ) ) != NULL ) {
+            it->load( xegame );
+            it->checkIcons( getApp( ) );
+            gl_pane->insertItem( it );
+          }
+          else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
+        }
+      } /* V knihovne nejsou zatim zadne polozky */
+    }   /* Knihovna (jeste) nevytvorena. Prvni spusteni? */
   }
   else {
     std::cout << "Chyba : neni zadan soubor, nebo ma chybny format" << std::endl;
@@ -314,18 +319,19 @@ void FXGameLauncher::load( )
 void FXGameLauncher::save( )
 {
   TiXmlDocument     xdoc;
-  TiXmlElement     *xroot;
-  TiXmlDeclaration *xdecl;
-
-  xdecl = new TiXmlDeclaration( "1.0", "", "" );
+  
+  TiXmlDeclaration *xdecl = new TiXmlDeclaration( "1.0", "", "" );
   xdoc.LinkEndChild( xdecl );
 
-  xroot = new TiXmlElement( getApp( )->reg( ).getAppKey( ).text( ) );
+  TiXmlElement *xroot = new TiXmlElement( getApp( )->reg( ).getAppKey( ).text( ) );
   xdoc.LinkEndChild( xroot );
 
+  TiXmlElement *xlibrary = new TiXmlElement( "Library" );
+  xroot->LinkEndChild( xlibrary );
+   
   FXGameItemArray buff;
   gl_pane->getItemList( NULL, &buff, true );
-  for( FXint i = 0; i != buff.no( ); i++ ) { buff[ i ]->save( xroot ); }
+  for( FXint i = 0; i != buff.no( ); i++ ) { buff[ i ]->save( xlibrary ); }
 
   std::cout << "Saving the menu xml-file" << std::endl;
   xdoc.SaveFile( gl_datafile.text( ) );
@@ -339,7 +345,7 @@ void FXGameLauncher::read_config( )
   //FXint pos_y = ( getApp( )->getRootWindow( )->getHeight( ) / 2 ) - ( this->getHeight( ) / 2 );
 
   gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
-  gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/opt/Gorgona/modules/Launchers.lua" );
+  gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
   gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/FXGameLauncher" ).text( ) );
   gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
