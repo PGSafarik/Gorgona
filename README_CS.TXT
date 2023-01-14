@@ -1,6 +1,6 @@
 ﻿Gorgona – Správce herních kolekcí a spouštěč her pro OS Linux 
 ================================================================================
-23.09.2022 
+14.01.2023 
 
 Obsah:
   1. Základní informace
@@ -31,7 +31,8 @@ docs/images/screenshot.png
 2. PŘEKLAD A INSTALACE
 ========================
 Závislosti:
-  Foxtoolkit 1.7.76 - GUI Framework http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz
+  Foxtoolkit 1.7.81 - GUI Framework http://fox-toolkit.org/ftp/fox-1.7.81.tar.gz
+  FoxGHI 0.4.0      - https://github.com/PGSafarik/FoxGHI
   TinyXml           - https://sourceforge.net/projects/tinyxml
   Lua 5.1           - https://www.lua.org
 
@@ -65,6 +66,8 @@ instrukci pro sestavení a instalaci projektu výše.
 ======================
 1. 28/03/2019 – Chybná návratová hodnota Lua spouštěčů - Otevřeno
   Lua spouštěče nevrací správně návratovou hodnotu po skončení takto spuštěné hry. Pravděpodobně jde o špatně vyzvednutou hodnotu z lua bufferu.
+  
+2. 11/01/2023 - Nutnost rucne zadat cestu k modulum v ModManager.lua - Otevreno  
 
 4. STAV PROJEKTU A PLÁNY DO BUDOUCNA
 ======================================
@@ -79,6 +82,19 @@ Repositář projektu na Githubu však zůstane zachován pro případné zájemc
 
 Projekt Morfeus, který se vyvíjel souběžně s Gorgonou, byl od ní oddělen, jako nezávislá utilita a je nadále vyvíjen samostatně. 
 
+11/01/2023 Aktualizace 
+  -- Vychozi verze foxlib 1.7.81
+  -- Top-level okna Gorgony jsou nyni vytvařena zpravována FoxGHI knihovnou. Vychozi verze je 0.4.1  
+  -- Nastrojové panely jsou nyni zpravovány FoxGHI Header Boxy
+  -- Upraven layout top-level oken v návaznosti na změnu zprávy top-level oken
+  -- Vyhledávání presunuto ze seznamu polozek do Header Baru 
+  -- Přidán modul pro podporu spouštění her pomoci Steam clienta (zatím je nutno manulane vyhledat Steam app id a zadat do pole přikazu)
+  -- Přidán modul pro podporu spouštění her nainstalovaných pomoci nástroje Legendary (Epic games a GOG.com. I zde je nutno manulane zadat id hry)
+  -- Jednoduchý nástin validace položek. Zatím kontroluje (a ne zcela správně) validnost podle existence spustitelneho souboru u nativnich polozek.
+     Položky ktere jsou vzhodnoceny jako nevalidní, jsou vypsány do stdout.
+  -- XML tagy reprezentující jednotlivé položky seznamu her jsou nyní seskupeny do xml tagu "Library". Tato zmena je momentálně nekompatibilní s předchozími 
+     verzemi a původní datový xml soubor nebude správně načten. Je potreba jej ručně opravit, nebo založit nový. 
+  
 5. AUTOR A LICENCE
 =====================
 Copyright (C) 2015 - 2022 Pavel Šafařík <drakarax@seznam.cz> alias D.A.Tiger
@@ -98,7 +114,10 @@ Spolu s Gorgonou byste měli obdržet kopii GNU General Public License. Pokud ne
 6. INTERNET: 
 ===============
   Muj blog:                http://bfuplusplus.blogspot.cz/
-  Morfeus:
+  Morfeus:                 https://github.com/PGSafarik/Morfeus
+  FoxGHI:                  https://github.com/PGSafarik/FoxGHI 
+  Legendary:               https://github.com/derrod/legendary 
+  SteamDB(EN):             https://steamdb.info/
   Parallel Realities (EN): https://www.parallelrealities.co.uk/
   Lutris (EN):             https://lutris.net/
   GameHub (EN):            https://tkashkin.github.io/projects/gamehub/
