@@ -68,6 +68,7 @@ instrukci pro sestavení a instalaci projektu výše.
   Lua spouštěče nevrací správně návratovou hodnotu po skončení takto spuštěné hry. Pravděpodobně jde o špatně vyzvednutou hodnotu z lua bufferu.
   
 2. 11/01/2023 - Nutnost rucne zadat cestu k modulum v ModManager.lua - Otevreno  
+   Příčina je v návrhu integrace Lua skriptů v Gorgoně. Pro zatím se uvažuje o workaroundu do C->LUA API.
 
 4. STAV PROJEKTU A PLÁNY DO BUDOUCNA
 ======================================
@@ -84,16 +85,17 @@ Projekt Morfeus, který se vyvíjel souběžně s Gorgonou, byl od ní oddělen,
 
 11/01/2023 Aktualizace 
   -- Vychozi verze foxlib 1.7.81
-  -- Top-level okna Gorgony jsou nyni vytvařena zpravována FoxGHI knihovnou. Vychozi verze je 0.4.1  
+  -- Top-level okna Gorgony jsou nyni vytvařena spravována FoxGHI knihovnou. Vychozi verze je 0.4.1  
   -- Nastrojové panely jsou nyni zpravovány FoxGHI Header Boxy
-  -- Upraven layout top-level oken v návaznosti na změnu zprávy top-level oken
+  -- Upraven layout top-level oken v návaznosti na změnu správy top-level oken
   -- Vyhledávání presunuto ze seznamu polozek do Header Baru 
   -- Přidán modul pro podporu spouštění her pomoci Steam clienta (zatím je nutno manulane vyhledat Steam app id a zadat do pole přikazu)
-  -- Přidán modul pro podporu spouštění her nainstalovaných pomoci nástroje Legendary (Epic games a GOG.com. I zde je nutno manulane zadat id hry)
+  -- Přidán modul pro podporu spouštění her nainstalovaných pomoci nástroje Legendary (Epic games a GOG.com. I zde je nutno manuálně zadat id hry)
   -- Jednoduchý nástin validace položek. Zatím kontroluje (a ne zcela správně) validnost podle existence spustitelneho souboru u nativnich polozek.
      Položky ktere jsou vzhodnoceny jako nevalidní, jsou vypsány do stdout.
   -- XML tagy reprezentující jednotlivé položky seznamu her jsou nyní seskupeny do xml tagu "Library". Tato zmena je momentálně nekompatibilní s předchozími 
      verzemi a původní datový xml soubor nebude správně načten. Je potreba jej ručně opravit, nebo založit nový. 
+  -- Nekolik drobnych oprav a zmen
   
 5. AUTOR A LICENCE
 =====================

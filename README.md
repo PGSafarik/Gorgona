@@ -54,8 +54,11 @@ These lines are commented out by default, so remove the leading '#' characters a
 
 ## 3. KNOWN ERRORS AND BUGS
 * ### 28/03/2019 - Bad return value from lua launchers - opened 
-Lua launchers do not correctly return a return value after a game launched in this way ends. It is probably a wrongly fetched value from the lua buffer.
-    
+Lua launchers do not correctly return a return value after a game launched in this way ends. It is probably a wrongly fetched value from the lua buffer.  
+
+* ### 11/01/2023 - Need to manually enter path to modules in ModManager.lua - Open 
+The cause is in the design of Lua script integration in Gorgona. For now, a workaround to the C->LUA API is being considered.  
+
 ## 4. PROJECT STATE AND PLANS FOR THE FUTHURE
 PROJECT STOPPED
 
@@ -64,6 +67,18 @@ In 2019/2020, more similar programs, such as Gorgona, appeared on the Linux scen
 However, the repository of the project on Github will be preserved for any interested parties, or for future generations to know that such a project ever existed...
 
 Project Morfeus, which was developed in parallel with Gorgon, was separated from it as an independent utility and continues to be developed independently
+
+11/01/2023 Aktualize:  
+* Default Foxlib version is 1.7.81
+* Gorgon's top-level windows are now managed by the FoxGHI library. The default version is 0.4.1
+* The Window toolbars is managed with FoxGHI header Boxes
+* Modified top-level window layout following the change in top-level window management
+* The item find frame moved on Header bar
+* Insert a new module for support run games from Steam. For now, you have to manually search for the Steam app id and enter it in the command field
+* Insert a new module for support an games installed with the Legendary utility (Epic games and Gog.com). Again, you must manually enter the game id.
+* A simple outline of item validation. So far it checks (and not correctly) validity by the existence of an executable file for native items. Items that are evaluated as not valid are dumped to stdout.
+* The XML tags representing the individual game list items are now grouped into the xml tag "Library". This change is currently incompatible with the previous versions and the original xml data file will not load correctly. You need to manually fix it or create a new one.
+* A few minor corrections and changes
 
 ## 5. AUTHOR AND PROJECT LICENCION:
 Copyright (C) 2015 - 2022 Pavel Šafařík <drakarax@seznam.cz>
@@ -81,8 +96,11 @@ You should have received a copy of the GNU General Public License along with Gor
 
 ## 6. INTERNET
   * [Author's blog (CZ)](http://bfuplusplus.blogspot.cz/)
-  * [Foxtoolkitu home page](http://fox-toolkit.org/)
+  * [Foxtoolkit home page](http://fox-toolkit.org/)
   * [Morfeus](https://github.com/PGSafarik/Morfeus)
+  * [FoxGHI](https://github.com/PGSafarik/FoxGHI)
+  * [Legendary](https://github.com/derrod/legendary)
+  * [SteamDB](https://steamdb.info/)
   * [Parallel Realities (EN)](https://www.parallelrealities.co.uk/)
   * [Lutris (EN)](https://lutris.net/)
   * [GameHub (EN)](https://tkashkin.github.io/projects/gamehub/)
