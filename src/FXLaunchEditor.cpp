@@ -1,6 +1,6 @@
 // FXLauncherEditor.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
 #include<FXLaunchEditor.h>
-#include<FXGameLauncher.h>
+#include<GorgonaWindow.h>
 #include<LuaAPI.h>
 
 #include<iostream>

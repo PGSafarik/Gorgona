@@ -22,6 +22,7 @@ FXint GO_Keywords::read( TiXmlElement *kwelem )
     this->k_word       = kwelem->Attribute( "keyword" );
 
     TiXmlElement *telem = kwelem->FirstChildElement( "Tag" );
+/*
     for( telem; telem; telem = telem->NextSiblingElement( "Tag" ) ) {
       GO_KeyEntry *e = new GO_KeyEntry;
       e->description = telem->Attribute( "description" );
@@ -30,6 +31,18 @@ FXint GO_Keywords::read( TiXmlElement *kwelem )
 
       this->insert( telem->Attribute( "key" ), e );
       resh++;
+    }
+*/
+    while( telem != NULL ) {
+      GO_KeyEntry *e = new GO_KeyEntry;
+      e->description = telem->Attribute( "description" );
+      e->actionid    = telem->Attribute( "action" );
+      split( telem->Attribute( "value" ), &e->vlist, ";" );
+
+      this->insert( telem->Attribute( "key" ), e );
+      resh++;
+      
+      telem = telem->FirstChildElement( "tag" ); 
     }
   }
 

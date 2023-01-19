@@ -1,10 +1,10 @@
 // FXLauncherLua.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<LuaAPI.h>
-#include<FXGameLauncher.h>
+#include<GorgonaWindow.h>
 #include<FXGameItem.h>
 #include<Utils.h>
 
-FXGameLauncher *_inst;   // Instance obsluzneho objektu
+GorgonaWindow *_inst;   // Instance obsluzneho objektu
 lua_State      *_state;  // Stavova promenna lua interpreteru
 FXbool          _linit;  // Indikace inicicalizace lua
 
@@ -24,7 +24,7 @@ int static l_registry_delete( lua_State *L );     // Remove header or Key
 
 
 /*************************************************************************************************/
-FXbool l_open( FXGameLauncher *i )
+FXbool l_open( GorgonaWindow *i )
 {
   if( ( _state = luaL_newstate( ) ) != NULL ){
     _inst = i;

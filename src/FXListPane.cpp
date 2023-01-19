@@ -1,6 +1,6 @@
 // FXListPane.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<FXListPane.h>
-#include<FXGameLauncher.h>
+#include<GorgonaWindow.h>
 
 FXDEFMAP( FXListPane ) LISTPANE_MAP[ ] = {
   FXMAPFUNC( SEL_COMMAND, FXListPane::TREE_SELECT, FXListPane::OnCmd_tree ),
@@ -310,7 +310,7 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
       std::cout << "[FXListPane] Item event doubleclick" << std::endl;
-      if( gl_target ) { gl_target->handle( this, FXSEL( SEL_COMMAND, FXGameLauncher::SYSTEM_RUN ), NULL ); }
+      if( gl_target ) { gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
       break;
     }
     default : {
@@ -443,7 +443,7 @@ FXlong FXListPane::Notify( FXuint type_message )
 FXlong FXListPane::SaveNotify( ) 
 { 
   FXlong res = 0;
-  if( gl_target ) { res = gl_target->handle( this, FXSEL( SEL_COMMAND, FXGameLauncher::DATA_SAVE ), NULL ); } 
+  if( gl_target ) { res = gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::DATA_SAVE ), NULL ); } 
 
   return res;
 }

@@ -20,13 +20,13 @@
 *************************************************************************/
 #include<fox-1.7/fx.h>
 #include<Gorgona.h>
-#include<FXGameLauncher.h>
+#include<GorgonaWindow.h>
 
 int main( int argc, char **argv )
 {
   Gorgona app( "Gorgona", "FXGameLauncher" );
   app.init( argc, argv );
-  new FXGameLauncher( &app );
+  new GorgonaWindow( &app );
   app.create( );
   return app.run( );
 }

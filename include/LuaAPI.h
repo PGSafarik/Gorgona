@@ -27,10 +27,10 @@
 #include<iostream>
 #include<cstring>
 
-class FXGameLauncher;
+class GorgonaWindow;
 
 // Zaklad skriptovaciho jazyka Lua
-FXbool l_open( FXGameLauncher *i );
+FXbool     l_open( GorgonaWindow *i );
 void       l_close( );
 FXbool     l_init( );
 lua_State* l_parser( );

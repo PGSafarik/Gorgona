@@ -1,23 +1,23 @@
-// FXGameLauncher.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
-#include<FXGameLauncher.h>
+// GorgonaWindow.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
+#include<GorgonaWindow.h>
 
 using namespace GORGONA;
 
-FXDEFMAP( FXGameLauncher ) LAUNCHERMAP[ ] = {
-  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::SYSTEM_RUN,  FXGameLauncher::OnCmd_System ),
-  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::LIST_EVENT,  FXGameLauncher::OnCmd_List ),
-  FXMAPFUNC( SEL_CHANGED,   FXGameLauncher::LIST_EVENT,  FXGameLauncher::OnCmd_List ),
-  FXMAPFUNC( SEL_CONFIGURE, FXGameLauncher::MAIN_CONFIG, FXGameLauncher::OnCmd_Main ),
-  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::CONF_SETUP,  FXGameLauncher::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::CONF_FOX,    FXGameLauncher::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND,   FXGameLauncher::DATA_SAVE,   FXGameLauncher::OnCmd_Data ),
-  FXMAPFUNC( SEL_SIGNAL,    FXGameLauncher::SIGNAL_CHLD, FXGameLauncher::OnSig_ExitChild )
+FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
+  FXMAPFUNC( SEL_CHANGED,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
+  FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_FOX,    GorgonaWindow::OnCmd_Config ),
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::DATA_SAVE,   GorgonaWindow::OnCmd_Data ),
+  FXMAPFUNC( SEL_SIGNAL,    GorgonaWindow::SIGNAL_CHLD, GorgonaWindow::OnSig_ExitChild )
 };
 
-FXIMPLEMENT( FXGameLauncher, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
+FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
 
 /**************************************************************************************************/
-FXGameLauncher::FXGameLauncher( Gorgona *app )
+GorgonaWindow::GorgonaWindow( Gorgona *app )
               : FXPrimaryWindow( app, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
 {  
   StringList arglist;
@@ -25,7 +25,7 @@ FXGameLauncher::FXGameLauncher( Gorgona *app )
 
   this->version( );
 
-  getApp( )->addSignal( SIGCHLD, this, FXGameLauncher::SIGNAL_CHLD, false, 0 );
+  getApp( )->addSignal( SIGCHLD, this, GorgonaWindow::SIGNAL_CHLD, false, 0 );
   gl_created= false;
 
   gl_iconstheme = new IconsTheme( getApp( ), "/usr/share/icons/oxygen/base/" );
@@ -42,7 +42,7 @@ FXGameLauncher::FXGameLauncher( Gorgona *app )
   gl_switcher = new FXSwitcher( contend, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
 
   // Create the item list
-  gl_pane = new FXListPane( gl_switcher, gl_iconstheme, this, FXGameLauncher::LIST_EVENT );
+  gl_pane = new FXListPane( gl_switcher, gl_iconstheme, this, GorgonaWindow::LIST_EVENT );
   gl_pane->setClosedFolderIc( gl_iconstheme->getIcon( "Places/folder.png" ) );
   gl_pane->setOpenFolderIc(   gl_iconstheme->getIcon( "Status/folder-open.png" ) );
   gl_pane->setSmallItemIc(    gl_iconstheme->getIcon( "Actions/roll.png" ) );
@@ -62,19 +62,19 @@ FXGameLauncher::FXGameLauncher( Gorgona *app )
     new FXMenuCommand( gl_mGorgona, "Rozbalit strom", gl_iconstheme->getIcon( "Actions/view-list-tree.png" ), gl_pane, FXListPane::TREE_EXPAND );
     new FXMenuCommand( gl_mGorgona, "Sbalit strom", gl_iconstheme->getIcon( "Actions/view-left-close.png" ), gl_pane, FXListPane::TREE_COLAPS );
     new FXMenuSeparator( gl_mGorgona, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
-    new FXMenuCommand( gl_mGorgona, "Volby", gl_iconstheme->getIcon( "Actions/configure.png" ), this, FXGameLauncher::CONF_SETUP );
-    new FXMenuCommand( gl_mGorgona, "Fox toolkit", gl_iconstheme->getIcon( "Actions/code-class.png" ), this, FXGameLauncher::CONF_FOX );
+    new FXMenuCommand( gl_mGorgona, "Volby", gl_iconstheme->getIcon( "Actions/configure.png" ), this, GorgonaWindow::CONF_SETUP );
+    new FXMenuCommand( gl_mGorgona, "Fox toolkit", gl_iconstheme->getIcon( "Actions/code-class.png" ), this, GorgonaWindow::CONF_FOX );
     new FXMenuSeparator( gl_mGorgona, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
     new FXMenuCommand( gl_mGorgona, "Ukoncit", gl_iconstheme->getIcon( "Actions/window-close.png" ), getApp( ), FXApp::ID_QUIT );
   new FXMenuCascade( gl_menu, "Gorgona", NULL, gl_mGorgona );
   gl_mGames = new FXMenuPane( gl_menu );
-    new FXMenuCommand( gl_mGames, "Spustit", gl_iconstheme->getIcon( "Actions/system-run.png" ), this, FXGameLauncher::SYSTEM_RUN );
+    new FXMenuCommand( gl_mGames, "Spustit", gl_iconstheme->getIcon( "Actions/system-run.png" ), this, GorgonaWindow::SYSTEM_RUN );
     new FXMenuSeparator( gl_mGames, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
     new FXMenuCommand( gl_mGames, "Pridat",  gl_iconstheme->getIcon( "Actions/list-add.png" ),    gl_pane, FXListPane::GAME_INSERT );
     new FXMenuCommand( gl_mGames, "Editovat",  gl_iconstheme->getIcon( "Actions/document-edit.png" ),    gl_pane,  FXListPane::GAME_EDIT );
     new FXMenuCommand( gl_mGames, "Odebrat",  gl_iconstheme->getIcon( "Actions/list-remove.png" ),    gl_pane, FXListPane::GAME_REMOVE );
     new FXMenuSeparator( gl_mGames, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
-    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ),    this, FXGameLauncher::DATA_SAVE );
+    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ),    this, GorgonaWindow::DATA_SAVE );
   new FXMenuCascade( gl_menu, "Arena", NULL, gl_mGames );
   gl_mTools = new FXMenuPane( gl_menu );
   new FXMenuCascade( gl_menu, "Nastroje", NULL, gl_mTools );
@@ -93,7 +93,7 @@ FXGameLauncher::FXGameLauncher( Gorgona *app )
   //mb->makeSeparator( );
   
   ToolBar *lb = new ToolBar( getHeader( ), gl_iconstheme );
-  lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, FXGameLauncher::SYSTEM_RUN );
+  lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, GorgonaWindow::SYSTEM_RUN );
 
   ToolBar *vb = new ToolBar( getHeader( ), gl_iconstheme );
   vb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
@@ -109,16 +109,16 @@ FXGameLauncher::FXGameLauncher( Gorgona *app )
 
   // Configure application & load data
   read_config( );
-  //this->handle( NULL, FXSEL( SEL_CONFIGURE, FXGameLauncher::MAIN_CONFIG ), NULL );
+  //this->handle( NULL, FXSEL( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG ), NULL );
 }
 
-FXGameLauncher::~FXGameLauncher( )
+GorgonaWindow::~GorgonaWindow( )
 {
   write_config( );
   if( ( gl_autosave == true ) || ( gl_change == true ) ) { save( ); }
 }
 
-void FXGameLauncher::create( )
+void GorgonaWindow::create( )
 {
   FXPrimaryWindow::create( );
   gl_pane->create( );
@@ -134,12 +134,12 @@ void FXGameLauncher::create( )
 }
 
 /*************************************************************************************************/
-long FXGameLauncher::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
 {
   FXlong resh = 0;
 
   switch( FXSELID( sel ) ) {
-    case FXGameLauncher::SYSTEM_RUN : {
+    case GorgonaWindow::SYSTEM_RUN : {
       resh = ( ( this->run( ) == true ) ? 1 : 0 );
       break;
     }
@@ -148,14 +148,14 @@ long FXGameLauncher::OnCmd_System( FXObject *sender, FXSelector sel, void *data 
   return resh;
 }
 
-long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 {
   FXlong resh       = 0;
 
   switch( FXSELTYPE( sel ) ) {
     case SEL_COMMAND :
     {
-      //std::cout << "[FXGameLauncher::OnCmd_List]New Select item in list ..." << std::endl;
+      //std::cout << "[GorgonaWindow::OnCmd_List]New Select item in list ..." << std::endl;
       //FXGameItem *gl_selected = gl_pane->getCurrentItem( );
       //if( ( gl_selected ) != NULL ) { gl_text->setText( gl_selected->read( "Description" ) ); }
       resh = 1;
@@ -164,7 +164,7 @@ long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_CHANGED :
     {
-      std::cout << "[FXGameLauncher::OnCmd_List] List must be updated ..." << std::endl;
+      std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl;
       FXString numinfo = "View ";
       numinfo += FXString::value( gl_pane->numItems( NULL, false ) ) + " game entries"; //!
       gl_statusbar->getStatusLine( )->setText( numinfo );
@@ -176,7 +176,7 @@ long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_DOUBLECLICKED :
     {
-       //std::cout << "[FXGameLauncher::OnCmd_List]Active item running ..." << std::endl;
+       //std::cout << "[GorgonaWindow::OnCmd_List]Active item running ..." << std::endl;
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
     }
@@ -186,18 +186,18 @@ long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   return resh;
 }
 
-long FXGameLauncher::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
 {
   FXlong resh = 0;
 
   switch( FXSELID( sel ) ) {
-    case FXGameLauncher::DATA_CHANGED : {
+    case GorgonaWindow::DATA_CHANGED : {
       gl_change = true;
       resh = 1;
       break;
     }
 
-    case FXGameLauncher::DATA_SAVE : {
+    case GorgonaWindow::DATA_SAVE : {
       if( gl_change == true ) {
         save( );
         resh = 1;
@@ -210,14 +210,14 @@ long FXGameLauncher::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
   return resh;
 }
 
-long FXGameLauncher::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
 {
   FXArray<const FXchar*> command;
   FXString cmd;
 
   this->write_config( );
   switch( FXSELID( sel ) ) {
-    case FXGameLauncher::CONF_SETUP : {
+    case GorgonaWindow::CONF_SETUP : {
       cmd = gl_toolkit_pth + "bin/adie " + FXPath::expand( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) ) + "/" + getApp( )->getAppName( ) + ".rc";
       //command.push( convert_str( gl_toolkit_pth + "bin/adie" ) );
       //command.push( convert_str( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" ) );
@@ -226,7 +226,7 @@ long FXGameLauncher::OnCmd_Config( FXObject *sender, FXSelector sel, void *data 
       std::cout << cmd.text( ) << std::endl;
       break;
     }
-    case FXGameLauncher::CONF_FOX : {
+    case GorgonaWindow::CONF_FOX : {
       cmd = gl_toolkit_pth + "bin/ControlPanel " + getApp( )->getAppName( ) + " " + getApp( )->getVendorName( );
       break;
     }
@@ -247,10 +247,10 @@ long FXGameLauncher::OnCmd_Config( FXObject *sender, FXSelector sel, void *data 
 
 }
 
-long FXGameLauncher::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 {
   switch( FXSELID( sel ) ) {
-    case FXGameLauncher::MAIN_CONFIG : {
+    case GorgonaWindow::MAIN_CONFIG : {
       //read_config( );
       std::cout << "Checking window configuration: mode-" << gl_winmode.text( ) << " " << this->getX( ) << "x" << this->getY( ) << " " << this->getWidth( ) << ", " << this->getHeight( ) << std::endl;
       gl_WinPos.set( this->getX( ), this->getY( ) );
@@ -262,7 +262,7 @@ long FXGameLauncher::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
   return 1;
 }
 
-long FXGameLauncher::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
+long GorgonaWindow::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 {
    // Cleaning the Child process
    FXint  __status;
@@ -278,7 +278,7 @@ long FXGameLauncher::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *da
 /*************************************************************************************************/
 /* Pomocne funkce pro interni operace tridy                                                      */
 /*************************************************************************************************/
-void FXGameLauncher::load( )
+void GorgonaWindow::load( )
 {
   TiXmlDocument  xdoc;
   FXGameItem    *it;
@@ -320,7 +320,7 @@ void FXGameLauncher::load( )
   gl_statusbar->getStatusLine( )->setNormalText( status_info );
 }
 
-void FXGameLauncher::save( )
+void GorgonaWindow::save( )
 {
   TiXmlDocument     xdoc;
   
@@ -342,7 +342,7 @@ void FXGameLauncher::save( )
 
 }
 
-void FXGameLauncher::read_config( )
+void GorgonaWindow::read_config( )
 {
   FXString as, hg;
   //FXint pos_x = ( getApp( )->getRootWindow( )->getWidth( ) / 2 ) - ( this->getWidth( ) / 2 );
@@ -350,7 +350,7 @@ void FXGameLauncher::read_config( )
 
   gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
   gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
-  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/FXGameLauncher" ).text( ) );
+  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
   gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
   gl_browser_args    = getApp( )->reg( ).readStringEntry( "Profile", "browserargs",       FXString::null );
@@ -365,7 +365,7 @@ void FXGameLauncher::read_config( )
 
   gl_datafile    = gl_profile + "/data/" + gl_gamelist + ".xml";//gamelist.xml";
   //gl_datafile  = "/home/gabriel/.parallelrealities/jgamelaunch/gamelist.xml";
-  //gl_datafile  = "/home/gabriel/Projects/Fox/FXGameLauncher/BETA.01.00/data/gamelist.xml";
+  //gl_datafile  = "/home/gabriel/Projects/Fox/GorgonaWindow/BETA.01.00/data/gamelist.xml";
 
   if( gl_view == "icons" ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_ICONS ), NULL ); }
   if( gl_view == "list"  ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_DETAIL ), NULL ); }
@@ -374,7 +374,7 @@ void FXGameLauncher::read_config( )
   std::cout << "{ read_config } OK" << std::endl;
 }
 
-void FXGameLauncher::write_config( )
+void GorgonaWindow::write_config( )
 {
   if( FXStat::isDirectory( gl_profile ) == false ) {
     FXDir::create( gl_profile );
@@ -391,7 +391,7 @@ void FXGameLauncher::write_config( )
   getApp( )->reg( ).writeStringEntry( "Profile", "autosave",       ( ( gl_autosave == true ) ? "true" : "false" ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "hidegui",        ( ( gl_hidegui  == true ) ? "true" : "false" ) );
   getApp( )->reg( ).writeStringEntry( "Window",  "OpenView",        gl_view.text( ) );
-  this->handle( this, FXSEL( SEL_CONFIGURE, FXGameLauncher::MAIN_CONFIG ), NULL );
+  this->handle( this, FXSEL( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG ), NULL );
   if( gl_winmode == "window" ) {
     FXint wx, wy;
     wx = this->getX( );
@@ -412,7 +412,7 @@ void FXGameLauncher::write_config( )
   }
 }
 
-void FXGameLauncher::read_Keywords( const FXString &listfile, const FXString &rootname )
+void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &rootname )
 {
    FXArray<GO_Keywords> *rlist;
 
@@ -451,7 +451,7 @@ void FXGameLauncher::read_Keywords( const FXString &listfile, const FXString &ro
 }
 
 
-void FXGameLauncher::checkWindowState( )
+void GorgonaWindow::checkWindowState( )
 {
   std::cout << "{ checkWindowState }" << std::endl;
   if( gl_winmode == "window" ) {
@@ -473,7 +473,7 @@ void FXGameLauncher::checkWindowState( )
   }
 }
 
-void FXGameLauncher::layout( )
+void GorgonaWindow::layout( )
 {
   //std::cout << "{ layout }" << std::endl;
   FXPrimaryWindow::layout( );
@@ -490,7 +490,7 @@ void FXGameLauncher::layout( )
 }
 
 /**************************************************************************************************/
-void FXGameLauncher::get_arguments( StringList *list )
+void GorgonaWindow::get_arguments( StringList *list )
 {
   if( list != NULL ) {
     const char *const *__args = getApp( )->getArgv( );
@@ -499,7 +499,7 @@ void FXGameLauncher::get_arguments( StringList *list )
 }
 
 
-void FXGameLauncher::version( )
+void GorgonaWindow::version( )
 {
   Welcome( getApp( ) );
   /*
@@ -512,7 +512,7 @@ void FXGameLauncher::version( )
 
 /**************************************************************************************************/
 
-FXbool FXGameLauncher::parse_params( FXArray<const FXchar*> *buffer, const FXString &ar, FXbool dump ) { // Rozparsovani retezce argumentu
+FXbool GorgonaWindow::parse_params( FXArray<const FXchar*> *buffer, const FXString &ar, FXbool dump ) { // Rozparsovani retezce argumentu
   /// Parametry se oddeluji znakem mezery (" ")
   /// Je-li to vyzdovano aplikaci musi byt dodreno i jejich poradi
   /// mezera za, nebo pred strednikem se predava jako soucast parametru
@@ -550,7 +550,7 @@ FXbool FXGameLauncher::parse_params( FXArray<const FXchar*> *buffer, const FXStr
   return ( ( nargs == start ) ? true : false );
 }
 
-FXbool FXGameLauncher::exec( const FXArray<const FXchar*> &args, FXbool wait, FXbool ver )
+FXbool GorgonaWindow::exec( const FXArray<const FXchar*> &args, FXbool wait, FXbool ver )
 {
   /// Cesta k spoustenemu souboru (args[0]) nesmi zacinat a koncit mezerou (" ")
   /// Cesta ke spoustenemu souboru musi byt absolutni (tedy od korenoveho adresare)
@@ -589,7 +589,7 @@ FXbool FXGameLauncher::exec( const FXArray<const FXchar*> &args, FXbool wait, FX
   return resh;
 }
 
-FXbool FXGameLauncher::run( FXGameItem *it )
+FXbool GorgonaWindow::run( FXGameItem *it )
 {
   FXbool resh = false;
   FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
@@ -603,7 +603,7 @@ FXbool FXGameLauncher::run( FXGameItem *it )
   return resh;
 }
 
-FXint FXGameLauncher::WaitOnGame( FXProcess *proc )
+FXint GorgonaWindow::WaitOnGame( FXProcess *proc )
 {
   FXint       status = 0;
   FXGameItem *it = this->get_ActiveItem( );

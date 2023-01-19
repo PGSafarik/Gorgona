@@ -12,15 +12,15 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __FXGAMELAUNCHER_H
-#define __FXGAMELAUNCHER_H
+#ifndef __GORGONAWINDOW_H
+#define __GORGONAWINDOW_H
 
 /*************************************************************************
-* FXGameLauncher.h                                                       *
+* GorgonaWindow.h                                                       *
 *                                                                        *
 * Hlavni okno aplikace                                                   *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
-* ./FoxGHICP --name Gorgona --vendor FXGameLauncher                      * 
+* ./FoxGHICP --name Gorgona --vendor GorgonaWindow                      * 
 *************************************************************************/
 // Syscalls and system types
 #include <cstdio>
@@ -53,11 +53,8 @@
 #include<FXListPane.h>
 #include<GO_Keywords.h>
 
-
-
-
-class FXGameLauncher : public FXPrimaryWindow {
-FXDECLARE( FXGameLauncher )
+class GorgonaWindow : public FXPrimaryWindow {
+FXDECLARE( GorgonaWindow )
   // Window Objects
   FindBar            *m_findbar;        // Vyhledavaci panel
   FXSwitcher         *gl_switcher;      // Prepinac aktivnich panelu
@@ -108,8 +105,8 @@ FXDECLARE( FXGameLauncher )
   FXString   gl_lscript;
 
 public :
-  FXGameLauncher( Gorgona *app );
-  virtual ~FXGameLauncher( );
+  GorgonaWindow( Gorgona *app );
+  virtual ~GorgonaWindow( );
 
   ////////////////////////////////////////////////
   ///
@@ -154,7 +151,7 @@ public :
   long OnCmd_List( FXObject *sender, FXSelector sel, void *data );
 
 protected :
-  FXGameLauncher( ) { }
+  GorgonaWindow( ) { }
 
   void load( );
   void save( );
@@ -173,5 +170,5 @@ protected :
   static FXbool parse_params( FXArray<const FXchar*> *buffer, const FXString &str, FXbool dump = false );
 };
 
-#endif /* __FXGAMELAUNCHER_H */
+#endif /* __GORGONAWINDOW_H */
 /*** END ****************************************************************/

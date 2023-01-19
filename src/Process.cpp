@@ -2,7 +2,7 @@
 #include<GorgonaProcess/Process.h>
 
 using namespace GORGONA;
-//#define DEBUG_DUMP_P true /// FIXME PROCESS_01 : Po skonceni ladeni odstranit priznak pro vypis ladicich informaci
+//#define __DEBUG true /// FIXME PROCESS_01 : Po skonceni ladeni odstranit priznak pro vypis ladicich informaci
 
 /// Callbacky pro volani funkci z Lua scriptu ///
 FXString lua_Launcher_p( const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
@@ -64,7 +64,7 @@ void Process::ParseCommand( const FXString &cmd )
     clear_string_buffer( &p_params );
   }
 
-  #ifdef DEBUG_DUMP_P
+  #ifdef __DEBUG
   // Vypis obsahu pole prikazu po parsovani
   FXint num = p_params.no( );
   std::cout << "[Perseus."<< getClassName( ) << "::ParseCommand( )] The params array listing of " << p_params.at( 0 )  << " command p_process: " << std::endl;
@@ -89,12 +89,12 @@ FXbool Process::start( const FXString &workdir, FXbool waiting )
   }
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
 
-  #ifdef DEBUG_DUMP_P
+  #ifdef __DEBUG
   std::cout << "[Perseus." << getClassName( ) << "::start( )] Debug process info for this command:" << std::endl;
   std::cout << "Launcher:  " << ( p_launchid.empty( ) ? "native" : p_launchid.text( ) ) << std::endl;
   std::cout << "Work dir:  " << ( workdir.empty( ) ? "native" : workdir.text( ) ) << std::endl;
   std::cout << "Executing: " << ( p_status ? "true" : "false" ) << std::endl;
-  #endif // DEBUG_DUMP_P
+  #endif // __DEBUG
 
   std::cout << "\n========================================================" << std::endl;
   std::cout.flush( );
@@ -110,16 +110,16 @@ void Process::counter( )
 FXint Process::waitForMy( FXbool value )
 {
   FXint stat = 0;
-  #ifdef DEBUG_DUMP_P
+  #ifdef __DEBUG
   std::cout << "[Perseus." << getClassName( ) << "::waitForMy( )] Waiting on process " << p_params[ 0 ] << std::endl;
   std::cout << "Type: " << ( value ? "enable" : "disable" ) << std::endl;
-  #endif // DEBUG_DUMP_P
+  #endif // __DEBUG
 
   if( value == true ) { this->p_process.wait( stat ); }
 
-  #ifdef DEBUG_DUMP_P
+  #ifdef __DEBUG
   std::cout << "Status : " <<  stat  << std::endl;
-  #endif // DEBUG_DUMP_P
+  #endif // __DEBUG
 
 
   return stat;
@@ -187,7 +187,7 @@ FXString lua_Launcher_p( const FXString &p_id, const FXString &p_cmd )
     lua_pop( l_parser( ), -1 );
   }
 
-  #ifdef DEBUG_DUMP_P
+  #ifdef __DEBUG
   std::cout << "__launcher( )" << std::endl;
   std::cout << "Spoustec \'" << p_id.text( ) << "\' Prikaz \'" << p_cmd.text( ) << "\'" << std::endl;
   std::cout << "Vysledek: " << resh.text( ) << std::endl;
