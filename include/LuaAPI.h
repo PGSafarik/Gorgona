@@ -47,6 +47,13 @@ int    l_ReadLaunchers( FXArray<FXString> *keylist );
 FXString inputBox( const FXString &label, const FXString &title = "Vlozte, prosim, pozadovane udaje:" );
 void     output( const FXString &value, FXbool nonl = false );
 
+
+/* Zprava kolekce
+void makeNewItem( ) { }       // Vytvoreni a zarazeni nove polozky
+void findItem( )    { }       // Vrati identifikatory polozek, ktere se shoduji se zadanym(i) parametrem(/Y)
+void setItemProperty( ) { }   //
+void getItemProperty( ) { }   //
+*/
 // Callbacks
 FXint __luanch( );
 FXString __launcher( const FXString &cmd, const FXString &t );

@@ -1,5 +1,5 @@
 // FXLauncherLua.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
-#include<FXLauncherLua.h>
+#include<LuaAPI.h>
 #include<FXGameLauncher.h>
 #include<FXGameItem.h>
 #include<Utils.h>
