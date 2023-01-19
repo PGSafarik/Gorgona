@@ -44,7 +44,8 @@ function Mod_Initialize( )
 	if ltable == nil then ltable = { } end 
 	
 	-- FIXME MOD_01 : Get this path from Gorgona !!!
-	Mod_Load( "/usr/share/Gorgona/modules/" )
+	--Mod_Load( "/usr/share/Gorgona/modules/" )
+      Mod_Load( "/home/gabriel/Projects/Fox/sources/Gorgona/modules" )
     
 	print( "List of Launchers id: " )
   for i = 1, #ltable do print( ltable[ i ] ) end 
@@ -81,7 +82,7 @@ function Mod_Load( dir )
 	for file in list:lines(  ) do
 		if file ~= "Launchers.lua" and file ~= "ModManager.lua" and file ~= "template.lua" then
 			file = dir .. "/" .. file
-			--print( file )
+			print( file )
 			dofile( file )
 		end	
 	end	

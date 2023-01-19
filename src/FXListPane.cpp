@@ -158,17 +158,21 @@ void FXListPane::showItem( FXGameItem *item )
   else { gl_itemslist->setItemText( index, text ); }
 }
 
+/// FIXME TREE_001: Add view of items count from folder!
 void FXListPane::showFolder( FXTreeItem *__folder, FXbool sub )
 {
   FXTreeItem *tit = ( ( __folder == NULL ) ? gl_rootfd : __folder );
+
   if( tit != NULL  ) {
     FXGameItemArray *itl = ( FXGameItemArray* )tit->getData( );
     FXint num = itl->no( );
+
     for( FXint i = 0; i != num; i++ ) {
       FXGameItem *item = itl->at( i );
       showItem( item );
     }
-
+    m_actinum = num;
+ 
     if( sub == true ) {
       FXTreeItem *f = tit->getFirst( );
       while( f != NULL ) {
@@ -176,7 +180,9 @@ void FXListPane::showFolder( FXTreeItem *__folder, FXbool sub )
         f = f->getNext( );
       }
     }
+
     gl_itemslist->sortItems( );
+    Notify( SEL_CHANGED );
   }
 }
 
@@ -237,8 +243,8 @@ void FXListPane::signedItem( FXint id, FXint state )
 /*************************************************************************************************/
 FXint FXListPane::numItems( FXTreeItem *folder, FXbool sub )
 {
-
-  return 0;
+  
+  return m_actinum;
 }
 
 FXint FXListPane::numFolders( FXTreeItem *folder, FXbool sub )
@@ -344,31 +350,22 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
     case FXListPane::LIST_FIND :
     {
       FXint    pos  = -1;
-      //FXint    curr = gl_itemslist->getCurrentItem( );
-
-      //FXString text = gl_searchfield->getText( );
       FXString text = (char *) data;
       std::cout << "Search text " << text << std::endl; 
       if( !text.empty( ) ) {
         pos = gl_itemslist->findItem( text );
-        if( pos > -1 ) { /*/ Nalezeno
-          gl_itemslist->killSelection( );
-          gl_itemslist->setCurrentItem( pos );
-          gl_itemslist->selectItem( pos );
-          gl_itemslist->makeItemVisible( pos );
-          */
+        if( pos > -1 ) { 
           aktiveItem( pos );
+          resh = 1;
         }
         else {
           FXString _msg = "Nelze najit polozku s pozadovanym textem ";
           FXMessageBox::information( this, MBOX_OK, "Vyhledavani", ( _msg + text ).text( ) );
         }
-        //gl_searchfield->setText( FXString::null );
       }
       else { FXMessageBox::question( this, MBOX_OK, "EHM...", "Coze to mam hledat?" ); }
       break;
     }
-
   }
 
   return resh;
@@ -380,7 +377,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
   FXuint _placement = PLACEMENT_SCREEN;
   FXSelector __sel = FXSEL( SEL_CHANGED, gl_selector );
   FXGameItem *item;
-
+  
   switch( FXSELID( sel ) ) {
     case FXListPane::GAME_INSERT :
     {
@@ -395,6 +392,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
           this->insertItem( item );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
           gl_target->handle( this, __sel, NULL );
+          SaveNotify( );
           resh = 1;
         }
       }
@@ -407,6 +405,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
         if( edit->execute( _placement ) == true ) {
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
           gl_target->handle( this, __sel, NULL );
+          SaveNotify( );
           resh = 1;
         }
       }
@@ -430,6 +429,23 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
   }
 
   return resh;
+}
+
+
+FXlong FXListPane::Notify( FXuint type_message ) 
+{
+  FXlong res = 0;
+  if( gl_target ) { res = gl_target->handle( this, FXSEL( type_message, gl_selector ), NULL ); } 
+
+  return res;
+}
+
+FXlong FXListPane::SaveNotify( ) 
+{ 
+  FXlong res = 0;
+  if( gl_target ) { res = gl_target->handle( this, FXSEL( SEL_COMMAND, FXGameLauncher::DATA_SAVE ), NULL ); } 
+
+  return res;
 }
 
 /*** END ******************************************************************************************/

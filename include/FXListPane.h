@@ -63,8 +63,11 @@ FXDECLARE( FXListPane )
   IconsTheme  *gl_icth;
   FXObject    *gl_target;
   FXSelector   gl_selector;
+  
+  FXint m_actinum;     // Pocet aktualne zobrazovanych polozek
+  FXint gl_nitems; 
+  FXint gl_nfolders;
 
-  FXint gl_nitems, gl_nfolders;
 
 public :
   FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSelector sel );
@@ -136,6 +139,8 @@ protected :
   ///
   ///
   void erase_f( FXGameItem *item ); // Funkce odstrani polozku z dat slozky
+  FXlong Notify( FXuint type_message );
+  FXlong SaveNotify( );
   /*
   inline FXIcon* loadExternalIcon( const FXString &ic_file, FXint width = 16, FXint height = 16 )
   {

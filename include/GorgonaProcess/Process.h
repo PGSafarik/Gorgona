@@ -28,7 +28,7 @@
 
 #include<Utils.h>
 #include<FXGameItem.h>
-#include<FXLauncherLua.h>
+#include<LuaAPI.h>
 
 namespace GORGONA {
 

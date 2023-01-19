@@ -42,13 +42,14 @@
 #include<tinyxml.h>
 
 // Internal headers
+#include<Gorgona.h>
 #include<Utils.h>
 #include<Boxes.h>
 #include<IconsTheme.h>
 #include<FXGameItem.h>
 #include<GorgonaProcess/Process.h>
 #include<FXLaunchEditor.h>
-#include<FXLauncherLua.h>
+#include<LuaAPI.h>
 #include<FXListPane.h>
 #include<GO_Keywords.h>
 
@@ -107,7 +108,7 @@ FXDECLARE( FXGameLauncher )
   FXString   gl_lscript;
 
 public :
-  FXGameLauncher( FXApp *a );
+  FXGameLauncher( Gorgona *app );
   virtual ~FXGameLauncher( );
 
   ////////////////////////////////////////////////

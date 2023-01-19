@@ -19,11 +19,12 @@
 * Copyright (c) 08/02/2015 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<fox-1.7/fx.h>
+#include<Gorgona.h>
 #include<FXGameLauncher.h>
 
 int main( int argc, char **argv )
 {
-  FXApp app( "Gorgona", "FXGameLauncher" );
+  Gorgona app( "Gorgona", "FXGameLauncher" );
   app.init( argc, argv );
   new FXGameLauncher( &app );
   app.create( );

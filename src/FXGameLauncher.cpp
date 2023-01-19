@@ -17,8 +17,8 @@ FXDEFMAP( FXGameLauncher ) LAUNCHERMAP[ ] = {
 FXIMPLEMENT( FXGameLauncher, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
 
 /**************************************************************************************************/
-FXGameLauncher::FXGameLauncher( FXApp *a )
-              : FXPrimaryWindow( a, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
+FXGameLauncher::FXGameLauncher( Gorgona *app )
+              : FXPrimaryWindow( app, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
 {  
   StringList arglist;
   get_arguments( &arglist );
@@ -164,7 +164,11 @@ long FXGameLauncher::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_CHANGED :
     {
-      //std::cout << "[FXGameLauncher::OnCmd_List]List must be changed ..." << std::endl;
+      std::cout << "[FXGameLauncher::OnCmd_List] List must be updated ..." << std::endl;
+      FXString numinfo = "View ";
+      numinfo += FXString::value( gl_pane->numItems( NULL, false ) ) + " game entries"; //!
+      gl_statusbar->getStatusLine( )->setText( numinfo );
+
       gl_change = true;
       resh = 1;
       break;
