@@ -1,6 +1,6 @@
 [Desktop Entry]
 Comment=Spravce her s moznosti vytvaret univerzalni spoustece
-Exec=/opt/Gorgona/gorgona
+Exec=/usr/bin/gorgona
 GenericName=Spravce her
 Icon=/usr/share/pixmaps/medusa-head.png
 Name=Gorgona
