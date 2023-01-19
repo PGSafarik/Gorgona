@@ -105,10 +105,9 @@ FXbool FXGameItem::parse( TiXmlElement *myel )
 {
   FXString _sect, _key, _value;
   TiXmlElement   *el = NULL;
-  TiXmlAttribute *at = NULL;
 
   // kontrola elementu hry
-  if( myel->Value( ) != "Game" ) { return false; }
+  if( FXString::compare( myel->Value( ), "Game" ) != 0 ) { return false; }
   el = myel;
 
   // Cyklus nacitani dat
@@ -116,27 +115,25 @@ FXbool FXGameItem::parse( TiXmlElement *myel )
     _sect = el->Value( );
 
     // Precteni klicu a hodnot elementu daneho elementu
-    if( ( at = el->FirstAttribute( ) ) != NULL ) {
-      for( at; at; at = at->Next( ) ) {
-        _key   = _sect + ":" + at->Name( );
-        _value = at->Value( );
+    for( TiXmlAttribute *at = el->FirstAttribute( ); at; at = at->Next( ) ) {
+      _key   = _sect + ":" + at->Name( );
+      _value = at->Value( );
 
-        // Nektere hodnoty je nutno osetrit zvlast
-        if( _key == "Run:type"  ) {
-          if( _value.empty( ) ) { _value = "native"; }
-        }
-        if( _key == "Run:backg" ) {
-          this->hidel = ( ( _value.empty( ) or ( _value == "false" ) ) ? false : true );
-          continue;
-        }
-        if( _key == "Stats:NumberOfPlays" ) {
-          this->nop = ( _value.empty( ) ? 0 : _value.toInt( ) );
-          continue;
-        }
-
-        // Ostatni se zapisou rovnou do hasmapy
-        this->write( _key, _value ); //}
+      // Nektere hodnoty je nutno osetrit zvlast
+      if( _key == "Run:type"  ) {
+        if( _value.empty( ) ) { _value = "native"; }
       }
+      if( _key == "Run:backg" ) {
+        this->hidel = ( ( _value.empty( ) or ( _value == "false" ) ) ? false : true );
+        continue;
+      }
+      if( _key == "Stats:NumberOfPlays" ) {
+        this->nop = ( _value.empty( ) ? 0 : _value.toInt( ) );
+        continue;
+      }
+
+      // Ostatni se zapisou rovnou do hasmapy
+      this->write( _key, _value ); //}
     }
 
     // Zpracovani elementu - sekci
@@ -151,11 +148,8 @@ void FXGameItem::load( TiXmlElement *eitem )
 {
   FXbool   _set_of_type = ( ( this->property.find( "type" ) != -1 ) ? true : false );
   FXString _name, _value, _sect, _key;
-  TiXmlElement   *elem = NULL;
-  TiXmlAttribute *attr = NULL;
 
-  if( ( elem = eitem->FirstChildElement( ) ) == NULL ) { return; }
-  for( elem; elem; elem = elem->NextSiblingElement( ) ){
+  for( TiXmlElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );
     // Osetreni elementu, se kterymi je potreba nakladat zvlastnim zpusobem :
     if( _sect == "Description" ) {
@@ -164,8 +158,7 @@ void FXGameItem::load( TiXmlElement *eitem )
     }
 
     // Zpracovani atributu elementu :
-    if( ( attr = elem->FirstAttribute( ) ) == NULL ) { continue; }
-    for( attr; attr; attr = attr->Next( ) ) {
+    for( TiXmlAttribute *attr = elem->FirstAttribute( ); attr; attr = attr->Next( ) ) {
       _name  = attr->Name( );
       _value = attr->Value( );
 
@@ -187,7 +180,7 @@ void FXGameItem::load( TiXmlElement *eitem )
       // Vsechny ostatni hodnoty jsou zaklicovany do cache vlastnosti:
       _key = _sect + ":" + _name;
       this->write( _key, _value, false );
-    }
+    } 
   }
   // Defaultni nastaveni typu spoustece
   if( _set_of_type == false ) { this->write( "Basic:type", "native", false ); }

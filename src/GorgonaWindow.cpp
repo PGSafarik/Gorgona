@@ -289,18 +289,15 @@ void GorgonaWindow::load( )
 
     /* read Games Library */
     TiXmlElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
-    if( xlibrary )  {
-      TiXmlElement  *xegame = xlibrary->FirstChildElement( "Game" );
-      if( xegame ) {
-        for( xegame; xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
-          if( ( it = new FXGameItem( ) ) != NULL ) {
-            it->load( xegame );
-            it->checkIcons( getApp( ) );
-            gl_pane->insertItem( it );
-          }
-          else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
+    if( xlibrary )  {        
+      for( TiXmlElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
+        if( ( it = new FXGameItem( ) ) != NULL ) {
+          it->load( xegame );
+          it->checkIcons( getApp( ) );
+          gl_pane->insertItem( it );
         }
-      } /* V knihovne nejsou zatim zadne polozky */
+        else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
+      } 
     }   /* Knihovna (jeste) nevytvorena. Prvni spusteni? */
   }
   else {
@@ -414,40 +411,40 @@ void GorgonaWindow::write_config( )
 
 void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &rootname )
 {
-   FXArray<GO_Keywords> *rlist;
+  FXArray<GO_Keywords> *rlist;
 
-   // Maping root of keyvords list?
-   if( !gl_keywordsList.has( rootname ) ) {
-     rlist = new FXArray<GO_Keywords>;
-     gl_keywordsList.insert( rootname, rlist );
-   }
-   else { rlist = gl_keywordsList.data( gl_keywordsList.find( rootname ) ); }
+  // Maping root of keyvords list?
+  if( !gl_keywordsList.has( rootname ) ) {
+    rlist = new FXArray<GO_Keywords>;
+    gl_keywordsList.insert( rootname, rlist );
+  }
+  else { rlist = gl_keywordsList.data( gl_keywordsList.find( rootname ) ); }
 
-   TiXmlDocument kwdoc;
-   if( ( listfile.empty( ) != true ) && ( kwdoc.LoadFile( listfile.text( ) ) != false ) ) {
-     TiXmlElement *kwelem = kwdoc.RootElement( )->FirstChildElement( "Keyword" );
-     for( kwelem; kwelem; kwelem = kwelem->NextSiblingElement( "Keyword" ) ) {
-       GO_Keywords *kwl = new GO_Keywords;
-       rlist->append( *kwl );
+  TiXmlDocument kwdoc;
+  if( ( listfile.empty( ) != true ) && ( kwdoc.LoadFile( listfile.text( ) ) != false ) ) {
+    TiXmlElement *kwelem = kwdoc.RootElement( )->FirstChildElement( "Keyword" );
+    while( kwelem != NULL ) {
+      GO_Keywords *kwl = new GO_Keywords;
+      rlist->append( *kwl );
 
-       // DUMPING
-       std::cout << "LOAD Keywords " << kwelem->Attribute( "value" ) << std::endl;
-       for( FXint i = 0; i != kwl->no( ); i++  ) {
-          FXString key = kwl->key( i );
-          if( !key.empty( ) ) {
-            std::cout << "\t" << key.text( ) << std::endl;
-          }
-       }
-     }
-   }
-    else {
+      // DUMPING
+      std::cout << "LOAD Keywords " << kwelem->Attribute( "value" ) << std::endl;
+      for( FXint i = 0; i != kwl->no( ); i++  ) {
+         FXString key = kwl->key( i );
+         if( !key.empty( ) ) {
+           std::cout << "\t" << key.text( ) << std::endl;
+         }
+      }
+
+      kwelem = kwelem->NextSiblingElement( "Keyword" );
+    }
+  }
+  else {
     std::cout << "Chyba : neni zadan keywords soubor, nebo ma chybny format" << std::endl;
     gl_change = true;
   }
   std::cout << "{ read_keywords } OK" << std::endl;
   std::cout.flush( );
-
-
 }
 
 
