@@ -46,7 +46,7 @@
 #include<Boxes.h>
 #include<IconsTheme.h>
 #include<FXGameItem.h>
-#include<GorgonaProcess/Process.h>
+//#include<GorgonaProcess/Process.h>
 #include<FXLaunchEditor.h>
 #include<LuaAPI.h>
 #include<FXListPane.h>
@@ -55,8 +55,11 @@
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
 
-FXObject *m_tgt;           // Cil notifikacnich zprav
-FXuint    m_message;       // ID notifikacni zpravy 
+FXObject            *m_tgt;           // Cil notifikacnich zprav
+FXuint               m_message;       // ID notifikacni zpravy 
+FXArray<FXProcess*>  m_descendants;   // Seznam spustenych procesu (potomku Gorgony)
+
+FXbool m_verbose;                      // Ukecany mod
 
 public:
    Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
@@ -70,14 +73,20 @@ public:
   virtual void init( int& argc, char** argv, FXbool connect = true );
 
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
+  FXint exec( const FXString &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
   FXint wait( FXProcess *process, FXbool notify = false );
  
   /* GUI handlers & messages */
+  enum {
+   SIGNAL_CHLD = FXApp::ID_LAST,  // Potomek skoncil
+   ID_LAST
+  };
 
+  long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
 
 protected:
-  long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );
-
+  long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Odesle notifikacni zpravu
+  void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Rozdeli jednotlive slozky retezce prikazu do pole
 
 };
 

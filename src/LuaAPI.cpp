@@ -14,7 +14,7 @@ FXRegistry& get_registry( ) { return _inst->getApp( )->reg( ); }
 // Gorgoana API for LUA scripts
 int static l_launcher_input( lua_State *L );     // Input box
 int static l_launcher_message( lua_State *L );   // Message box
-int static l_launcher_exec( lua_State *L );      // exec ( Run program )
+//int static l_launcher_exec( lua_State *L );      // exec ( Run program )
 int static l_launcher_selitem( lua_State *L );   // Select game item
 // Manipulation with Gorgona cfg register
 int static l_registry_write( lua_State *L );     // Read registry value
@@ -37,7 +37,7 @@ FXbool l_open( GorgonaWindow *i )
     lua_register( _state, "GetSelectItem",    l_launcher_selitem );
     /// Tree Manipulating ///////////////////////
     /// Others //////////////////////////////////
-    lua_register( _state, "__exec",          l_launcher_exec );
+    //lua_register( _state, "__exec",          l_launcher_exec );
     lua_register( _state, "Register_write",  l_registry_write );
     lua_register( _state, "Register_read",   l_registry_read );
     lua_register( _state, "Register_test",   l_registry_test );
@@ -165,7 +165,7 @@ int l_launcher_message( lua_State *L )
   lua_pushstring( L, actived.text( ) );
   return 1;
 }
-
+/*
 int l_launcher_exec( lua_State *L )
 {
   FXint prm_num;
@@ -185,7 +185,7 @@ int l_launcher_exec( lua_State *L )
 
   return 0;
 }
-
+*/
 int l_launcher_selitem( lua_State *L )
 {
   luaL_checktype( L, 1, LUA_TTABLE );

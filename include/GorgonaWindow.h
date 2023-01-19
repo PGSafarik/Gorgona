@@ -47,7 +47,7 @@
 #include<Boxes.h>
 #include<IconsTheme.h>
 #include<FXGameItem.h>
-#include<GorgonaProcess/Process.h>
+#include<GorgonaProcess/Runnable.h>
 #include<FXLaunchEditor.h>
 #include<LuaAPI.h>
 #include<FXListPane.h>
@@ -55,6 +55,8 @@
 
 class GorgonaWindow : public FXPrimaryWindow {
 FXDECLARE( GorgonaWindow )
+  Gorgona  *m_app;
+
   // Window Objects
   FindBar            *m_findbar;        // Vyhledavaci panel
   FXSwitcher         *gl_switcher;      // Prepinac aktivnich panelu
@@ -118,7 +120,6 @@ public :
   ///////////////////////////////////////////////
   /// Operace
   ///
-  FXbool exec( const FXArray<const FXchar*> &args, FXbool wait = true, FXbool ver = false );
   virtual void layout( );
 
   ////////////////////////////////////////////////
@@ -134,7 +135,6 @@ public :
     DATA_CHANGED,      // Seznam her byl zmenen
 
     SYSTEM_RUN,        // Spustit hru
-    SIGNAL_CHLD,        // Hra je ukoncen (skoncil proces potomka)
 
     CONF_SETUP,        // Nastaveni aplikace
     CONF_FOX,          // Nastaveni frameworku Fox
@@ -146,7 +146,6 @@ public :
   long OnCmd_Main(FXObject *sender, FXSelector sel, void *data );
   long OnCmd_Data( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_System( FXObject *sender, FXSelector sel, void *data );
-  long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_Config( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_List( FXObject *sender, FXSelector sel, void *data );
 
@@ -165,9 +164,7 @@ protected :
   void version( );
   
   /* Process */
-  FXint WaitOnGame( FXProcess *proc );
   FXbool run( FXGameItem *it = NULL );
-  static FXbool parse_params( FXArray<const FXchar*> *buffer, const FXString &str, FXbool dump = false );
 };
 
 #endif /* __GORGONAWINDOW_H */

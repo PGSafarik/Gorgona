@@ -1,7 +1,7 @@
 // GorgonaWindow.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
 #include<GorgonaWindow.h>
 
-using namespace GORGONA;
+using namespace PERSEUS;
 
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
@@ -11,7 +11,6 @@ FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_FOX,    GorgonaWindow::OnCmd_Config ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::DATA_SAVE,   GorgonaWindow::OnCmd_Data ),
-  FXMAPFUNC( SEL_SIGNAL,    GorgonaWindow::SIGNAL_CHLD, GorgonaWindow::OnSig_ExitChild )
 };
 
 FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
@@ -19,13 +18,14 @@ FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERM
 /**************************************************************************************************/
 GorgonaWindow::GorgonaWindow( Gorgona *app )
               : FXPrimaryWindow( app, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
-{  
+{ 
+  m_app = app; 
+ 
   StringList arglist;
   get_arguments( &arglist );
 
   this->version( );
 
-  getApp( )->addSignal( SIGCHLD, this, GorgonaWindow::SIGNAL_CHLD, false, 0 );
   gl_created= false;
 
   gl_iconstheme = new IconsTheme( getApp( ), "/usr/share/icons/oxygen/base/" );
@@ -164,7 +164,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_CHANGED :
     {
-      std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl;
+      //std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl;
       FXString numinfo = "View ";
       numinfo += FXString::value( gl_pane->numItems( NULL, false ) ) + " game entries"; //!
       gl_statusbar->getStatusLine( )->setText( numinfo );
@@ -232,9 +232,10 @@ long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
     }
   }
   //system( ( cmd + "&" ).text( ) );
-  parse_params( &command, cmd );
-  command.append( NULL );
-  exec( command, false, false );
+  /// FIXME GORWIN_001 : This operation has executing Gorgona class 
+  //parse_params( &command, cmd );
+  //command.append( NULL );
+  //m_app->exec( command, 0, 0, 0 );
 
   getApp( )->reg( ).clear( );
   getApp( )->reg( ).parseFile( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" );
@@ -260,19 +261,6 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
   }
 
   return 1;
-}
-
-long GorgonaWindow::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
-{
-   // Cleaning the Child process
-   FXint  __status;
-   struct rusage __usage;
-
-   pid_t childPID = wait3( &__status, 0, &__usage );
-   std::cout << "Quiting the child process " << childPID << " at " << getpid( ) << std::endl;
-   std::cout << "Exit code is: " << __status << std::endl;
-
-   return 1;
 }
 
 /*************************************************************************************************/
@@ -499,16 +487,11 @@ void GorgonaWindow::get_arguments( StringList *list )
 void GorgonaWindow::version( )
 {
   Welcome( getApp( ) );
-  /*
-  std::cout << "Copyright " << AutoVersion::DATE << "/" << AutoVersion::MONTH << "/" << AutoVersion::YEAR << "  D.A.Tiger <drakarax@seznam.cz>, GNU GPL 3" << std::endl;
-  std::cout << "App version: "<< AutoVersion::MAJOR<< "."<< AutoVersion::MINOR << "." << AutoVersion::REVISION;
-  std::cout << " [" << AutoVersion::STATUS << "]" << std::endl;
-  std::cout << "lib Fox    : " << FOX_MAJOR << "." << FOX_MINOR << "." << FOX_LEVEL << std::endl;
-  */
+
 }
 
 /**************************************************************************************************/
-
+/* /// REMOVE
 FXbool GorgonaWindow::parse_params( FXArray<const FXchar*> *buffer, const FXString &ar, FXbool dump ) { // Rozparsovani retezce argumentu
   /// Parametry se oddeluji znakem mezery (" ")
   /// Je-li to vyzdovano aplikaci musi byt dodreno i jejich poradi
@@ -546,71 +529,21 @@ FXbool GorgonaWindow::parse_params( FXArray<const FXchar*> *buffer, const FXStri
 
   return ( ( nargs == start ) ? true : false );
 }
-
-FXbool GorgonaWindow::exec( const FXArray<const FXchar*> &args, FXbool wait, FXbool ver )
-{
-  /// Cesta k spoustenemu souboru (args[0]) nesmi zacinat a koncit mezerou (" ")
-  /// Cesta ke spoustenemu souboru musi byt absolutni (tedy od korenoveho adresare)
-  /// Navratovy kod spousteneho procesu lze zatim ziskat pouze pri wait = true
-  /// Hodnota true parametru wait zablokuje celou aplikaci launcheru!
-
-  FXint     resh   = false;
-  FXint     pid    = 0;
-  FXint     status = 0;
-  FXProcess proc;
-
-  if( ver == true ) {
-    std::cout << "Run the process:";
-    FXint num = args.no( );
-    for( FXint i = 0; i != num; i++ ) { std::cout << " " << args[ i ]; }
-    std::cout << "\n========================================================" << std::endl;
-    std::cout << "\n";
-
-  }
-
-  if( ( resh = proc.start( args[ 0 ], args.data( ) ) ) == true ) {
-    pid = proc.id( );
-    status = WaitOnGame( &proc );
-  }
-
-  if( ver == true ) {
-    if( resh == true ) {
-      std::cout << "process running of " << pid << std::endl;
-      std::cout << "Process exited with " << status << " exit status" << std::endl;
-    }
-    else { std::cout << "RUN FATAL ERROR: Process is not running!" << std::endl;}
-    std::cout << "\n";
-    std::cout.flush( );
-  }
-
-  return resh;
-}
+*/
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
   FXbool resh = false;
   FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
   if( item != NULL ) {
-    GameProcess proc( item, NULL, 0 );
-    resh = proc.start( );
+    Game game( m_app, item, NULL, 0 );
+    resh = game.run( );
     gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
     gl_change = true;
   }
   else { std::cerr << "Neplatny odkaz na hru" << std::endl; }
   return resh;
 }
-
-FXint GorgonaWindow::WaitOnGame( FXProcess *proc )
-{
-  FXint       status = 0;
-  FXGameItem *it = this->get_ActiveItem( );
-  std::cout << "Wait on Game status:" << it->hidel << std::endl;
-  if( it->hidel == true ) {
-    proc->wait( status );
-  }
-  return status;
-}
-
 
 
 

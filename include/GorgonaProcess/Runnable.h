@@ -12,11 +12,11 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __PROCESS_H
-#define __PROCESS_H
+#ifndef __PERSEUS_H
+#define __PERSEUS_H
 
 /*************************************************************************
-* Process.h                                                              *
+* Runnable.h                                                              *
 *                                                                        *
 * Trida reprezentujici instanci herni aplikace(procesu)                  *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
@@ -26,70 +26,64 @@
 #include<fox-1.7/fx.h>
 #include<tinyxml.h>
 
+#include<Gorgona.h>
 #include<Utils.h>
 #include<FXGameItem.h>
 #include<LuaAPI.h>
 
-namespace GORGONA {
+namespace PERSEUS {
 
   /// Obecna trida procesu Gorgony ///
-  class Process : public FXObject {
-  FXDECLARE( Process )
-    FXArray<const char*> p_params;      // Seznam parametru i s prikazem (id 0) pro FXProcess
-    StringList           p_childlist;   // Seznam potomku daneho procesu
-    FXProcess            p_process;     // Objekt prvne spusteneho procesu
+  class Runnable: public FXObject  {
+  FXDECLARE( Runnable)
+    Gorgona             *m_app;
     FXString             p_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
+    FXString             m_workdir;     // Pozadovany pracovni adresare
     FXString             p_command;     // Retezec s prikazem
-    FXbool               p_status;      // Status spusteni prvniho procesu
     FXbool               p_notify;      // Indikator notifikace opreaci
-    FXbool               p_parse;       // Indikator, zda je prikaz prezpracovan
 
     FXObject   *p_target;               // Cilovy objekt notifikaci
     FXSelector  p_selector;             // notifikacni zprava
 
   public :
-    Process( const FXString &cmd, const FXString &launcher = "native", FXObject *tgt = NULL, FXSelector sel = 0 );
-    virtual ~Process( );
+    Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher = "native", FXObject *tgt = NULL, FXSelector sel = 0 );
+    virtual ~Runnable( );
 
-    //////////////////////////////////////////////
-    // Metody operaci
-    //
-    virtual FXbool   start( const FXString &workdir, FXbool waiting = false );
-    virtual void     counter( );
-    virtual FXint    waitForMy( FXbool value );
-    virtual FXString changeWorkDir( const FXString &nwd );
+    /* Access methods */
+    void     set_notify( FXbool value = true )  { p_notify = value; }
+    FXbool   get_notify( )                      { return p_notify;  }
+    void     set_workdir( const FXString &dir ) { m_workdir = dir;  }
+    FXString get_workdir( )                     { return m_workdir; }  
 
-    //////////////////////////////////////////////
-    // Pristupove metody
-    //
-    void   set_notify( FXbool value = true ) { p_notify = value; }
-    FXbool get_notify( )                     { return p_notify; }
-
+    /* Operations methods */
+    virtual FXint run( );
+    
   protected:
-    Process( ) { }
-    void ParseCommand( const FXString &cmd );
+    Runnable( ) { }
+    //void ParseCommand( const FXString &cmd );
     FXbool is_native( ) { return ( p_launchid.empty( ) || p_launchid == "native" ); }
+    FXString ChangeWorkDir( );
   };
 
   /// Trida urcena k spousteni a rizeni procesu her ///
-  class GameProcess : public Process {
-  FXDECLARE( GameProcess )
+  class Game : public Runnable {
+  FXDECLARE( Game )
     FXGameItem *gp_item;
 
   public:
-    GameProcess( FXGameItem *game, FXObject *tgt = NULL, FXSelector sel = 0 );
-    virtual ~GameProcess( );
+    Game( Gorgona *a, FXGameItem *game, FXObject *tgt = NULL, FXSelector sel = 0 );
+    virtual ~Game( );
 
     //////////////////////////////////////////////
     // Metody operaci
     //
-    virtual FXbool start( );
-    virtual void   counter( );
+    virtual FXint run( );
+    void counter( );
 
   protected:
-    GameProcess( ) { }
+    Game( ) { }
   };
 
-}      /* Namespace GORGONA */
-#endif /* __PROCESS_H */
+}      /* Namespace PERSEUS */
+#endif /* __PERSEUS_H */
 /*** END ****************************************************************/
