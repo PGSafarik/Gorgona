@@ -16,9 +16,9 @@
 #define __PERSEUS_H
 
 /*************************************************************************
-* Runnable.h                                                              *
+* Runnable.h                                                             *
 *                                                                        *
-* Trida reprezentujici instanci herni aplikace(procesu)                  *
+* Small classes representing an executable structure                     *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<iostream>
@@ -26,10 +26,7 @@
 #include<fox-1.7/fx.h>
 #include<tinyxml.h>
 
-#include<Gorgona.h>
-#include<Utils.h>
-#include<FXGameItem.h>
-#include<LuaAPI.h>
+class Gorgona;
 
 namespace PERSEUS {
 
@@ -37,41 +34,60 @@ namespace PERSEUS {
   class Runnable: public FXObject  {
   FXDECLARE( Runnable)
     Gorgona             *m_app;         // Ukazatel na instanci aplikace
-    FXString             p_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
+    FXString             m_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
     FXString             m_workdir;     // Pozadovany pracovni adresare
-    FXString             p_command;     // Retezec s prikazem
-    FXbool               p_notify;      // Indikator notifikace opreaci
+    FXString             m_command;     // Zadany prikaz ke spusteni
+    FXString             m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
+    FXbool               m_notify;      // Indikator notifikace opreaci
 
-    FXObject   *p_target;               // Cilovy objekt notifikaci
-    FXSelector  p_selector;             // notifikacni zprava
+    FXObject   *m_target;               // Cilovy objekt notifikaci
+    FXSelector  m_message;              // notifikacni zprava
 
   public :
+    Runnable( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
     Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher = "native", FXObject *tgt = NULL, FXSelector sel = 0 );
     virtual ~Runnable( );
 
     /* Access methods */
-    void     set_notify( FXbool value = true )  { p_notify = value; }
-    FXbool   get_notify( )                      { return p_notify;  }
-    void     set_workdir( const FXString &dir ) { m_workdir = dir;  }
-    FXString get_workdir( )                     { return m_workdir; }  
-
-    /* Operations methods */
-    virtual FXint run( );
+    void     set_notify( FXbool value = true )  { m_notify = value;  }
+    FXbool   get_notify( )                      { return m_notify;   }
+    void     set_workdir( const FXString &dir ) { m_workdir = dir;   }
+    FXString get_workdir( )                     { return m_workdir;  } 
+    void     set_launchid( const FXString &id ) { m_launchid = id;   }
+    FXString get_launchid( )                    { return m_launchid; }
+    void     set_command( const FXString &cmd ) { Command( cmd );    }
+    FXString get_command( )                     { return m_command;  } 
     
+    /* Operations methods */
+    FXint operator( ) ( ) { return run( ); }
+
+    virtual FXint  run( );
+    virtual FXbool load( TiXmlElement *parent ); 
+    virtual FXbool save( TiXmlElement *parent );
+    virtual FXbool validation( );
+    
+    /* Debug & testing */
+    virtual void dump( ); 
+
   protected:
     Runnable( ) { }
     
-    FXbool IsNative( ) { return ( p_launchid.empty( ) || p_launchid == "native" ); }
+    virtual void Command( const FXString &cmd ); 
+    FXbool IsNative( ) { return ( m_launchid.empty( ) || m_launchid == "native" ); }
     FXString ChangeWorkDir( );
   };
 
   /* Trida urcena k spousteni a rizeni procesu her */
   class Game : public Runnable {
   FXDECLARE( Game )
-    FXGameItem *gp_item;
+    FXint   m_used;        // Pocet spusteni 
+    FXlong  m_total;       // Celkova doba spusteni
+    FXlong  m_last;        // Posledni spusteni (datum, cas)
+    FXlong  m_time;        // Celkova doba posledniho spusteni 
+    FXlong  m_longest;     // Nejdelsi doba behu vubec  
 
   public:
-    Game( Gorgona *a, FXGameItem *game, FXObject *tgt = NULL, FXSelector sel = 0 );
+    Game( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
     virtual ~Game( );
 
     /* Operations methods */
