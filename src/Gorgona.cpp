@@ -15,7 +15,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_tgt = NULL;
   m_message = 0;
 
-  m_verbose = true;
+  m_verbose = false;
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 }
@@ -38,7 +38,7 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   FXApp::init( argc, argv, connect );
 }
 
-FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts )
+FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
 {
   /* Metoda prevezme prikaz a spusti jej jako novy proces, reprezentovany objektem typu FXProcess, ktery je nasledne 
      vlozen do bufferu procesu. V pripade uspechu vrati PID spusteneho procesu, v pripade neuspechu vrati chybovy kod
@@ -47,6 +47,7 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint
      - Cesta ke spoustenemu souboru musi byt absolutni (tedy od korenoveho adresare)
      - Navratovy kod spousteneho procesu lze zatim ziskat pouze pri wait = true
      - Aktivace wait zablokuje celou aplikaci launcheru!
+     FIXME GORGONA_003: Dopracovat spousteci priznaky
   */
   FXint pid = 0;
 
@@ -77,13 +78,13 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint
   return pid;
 }
 
-FXint Gorgona::exec( const FXString &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts )
+FXint Gorgona::exec( const FXString &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
 {
   FXArray<const char*> buffer;
 
   if( !cmd.empty( ) ) {
     ParseCommand( cmd, &buffer );
-    return exec( buffer, term_opts, sudo_opts, proc_opts );
+    return exec( buffer, proc_opts, term_opts, sudo_opts );
   }  
   
   return -1;
@@ -99,6 +100,13 @@ FXint Gorgona::wait( FXProcess *process, FXbool notify )
   }
   
   return status;
+}
+
+long Gorgona::notify( FXuint mtype, void *mdata ) 
+{
+   long retv = -1;
+   if( m_tgt && m_message > 0 ) { retv = m_tgt->handle( this, FXSEL( mtype, m_message ), mdata ); } 
+   return retv;
 }
 
 /**************************************************************************************************/
@@ -125,25 +133,26 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 }
 
 /**************************************************************************************************/
-long Gorgona::Notify( FXbool send, FXuint mtype, void *mdata )
+long Gorgona::Notify( FXbool enable, FXuint mtype, void *mdata )
 {
-  long status = 0;
-
-  if( send && m_tgt ) { status = m_tgt->handle( this, FXSEL( mtype, m_message ), mdata ); }
-
-  return status;
+  return ( enable ? notify( mtype, mdata ) : -1 );
 }
 
 void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 {
-  // Parametry se oddeluji znakem mezery (" ")
-  // Je-li to vyzdovano aplikaci musi byt dodreno i jejich poradi
-  // mezera za, nebo pred strednikem se predava jako soucast parametru
-  // Specialni znaky ( napr uvozovky) je nutno uvadet v zastupne notaci dle XML standardu
-
+  /* Metoda provadi rozdeleni retezce prikazu do pole typu const char*, jak to pozaduje trida  FXProcess
+     buffer[ 0 ] je samotny prikaz urceny ke spusteni, kazda dalsi polozka  predstavuje jeden argument.
+ 
+    - Parametry se oddeluji znakem mezery (" "), nebo env IFS 
+    - Musi byt dodreno i poradi jednotlivych casti prikazu, jak bylo zadano
+    - mezera za, nebo pred strednikem se predava jako soucast parametru
+    - Specialni znaky ( napr uvozovky) je nutno uvadet v zastupne notaci dle XML standardu
+    FIXME GORGONA_001 : Doplnit funkcionalitu znaku ', " a \
+    FIXME GORGONA_002 : dodat cteni ENV IFS, alternativne zadat separator argumentem metody 
+  */
   FXint    start, nargs;  // Aktualni sekce, ktera predstavuje argument; Pocet parametru v retezci
   FXString section_str;   // Subsekce retezce
-  //FXbool   p_parse = false;
+ 
 
   clear_string_buffer( buffer );
   if( !cmd.empty( ) && ( cmd != "" ) ) {
@@ -167,25 +176,16 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 
   if( nargs == start ) {
     buffer->append( NULL );
-    //p_parse = true;
   }
   else {
-    //p_parse = false;
     clear_string_buffer( buffer );
   }
-  /*
-  #ifdef __DEBUG
-  // Vypis obsahu pole prikazu po parsovani
-  FXint num = buffer->no( );
-  std::cout << "[Perseus."<< getClassName( ) << "::ParseCommand( )] The params array listing of " << p_params.at( 0 )  << " command p_process: " << std::endl;
-  for( FXint i = 0; i != num; i++  ) { std::cout << "\n" << i << ". " << p_params.at( i ) << " " ; }
-  std::cout << "\n" << std::endl;
-  std::cout.flush( );
-  #endif
-  */
 }
 
+void Gorgona::LuaInit( )
+{
 
 
+}
 
 /*** END ******************************************************************************************/

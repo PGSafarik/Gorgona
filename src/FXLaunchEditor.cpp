@@ -2,6 +2,10 @@
 #include<FXLaunchEditor.h>
 #include<GorgonaWindow.h>
 #include<LuaAPI.h>
+#include<FXGameItem.h>
+#include<Utils.h>
+#include<IconsTheme.h>
+
 
 #include<iostream>
 #include<cstring>
@@ -364,12 +368,14 @@ void FXLaunchEditor::load( )
   if( le_item ) {
     setvalue_text( "Titul", le_item->read( "Basic:title" ) );
     setvalue_text( "Zanr", le_item->read( "Basic:genre") );
-    setvalue_text( "Prikaz", le_item->read( "Basic:exec") );
-    setvalue_combo( "Spoustec", le_item->read( "Basic:type" ) );
-    setvalue_text( "Pracovni adresar", le_item->read( "Basic:workdir") );
     setvalue_text( "Rok vydani", le_item->read( "Advanced:year" ) );
     setvalue_text( "Autor", le_item->read( "Advanced:author" ) );
     setvalue_text( "Domovska stranka", le_item->read( "Advanced:homepage" ) );
+
+    setvalue_combo( "Spoustec", le_item->exec->get_launchid( ) );
+    setvalue_text( "Prikaz", le_item->exec->get_command( ) );
+    setvalue_text( "Pracovni adresar", le_item->exec->get_workdir( ) );
+
     le_text->setText( le_item->read( "Description" ) );
     le_backg->setCheck( le_item->hidel );
   }
@@ -380,13 +386,15 @@ void FXLaunchEditor::save( )
   if( le_item ) {
     le_item->write( "Basic:title", getvalue_text( "Titul" ) );
     le_item->write( "Basic:genre", getvalue_text( "Zanr" ) );
-    le_item->write( "Basic:exec", getvalue_text( "Prikaz" ) );
-    le_item->write( "Basic:workdir", getvalue_text( "Pracovni adresar" ) );
-    le_item->write( "Basic:type", getvalue_combo( "Spoustec" ) );
     le_item->write( "Advanced:year", getvalue_text( "Rok vydani" ) );
     le_item->write( "Advanced:author", getvalue_text( "Autor" ) );
     le_item->write( "Advanced:homepage", getvalue_text( "Domovska stranka" ) );
     le_item->write( "Description", le_text->getText( ) );
+
+    le_item->exec->set_launchid( getvalue_combo( "Spoustec" ) );
+    le_item->exec->set_command( getvalue_text( "Prikaz" ) );
+    le_item->exec->set_workdir( getvalue_text( "Pracovni adresar" ) );
+
     le_item->hidel = le_backg->getCheck( );
   }
 

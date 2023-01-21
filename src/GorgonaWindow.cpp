@@ -1,8 +1,6 @@
 // GorgonaWindow.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
 #include<GorgonaWindow.h>
 
-using namespace PERSEUS;
-
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
@@ -279,7 +277,7 @@ void GorgonaWindow::load( )
     TiXmlElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
     if( xlibrary )  {        
       for( TiXmlElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
-        if( ( it = new FXGameItem( ) ) != NULL ) {
+        if( ( it = new FXGameItem( m_app ) ) != NULL ) {
           it->load( xegame );
           it->checkIcons( getApp( ) );
           gl_pane->insertItem( it );
@@ -491,53 +489,13 @@ void GorgonaWindow::version( )
 }
 
 /**************************************************************************************************/
-/* /// REMOVE
-FXbool GorgonaWindow::parse_params( FXArray<const FXchar*> *buffer, const FXString &ar, FXbool dump ) { // Rozparsovani retezce argumentu
-  /// Parametry se oddeluji znakem mezery (" ")
-  /// Je-li to vyzdovano aplikaci musi byt dodreno i jejich poradi
-  /// mezera za, nebo pred strednikem se predava jako soucast parametru
-  /// Specialni znaky ( napr uvozovky) je nutno uvadet v zastupne notaci dle XML standardu
-  FXint    start, nargs;  // Aktualni sekce, ktera predstavuje argument; Pocet parametru v retezci
-  FXString section_str;   // Subsekce retezce
-
-  if( !ar.empty( ) && ( ar != "" ) ) {
-    nargs = ar.contains( " " );
-    if( nargs > 0 ) {
-      nargs++;
-      start = 0;
-      while( start < nargs ){
-        section_str = ar.section( " ", start );
-        if( !section_str.empty( ) ) {
-          buffer->append( convert_str( section_str ) );
-          start++;
-        } else { break; }
-      }
-    }
-    else {
-      start = nargs = 1;
-      buffer->append( convert_str( ar ) );
-    }
-  }
-
-  if( dump == true ) {
-    FXint num = buffer->no( );
-    std::cout << "This parameter(s) setting of new process: ";
-    for( FXint i = 0; i != num; i++  ) { std::cout << "\n" << i << ". " << buffer->at( i ) << " " ; }
-    std::cout << "\n" << std::endl;
-    std::cout.flush( );
-  }
-
-  return ( ( nargs == start ) ? true : false );
-}
-*/
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
   FXbool resh = false;
   FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
   if( item != NULL ) {
-    Game game( m_app, item, NULL, 0 );
-    resh = game.run( );
+    item->exec->run( );
     gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
     gl_change = true;
   }

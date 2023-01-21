@@ -47,7 +47,7 @@
 #include<Boxes.h>
 #include<IconsTheme.h>
 #include<FXGameItem.h>
-#include<GorgonaProcess/Runnable.h>
+#include<Perseus/Runnable.h>
 #include<FXLaunchEditor.h>
 #include<LuaAPI.h>
 #include<FXListPane.h>
@@ -99,8 +99,8 @@ FXDECLARE( GorgonaWindow )
   FXTreeItem *gl_gameroot;          // Koren herniho stromu
 
   // Zprava podprocesu
-  FXint       gl_childPID;          // PID potomka, ktery byl prave ukoncen
-  FXint       gl_childRV;           // Navratova hodnota ukonceneho potomka
+  //FXint       gl_childPID;          // PID potomka, ktery byl prave ukoncen
+  //FXint       gl_childRV;           // Navratova hodnota ukonceneho potomka
   //FXGameProcessList gl_processlist; // Seznam se spustenymi procesy-potomky
 
   // LUA
@@ -154,7 +154,7 @@ protected :
 
   void load( );
   void save( );
-  void lua_init( );
+  /**void lua_init( );**/
   void read_config( );
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );

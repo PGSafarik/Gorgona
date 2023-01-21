@@ -45,8 +45,7 @@
 #include<Utils.h>
 #include<Boxes.h>
 #include<IconsTheme.h>
-#include<FXGameItem.h>
-//#include<GorgonaProcess/Process.h>
+//#include<FXGameItem.h>
 #include<FXLaunchEditor.h>
 #include<LuaAPI.h>
 #include<FXListPane.h>
@@ -66,7 +65,7 @@ public:
    virtual ~Gorgona( );
 
    /* Access methods */
-
+   void setNotify( FXObject *tgt, FXuint msg ) { m_tgt = tgt; m_message = msg; }
 
   /* Operations methods */
   virtual void create( );
@@ -75,6 +74,8 @@ public:
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
   FXint exec( const FXString &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
   FXint wait( FXProcess *process, FXbool notify = false );
+
+  long notify( FXuint mtype, void *mdata );
  
   /* GUI handlers & messages */
   enum {
@@ -87,6 +88,7 @@ public:
 protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Odesle notifikacni zpravu
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Rozdeli jednotlive slozky retezce prikazu do pole
+  void LuaInit( );
 
 };
 

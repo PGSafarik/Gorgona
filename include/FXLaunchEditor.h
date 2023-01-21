@@ -24,12 +24,9 @@
 #include<fox-1.7/fx.h>
 #include<fxghi.h>
 
-#include<FXGameItem.h>
-#include<Utils.h>
-#include<IconsTheme.h>
-
-
 class FXGameLauncher;
+class FXGameItem;
+class IconsTheme;
 
 enum { // Ciselny seznam sekci
   SECTION_BASIC = 0,    //

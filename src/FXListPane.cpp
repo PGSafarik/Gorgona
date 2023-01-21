@@ -115,7 +115,7 @@ void FXListPane::removeItem( FXint id )
     erase_f( data );
     if( data != NULL ) {
       std::cout << "From memory" << std::endl;
-      data->clear( FXString::null );
+      //data->clear( FXString::null );
       delete data;
     }
     data = NULL;
@@ -384,7 +384,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
       //gl_currentit = NULL;
       FXString name;
       if( FXInputDialog::getString( name, this, "Pridat novou hru do zbirky", "Zadejte nazev pridavaneho titulu: " ) == true ) {
-        item = new FXGameItem( name );
+        item = new FXGameItem( ( Gorgona *) getApp( ), name );
         FXTreeItem *f = getCurrentFolder( );
         if( f ) { item->write( "Basic:genre", f->getText( ) ); }
         FXLaunchEditor *edit = new FXLaunchEditor( this, gl_icth, item );
