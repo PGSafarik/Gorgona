@@ -13,7 +13,7 @@ SET( CMAKE_CXX_STANDARD_REQUIRED ON )       # C++ Standard
 
 # Configure project
 #CONFIGURE_FILE( MakeConfig.h.in MakeConfig.h )
-FILE( GLOB SOURCES src/*.cpp )                          # List of implementation files
+FILE( GLOB SOURCES src/*.cpp src/Perseus/*.cpp )                          # List of implementation files
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
 
 # Add directories for project dependecies
