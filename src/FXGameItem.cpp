@@ -1,24 +1,34 @@
 // FXGameItem.cpp Copyright (c) 24/03/2019; D.A.Tiger; GNU GPL 3
 #include<FXGameItem.h>
+#include<Perseus/Runnable.h>
+#include<Utils.h>
+
 #include<iostream>
 
-FXGameItem::FXGameItem( )
+FXGameItem::FXGameItem( Gorgona *app )
 {
   this->hidel     = false;
   this->change    = false;
   this->nop       = 0;
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
+
+  this->exec = new PERSEUS::Runnable( app );
 }
 
-FXGameItem::FXGameItem( const FXString &name, const FXString &type )
+FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type )
 {
   this->hidel     = false;
   this->change    = false;
   this->nop       = 0;
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
-  clear( name, type );
+  
+  property.clear( );
+  property.insert( "Basic:title", name.text( ) );
+
+  exec = new PERSEUS::Runnable( app );
+  exec->set_launchid( type );
 }
 
 FXGameItem::~FXGameItem( )
@@ -27,18 +37,18 @@ FXGameItem::~FXGameItem( )
   if( this->BigIcon   != NULL ) { delete this->BigIcon; }
   if( this->SmallIcon != NULL ) { delete this->SmallIcon; }
 }
-
-void FXGameItem::clear( const FXString &name, const FXString &type )
+/*
+void FXGameItem::clear( )
 {
   this->property.clear( );
-  this->property.insert( "Basic:title", name.text( ) );
-  this->property.insert( "Basic:type", ( type.empty( ) ? "native" : type.text( ) ) );
 }
+*/
 
 void FXGameItem::dump( FXbool force )
 {
+  
   if( force == false ) {
-    std::cout << "Game entry [" << this->property[ "Basic:type" ] << "] = " << this->property[ "Basic:title" ] << std::endl;
+    std::cout << "Game entry [" << exec->get_launchid( ) << "] = " << this->property[ "Basic:title" ] << std::endl;
     std::cout.flush( );
   }
   else {
@@ -52,14 +62,17 @@ void FXGameItem::dump( FXbool force )
       if( k.empty( ) ) { continue; }
       else { std::cout << k.text( ) << ": " << this->property.at( k ).text( ) << std::endl; }
     }
+      
+    exec->dump( );
   }
+  
 }
 
 FXbool FXGameItem::validate( )
 {
   FXString text =  "VALIDATION: The entry \"" + property[ "Basic:title" ]; 
            text += "\" ";
-
+/*
   if( property[ "Basic:type" ] == "native" ) {
     FXString exec = property[ "Basic:exec" ];
     if( !exec.empty( ) ) {
@@ -73,7 +86,8 @@ FXbool FXGameItem::validate( )
       m_valid = false;
     }
   }
-  
+*/ 
+  m_valid = exec->validation( ); 
   if( m_valid ) { std::cout << text << "OK." << std::endl; }
   return m_valid;
 }
@@ -83,70 +97,23 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
    FXbool resh = false;
 
    if( this->property.find( k.text( ) ) == -1 ) {
-     //if( this->property.insert( k.text( ), v.text( ) ) != NULL ) { resh = true; }
      this->property.insert( k.text( ), v.text( ) );
      resh = true;
    }
    else {
-     //if( this->property.replace( k.text( ), v.text( ) ) != NULL ) { resh = true; }
      this->property.remove( k.text( ) );
      this->property.insert( k.text( ), v.text( ) );
      resh = true;
    }
 
    if( resh ) {
-     //std::cout << "writing[ " << k.text( ) << "] = " << v.text( ) << std::endl;
      this->change = chang;
    }
    return resh;
 }
 
-FXbool FXGameItem::parse( TiXmlElement *myel )
-{
-  FXString _sect, _key, _value;
-  TiXmlElement   *el = NULL;
-
-  // kontrola elementu hry
-  if( FXString::compare( myel->Value( ), "Game" ) != 0 ) { return false; }
-  el = myel;
-
-  // Cyklus nacitani dat
-  while( el != NULL ) {
-    _sect = el->Value( );
-
-    // Precteni klicu a hodnot elementu daneho elementu
-    for( TiXmlAttribute *at = el->FirstAttribute( ); at; at = at->Next( ) ) {
-      _key   = _sect + ":" + at->Name( );
-      _value = at->Value( );
-
-      // Nektere hodnoty je nutno osetrit zvlast
-      if( _key == "Run:type"  ) {
-        if( _value.empty( ) ) { _value = "native"; }
-      }
-      if( _key == "Run:backg" ) {
-        this->hidel = ( ( _value.empty( ) or ( _value == "false" ) ) ? false : true );
-        continue;
-      }
-      if( _key == "Stats:NumberOfPlays" ) {
-        this->nop = ( _value.empty( ) ? 0 : _value.toInt( ) );
-        continue;
-      }
-
-      // Ostatni se zapisou rovnou do hasmapy
-      this->write( _key, _value ); //}
-    }
-
-    // Zpracovani elementu - sekci
-    if( _sect == "Deskription" ) { this->write( _sect, el->GetText( ), false ); }
-    if( _sect == "Game" ) { el = el->FirstChildElement( ); } else { el = el->NextSiblingElement( ); }
-  }
-
-  return true;
-}
-
 void FXGameItem::load( TiXmlElement *eitem )
 {
-  FXbool   _set_of_type = ( ( this->property.find( "type" ) != -1 ) ? true : false );
   FXString _name, _value, _sect, _key;
 
   for( TiXmlElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
@@ -163,28 +130,23 @@ void FXGameItem::load( TiXmlElement *eitem )
       _value = attr->Value( );
 
       // Zpracovani atributu elementu, ktere vyzaduji zvlastni zachazeni :
-      if( _name == "background" ) {
-        this->hidel = ( ( _value.empty( ) or ( _value == "false" ) ) ? false : true );
-        continue;
-      }
       if( _name == "numberOfPlays" ) {
         this->nop = ( _value.empty( ) ? 0 : _value.toInt( ) );
         continue;
       }
-      if( _name == "type" ) {
-        if( _value.empty( ) == true ) { _value = "native"; }
-        _set_of_type = true;
-      }
-      if( _name == "binary" ) { _name = "exec"; }
 
       // Vsechny ostatni hodnoty jsou zaklicovany do cache vlastnosti:
       _key = _sect + ":" + _name;
       this->write( _key, _value, false );
     } 
   }
-  // Defaultni nastaveni typu spoustece
-  if( _set_of_type == false ) { this->write( "Basic:type", "native", false ); }
+
+  exec->load( eitem ); 
   
+  #ifdef __DEBUG
+   dump( true );
+  #endif
+
   validate( );
 }
 
@@ -203,14 +165,14 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
   //std::cout << "Writing the Game item : " << read( "Basic:title" ).text( ) << std::endl;
   //std::cout.flush( );
 
-  TiXmlElement *e_desc  = NULL;
-  TiXmlElement *e_tmp = NULL;
-  TiXmlText    *e_text  = NULL;
-  TiXmlElement *e_self  = new TiXmlElement( ename.text( ) );
+  TiXmlText    *e_text  = NULL;                               // Element popisoveho textu
+  TiXmlElement *e_desc  = NULL;                               // Nosny element popisu
+  TiXmlElement *e_tmp   = NULL;                               // Pomocny element
+  TiXmlElement *e_self  = new TiXmlElement( ename.text( ) );  // Eelement reprezentujici (herni) polozku
+
   pNode->LinkEndChild( e_self );
 
   FXString key, value;
-  //for( FXint i = this->property.first( ); i <= this->property.last( ); i = this->property.next( i ) ){
   for( FXival i = 0; i < this->property.no( ); i++ ) {
     key   = this->property.key( i );
     if( key.empty( ) ) { continue; }
@@ -238,17 +200,16 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
     }
   }
 
-  e_tmp = e_self->FirstChildElement( "Basic" );
-  e_tmp->SetAttribute( "background", ( ( this->hidel  == true )? "true" : "false" ) );
   e_tmp = e_self->FirstChildElement( "Extra" );
   if( e_tmp == NULL ) {
     e_tmp = new TiXmlElement( "Extra" );
     e_self->LinkEndChild( e_tmp );
   }
   e_tmp->SetAttribute( "numberOfPlays", FXString::value( this->nop ).text( ) );
-//  std::cout << "End writing";
-//  std::cout << "\n\n";
-//  std::cout.flush( );
+
+  exec->save( e_self );
+ 
+
 }
 
 void FXGameItem::checkIcons( FXApp *app )

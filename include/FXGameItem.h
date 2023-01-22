@@ -24,8 +24,7 @@
 #include<fox-1.7/fx.h>
 #include<tinyxml.h>
 
-#include<Utils.h>
-
+#include<Perseus/Runnable.h>
 
 struct FXGameItem {
   FXint        nop;		 // Dosavadni pocet spusteni
@@ -41,16 +40,17 @@ struct FXGameItem {
 
   FXbool  m_valid;     // 
   
+  PERSEUS::Runnable *exec;  // Spoustec  
 
-  FXGameItem( );
-  FXGameItem( const FXString &name, const FXString &type = "native" );
+  FXGameItem( Gorgona *app );
+  FXGameItem( Gorgona *app, const FXString &name, const FXString &type = "native" );
   virtual ~FXGameItem( );
 
   ///////////////////////////////////////////////
   ///
   ///
   void dump( FXbool force = false );
-  void clear( const FXString &name, const FXString &type = FXString::null );
+  //void clear( );
   FXbool validate( );
 
   void   checkIcons( FXApp *app );
@@ -59,8 +59,6 @@ struct FXGameItem {
 
   void load( TiXmlElement *eitem );
   void save( TiXmlElement *pNode, const FXString &ename = "Game" );
-
-  FXbool parse( TiXmlElement *myel ); // Nacteni hodnot zpostece hry z xml elementu
 
 
   FXString operator ( ) ( const FXString &key, const FXString &value = FXString::null, FXbool change = true  )
