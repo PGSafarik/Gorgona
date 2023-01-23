@@ -54,11 +54,15 @@
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
 
-FXObject            *m_tgt;           // Cil notifikacnich zprav
-FXuint               m_message;       // ID notifikacni zpravy 
-FXArray<FXProcess*>  m_descendants;   // Seznam spustenych procesu (potomku Gorgony)
+  FXObject            *m_tgt;           // Cil notifikacnich zprav
+  FXuint               m_message;       // ID notifikacni zpravy 
+  FXArray<FXProcess*>  m_descendants;   // Seznam spustenych procesu (potomku Gorgony)
 
-FXbool m_verbose;                      // Ukecany mod
+  FXbool m_verbose;                      // Ukecany mod
+
+  /* Lua */
+  lua_State *m_lua;                      // Instance interpreteru jazyka Lua
+  FXString   m_initscript;               // Inicializacni script 
 
 public:
    Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
@@ -66,6 +70,7 @@ public:
 
    /* Access methods */
    void setNotify( FXObject *tgt, FXuint msg ) { m_tgt = tgt; m_message = msg; }
+   lua_State* getLua( ) { return m_lua; }
 
   /* Operations methods */
   virtual void create( );
@@ -74,6 +79,7 @@ public:
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
   FXint exec( const FXString &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
   FXint wait( FXProcess *process, FXbool notify = false );
+  FXint execLuaFile( const FXString &script );
 
   long notify( FXuint mtype, void *mdata );
  
@@ -88,8 +94,8 @@ public:
 protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Odesle notifikacni zpravu
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Rozdeli jednotlive slozky retezce prikazu do pole
-  void LuaInit( );
-
+  FXbool LuaInit( );
+  void ReadConfig( );
 };
 
 #endif /* __GORGONA_H */

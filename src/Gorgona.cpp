@@ -34,8 +34,9 @@ void Gorgona::create( )
 
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
-
   FXApp::init( argc, argv, connect );
+  ReadConfig( );
+  LuaInit( );
 }
 
 FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
@@ -88,6 +89,17 @@ FXint Gorgona::exec( const FXString &cmd, FXuint proc_opts, FXuint term_opts, FX
   }  
   
   return -1;
+}
+
+FXint Gorgona::execLuaFile( const FXString &script )
+{
+  FXint result = -1;
+
+  if( m_lua ) {
+    if( ( result = luaL_dofile( m_lua, script.text( ) ) ) != 0 ) { l_ErrorMessage( result ); }    
+  }
+
+  return result;
 }
 
 FXint Gorgona::wait( FXProcess *process, FXbool notify )
@@ -182,10 +194,23 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
   }
 }
 
-void Gorgona::LuaInit( )
+void Gorgona::ReadConfig( )
 {
+   m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+}
 
+FXbool Gorgona::LuaInit( )
+{
+  FXbool result = false;
+ 
+  if( ( m_lua = l_open( this ) ) != NULL ) { 
+    FXint status = execLuaFile( m_initscript );
+    std::cout << "[INFO Gorgona]: Lua initialized: " << m_initscript  << " => " << status << std::endl; 
+    
+    result = true;
+  }
 
+  return result;
 }
 
 /*** END ******************************************************************************************/

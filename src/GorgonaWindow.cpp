@@ -103,7 +103,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
 
   // - lua initialize
-  if( l_open( this ) ) { std::cout << "Lua initialized" << std::endl; }
+  //if( l_open( this ) ) { std::cout << "Lua initialized" << std::endl; }
 
   // Configure application & load data
   read_config( );
@@ -123,7 +123,7 @@ void GorgonaWindow::create( )
   show( PLACEMENT_SCREEN );
   checkWindowState( );
 
-  gl_mlaunch = l_Script( gl_mlaunch_pth );
+  //gl_mlaunch = l_Script( gl_mlaunch_pth );
   load( );
 
   gl_created= true;

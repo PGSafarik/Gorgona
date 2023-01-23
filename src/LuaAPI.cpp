@@ -4,18 +4,18 @@
 #include<FXGameItem.h>
 #include<Utils.h>
 
-GorgonaWindow *_inst;   // Instance obsluzneho objektu
-lua_State      *_state;  // Stavova promenna lua interpreteru
+Gorgona *_inst;   // Instance obsluzneho objektu
+//lua_State      *_state;  // Stavova promenna lua interpreteru
 FXbool          _linit;  // Indikace inicicalizace lua
 
 // Auxiliary functions
-FXRegistry& get_registry( ) { return _inst->getApp( )->reg( ); }
+FXRegistry& get_registry( ) { return _inst->reg( ); }
 
 // Gorgoana API for LUA scripts
 int static l_launcher_input( lua_State *L );     // Input box
 int static l_launcher_message( lua_State *L );   // Message box
 //int static l_launcher_exec( lua_State *L );      // exec ( Run program )
-int static l_launcher_selitem( lua_State *L );   // Select game item
+//int static l_launcher_selitem( lua_State *L );   // Select game item
 // Manipulation with Gorgona cfg register
 int static l_registry_write( lua_State *L );     // Read registry value
 int static l_registry_read( lua_State *L );      // Write registry value
@@ -24,52 +24,55 @@ int static l_registry_delete( lua_State *L );     // Remove header or Key
 
 
 /*************************************************************************************************/
-FXbool l_open( GorgonaWindow *i )
+lua_State* l_open( Gorgona *app )
 {
-  if( ( _state = luaL_newstate( ) ) != NULL ){
-    _inst = i;
-    luaL_openlibs( _state );
+  lua_State *state;
+  _inst = app;
+
+  if( ( state = luaL_newstate( ) ) != NULL ){
+    
+    luaL_openlibs( state );
 
     /// GUI /////////////////////////////////////
-    lua_register( _state, "MessageBox", l_launcher_message );
-    lua_register( _state, "InputBox",   l_launcher_input );
+    lua_register( state, "MessageBox", l_launcher_message );
+    lua_register( state, "InputBox",   l_launcher_input );
     /// List manipulating ///////////////////////
-    lua_register( _state, "GetSelectItem",    l_launcher_selitem );
+    /// lua_register( state, "GetSelectItem",    l_launcher_selitem );
     /// Tree Manipulating ///////////////////////
     /// Others //////////////////////////////////
-    //lua_register( _state, "__exec",          l_launcher_exec );
-    lua_register( _state, "Register_write",  l_registry_write );
-    lua_register( _state, "Register_read",   l_registry_read );
-    lua_register( _state, "Register_test",   l_registry_test );
-    lua_register( _state, "Register_delete", l_registry_delete );
+    //lua_register( state, "__exec",          l_launcher_exec );
+    lua_register( state, "Register_write",  l_registry_write );
+    lua_register( state, "Register_read",   l_registry_read );
+    lua_register( state, "Register_test",   l_registry_test );
+    lua_register( state, "Register_delete", l_registry_delete );
 
     //lua_register( _state, "RegLaunch",  l_launcher_RegLaunch );
 
     // Creating table for button type MessageBox values
-    lua_newtable( _state );
-    l_TableWrite_num( _state, "ok",                         1 ); /*MBOX_OK*/
-    l_TableWrite_num( _state, "ok_cancel",                  2 ); /*MBOX_OK_CANCEL*/
-    l_TableWrite_num( _state, "yes_no",                     3 ); /*MBOX_YES_NO*/
-    l_TableWrite_num( _state, "yes_no_cancel",              4 ); /*MBOX_YES_NO_CANCEL*/
-    l_TableWrite_num( _state, "quit_cancel",                5 ); /*MBOX_QUIT_CANCEL */
-    l_TableWrite_num( _state, "quit_save_cancel",           6 ); /*MBOX_QUIT_SAVE_CANCEL*/
-    l_TableWrite_num( _state, "skip_skipall_cancel",        7 ); /*MBOX_SKIP_SKIPALL_CANCEL*/
-    l_TableWrite_num( _state, "save_cancel_dontsave",       8 ); /*MBOX_SAVE_CANCEL_DONTSAVE*/
-    l_TableWrite_num( _state, "yes_yesall_no_noall_cancel", 9 ); /*MBOX_YES_YESALL_NO_NOALL_CANCEL*/
-    lua_setglobal( _state, "mbox_buttons" );
+    lua_newtable( state );
+    l_TableWrite_num( state, "ok",                         1 ); /*MBOX_OK*/
+    l_TableWrite_num( state, "ok_cancel",                  2 ); /*MBOX_OK_CANCEL*/
+    l_TableWrite_num( state, "yes_no",                     3 ); /*MBOX_YES_NO*/
+    l_TableWrite_num( state, "yes_no_cancel",              4 ); /*MBOX_YES_NO_CANCEL*/
+    l_TableWrite_num( state, "quit_cancel",                5 ); /*MBOX_QUIT_CANCEL */
+    l_TableWrite_num( state, "quit_save_cancel",           6 ); /*MBOX_QUIT_SAVE_CANCEL*/
+    l_TableWrite_num( state, "skip_skipall_cancel",        7 ); /*MBOX_SKIP_SKIPALL_CANCEL*/
+    l_TableWrite_num( state, "save_cancel_dontsave",       8 ); /*MBOX_SAVE_CANCEL_DONTSAVE*/
+    l_TableWrite_num( state, "yes_yesall_no_noall_cancel", 9 ); /*MBOX_YES_YESALL_NO_NOALL_CANCEL*/
+    lua_setglobal( state, "mbox_buttons" );
 
-    lua_newtable( _state );
-    l_TableWrite_num( _state, "information", 1 );
-    l_TableWrite_num( _state, "warnning",    2 );
-    l_TableWrite_num( _state, "error",       3 );
-    l_TableWrite_num( _state, "question",    4 );
-    lua_setglobal( _state, "mbox_type" );
+    lua_newtable( state );
+    l_TableWrite_num( state, "information", 1 );
+    l_TableWrite_num( state, "warnning",    2 );
+    l_TableWrite_num( state, "error",       3 );
+    l_TableWrite_num( state, "question",    4 );
+    lua_setglobal( state, "mbox_type" );
 
     _linit = true;
   }
   else { _linit = false; }
 
-  return _linit;
+  return state;
 }
 
 void l_close( )
@@ -84,10 +87,12 @@ FXbool l_init( )
   return _linit;
 }
 
+/*
 lua_State* l_parser( )
 {
   return ( ( _linit = true ) ? _state : NULL );
 }
+*/
 
 /**************************************************************************************************/
 int l_launcher_input( lua_State *L )
@@ -186,6 +191,8 @@ int l_launcher_exec( lua_State *L )
   return 0;
 }
 */
+
+/*
 int l_launcher_selitem( lua_State *L )
 {
   luaL_checktype( L, 1, LUA_TTABLE );
@@ -200,6 +207,7 @@ int l_launcher_selitem( lua_State *L )
 
   return 0;
 }
+*/
 
 int l_registry_write( lua_State *L )
 {
@@ -336,7 +344,7 @@ FXbool l_Script( const FXString &script )
   std::cout << "Loading the initial script: " << script.text( ) << std::endl;
   FXbool loaded = false;
   if( _linit == true ) {
-    FXint resh = luaL_dofile( _state, script.text( ) );
+    FXint resh = luaL_dofile( _inst->getLua( ), script.text( ) );
     if( resh == 0 ) { loaded = true; }
     else { l_ErrorMessage( resh ); }
   }
@@ -346,8 +354,8 @@ FXbool l_Script( const FXString &script )
 
 void l_Error( const FXString &str )
 {
-  lua_pushstring( _state, str.text( ) );
-  lua_error( _state );
+  lua_pushstring( _inst->getLua( ), str.text( ) );
+  lua_error( _inst->getLua( ) );
 }
 
 void l_ErrorMessage( FXint num, const FXString &msg )
@@ -357,8 +365,8 @@ void l_ErrorMessage( FXint num, const FXString &msg )
   err_head += FXString::value( num ) + " )";
 
   if( msg.empty( ) ) {
-    err_text = lua_tostring( _state, -1 );
-    lua_pop( _state, 1 );
+    err_text = lua_tostring( _inst->getLua( ), -1 );
+    lua_pop( _inst->getLua( ), 1 );
   }
   else { err_text = msg; }
 
@@ -383,22 +391,22 @@ int l_ReadLaunchers( FXArray<FXString> *keylist )
   FXint num = 0;
   //std::cout << "Registered user lauchers : " << std::endl;
   FXint t = 1;
-  lua_getglobal( _state, "ltable" );
-  if( lua_istable( _state, t ) == true ) {
+  lua_getglobal( _inst->getLua( ), "ltable" );
+  if( lua_istable( _inst->getLua( ), t ) == true ) {
     /// FIXME LUA_01 : Nasledujici zakomentovany kod, je vyuzitelny pro cteni tabulek. Na pole je nepouzitelny
     /*
-    lua_pushnil( _state );
-    while( lua_next( _state, t ) != 0 ) {
-      FXString key = lua_tostring( _state, -2 );
+    lua_pushnil( _inst->getLua( ) );
+    while( lua_next( _inst->getLua( ), t ) != 0 ) {
+      FXString key = lua_tostring( _inst->getLua( ), -2 );
       keylist->push( key );
       num++;
-      lua_pop( _state , 1 );
+      lua_pop( _inst->getLua( ) , 1 );
     }
    */
-    num = luaL_getn( _state, t );
+    num = luaL_getn( _inst->getLua( ), t );
     for( FXint i = 1; i <= num; i++ ) {
-      lua_rawgeti( _state, t, i );
-      FXString key = lua_tostring( _state, -1 );
+      lua_rawgeti( _inst->getLua( ), t, i );
+      FXString key = lua_tostring( _inst->getLua( ), -1 );
       //std::cout << i << " : " << key.text( ) << std::endl;
       keylist->push( key );
     }
@@ -427,13 +435,13 @@ FXint __luanch( )
 {
   FXint resh = -1;
 
-  lua_getglobal( _state, "launcher" );
-  if( lua_pcall( _state, 0, 1, 0 ) != 0 ){
-    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _state, -1 ) << std::endl;
+  lua_getglobal( _inst->getLua( ), "launcher" );
+  if( lua_pcall( _inst->getLua( ), 0, 1, 0 ) != 0 ){
+    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _inst->getLua( ), -1 ) << std::endl;
   }
   else {
-    resh = lua_tonumber( _state, -1 );
-    lua_pop( _state, -1 );
+    resh = lua_tonumber( _inst->getLua( ), -1 );
+    lua_pop( _inst->getLua( ), -1 );
   }
   std::cout << "Polozka byla spustena s navratovym kodem " << resh << std::endl;
 
@@ -450,16 +458,16 @@ FXint __luanch( )
 // **/
 //  FXString resh = FXString::null;
 //
-//  lua_pushstring( _state, convert_str( ltypet ) );
-//  lua_pushstring( _state, convert_str( cmd ) );
-//  lua_getglobal(  _state, "launcher"  );
+//  lua_pushstring( _inst->getLua( ), convert_str( ltypet ) );
+//  lua_pushstring( _inst->getLua( ), convert_str( cmd ) );
+//  lua_getglobal(  _inst->getLua( ), "launcher"  );
 //
-//  if( lua_pcall( _state, 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
-//    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _state, -1 ) << std::endl;
+//  if( lua_pcall( _inst->getLua( ), 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
+//    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _inst->getLua( ), -1 ) << std::endl;
 //  }
 //  else {
-//    resh = lua_tostring( _state, -1 );
-//    lua_pop( _state, -1 );
+//    resh = lua_tostring( _inst->getLua( ), -1 );
+//    lua_pop( _inst->getLua( ), -1 );
 //  }
 //
 //  std::cout << "__launcher( )" << std::endl;

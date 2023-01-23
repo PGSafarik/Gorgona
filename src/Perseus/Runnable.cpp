@@ -8,7 +8,7 @@
 using namespace PERSEUS;
 
 /// Callbacky pro volani funkci z Lua scriptu ///
-FXString lua_Launcher_p( const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
+FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
 
 
 /*************************************************************************************************/
@@ -54,7 +54,7 @@ void Runnable::Command( const FXString &cmd )
   m_command = cmd;
 
   if( !m_command.empty( ) && !IsNative( ) ) {
-    m_execute = lua_Launcher_p( m_launchid, m_command );
+    m_execute = lua_Launcher_p( m_app, m_launchid, m_command );
   }
   else { m_execute = m_command; } 
 }
@@ -169,7 +169,7 @@ void Game::counter( )
 }
 
 /*************************************************************************************************/
-FXString lua_Launcher_p( const FXString &p_id, const FXString &p_cmd )
+FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd )
 {
 /**
    Globalni Callback volani launcheru v Lua modulu
@@ -178,16 +178,16 @@ FXString lua_Launcher_p( const FXString &p_id, const FXString &p_cmd )
  **/
   FXString resh = FXString::null;
 
-  lua_getglobal(  l_parser( ), "launcher"  );
-  lua_pushstring( l_parser( ), convert_str( p_id ) );
-  lua_pushstring( l_parser( ), convert_str( p_cmd ) );
+  lua_getglobal(  a->getLua( ), "launcher"  );
+  lua_pushstring( a->getLua( ), convert_str( p_id ) );
+  lua_pushstring( a->getLua( ), convert_str( p_cmd ) );
 
-  if( lua_pcall( l_parser( ), 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
-    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( l_parser( ), -1 ) << std::endl;
+  if( lua_pcall( a->getLua( ), 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
+    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( a->getLua( ), -1 ) << std::endl;
   }
   else {
-    resh = lua_tostring( l_parser( ), -1 );
-    lua_pop( l_parser( ), -1 );
+    resh = lua_tostring( a->getLua( ), -1 );
+    lua_pop( a->getLua( ), -1 );
   }
   
   #ifdef __DEBUG
