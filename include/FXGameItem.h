@@ -26,6 +26,10 @@
 
 #include<Perseus/Runnable.h>
 
+
+
+
+
 struct FXGameItem {
   FXint        nop;		 // Dosavadni pocet spusteni
   FXbool       hidel;	 // Skryt spoustec pri spusteni
@@ -40,7 +44,7 @@ struct FXGameItem {
 
   FXbool  m_valid;     // 
   
-  PERSEUS::Runnable *exec;  // Spoustec  
+  PERSEUS::Game *exec;  // Spoustec  
 
   FXGameItem( Gorgona *app );
   FXGameItem( Gorgona *app, const FXString &name, const FXString &type = "native" );

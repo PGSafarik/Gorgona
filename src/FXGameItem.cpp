@@ -13,7 +13,7 @@ FXGameItem::FXGameItem( Gorgona *app )
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
 
-  this->exec = new PERSEUS::Runnable( app );
+  this->exec = new PERSEUS::Game( app );
 }
 
 FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type )
@@ -27,7 +27,7 @@ FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type
   property.clear( );
   property.insert( "Basic:title", name.text( ) );
 
-  exec = new PERSEUS::Runnable( app );
+  exec = new PERSEUS::Game( app );
   exec->set_launchid( type );
 }
 
