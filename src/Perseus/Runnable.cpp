@@ -139,7 +139,13 @@ FXIMPLEMENT( Game, Runnable, NULL, 0 )
 
 Game::Game( Gorgona *a, FXObject *tgt, FXSelector sel )
            : Runnable( a, tgt, sel )
-{ }
+{ 
+  m_used    = 0;
+  m_total   = 0;
+  m_last    = 0;
+  m_time    = 0;
+  m_longest = 0;
+}
 
 Game::~Game( )
 {
@@ -151,22 +157,58 @@ FXint Game::run( )
   //std::cout << "\n=== " << ( *gp_item )( "Basic:title" ) << " ==============================================" << std::endl;
   //set_workdir( ( *gp_item )( "Basic:workdir" ) );
   FXint pid = Runnable::run( );
-  counter( );
+  Counter( );
 
   return pid;
 }
 
-void Game::counter( )
+void Game::Counter( )
 {
+  m_used += 1;
+
   /*
-  /// FIXME GAME_001: Pridat vypocet nejdelsi doby v kuse a celkove doby hrani
-
-  gp_item->nop += 1;
-
   FXDate date = FXDate::localDate( );
   ( *gp_item )( "Extra:lastPlayed", FXString::value( date.day( ) ) + "/" + FXString::value( date.month( ) ) + "/" + FXString::value( date.year( ) ) );
   */
 }
+
+FXbool Game::load( TiXmlElement *parent )
+{
+  bool res = false;
+
+  if( Runnable::load( parent ) ) {
+    TiXmlElement *rne = parent->FirstChildElement( "Runnable" );
+    TiXmlElement *gre = parent->FirstChildElement( "Perseus:Game" );
+    if( gre ) {
+      gre->Attribute( "count", &m_used );
+
+      res = true;
+    }
+  }
+
+  return res;
+}
+ 
+FXbool Game::save( TiXmlElement *parent )
+{
+  bool res = false;
+
+  if( Runnable::save( parent ) && m_used > 0 ) {
+    TiXmlElement *rne = parent->FirstChildElement( "Runnable" );
+    TiXmlElement *gre = parent->FirstChildElement( "Perseus:Game" );
+    if( gre == NULL ) { 
+      gre = new TiXmlElement( "Perseus:Game" );
+      rne->LinkEndChild( gre ); 
+    }
+
+    gre->Attribute( "count", &m_used );
+
+    res = true;
+  }
+
+  return res;
+}
+
 
 /*************************************************************************************************/
 FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd )

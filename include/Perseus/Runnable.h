@@ -89,13 +89,22 @@ namespace PERSEUS {
   public:
     Game( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
     virtual ~Game( );
+    
+    /* Access methods */
+    FXint count( ) { return m_used; }
 
     /* Operations methods */
     virtual FXint run( );
-    void counter( );
+    virtual FXbool load( TiXmlElement *parent ); 
+    virtual FXbool save( TiXmlElement *parent );
 
   protected:
     Game( ) { }
+   
+    /* Helpful routines */
+    void Counter( );
+
+
   };
 
 }      /* Namespace PERSEUS */
