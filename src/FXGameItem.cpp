@@ -162,8 +162,10 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
 {
-  //std::cout << "Writing the Game item : " << read( "Basic:title" ).text( ) << std::endl;
+  #ifdef __DEBUG
+  std::cout << "Writing the Game item : " << read( "Basic:title" ).text( ) << std::endl;
   //std::cout.flush( );
+  #endif
 
   TiXmlText    *e_text  = NULL;                               // Element popisoveho textu
   TiXmlElement *e_desc  = NULL;                               // Nosny element popisu
@@ -207,9 +209,9 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
   }
   e_tmp->SetAttribute( "numberOfPlays", FXString::value( this->nop ).text( ) );
 
-  exec->save( e_self );
- 
-
+  /// FIXME GAMEITEM_001: force!
+  //exec->set_change( true );
+  exec->save( e_self, true );
 }
 
 void FXGameItem::checkIcons( FXApp *app )

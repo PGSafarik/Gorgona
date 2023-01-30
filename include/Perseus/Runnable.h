@@ -33,15 +33,17 @@ namespace PERSEUS {
   /* Obecna trida definujici spustitelny objekt Gorgony */
   class Runnable: public FXObject  {
   FXDECLARE( Runnable)
-    Gorgona             *m_app;         // Ukazatel na instanci aplikace
-    FXString             m_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
-    FXString             m_workdir;     // Pozadovany pracovni adresare
-    FXString             m_command;     // Zadany prikaz ke spusteni
-    FXString             m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
-    FXbool               m_notify;      // Indikator notifikace opreaci
+    Gorgona  *m_app;         // Ukazatel na instanci aplikace
+    FXString  m_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
+    FXString  m_workdir;     // Pozadovany pracovni adresare
+    FXString  m_command;     // Zadany prikaz ke spusteni
+    FXString  m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
+    FXbool    m_notify;      // Indikator notifikace opreaci
 
-    FXObject   *m_target;               // Cilovy objekt notifikaci
-    FXSelector  m_message;              // notifikacni zprava
+    FXbool m_change;         // indikuje zmenu objektu
+  
+    FXObject   *m_target;    // Cilovy objekt notifikaci
+    FXSelector  m_message;   // notifikacni zprava
 
   public :
     Runnable( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
@@ -57,13 +59,15 @@ namespace PERSEUS {
     FXString get_launchid( )                    { return m_launchid; }
     void     set_command( const FXString &cmd ) { Command( cmd );    }
     FXString get_command( )                     { return m_command;  } 
+    void     set_change( FXbool value )         { m_change = value;  }
+    FXbool   is_changed( )                      { return m_change;    }
     
     /* Operations methods */
     FXint operator( ) ( ) { return run( ); }
 
     virtual FXint  run( );
     virtual FXbool load( TiXmlElement *parent ); 
-    virtual FXbool save( TiXmlElement *parent );
+    virtual FXbool save( TiXmlElement *parent, FXbool force = false );
     virtual FXbool validation( );
     
     /* Debug & testing */
@@ -72,9 +76,14 @@ namespace PERSEUS {
   protected:
     Runnable( ) { }
     
+    /* Helpful methods */
     virtual void Command( const FXString &cmd ); 
+    virtual void Write( TiXmlElement *runelement ) { }
+    virtual void Read( TiXmlElement *runelement )  { }
+
     FXbool IsNative( ) { return ( m_launchid.empty( ) || m_launchid == "native" ); }
     FXString ChangeWorkDir( );
+ 
   };
 
   /* Trida urcena k spousteni a rizeni procesu her */
@@ -95,15 +104,14 @@ namespace PERSEUS {
 
     /* Operations methods */
     virtual FXint run( );
-    virtual FXbool load( TiXmlElement *parent ); 
-    virtual FXbool save( TiXmlElement *parent );
 
   protected:
     Game( ) { }
    
     /* Helpful routines */
     void Counter( );
-
+    virtual void Write( TiXmlElement *runelement );
+    virtual void Read( TiXmlElement *runelement );
 
   };
 

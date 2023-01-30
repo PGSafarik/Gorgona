@@ -144,7 +144,7 @@ void FXListPane::showItem( FXGameItem *item )
   FXString sep = "\t";
   FXIcon *ic_small, *ic_big;
   FXString text = item->read( "Basic:title" );
-  text += sep + FXString::value( item->nop );
+  text += sep + FXString::value( item->exec->count( ) );
   text += sep + item->read( "Extra:lastPlayed" );
   text += sep + item->read( "Basic:genre" );
 

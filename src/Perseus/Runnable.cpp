@@ -20,13 +20,12 @@ Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
   m_app     = a;
   m_target  = tgt;
   m_message = sel;
-
-  m_notify = false;
-
+  m_change  = false;
+  m_notify  = false;
 }
 
 Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
-       : m_launchid( launcher ), m_notify( false ), m_target( tgt ), m_message( sel )
+       : m_launchid( launcher ), m_notify( false ), m_target( tgt ), m_message( sel ), m_change( false )
 {
   m_app = a;
   set_command( cmd );
@@ -76,7 +75,7 @@ FXbool Runnable::load( TiXmlElement *parent )
   FXbool resh = false; 
 
   if( parent ) {
-    TiXmlElement *re = parent->FirstChildElement( "Runnable" );
+    TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
 
     if( re ) {
       m_launchid = re->Attribute( "type" );
@@ -84,6 +83,8 @@ FXbool Runnable::load( TiXmlElement *parent )
       //m_bckg  = re->Attribute( "background" );
 
       set_command( re->Attribute( "exec" ) );
+
+      Read( re );
       resh = true;
     }   
   }
@@ -91,15 +92,19 @@ FXbool Runnable::load( TiXmlElement *parent )
   return resh;
 }
  
-FXbool Runnable::save( TiXmlElement *parent )
+FXbool Runnable::save( TiXmlElement *parent, FXbool force )
 {
   FXbool resh = false; 
+    #ifdef __DEBUG
+    std::cout << "[DEBUG PERSEUS::Runnable::Save( ) ] changed: " << m_change << " force: " << force << std::endl;
+    #endif 
 
-  if( parent ) {
-    TiXmlElement *re = parent->FirstChildElement( "Runnable" );
+  if( parent && ( m_change || force ) ) {
+
+    TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
 
     if( re == NULL ) { 
-      re = new TiXmlElement( "Runnable" );
+      re = new TiXmlElement( "Perseus:Runnable" );
       parent->LinkEndChild( re );
     }
 
@@ -107,7 +112,13 @@ FXbool Runnable::save( TiXmlElement *parent )
     re->SetAttribute( "type",       m_launchid.text( ) );
     re->SetAttribute( "workdir",    m_workdir.text( ) );
     //re->SetAttribute( "background", m_backg.text( ) );
+    
+    Write( re );
 
+    #ifdef __DEBUG
+    std::cout << "[DEBUG PERSEUS::Runnable::Save( ) ]  saved " << std::endl;
+    #endif 
+    
     resh = true;
   }
 
@@ -157,7 +168,11 @@ FXint Game::run( )
   //std::cout << "\n=== " << ( *gp_item )( "Basic:title" ) << " ==============================================" << std::endl;
   //set_workdir( ( *gp_item )( "Basic:workdir" ) );
   FXint pid = Runnable::run( );
-  Counter( );
+
+  if( pid > 0 ) {
+    Counter( );
+    set_change( true );
+  }
 
   return pid;
 }
@@ -172,41 +187,42 @@ void Game::Counter( )
   */
 }
 
-FXbool Game::load( TiXmlElement *parent )
+void Game::Read( TiXmlElement *runelement )
 {
-  bool res = false;
+  //bool res = false;
 
-  if( Runnable::load( parent ) ) {
-    TiXmlElement *rne = parent->FirstChildElement( "Runnable" );
-    TiXmlElement *gre = parent->FirstChildElement( "Perseus:Game" );
-    if( gre ) {
-      gre->Attribute( "count", &m_used );
-
-      res = true;
-    }
+  //if( Runnable::load( parent ) ) {
+  TiXmlElement *game_el= NULL;
+ 
+  if( runelement && ( game_el = runelement->FirstChildElement( "Perseus:Game" ) ) != NULL ) {
+      game_el->Attribute( "count", &m_used );
+      //res = true;
   }
 
-  return res;
+  //return res;
 }
  
-FXbool Game::save( TiXmlElement *parent )
+void Game::Write( TiXmlElement *runelement )
 {
-  bool res = false;
-
-  if( Runnable::save( parent ) && m_used > 0 ) {
-    TiXmlElement *rne = parent->FirstChildElement( "Runnable" );
-    TiXmlElement *gre = parent->FirstChildElement( "Perseus:Game" );
-    if( gre == NULL ) { 
-      gre = new TiXmlElement( "Perseus:Game" );
-      rne->LinkEndChild( gre ); 
+  //bool res = false;
+  
+  if( runelement ) {
+    TiXmlElement *game_el = runelement->FirstChildElement( "Perseus:Game" );
+    if( game_el == NULL ) { 
+      game_el = new TiXmlElement( "Perseus:Game" );
+      runelement->LinkEndChild( game_el ); 
     }
 
-    gre->Attribute( "count", &m_used );
+    game_el->SetAttribute( "count", m_used );
 
-    res = true;
+    #ifdef __DEBUG
+    std::cout << "[DEBUG PERSEUS::Game::Save( ) ] saved" << std::endl;
+    #endif 
+
+    //res = true;
   }
 
-  return res;
+  //return res;
 }
 
 
