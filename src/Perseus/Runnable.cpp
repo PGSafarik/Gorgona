@@ -10,7 +10,6 @@ using namespace PERSEUS;
 /// Callbacky pro volani funkci z Lua scriptu ///
 FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
 
-
 /*************************************************************************************************/
 //FXDEFMAP( Runnable ) RunnableMAP[ ] = { }
 FXIMPLEMENT( Runnable, FXObject, NULL, 0 )
@@ -25,9 +24,13 @@ Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
 }
 
 Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
-       : m_launchid( launcher ), m_notify( false ), m_target( tgt ), m_message( sel ), m_change( false )
 {
-  m_app = a;
+  m_app      = a;
+  m_target   = tgt;
+  m_message  = sel;
+  m_change   = false;
+  m_notify   = false;
+  m_launchid = launcher;
   set_command( cmd );
 }
 
@@ -80,8 +83,6 @@ FXbool Runnable::load( TiXmlElement *parent )
     if( re ) {
       m_launchid = re->Attribute( "type" );
       m_workdir = re->Attribute( "workdir" );
-      //m_bckg  = re->Attribute( "background" );
-
       set_command( re->Attribute( "exec" ) );
 
       Read( re );
@@ -95,10 +96,6 @@ FXbool Runnable::load( TiXmlElement *parent )
 FXbool Runnable::save( TiXmlElement *parent, FXbool force )
 {
   FXbool resh = false; 
-    #ifdef __DEBUG
-    std::cout << "[DEBUG PERSEUS::Runnable::Save( ) ] changed: " << m_change << " force: " << force << std::endl;
-    #endif 
-
   if( parent && ( m_change || force ) ) {
 
     TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
@@ -111,13 +108,8 @@ FXbool Runnable::save( TiXmlElement *parent, FXbool force )
     re->SetAttribute( "exec",       m_command.text( ) );
     re->SetAttribute( "type",       m_launchid.text( ) );
     re->SetAttribute( "workdir",    m_workdir.text( ) );
-    //re->SetAttribute( "background", m_backg.text( ) );
     
     Write( re );
-
-    #ifdef __DEBUG
-    std::cout << "[DEBUG PERSEUS::Runnable::Save( ) ]  saved " << std::endl;
-    #endif 
     
     resh = true;
   }
@@ -192,33 +184,21 @@ void Game::Counter( )
 {
   m_used += 1;
   m_last = FXDate::localDate( ).getTime( );
-  /*
-  FXDate date = FXDate::localDate( );
-  ( *gp_item )( "Extra:lastPlayed", FXString::value( date.day( ) ) + "/" + FXString::value( date.month( ) ) + "/" + FXString::value( date.year( ) ) );
-  */
 }
 
 void Game::Read( TiXmlElement *runelement )
 {
-  //bool res = false;
-
-  //if( Runnable::load( parent ) ) {
   TiXmlElement *game_el= NULL;
  
   if( runelement && ( game_el = runelement->FirstChildElement( "Perseus:Game" ) ) != NULL ) {
       game_el->Attribute( "count", &m_used );
       FXString value = game_el->Attribute( "last" );
       if( !value.empty( ) ) { m_last = value.toLong( ); } else { m_last = 0; }
-      //res = true;
   }
-
-  //return res;
 }
  
 void Game::Write( TiXmlElement *runelement )
 {
-  //bool res = false;
-  
   if( runelement ) {
     TiXmlElement *game_el = runelement->FirstChildElement( "Perseus:Game" );
     if( game_el == NULL ) { 
@@ -229,15 +209,7 @@ void Game::Write( TiXmlElement *runelement )
     game_el->SetAttribute( "count", m_used );
     FXString value = FXString::value( m_last );
     game_el->SetAttribute( "last", value.text( ) );
-
-    #ifdef __DEBUG
-    std::cout << "[DEBUG PERSEUS::Game::Save( ) ] saved" << std::endl;
-    #endif 
-
-    //res = true;
   }
-
-  //return res;
 }
 
 
