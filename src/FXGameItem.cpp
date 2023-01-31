@@ -118,6 +118,8 @@ void FXGameItem::load( TiXmlElement *eitem )
 
   for( TiXmlElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );
+    if( _sect.find( ":" ) >= 0 ) { continue; } // Pokud jde o data jineho modulu, preskocit
+ 
     // Osetreni elementu, se kterymi je potreba nakladat zvlastnim zpusobem :
     if( _sect == "Description" ) {
       this->write( _sect.text( ), elem->GetText( ), false );
