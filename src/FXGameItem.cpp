@@ -131,13 +131,7 @@ void FXGameItem::load( TiXmlElement *eitem )
       _name  = attr->Name( );
       _value = attr->Value( );
 
-      // Zpracovani atributu elementu, ktere vyzaduji zvlastni zachazeni :
-      if( _name == "numberOfPlays" ) {
-        this->nop = ( _value.empty( ) ? 0 : _value.toInt( ) );
-        continue;
-      }
-
-      // Vsechny ostatni hodnoty jsou zaklicovany do cache vlastnosti:
+       // Vsechny ostatni hodnoty jsou zaklicovany do cache vlastnosti:
       _key = _sect + ":" + _name;
       this->write( _key, _value, false );
     } 
@@ -158,8 +152,6 @@ const FXString FXGameItem::read( const FXString &k ) const
   FXival pos = 0;
   if( ( pos = this->property.find( k.text( ) ) ) != -1 ) { s = this->property.data( pos ); }
   return s;
-  //std::cout << "FXGameItem::read( key ): Key = " << k.text( ) << " value = " << resh.text( ) << std::endl;
-  //return resh;
 }
 
 void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
@@ -204,15 +196,7 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
     }
   }
 
-  e_tmp = e_self->FirstChildElement( "Extra" );
-  if( e_tmp == NULL ) {
-    e_tmp = new TiXmlElement( "Extra" );
-    e_self->LinkEndChild( e_tmp );
-  }
-  e_tmp->SetAttribute( "numberOfPlays", FXString::value( this->nop ).text( ) );
-
   /// FIXME GAMEITEM_001: force!
-  //exec->set_change( true );
   exec->save( e_self, true );
 }
 
