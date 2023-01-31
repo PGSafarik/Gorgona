@@ -163,6 +163,17 @@ Game::~Game( )
 
 }
 
+FXString Game::last( )
+{
+  FXString last_str = FXString::null;
+  if( m_last > 0 ) {
+    FXDate date; 
+    date.setTime( m_last );
+    last_str = FXString::value( date.day( ) ) + "/" + FXString::value( date.month( ) ) + "/" + FXString::value( date.year( ) );
+  }
+  return last_str;
+}
+
 FXint Game::run( )
 {
   //std::cout << "\n=== " << ( *gp_item )( "Basic:title" ) << " ==============================================" << std::endl;
@@ -180,7 +191,7 @@ FXint Game::run( )
 void Game::Counter( )
 {
   m_used += 1;
-
+  m_last = FXDate::localDate( ).getTime( );
   /*
   FXDate date = FXDate::localDate( );
   ( *gp_item )( "Extra:lastPlayed", FXString::value( date.day( ) ) + "/" + FXString::value( date.month( ) ) + "/" + FXString::value( date.year( ) ) );
@@ -196,6 +207,8 @@ void Game::Read( TiXmlElement *runelement )
  
   if( runelement && ( game_el = runelement->FirstChildElement( "Perseus:Game" ) ) != NULL ) {
       game_el->Attribute( "count", &m_used );
+      FXString value = game_el->Attribute( "last" );
+      if( !value.empty( ) ) { m_last = value.toLong( ); } else { m_last = 0; }
       //res = true;
   }
 
@@ -214,6 +227,8 @@ void Game::Write( TiXmlElement *runelement )
     }
 
     game_el->SetAttribute( "count", m_used );
+    FXString value = FXString::value( m_last );
+    game_el->SetAttribute( "last", value.text( ) );
 
     #ifdef __DEBUG
     std::cout << "[DEBUG PERSEUS::Game::Save( ) ] saved" << std::endl;

@@ -91,7 +91,8 @@ namespace PERSEUS {
   FXDECLARE( Game )
     FXint   m_used;        // Pocet spusteni 
     FXlong  m_total;       // Celkova doba spusteni
-    FXlong  m_last;        // Posledni spusteni (datum, cas)
+    FXTime  m_last;        // Posledni spusteni (datum, cas)
+    //FXDate  m_last;        // Posledni spusteni   
     FXlong  m_time;        // Celkova doba posledniho spusteni 
     FXlong  m_longest;     // Nejdelsi doba behu vubec  
 
@@ -100,7 +101,8 @@ namespace PERSEUS {
     virtual ~Game( );
     
     /* Access methods */
-    FXint count( ) { return m_used; }
+    FXint    count( ) { return m_used; }
+    FXString last( );  
 
     /* Operations methods */
     virtual FXint run( );
