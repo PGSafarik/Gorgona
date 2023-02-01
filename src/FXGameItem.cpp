@@ -9,7 +9,7 @@ FXGameItem::FXGameItem( Gorgona *app )
 {
   this->hidel     = false;
   this->change    = false;
-  this->nop       = 0;
+  ///this->nop       = 0;
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
 
@@ -20,7 +20,7 @@ FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type
 {
   this->hidel     = false;
   this->change    = false;
-  this->nop       = 0;
+  ///this->nop       = 0;
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
   
@@ -55,7 +55,7 @@ void FXGameItem::dump( FXbool force )
     std::cout << "Game entry "          << this->property[ "Basic:title" ] << std::endl;
     std::cout << "Change: "             << this->change << std::endl;
     std::cout << "Hide GUI ON: "        << this->hidel << std::endl;
-    std::cout << "Nuber of execution: " << this->nop << std::endl;
+    ///std::cout << "Nuber of execution: " << this->nop << std::endl;
 
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       FXString k = this->property.key( i );
