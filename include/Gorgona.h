@@ -85,7 +85,7 @@ public:
  
   /* GUI handlers & messages */
   enum {
-   SIGNAL_CHLD = FXApp::ID_LAST,  // Potomek skoncil
+   SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess
    ID_LAST
   };
 
@@ -94,8 +94,8 @@ public:
 protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Odesle notifikacni zpravu
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Rozdeli jednotlive slozky retezce prikazu do pole
-  FXbool LuaInit( );
-  void ReadConfig( );
+  FXbool LuaInit( );                                                             // Inicializace interpreteru jazyka Lua 
+  void ReadConfig( );                                                            // Nacte konfiguracni data
 };
 
 #endif /* __GORGONA_H */
