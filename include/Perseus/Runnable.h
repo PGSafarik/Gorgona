@@ -107,6 +107,9 @@ namespace PERSEUS {
     /* Operations methods */
     virtual FXint run( );
 
+    /* Debug & testing */
+    virtual void dump( ); 
+
   protected:
     Game( ) { }
    

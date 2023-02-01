@@ -180,6 +180,18 @@ FXint Game::run( )
   return pid;
 }
 
+void Game::dump( )
+{ 
+  FXString text = "   Runnable <- Game = { \n";
+  text += "     Last run: "      + last( ) + "\n";   
+  text += "     Number of run: " + FXString::value( m_used ) + "\n";
+  text += "   } \n";
+
+  std::cout << text;   
+  
+  Runnable::dump( );
+}
+
 void Game::Counter( )
 {
   m_used += 1;
