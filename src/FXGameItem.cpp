@@ -9,7 +9,7 @@ FXGameItem::FXGameItem( Gorgona *app )
 {
   this->hidel     = false;
   this->change    = false;
-  ///this->nop       = 0;
+  
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
 
@@ -20,7 +20,7 @@ FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type
 {
   this->hidel     = false;
   this->change    = false;
-  ///this->nop       = 0;
+  
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
   
@@ -55,7 +55,6 @@ void FXGameItem::dump( FXbool force )
     std::cout << "Game entry "          << this->property[ "Basic:title" ] << std::endl;
     std::cout << "Change: "             << this->change << std::endl;
     std::cout << "Hide GUI ON: "        << this->hidel << std::endl;
-    ///std::cout << "Nuber of execution: " << this->nop << std::endl;
 
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       FXString k = this->property.key( i );
@@ -220,6 +219,51 @@ void FXGameItem::checkIcons( FXApp *app )
   if( ( file = this->read( "Icon:big" ) ) != FXString::null ){
     this->BigIcon = loadExternIcon( app, file, bis, bis );
   }
+}
+
+/**************************************************************************************************/
+Library::Library( Gorgona *app )
+{
+  m_app = app;
+}
+
+Library::~Library( )
+{
+
+
+
+}
+
+FXbool Library::load( TiXmlElement *library_el )
+{
+  FXbool result = false; 
+   
+  if( library_el ) {
+    for( TiXmlElement *el = library_el->FirstChildElement( "Game" ); el; el = el->NextSiblingElement( "Game" ) ) {
+      FXGameItem *item = new FXGameItem( m_app );    
+      if( item ) {
+        item->load( el );
+        item->checkIcons( ( FXApp*) m_app );  // ?  FIXME ItemList_001: FXGameItem::CheckIcons muze (ted uz) volat i metoda FXGameItem::Load( )
+        push( item );
+      }
+      else { std::cout << "[WARNING ItemList::Load( )] : Unable to create a trigger item" << std::endl; }  
+      result = true;
+    }
+  } /* Knihovna (jeste) nevytvorena. Prvni spusteni? */ 
+
+  return result; 
+}
+
+FXbool Library::save( TiXmlElement *library_el )
+{
+  FXbool result = false;
+
+  if( library_el ) {
+    FXint num = no( );
+    for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el ); }
+  }
+
+  return result;
 }
 
 /*** END ******************************************************************************************/

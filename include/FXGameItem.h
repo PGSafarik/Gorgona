@@ -79,5 +79,17 @@ protected :
 
 typedef  FXArray<FXGameItem*> FXGameItemArray;
 
+class Library : public FXArray<FXGameItem*> {
+  Gorgona *m_app;
+
+public :
+  Library( Gorgona *app );
+  virtual ~Library( );
+
+  /* Operations methods */
+  virtual FXbool load( TiXmlElement *library_el );
+  virtual FXbool save( TiXmlElement *library_el );
+};
+
 #endif /* __FXGAMEITEM_H */
 /*** END ****************************************************************/
