@@ -64,14 +64,28 @@ FXDECLARE( Gorgona )
   lua_State *m_lua;                      // Instance interpreteru jazyka Lua
   FXString   m_initscript;               // Inicializacni script 
 
+  /* Data */
+  FXString      m_profiledir;
+  FXString      m_gamelist;
+  TiXmlDocument *mx_document;
+  TiXmlElement  *mx_root;
+
+  Library *m_library;     
+
 public:
-   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
-   virtual ~Gorgona( );
+  Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
+  virtual ~Gorgona( );
 
-   /* Access methods */
-   void setNotify( FXObject *tgt, FXuint msg ) { m_tgt = tgt; m_message = msg; }
-   lua_State* getLua( ) { return m_lua; }
+  /* Access methods */
+  void setNotify( FXObject *tgt, FXuint msg ) { m_tgt = tgt; m_message = msg; }
+  lua_State* getLua( ) { return m_lua; }
+  Library*   getLibrary( ) { return m_library; }
+  FXString   getProfileDir( ) { return m_profiledir; }
+  void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
+  FXString   getLibraryFilenme( ) { return m_gamelist; }
+  void       setLibraryFilenme( const FXString &name ) {  m_gamelist = name; }
 
+ 
   /* Operations methods */
   virtual void create( );
   virtual void init( int& argc, char** argv, FXbool connect = true );

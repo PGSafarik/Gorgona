@@ -275,6 +275,7 @@ void GorgonaWindow::load( )
 
     /* read Games Library */
     TiXmlElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
+    
     if( xlibrary )  {        
       for( TiXmlElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
         if( ( it = new FXGameItem( m_app ) ) != NULL ) {
@@ -284,12 +285,14 @@ void GorgonaWindow::load( )
         }
         else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
       } 
-    }   /* Knihovna (jeste) nevytvorena. Prvni spusteni? */
+    }   // Knihovna (jeste) nevytvorena. Prvni spusteni? 
+    
   }
   else {
     std::cout << "Chyba : neni zadan soubor, nebo ma chybny format" << std::endl;
     gl_change = true;
   }
+
   std::cout.flush( );
 
   gl_pane->showFolder( NULL, true );
@@ -305,6 +308,7 @@ void GorgonaWindow::load( )
 
 void GorgonaWindow::save( )
 {
+  //*
   TiXmlDocument     xdoc;
   
   TiXmlDeclaration *xdecl = new TiXmlDeclaration( "1.0", "", "" );
@@ -322,7 +326,7 @@ void GorgonaWindow::save( )
 
   std::cout << "Saving the menu xml-file" << std::endl;
   xdoc.SaveFile( gl_datafile.text( ) );
-
+  //*/
 }
 
 void GorgonaWindow::read_config( )
@@ -332,9 +336,9 @@ void GorgonaWindow::read_config( )
   //FXint pos_y = ( getApp( )->getRootWindow( )->getHeight( ) / 2 ) - ( this->getHeight( ) / 2 );
 
   gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
-  gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
-  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
-  gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
+/**/  gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+/**/  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
+/**/  gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
   gl_browser_args    = getApp( )->reg( ).readStringEntry( "Profile", "browserargs",       FXString::null );
   gl_doubleclick_key = getApp( )->reg( ).readStringEntry( "Profile", "doubleclickaction", FXString::null );

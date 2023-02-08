@@ -196,7 +196,10 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 
 void Gorgona::ReadConfig( )
 {
-   m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+  m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
+  m_gamelist   = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
+  
 }
 
 FXbool Gorgona::LuaInit( )
