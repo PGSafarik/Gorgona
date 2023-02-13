@@ -54,11 +54,10 @@
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
 
-  FXObject            *m_tgt;           // Cil notifikacnich zprav
-  FXuint               m_message;       // ID notifikacni zpravy 
-  FXArray<FXProcess*>  m_descendants;   // Seznam spustenych procesu (potomku Gorgony)
-
-  FXbool m_verbose;                      // Ukecany mod
+  FXObject            *m_tgt;               // Cil notifikacnich zprav
+  FXuint               m_message;           // ID notifikacni zpravy 
+  FXDictionaryOf<FXProcess>  m_descendants; // List of registered descendants of the Gorgona process 
+  FXbool m_verbose;                         // Ukecany mod
 
   /* Lua */
   lua_State *m_lua;                      // Instance interpreteru jazyka Lua
@@ -84,8 +83,9 @@ public:
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
   FXString   getLibraryFilenme( ) { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name ) {  m_gamelist = name; }
+  FXbool     hasChild( FXint pid );  
+  FXProcess* findChild( FXint pid );
 
- 
   /* Operations methods */
   virtual void create( );
   virtual void init( int& argc, char** argv, FXbool connect = true );

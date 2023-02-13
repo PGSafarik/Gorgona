@@ -15,7 +15,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_tgt = NULL;
   m_message = 0;
 
-  m_verbose = false;
+  m_verbose = true;
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 }
@@ -26,6 +26,26 @@ Gorgona::~Gorgona( )
 }
 
 /**************************************************************************************************/
+FXbool Gorgona::hasChild( FXint pid )     
+{ 
+  if( !m_descendants.empty( ) && pid > 0 ) { 
+    return m_descendants.has( FXString::value( pid ) ); 
+  }
+    
+  return false;
+}
+  
+FXProcess* Gorgona::findChild( FXint pid )
+{
+  if( hasChild( pid ) ) {
+    return m_descendants[ FXString::value( pid ) ];
+  }
+
+  return NULL; 
+}
+
+
+/**************************************************************************************************/
 void Gorgona::create( )
 {
   FXApp::create( );
@@ -34,6 +54,8 @@ void Gorgona::create( )
 
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
+  Welcome( this ); 
+ 
   FXApp::init( argc, argv, connect );
   ReadConfig( );
   LuaInit( );
@@ -52,26 +74,30 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint
   */
   FXint pid = 0;
 
-  if( m_verbose ) {
-    std::cout << "Run the process:";
-    FXString text = "";
-    FXint num = cmd.no( );
-    for( FXint i = 0; i != num; i++ ) { 
-       text += " "; 
-       text += cmd[ i ]; 
-    }
-    std::cout << text << std::endl;;
-  }
-  
   FXProcess *proc = new FXProcess; 
   if( proc->start( cmd[ 0 ], cmd.data( ) ) ) {
     pid = proc->id( );
-    if( m_verbose ) { std::cout << "PID: " << pid <<  std::endl; }
 
-    m_descendants.push( proc ); 
+    FXString key =  FXString::value( pid );
+    m_descendants.insert( key , proc ); 
     Notify( true, SEL_CHANGED );
+
+    if( m_verbose ) {
+      std::cout << "EXECUTE the process:";
+      FXString text = "";
+      FXint num = cmd.no( );
+      for( FXint i = 0; i != num; i++ ) { 
+        text += " "; 
+        text += cmd[ i ]; 
+      }
+      text += "\n";
+      text += "PID: " + key; 
+      std::cout << text << std::endl;;
+    }
+
   }
   else { std::cout << "[WARNING]: Process " << cmd[ 0 ] << "is not running!" << std::endl; }
+
 
   std::cout << "\n";
   std::cout.flush( );
@@ -128,18 +154,19 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   struct rusage __usage;
   
   FXint pid = ( FXint ) wait3( &status, 0, &__usage );
-  std::cout << "Child process " << pid << " with the exit code " << status << std::endl;
-
-  FXint num = m_descendants.no( );
-  FXProcess *proc = NULL;
-  for( FXint i = 0; i != num; i++ ) {
-    proc = m_descendants[ i ];
-    if( proc && proc->id( ) == pid ) {
-      m_descendants.erase( i );
+  
+  FXString key = FXString::value( pid );
+  if( m_descendants.has( key ) ) {
+    FXProcess *proc = m_descendants[ key ];
+    if( proc != NULL ) {
+      m_descendants.remove( key );
       delete proc;
-      std::cout << "This process removed from decedants list." << std::endl;
+      std::cout << "Unregister the process of the descendant " << pid << ", which just finished with exit code " << status << std::endl;
     }
-  } 
+    std::cout << "Remaining number of registered processes: " << m_descendants.used( ) << std::endl;
+  }
+  else { std::cout << "The process of the descendant " << pid << ", which just finished with exit code " << status << std::endl; }    
+  
   
   return 1;
 }
@@ -152,7 +179,7 @@ long Gorgona::Notify( FXbool enable, FXuint mtype, void *mdata )
 
 void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 {
-  /* Metoda provadi rozdeleni retezce prikazu do pole typu const char*, jak to pozaduje trida  FXProcess
+  /* Metoda provadi rozdeleni retezce prikazu do pole typu const char*, jak to pozaduje trida FXProcess
      buffer[ 0 ] je samotny prikaz urceny ke spusteni, kazda dalsi polozka  predstavuje jeden argument.
  
     - Parametry se oddeluji znakem mezery (" "), nebo env IFS 
