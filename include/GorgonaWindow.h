@@ -70,7 +70,6 @@ FXDECLARE( GorgonaWindow )
   FXMenuPane *gl_mGorgona;
   FXMenuPane *gl_mGames;
   FXMenuPane *gl_mTools;
-  //FXMenuPane *gl_mView;
   FXMenuPane *gl_mHelp;
 
   // Settings
@@ -98,33 +97,19 @@ FXDECLARE( GorgonaWindow )
   FXbool      gl_change;            // Doslo ke zmenam v seznamech
   FXTreeItem *gl_gameroot;          // Koren herniho stromu
 
-  // Zprava podprocesu
-  //FXint       gl_childPID;          // PID potomka, ktery byl prave ukoncen
-  //FXint       gl_childRV;           // Navratova hodnota ukonceneho potomka
-  //FXGameProcessList gl_processlist; // Seznam se spustenymi procesy-potomky
-
-  // LUA
-  FXString   gl_lscript;
-
 public :
   GorgonaWindow( Gorgona *app );
   virtual ~GorgonaWindow( );
 
-  ////////////////////////////////////////////////
-  ///
-  ///
+  /* Access methods */
   virtual void create( );
   IconsTheme* get_IconsTheme( ) { return gl_iconstheme; }
   FXGameItem* get_ActiveItem( ) { return gl_pane->getCurrentItem( ); }
 
-  ///////////////////////////////////////////////
-  /// Operace
-  ///
+  /* Operations */
   virtual void layout( );
 
-  ////////////////////////////////////////////////
-  ///
-  ///
+  /* Event messagess & handlers */
   enum {
     MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
@@ -154,14 +139,12 @@ protected :
 
   void load( );
   void save( );
-  /**void lua_init( );**/
   void read_config( );
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );
   void checkWindowState( );
 
   void get_arguments( StringList *list );
-  void version( );
   
   /* Process */
   FXbool run( FXGameItem *it = NULL );
