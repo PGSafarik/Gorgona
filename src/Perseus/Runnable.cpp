@@ -11,8 +11,8 @@ using namespace PERSEUS;
 FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
 
 /*************************************************************************************************/
-//FXDEFMAP( Runnable ) RunnableMAP[ ] = { }
-FXIMPLEMENT( Runnable, FXObject, NULL, 0 )
+FXDEFMAP( Runnable ) RUNMAP[ ] = { };
+FXIMPLEMENT( Runnable, FXObject, RUNMAP, ARRAYNUMBER( RUNMAP ) )
 
 Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
 {
@@ -40,12 +40,19 @@ Runnable::~Runnable( )
 FXint Runnable::run( )
 {
   FXint pid = 0; 
+
+  if( m_pid > 0 ) {
+    if( !m_app->hasChild( m_pid ) ) { m_pid = 0; }
+    else { return -1; }
+  }
+
   FXString chwd = ChangeWorkDir( );
   
 
   if( ( pid = m_app->exec( m_execute, 0, 0, 0 ) ) <= 0 ) { 
     std::cout << "[ERROR Runnable]: Command " << m_command << " is not running!" << std::endl; 
   }
+  else { m_pid = pid; }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
   return pid;
@@ -137,8 +144,8 @@ void Runnable::dump( )
 }
 
 /*************************************************************************************************/
-//FXDEFMAP( Game ) GameMAP[ ] = { }
-FXIMPLEMENT( Game, Runnable, NULL, 0 )
+FXDEFMAP( Game ) GAMEMAP[ ] = { };
+FXIMPLEMENT( Game, Runnable, GAMEMAP, ARRAYNUMBER( GAMEMAP ) )
 
 Game::Game( Gorgona *a, FXObject *tgt, FXSelector sel )
            : Runnable( a, tgt, sel )

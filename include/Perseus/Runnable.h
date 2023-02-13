@@ -40,8 +40,9 @@ namespace PERSEUS {
     FXString  m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
     FXbool    m_notify;      // Indikator notifikace opreaci
 
-    FXbool m_change;         // indikuje zmenu objektu
-  
+    FXbool m_change;         // Indikuje zmenu objektu
+    FXint  m_pid;            // Process ID
+    
     FXObject   *m_target;    // Cilovy objekt notifikaci
     FXSelector  m_message;   // notifikacni zprava
 
@@ -60,14 +61,15 @@ namespace PERSEUS {
     void     set_command( const FXString &cmd ) { Command( cmd );    }
     FXString get_command( )                     { return m_command;  } 
     void     set_change( FXbool value )         { m_change = value;  }
-    FXbool   is_changed( )                      { return m_change;    }
-    
+    FXbool   is_changed( )                      { return m_change;   }
+    FXbool   is_running( )                      { return m_pid > 0;  } 
+
     /* Operations methods */
     FXint operator( ) ( ) { return run( ); }
 
     virtual FXint  run( );
-    virtual FXbool load( TiXmlElement *parent ); 
-    virtual FXbool save( TiXmlElement *parent, FXbool force = false );
+    FXbool load( TiXmlElement *parent ); 
+    FXbool save( TiXmlElement *parent, FXbool force = false );
     virtual FXbool validation( );
     
     /* Debug & testing */
