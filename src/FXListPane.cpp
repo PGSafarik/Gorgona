@@ -331,9 +331,18 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
     case FXListPane::LIST_REFRESH :
     {
       std::cout << "Refresh list..." << std::endl;
+      FXint current = gl_itemslist->getCurrentItem( );
+
       gl_itemslist->clearItems( );
-      showFolder( ( ( gl_activefd != NULL ) ? gl_activefd : gl_rootfd ), ( ( gl_activefd == gl_rootfd )? true : false ) );
       gl_currentit = NULL;
+    
+      showFolder( ( ( gl_activefd != NULL ) ? gl_activefd : gl_rootfd ), ( ( gl_activefd == gl_rootfd )? true : false ) );
+
+      if( current >= 0 ) {
+        aktiveItem( current ); 
+        //gl_currentit = gl_itemslist->getItem( current );        
+      } 
+      
       resh = 1;
       break;
     }
