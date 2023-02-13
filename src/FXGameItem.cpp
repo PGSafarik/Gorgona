@@ -139,7 +139,7 @@ void FXGameItem::load( TiXmlElement *eitem )
   exec->load( eitem ); 
   
   #ifdef __DEBUG
-   dump( true );
+   dump( );
   #endif
 
   validate( );
