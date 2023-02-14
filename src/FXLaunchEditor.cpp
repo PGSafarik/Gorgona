@@ -41,7 +41,7 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   FXIcon *ic_bicon = ( ( it->BigIcon != NULL ) ? it->BigIcon : icth->getIcon( "Actions_big/roll.png" ) );
   FXIcon *ic_micon = ( ( it->SmallIcon != NULL ) ? it->SmallIcon : icth->getIcon( "Actions/roll.png" ) );
 
-  this->setIcon( ic_window );
+  //this->setIcon( ic_window );
   FXVerticalFrame   *content      = new FXVerticalFrame( this, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0 );
   FXHorizontalFrame *content_sect = new FXHorizontalFrame( content, FRAME_GROOVE | LAYOUT_FILL );
   le_sections = new FXList( content_sect, this, FXLaunchEditor::SECTION_SELECT, FRAME_LINE | LIST_NORMAL | LAYOUT_FILL_Y | LAYOUT_FIX_WIDTH, 0, 0, 100 );
