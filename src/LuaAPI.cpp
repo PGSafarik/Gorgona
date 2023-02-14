@@ -5,8 +5,6 @@
 #include<Utils.h>
 
 Gorgona *_inst;   // Instance obsluzneho objektu
-//lua_State      *_state;  // Stavova promenna lua interpreteru
-FXbool          _linit;  // Indikace inicicalizace lua
 
 // Auxiliary functions
 FXRegistry& get_registry( ) { return _inst->reg( ); }
@@ -16,6 +14,7 @@ int static l_launcher_input( lua_State *L );     // Input box
 int static l_launcher_message( lua_State *L );   // Message box
 //int static l_launcher_exec( lua_State *L );      // exec ( Run program )
 //int static l_launcher_selitem( lua_State *L );   // Select game item
+
 // Manipulation with Gorgona cfg register
 int static l_registry_write( lua_State *L );     // Read registry value
 int static l_registry_read( lua_State *L );      // Write registry value
@@ -24,13 +23,14 @@ int static l_registry_delete( lua_State *L );     // Remove header or Key
 
 
 /*************************************************************************************************/
-lua_State* l_open( Gorgona *app )
-{
-  lua_State *state;
+FXbool l_open( Gorgona *app )
+{ 
   _inst = app;
 
-  if( ( state = luaL_newstate( ) ) != NULL ){
-    
+  FXbool     result = false;
+  lua_State *state = _inst->getLua( );
+
+  if( state ) {  
     luaL_openlibs( state );
 
     /// GUI /////////////////////////////////////
@@ -68,31 +68,16 @@ lua_State* l_open( Gorgona *app )
     l_TableWrite_num( state, "question",    4 );
     lua_setglobal( state, "mbox_type" );
 
-    _linit = true;
+    result = true;
   }
-  else { _linit = false; }
 
-  return state;
+  return result;
 }
 
 void l_close( )
 {
   _inst = NULL;
-  _linit = false;
 }
-
-
-FXbool l_init( )
-{
-  return _linit;
-}
-
-/*
-lua_State* l_parser( )
-{
-  return ( ( _linit = true ) ? _state : NULL );
-}
-*/
 
 /**************************************************************************************************/
 int l_launcher_input( lua_State *L )
@@ -343,7 +328,7 @@ FXbool l_Script( const FXString &script )
 {
   std::cout << "Loading the initial script: " << script.text( ) << std::endl;
   FXbool loaded = false;
-  if( _linit == true ) {
+  if( _inst->isLuaInit( ) == true ) {
     FXint resh = luaL_dofile( _inst->getLua( ), script.text( ) );
     if( resh == 0 ) { loaded = true; }
     else { l_ErrorMessage( resh ); }

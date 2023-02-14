@@ -31,10 +31,8 @@
 class Gorgona;
 
 // Zaklad skriptovaciho jazyka Lua
-lua_State*     l_open( Gorgona *app );
+FXbool     l_open( Gorgona *app );
 void       l_close( );
-FXbool     l_init( );
-//lua_State* l_parser( );
 
 // Pomocne rutiny
 FXbool l_Script( const FXString &script );
