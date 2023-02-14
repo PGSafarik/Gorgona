@@ -52,8 +52,6 @@ enum {
 
 class FXLaunchEditor : public FXSecondaryWindow /*FXDialogBox*/ {
 FXDECLARE( FXLaunchEditor )
-  //FXGameLauncher *le_parent;
-
   // Widgety dialogu
   FXSwitcher    *le_switcher;
   FXList        *le_sections;
@@ -77,19 +75,13 @@ public :
   FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it = NULL );
   virtual ~FXLaunchEditor( );
 
-  ///////////////////////////////////////////////
-  ///
-  ///
+  /* Operations methods */
   virtual void create( );
 
 
-  ///////////////////////////////////////////////
-  ///
-  ///
+  /* Access methods */
 
-  ///////////////////////////////////////////////
-  ///
-  ///
+  /* Event messages & handlers */
   enum {
     ID_ACCEPT = FXDialogBox::ID_LAST,
     ID_STORNO,
@@ -109,11 +101,11 @@ public :
 protected :
   FXLaunchEditor( ) { }
 
-  // Pomocne rutiny pro zpravu sekci
+  /* Helpful methods for sections managment */
   void make_sect( const FXString &name, const FXString &descr, FXIcon *ic = NULL );
   FXVerticalFrame* get_sect( const FXString &name );
 
-  // Pomocne rutiny pro tvorbu widgetu nastaveni voleb
+  /* Helpful methods for generic widgets */
   void     makevalue_text( const FXString &sect, const FXString &label, const FXString &value = FXString::null );
   void     makevalue_combo( const FXString &sect, const FXString &label, const FXString &value = FXString::null, FXArray<FXString> *t = NULL );
   void     makevalue_file( const FXString &sect, const FXString &label, const FXString &value = FXString::null );
@@ -125,11 +117,10 @@ protected :
   void     setvalue_combo( const FXString &name, const FXString &value = FXString::null );
   FXString getvalue_combo( const FXString &name );
 
-  // Pomocne rutiny pro zpracovani editovane polozky
+  /* Item data rutines */
   void load( );
   void save( );
 };
-
 
 #endif /* __FXLAUNCHEDITOR_H */
 /*** END ****************************************************************/

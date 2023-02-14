@@ -20,11 +20,10 @@ FXDEFMAP( FXLaunchEditor ) LAUNCHEDITORMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ICON_BIG,  FXLaunchEditor::onCmd_Icon ),
   FXMAPFUNC( SEL_COMMAND, FXLaunchEditor::ICON_SMALL,  FXLaunchEditor::onCmd_Icon )
 };
-FXIMPLEMENT( FXLaunchEditor, FXSecondaryWindow /*FXDialogBox*/, LAUNCHEDITORMAP, ARRAYNUMBER( LAUNCHEDITORMAP ) )
+FXIMPLEMENT( FXLaunchEditor, FXSecondaryWindow, LAUNCHEDITORMAP, ARRAYNUMBER( LAUNCHEDITORMAP ) )
 
 /*************************************************************************************************/
 FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
-              /*: FXDialogBox( p, "Edit item", DECOR_ALL, 0, 0, 660, 320 )*/
                 : FXSecondaryWindow( p, "Edit Game", WINDOW_STATIC, 0, 0, 660, 320  )
 {
   le_item     = it;
@@ -41,7 +40,6 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   FXIcon *ic_storno = icth->getIcon( "Actions_big/dialog-cancel.png" );
   FXIcon *ic_bicon = ( ( it->BigIcon != NULL ) ? it->BigIcon : icth->getIcon( "Actions_big/roll.png" ) );
   FXIcon *ic_micon = ( ( it->SmallIcon != NULL ) ? it->SmallIcon : icth->getIcon( "Actions/roll.png" ) );
-  //FXIcon *ic_find   = icth->getIcon( "Actions/edit-find.png" );
 
   this->setIcon( ic_window );
   FXVerticalFrame   *content      = new FXVerticalFrame( this, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0 );
@@ -94,9 +92,7 @@ FXLaunchEditor::~FXLaunchEditor( )
 /*************************************************************************************************/
 void FXLaunchEditor::create( )
 {
-  //FXDialogBox::create( );
   FXSecondaryWindow::create( ); 
-
 }
 
 
@@ -243,7 +239,8 @@ void FXLaunchEditor::makevalue_combo( const FXString &sect, const FXString &labe
   if( sect_fr ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( sect_fr, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
     new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
-    w_value = new FXComboBox( f, 5, NULL, 0, COMBOBOX_NORMAL | LAYOUT_FILL_X );
+    FXHorizontalFrame *cf = new FXHorizontalFrame( f, FRAME_LINE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
+    w_value = new FXComboBox( cf, 5, NULL, 0, COMBOBOX_NORMAL | LAYOUT_FILL_X );
     if( t != NULL ) {
       for( FXint i = 0; i != t->no( ); i++ ) {
         //FXString key = t->at( i );
