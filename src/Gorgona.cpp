@@ -12,10 +12,17 @@ FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
 Gorgona::Gorgona( const FXString& name, const FXString& vendor )
        : FXApp( name, vendor )
 {
-  m_tgt = NULL;
+  m_tgt     = NULL;
   m_message = 0;
-
   m_verbose = true;
+  m_lua     = luaL_newstate( );
+  
+  m_initscript = m_profiledir = m_gamelist = FXString::null;
+
+  mx_document = NULL;
+  mx_root     = NULL;
+
+  m_library = NULL;
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 }
@@ -229,18 +236,14 @@ void Gorgona::ReadConfig( )
   
 }
 
-FXbool Gorgona::LuaInit( )
+void Gorgona::LuaInit( )
 {
-  FXbool result = false;
- 
-  if( ( m_lua = l_open( this ) ) != NULL ) { 
-    FXint status = execLuaFile( m_initscript );
-    std::cout << "[INFO Gorgona]: Lua initialized: " << m_initscript  << " => " << status << std::endl; 
-    
-    result = true;
+  if( l_open( this ) ) { 
+    FXint result = execLuaFile( m_initscript );
+    m_luaOk = ( result == 0 ); 
+    std::cout << "[INFO Gorgona]: Lua initialized: " << m_initscript  << " => " << result << std::endl; 
   }
-
-  return result;
+  else { std::cout << "[ERROR Gorgona]: Lua its NOT opened!"; }
 }
 
 /*** END ******************************************************************************************/

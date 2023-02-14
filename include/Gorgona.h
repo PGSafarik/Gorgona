@@ -16,7 +16,7 @@
 #define __GORGONA_H
 
 /*************************************************************************
-* FXGameLauncher.h                                                       *
+* Gorgona.h                                                       *
 *                                                                        *
 * Trida reprezentuje instanci aplikace a komunikuje se systemem          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
@@ -34,55 +34,52 @@
 #include<lua5.1/lualib.h>
 #include<lua5.1/lauxlib.h>
 
-// Foxlib, the GUI library
-#include<fox-1.7/fx.h>
-#include<fxghi.h>
-
 // Tiny xml - xml support
 #include<tinyxml.h>
 
+// Foxlib, the GUI library
+#include<fox-1.7/fx.h>
+
 // Internal headers
 #include<Utils.h>
-#include<Boxes.h>
 #include<IconsTheme.h>
-//#include<FXGameItem.h>
-#include<FXLaunchEditor.h>
+#include<FXGameItem.h> 
 #include<LuaAPI.h>
-#include<FXListPane.h>
-#include<GO_Keywords.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
+  FXObject *m_tgt;     // Notify target
+  FXuint    m_message; // ID of notifikacation message
+  FXbool    m_verbose; // Verbose mod
 
-  FXObject            *m_tgt;               // Cil notifikacnich zprav
-  FXuint               m_message;           // ID notifikacni zpravy 
+  /* Child process managment */
   FXDictionaryOf<FXProcess>  m_descendants; // List of registered descendants of the Gorgona process 
-  FXbool m_verbose;                         // Ukecany mod
 
   /* Lua */
-  lua_State *m_lua;                      // Instance interpreteru jazyka Lua
-  FXString   m_initscript;               // Inicializacni script 
+  lua_State *m_lua;        // Instance of the Lua language interpreter
+  FXbool     m_luaOk;      // True indicate succeful initialize the Lua language ;) 
+  FXString   m_initscript; // Initialize script (lua)
 
   /* Data */
-  FXString      m_profiledir;
-  FXString      m_gamelist;
-  TiXmlDocument *mx_document;
-  TiXmlElement  *mx_root;
-
-  Library *m_library;     
+  FXString      m_profiledir; // Path of rofile directory 
+  FXString      m_gamelist;   // Filename for list of games (xml)
+  TiXmlDocument *mx_document; // XML instance of the games list
+  TiXmlElement  *mx_root;     // XML root element of the games list 
+  Library       *m_library;   // Library of games ;)
 
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
   virtual ~Gorgona( );
 
   /* Access methods */
-  void setNotify( FXObject *tgt, FXuint msg ) { m_tgt = tgt; m_message = msg; }
-  lua_State* getLua( ) { return m_lua; }
-  Library*   getLibrary( ) { return m_library; }
-  FXString   getProfileDir( ) { return m_profiledir; }
+  void setNotify( FXObject *tgt, FXuint msg )           { m_tgt = tgt; m_message = msg; }
+  lua_State* getLua( )                                  { return m_lua; }
+  FXbool     isLuaInit( )                               { return m_luaOk; }    
+  Library*   getLibrary( )                              { return m_library; }
+  FXString   getProfileDir( )                           { return m_profiledir; }
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
-  FXString   getLibraryFilenme( ) { return m_gamelist; }
-  void       setLibraryFilenme( const FXString &name ) {  m_gamelist = name; }
+  FXString   getLibraryFilenme( )                       { return m_gamelist; }
+  void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
   FXbool     hasChild( FXint pid );  
   FXProcess* findChild( FXint pid );
 
@@ -102,14 +99,13 @@ public:
    SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess
    ID_LAST
   };
-
   long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
 
 protected:
-  long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Odesle notifikacni zpravu
-  void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Rozdeli jednotlive slozky retezce prikazu do pole
-  FXbool LuaInit( );                                                             // Inicializace interpreteru jazyka Lua 
-  void ReadConfig( );                                                            // Nacte konfiguracni data
+  long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Send of notification message, if anyone 
+  void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
+  void LuaInit( );                                                             // Initialize langugae interpret of Lua 
+  void ReadConfig( );                                                            // Load configurations data
 };
 
 #endif /* __GORGONA_H */
