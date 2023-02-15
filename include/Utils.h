@@ -48,14 +48,23 @@ extern std::istream& operator >>( std::istream &store, FX::FXString &str );
 //extern FX::FXString& operator =( const std::string &str );      
 
 /////////////////////////////////////////////////
-// External Icons
-//
+/* External Icons                              */
 extern FXIcon* loadExternIcon( FXApp *a, const FXString &file, FXint width = 16, FXint height = 16 );
 extern FXIcon* createIconType( FXApp *a, const FXString &type, FXuint opts = IMAGE_DITHER | IMAGE_SHMI | IMAGE_SHMP /*| IMAGE_ALPHAGUESS*/ );
 
 //////////////////////////////////////////////////
 /* More helpers function                        */
 extern void Welcome( FXApp *app );
+
+//////////////////////////////////////////////////
+/* Terminal profile struct                      */
+struct TerminalProfile {
+  FXString name;      // Nazev, identifikator terminalu
+  FXString exec;      // Spustitelny soubor emulatoru
+  FXString p_run;     // Parametr predavajici prikaz ke spusteni v terminalu
+  FXString p_noclose; // Parametr zabranujici ukonceni emulatoru po provedeni prikazu
+  FXString p_workdir; // Parametr, umoznujici (u nekterych) emulatoru terminalu zmenit pracovni adresar (Gorgona jej nevyuziva)
+};
 
 #endif /* __UTILS_H */
 /*** END ****************************************************************/
