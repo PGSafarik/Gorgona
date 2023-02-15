@@ -130,6 +130,11 @@ FXbool Runnable::validation( )
   return true;
 }
 
+void Runnable::CheckTerminal( )
+{
+
+
+}
 
 void Runnable::dump( ) 
 {

@@ -85,6 +85,7 @@ namespace PERSEUS {
 
     FXbool IsNative( ) { return ( m_launchid.empty( ) || m_launchid == "native" ); }
     FXString ChangeWorkDir( );
+    void CheckTerminal( );
  
   };
 
