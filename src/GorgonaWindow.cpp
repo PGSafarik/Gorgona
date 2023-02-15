@@ -3,7 +3,6 @@
 
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
-  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CHANGED,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
@@ -19,11 +18,6 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
 { 
   m_app = app; 
  
-  StringList arglist;
-  get_arguments( &arglist );
-
-  gl_created= false;
-
   gl_iconstheme = new IconsTheme( getApp( ), "/usr/share/icons/oxygen/base/" );
   gl_iconstheme->insert( "Actions", "16x16/actions" );
   gl_iconstheme->insert( "Actions_big", "32x32/actions" );
@@ -120,8 +114,6 @@ void GorgonaWindow::create( )
 
   load( );
 
-  gl_created= true;
-
   std::cout.flush( );
 }
 
@@ -131,6 +123,7 @@ long GorgonaWindow::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
   FXlong resh = 0;
 
   switch( FXSELID( sel ) ) {
+    /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?
     case GorgonaWindow::SYSTEM_RUN : {
       std::cout << "[DEBUG - GorgonaWindow::OnCmd_System] Launch active game item ..." << std::endl;
       resh = ( ( this->run( ) == true ) ? 1 : 0 );
@@ -146,15 +139,6 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   FXlong resh       = 0;
 
   switch( FXSELTYPE( sel ) ) {
-    case SEL_COMMAND :
-    {
-      //std::cout << "[GorgonaWindow::OnCmd_List]New Select item in list ..." << std::endl;
-      //FXGameItem *gl_selected = gl_pane->getCurrentItem( );
-      //if( ( gl_selected ) != NULL ) { gl_text->setText( gl_selected->read( "Description" ) ); }
-      resh = 1;
-      break;
-    }
-
     case SEL_CHANGED :
     {
       //std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl;
@@ -169,6 +153,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_DOUBLECLICKED :
     {
+       /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?  
        std::cout << "[GorgonaWindow::OnCmd_List] Launch active item" << std::endl;
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
@@ -205,30 +190,32 @@ long GorgonaWindow::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
 
 long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
 {
-  FXArray<const FXchar*> command;
-  FXString cmd;
+  //- FXArray<const FXchar*> command;
+  //- FXString cmd;
 
   this->write_config( );
+
+  /** FXIXME GORGONA_WINDOW_002: Kompletne odstranit, navrhnout radne konfiguracni rozhrani a prepracovat */
   switch( FXSELID( sel ) ) {
     case GorgonaWindow::CONF_SETUP : {
-      cmd = gl_toolkit_pth + "bin/adie " + FXPath::expand( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) ) + "/" + getApp( )->getAppName( ) + ".rc";
-      //command.push( convert_str( gl_toolkit_pth + "bin/adie" ) );
-      //command.push( convert_str( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" ) );
+      //- cmd = gl_toolkit_pth + "bin/adie " + FXPath::expand( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) ) + "/" + getApp( )->getAppName( ) + ".rc";
+      //- command.push( convert_str( gl_toolkit_pth + "bin/adie" ) );
+      //- command.push( convert_str( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" ) );
       //
-      //cmd = FXPath::expand( cmd );
-      std::cout << cmd.text( ) << std::endl;
+      //- cmd = FXPath::expand( cmd );
+      //- std::cout << cmd.text( ) << std::endl;
       break;
     }
     case GorgonaWindow::CONF_FOX : {
-      cmd = gl_toolkit_pth + "bin/ControlPanel " + getApp( )->getAppName( ) + " " + getApp( )->getVendorName( );
+      //- cmd = gl_toolkit_pth + "bin/ControlPanel " + getApp( )->getAppName( ) + " " + getApp( )->getVendorName( );
       break;
     }
   }
 
-  /// FIXME GORWIN_001 : This operation has executing Gorgona class 
-  //parse_params( &command, cmd );
-  //command.append( NULL );
-  //m_app->exec( command, 0, 0, 0 );
+  /// FIXME GORGONA_WINDOW_001: This operation has executing Gorgona class 
+  //- parse_params( &command, cmd );
+  //- command.append( NULL );
+  //- m_app->exec( command, 0, 0, 0 );
 
   getApp( )->reg( ).clear( );
   getApp( )->reg( ).parseFile( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" );
@@ -325,8 +312,8 @@ void GorgonaWindow::read_config( )
 {
   FXString as, hg;
 
-  gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
-/**/  gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+  //- gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
+  //- gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
 /**/  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
 /**/  gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
@@ -341,7 +328,7 @@ void GorgonaWindow::read_config( )
   gl_hidegui         = ( ( hg.empty( ) or ( hg == "false" ) ) ? false : true );
 
   gl_datafile    = gl_profile + "/data/" + gl_gamelist + ".xml";
-  //gl_datafile  = "/home/gabriel/Projects/Fox/GorgonaWindow/BETA.01.00/data/gamelist.xml";
+  //- gl_datafile  = "/home/gabriel/Projects/Fox/GorgonaWindow/BETA.01.00/data/gamelist.xml";
 
   if( gl_view == "icons" ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_ICONS ), NULL ); }
   if( gl_view == "list"  ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_DETAIL ), NULL ); }
@@ -357,8 +344,8 @@ void GorgonaWindow::write_config( )
     FXDir::create( gl_profile + "/data" );
   }
 
-  getApp( )->reg( ).writeStringEntry( "Modules", "toolkitpath",     gl_toolkit_pth.text( ) );
-  getApp( )->reg( ).writeStringEntry( "Modules", "launchers",       gl_mlaunch_pth.text( ) );
+  //- getApp( )->reg( ).writeStringEntry( "Modules", "toolkitpath",     gl_toolkit_pth.text( ) );
+  //- getApp( )->reg( ).writeStringEntry( "Modules", "launchers",       gl_mlaunch_pth.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "Directory",       gl_profile.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "Gamelist",        gl_gamelist.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "DoubleClickKey",  gl_doubleclick_key.text( ) );
@@ -453,7 +440,7 @@ void GorgonaWindow::layout( )
 {
   //std::cout << "{ layout }" << std::endl;
   FXPrimaryWindow::layout( );
-  if( ( gl_created != false ) && (this->isMinimized( ) != true ) ) {
+  if( m_app->isCreated( )  && !this->isMinimized( ) ) {
   // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
   // predevsim tvorby samotneho okna. Dale nema smysl provadet kontrolu v pripade ze je hlavni
   // okno aplikace minimalizovano. Pri obnoveni sveho stavu se stejne (vetsinou) navrati do
@@ -465,7 +452,8 @@ void GorgonaWindow::layout( )
   //std::cout << "winmode:" << gl_winmode.text( ) << std::endl;
 }
 
-/**************************************************************************************************/
+/*
+/// FIXME GORGONA_WINDOW_008: Argumenty ma zpracovat trida Gorgona. Pryc s tim
 void GorgonaWindow::get_arguments( StringList *list )
 {
   if( list != NULL ) {
@@ -473,8 +461,7 @@ void GorgonaWindow::get_arguments( StringList *list )
     for( FXint i = 0; i != getApp( )->getArgc( ); i++ ) { list->push( __args[ i ] ); }
   }
 }
-
-/**************************************************************************************************/
+*/
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {

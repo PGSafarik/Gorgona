@@ -61,12 +61,12 @@ FXDECLARE( GorgonaWindow )
   FindBar            *m_findbar;        // Vyhledavaci panel
   FXSwitcher         *gl_switcher;      // Prepinac aktivnich panelu
   FXListPane         *gl_pane;          // Panel seznamu polozek
-  FXText             *gl_text;          // Pole pro popisek
   FXStatusBar        *gl_statusbar;     // Status bar
   IconsTheme         *gl_iconstheme;    // Tema icon
   FXIcon             *gl_iconFolder;    // Ikona slozky
   FXIcon             *gl_iconItem;      // Ikona obecne polozky
 
+  /// FIXME GORGONA_WINDOW_006: Menu ma byt integrovano do vlastniho headerboxu. Presunout
   FXMenuPane *gl_mGorgona;
   FXMenuPane *gl_mGames;
   FXMenuPane *gl_mTools;
@@ -87,13 +87,13 @@ FXDECLARE( GorgonaWindow )
   FXSize    gl_WinSize;         // Sizka okna - v okenim rezimu
   GO_KeyRoots gl_keywordsList;  // databaze klicovych slov a tagu
 
+  /// FIXME GORGONA_WINDOW_005: Odstranit - moduly ma na starosti trida Gorgona
   // Moduly
-  FXString gl_mlaunch_pth;
-  FXString gl_toolkit_pth;
-  FXbool   gl_mlaunch;
+  //- FXString gl_mlaunch_pth;
+  //- FXString gl_toolkit_pth;
+  //- FXbool   gl_mlaunch;
 
   // Application state
-  FXbool      gl_created;           // Indikkuje vytvoreni okna na strane serveru. Nutne kvuli kontrole statusu okna.
   FXbool      gl_change;            // Doslo ke zmenam v seznamech
   FXTreeItem *gl_gameroot;          // Koren herniho stromu
 
@@ -143,10 +143,9 @@ protected :
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );
   void checkWindowState( );
-
-  void get_arguments( StringList *list );
   
   /* Process */
+  /// FIXME GORGONA_WINDOW_007: Nebude lepsi vytvorit rovnou univerzalni event?
   FXbool run( FXGameItem *it = NULL );
 };
 
