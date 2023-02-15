@@ -32,7 +32,7 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   icth        = icons;
   le_share    = "";
 
-  FXIcon *ic_window = icth->getIcon( "Actions/run-build-configure.png" );
+  //FXIcon *ic_window = icth->getIcon( "Actions/run-build-configure.png" );
   FXIcon *ic_basic  = icth->getIcon( "Actions/run-build-install.png" );
   FXIcon *ic_descr  = icth->getIcon( "Actions/documentation.png" );
   FXIcon *ic_advan  = icth->getIcon( "Actions/games-highscores.png" );

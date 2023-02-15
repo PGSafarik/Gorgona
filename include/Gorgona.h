@@ -48,9 +48,11 @@
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
-  FXObject *m_tgt;     // Notify target
-  FXuint    m_message; // ID of notifikacation message
-  FXbool    m_verbose; // Verbose mod
+  FXObject *m_tgt;         // Notify target
+  FXuint    m_message;     // ID of notifikacation message
+  FXbool    m_verbose;     // Verbose mod
+  FXbool    m_created;     // Application created (finised the function call craete )
+  FXbool    m_initialized; // Finisched the initialize proces this application
 
   /* Child process managment */
   FXDictionaryOf<FXProcess>  m_descendants; // List of registered descendants of the Gorgona process 
@@ -74,7 +76,9 @@ public:
   /* Access methods */
   void setNotify( FXObject *tgt, FXuint msg )           { m_tgt = tgt; m_message = msg; }
   lua_State* getLua( )                                  { return m_lua; }
-  FXbool     isLuaInit( )                               { return m_luaOk; }    
+  FXbool     isLuaInit( )                               { return m_luaOk; } 
+  FXbool     isCreated( )                               { return m_created; }
+  FXbool     isInitialized( )                           { return m_initialized; }      
   Library*   getLibrary( )                              { return m_library; }
   FXString   getProfileDir( )                           { return m_profiledir; }
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
@@ -104,7 +108,7 @@ public:
 protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Send of notification message, if anyone 
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
-  void LuaInit( );                                                             // Initialize langugae interpret of Lua 
+  void LuaInit( );                                                               // Initialize langugae interpret of Lua 
   void ReadConfig( );                                                            // Load configurations data
 };
 

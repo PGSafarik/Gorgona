@@ -12,9 +12,12 @@ FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
 Gorgona::Gorgona( const FXString& name, const FXString& vendor )
        : FXApp( name, vendor )
 {
-  m_tgt     = NULL;
-  m_message = 0;
-  m_verbose = true;
+  m_tgt         = NULL;
+  m_message     = 0;
+  m_verbose     = true;
+  m_initialized = false;
+  m_created     = false;
+
   m_lua     = luaL_newstate( );
   
   m_initscript = m_profiledir = m_gamelist = FXString::null;
@@ -56,7 +59,7 @@ FXProcess* Gorgona::findChild( FXint pid )
 void Gorgona::create( )
 {
   FXApp::create( );
-
+  m_created = true;
 }
 
 void Gorgona::init( int& argc, char** argv, FXbool connect )
@@ -66,6 +69,8 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   FXApp::init( argc, argv, connect );
   ReadConfig( );
   LuaInit( );
+
+  m_initialized = true;
 }
 
 FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
