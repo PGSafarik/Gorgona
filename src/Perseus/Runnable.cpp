@@ -50,7 +50,6 @@ FXint Runnable::run( )
 
   FXString chwd = ChangeWorkDir( );
   
-  dump( ); 
   if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
     std::cout << "[ERROR Runnable]: Command " << m_command << " is not running!" << std::endl; 
   }
@@ -139,7 +138,6 @@ FXbool Runnable::validation( )
 
 void Runnable::CheckTerminal( )
 {
-  
   if( m_terminal && m_app->hasTerminal( ) ) {
     TermInfo *tnfo = m_app->getTerminal( );
     FXString  tcmd = tnfo->exec + " ";

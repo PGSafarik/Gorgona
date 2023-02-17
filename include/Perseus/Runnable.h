@@ -86,7 +86,6 @@ namespace PERSEUS {
     FXbool IsNative( ) { return ( m_launchid.empty( ) || m_launchid == "native" ); }
     FXString ChangeWorkDir( );
     void CheckTerminal( );
- 
   };
 
   /* Trida urcena k spousteni a rizeni procesu her */
@@ -94,8 +93,7 @@ namespace PERSEUS {
   FXDECLARE( Game )
     FXint   m_used;        // Pocet spusteni 
     FXlong  m_total;       // Celkova doba spusteni
-    FXTime  m_last;        // Posledni spusteni (datum, cas)
-    //FXDate  m_last;      // Posledni spusteni   
+    FXTime  m_last;        // Posledni spusteni (datum, cas)   
     FXlong  m_time;        // Celkova doba posledniho spusteni 
     FXlong  m_longest;     // Nejdelsi doba behu vubec  
 

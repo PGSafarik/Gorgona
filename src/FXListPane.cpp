@@ -305,12 +305,14 @@ long FXListPane::OnCmd_tree( FXObject *sender, FXSelector sel, void *data )
 
 long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
 {
-  FXuint mtype = FXSELTYPE( sel );
+  FXuint mtype  = FXSELTYPE( sel );
+  long   result = 0;
 
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
       std::cout << "[FXListPane] Item event doubleclick" << std::endl;
       if( gl_target ) { gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
+      result = 1;
       break;
     }
     default : {
@@ -318,9 +320,11 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
         std::cout << "[FXListPane] Item event other" << std::endl;
         gl_target->handle( this, FXSEL( mtype, gl_selector), NULL );
       }
+      result = 1;
     }
   }
-  return 1;
+
+  return result;
 }
 
 long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
