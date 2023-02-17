@@ -58,7 +58,7 @@ extern void Welcome( FXApp *app );
 
 //////////////////////////////////////////////////
 /* Terminal profile struct                      */
-struct TerminalProfile {
+struct TermInfo {
   FXString name;      // Nazev, identifikator terminalu
   FXString exec;      // Spustitelny soubor emulatoru
   FXString p_run;     // Parametr predavajici prikaz ke spusteni v terminalu

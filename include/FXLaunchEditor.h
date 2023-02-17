@@ -57,6 +57,7 @@ FXDECLARE( FXLaunchEditor )
   FXList        *le_sections;
   FXText        *le_text;
   FXCheckButton *le_backg;
+  FXCheckButton *m_term;
   FXButton      *le_Bicon;
   FXButton      *le_Micon;
 

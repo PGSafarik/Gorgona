@@ -59,7 +59,8 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   makevalue_combo( "Zakladni", "Spoustec", FXString::null, &tlist );
   makevalue_file( "Zakladni", "Prikaz"  );
   makevalue_dir( "Zakladni", "Pracovni adresar"  );
-  le_backg = new FXCheckButton( get_sect( "Zakladni" ), "Cekat na hru", NULL, 0 );
+  m_term = new FXCheckButton( get_sect( "Zakladni" ), "Run in terminal", NULL, 0 );
+  le_backg = new FXCheckButton( get_sect( "Zakladni" ), "Run in blocked mode", NULL, 0 );
   FXHorizontalFrame *btnfr = new FXHorizontalFrame( get_sect( "Zakladni" ), FRAME_SUNKEN | LAYOUT_CENTER_X | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
   btnfr->setBackColor( getApp( )->getShadowColor( ) );
   le_Micon = new FXButton( btnfr, "Mala ikona",  ic_micon, this, FXLaunchEditor::ICON_SMALL, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
@@ -375,6 +376,7 @@ void FXLaunchEditor::load( )
 
     le_text->setText( le_item->read( "Description" ) );
     le_backg->setCheck( le_item->hidel );
+    m_term->setCheck( le_item->exec->enabled_termnal( ) );
   }
 }
 
@@ -393,6 +395,7 @@ void FXLaunchEditor::save( )
     le_item->exec->set_workdir( getvalue_text( "Pracovni adresar" ) );
 
     le_item->hidel = le_backg->getCheck( );
+    le_item->exec->set_terminal( m_term->getCheck( ) ); 
   }
 
 }

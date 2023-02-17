@@ -63,12 +63,13 @@ FXDECLARE( Gorgona )
   FXString   m_initscript; // Initialize script (lua)
 
   /* Data */
-  FXString      m_profiledir; // Path of rofile directory 
-  FXString      m_gamelist;   // Filename for list of games (xml)
-  TiXmlDocument *mx_document; // XML instance of the games list
-  TiXmlElement  *mx_root;     // XML root element of the games list 
-  Library       *m_library;   // Library of games ;)
-
+  FXString        m_profiledir; // Path of rofile directory 
+  FXString        m_gamelist;   // Filename for list of games (xml)
+  TiXmlDocument   *mx_document; // XML instance of the games list
+  TiXmlElement    *mx_root;     // XML root element of the games list 
+  Library         *m_library;   // Library of games ;)
+  TermInfo        *m_term;      // Terminal profile
+ 
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
   virtual ~Gorgona( );
@@ -87,12 +88,15 @@ public:
   FXbool     hasChild( FXint pid );  
   FXProcess* findChild( FXint pid );
 
+  TermInfo* getTerminal( )  { return m_term; }
+  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
+
   /* Operations methods */
   virtual void create( );
   virtual void init( int& argc, char** argv, FXbool connect = true );
 
-  FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
-  FXint exec( const FXString &cmd, FXuint term_opts, FXuint sudo_opts, FXuint proc_opts );
+  FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );
+  FXint exec( const FXString &cmd, FXuint term_opts );
   FXint wait( FXProcess *process, FXbool notify = false );
   FXint execLuaFile( const FXString &script );
 

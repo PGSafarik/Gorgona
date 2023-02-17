@@ -16,11 +16,12 @@ FXIMPLEMENT( Runnable, FXObject, RUNMAP, ARRAYNUMBER( RUNMAP ) )
 
 Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
 {
-  m_app     = a;
-  m_target  = tgt;
-  m_message = sel;
-  m_change  = false;
-  m_notify  = false;
+  m_app      = a;
+  m_target   = tgt;
+  m_message  = sel;
+  m_change   = false;
+  m_notify   = false;
+  m_terminal = false;
 }
 
 Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
@@ -31,6 +32,7 @@ Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, F
   m_change   = false;
   m_notify   = false;
   m_launchid = launcher;
+  m_terminal = false; 
   set_command( cmd );
 }
 
@@ -49,7 +51,7 @@ FXint Runnable::run( )
   FXString chwd = ChangeWorkDir( );
   
 
-  if( ( pid = m_app->exec( m_execute, 0, 0, 0 ) ) <= 0 ) { 
+  if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
     std::cout << "[ERROR Runnable]: Command " << m_command << " is not running!" << std::endl; 
   }
   else { m_pid = pid; }
@@ -60,12 +62,14 @@ FXint Runnable::run( )
 
 void Runnable::Command( const FXString &cmd )
 {
-  m_command = cmd;
+  m_command = ( !cmd.empty( ) ? cmd : m_command );
 
   if( !m_command.empty( ) && !IsNative( ) ) {
     m_execute = lua_Launcher_p( m_app, m_launchid, m_command );
   }
   else { m_execute = m_command; } 
+
+  CheckTerminal( );
 }
 
 FXString Runnable::ChangeWorkDir( )
@@ -115,7 +119,8 @@ FXbool Runnable::save( TiXmlElement *parent, FXbool force )
     re->SetAttribute( "exec",       m_command.text( ) );
     re->SetAttribute( "type",       m_launchid.text( ) );
     re->SetAttribute( "workdir",    m_workdir.text( ) );
-    
+    re->SetAttribute( "Terminal",   m_terminal );
+
     Write( re );
     
     resh = true;
@@ -132,8 +137,13 @@ FXbool Runnable::validation( )
 
 void Runnable::CheckTerminal( )
 {
-
-
+  
+  if( m_terminal && m_app->hasTerminal( ) ) {
+    TermInfo *tnfo = m_app->getTerminal( );
+    FXString  tcmd = tnfo->exec + " ";
+    if( !tnfo->p_noclose.empty( ) ) { tcmd += tnfo->p_noclose + " "; }
+    m_execute = tcmd + tnfo->p_run + " " + m_execute;
+  } 
 }
 
 void Runnable::dump( ) 

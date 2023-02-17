@@ -38,6 +38,7 @@ namespace PERSEUS {
     FXString  m_workdir;     // Pozadovany pracovni adresare
     FXString  m_command;     // Zadany prikaz ke spusteni
     FXString  m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
+    FXbool    m_terminal;    // Spustit program v (emulatoru) terminalu
     FXbool    m_notify;      // Indikator notifikace opreaci
 
     FXbool m_change;         // Indikuje zmenu objektu
@@ -52,22 +53,21 @@ namespace PERSEUS {
     virtual ~Runnable( );
 
     /* Access methods */
-    void     set_notify( FXbool value = true )  { m_notify = value;  }
-    FXbool   get_notify( )                      { return m_notify;   }
-    void     set_workdir( const FXString &dir ) { m_workdir = dir;   }
-    FXString get_workdir( )                     { return m_workdir;  } 
-    void     set_launchid( const FXString &id ) { m_launchid = id;   }
-    FXString get_launchid( )                    { return m_launchid; }
-    void     set_command( const FXString &cmd ) { Command( cmd );    }
-    FXString get_command( )                     { return m_command;  } 
-    void     set_change( FXbool value )         { m_change = value;  }
-    FXbool   is_changed( )                      { return m_change;   }
-    FXbool   is_running( )                      { return m_pid > 0;  } 
+    void     set_notify( FXbool value = true )  { m_notify = value;   }
+    FXbool   get_notify( )                      { return m_notify;    }
+    void     set_workdir( const FXString &dir ) { m_workdir = dir;    }
+    FXString get_workdir( )                     { return m_workdir;   } 
+    void     set_launchid( const FXString &id ) { m_launchid = id;    }
+    FXString get_launchid( )                    { return m_launchid;  }
+    void     set_command( const FXString &cmd ) { Command( cmd );     }
+    FXString get_command( )                     { return m_command;   } 
+    void     set_change( FXbool value )         { m_change = value;   }
+    FXbool   is_changed( )                      { return m_change;    }
+    void     set_terminal( FXbool value )       { m_terminal = value; Command( ); }
+    FXbool   enabled_termnal( )                 { return m_terminal;  }                        
+    FXbool   is_running( )                      { return m_pid > 0;   } 
 
-    /* Operations methods */
-    FXint operator( ) ( ) { return run( ); }
-
-    virtual FXint  run( );
+    virtual FXint run( );
     FXbool load( TiXmlElement *parent ); 
     FXbool save( TiXmlElement *parent, FXbool force = false );
     virtual FXbool validation( );
@@ -79,7 +79,7 @@ namespace PERSEUS {
     Runnable( ) { }
     
     /* Helpful methods */
-    virtual void Command( const FXString &cmd ); 
+    virtual void Command( const FXString &cmd = FXString::null ); 
     virtual void Write( TiXmlElement *runelement ) { }
     virtual void Read( TiXmlElement *runelement )  { }
 
@@ -95,7 +95,7 @@ namespace PERSEUS {
     FXint   m_used;        // Pocet spusteni 
     FXlong  m_total;       // Celkova doba spusteni
     FXTime  m_last;        // Posledni spusteni (datum, cas)
-    //FXDate  m_last;        // Posledni spusteni   
+    //FXDate  m_last;      // Posledni spusteni   
     FXlong  m_time;        // Celkova doba posledniho spusteni 
     FXlong  m_longest;     // Nejdelsi doba behu vubec  
 

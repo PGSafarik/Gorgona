@@ -27,6 +27,8 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 
   m_library = NULL;
 
+  m_term = new TermInfo;
+
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 }
 
@@ -70,10 +72,17 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   ReadConfig( );
   LuaInit( );
 
+  /* Docasne */
+  m_term->name      = "xterm";
+  m_term->exec      = "/usr/bin/xterm";
+  m_term->p_run     = "-e";
+  m_term->p_noclose = "+hold";
+  m_term->p_workdir = FXString::null;
+
   m_initialized = true;
 }
 
-FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
+FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
 {
   /* Metoda prevezme prikaz a spusti jej jako novy proces, reprezentovany objektem typu FXProcess, ktery je nasledne 
      vlozen do bufferu procesu. V pripade uspechu vrati PID spusteneho procesu, v pripade neuspechu vrati chybovy kod
@@ -117,13 +126,13 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts, FXuint
   return pid;
 }
 
-FXint Gorgona::exec( const FXString &cmd, FXuint proc_opts, FXuint term_opts, FXuint sudo_opts )
+FXint Gorgona::exec( const FXString &cmd, FXuint proc_opts )
 {
   FXArray<const char*> buffer;
 
   if( !cmd.empty( ) ) {
     ParseCommand( cmd, &buffer );
-    return exec( buffer, proc_opts, term_opts, sudo_opts );
+    return exec( buffer, proc_opts );
   }  
   
   return -1;
