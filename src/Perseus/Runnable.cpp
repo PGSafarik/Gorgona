@@ -50,7 +50,7 @@ FXint Runnable::run( )
 
   FXString chwd = ChangeWorkDir( );
   
-
+  dump( ); 
   if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
     std::cout << "[ERROR Runnable]: Command " << m_command << " is not running!" << std::endl; 
   }
@@ -94,7 +94,9 @@ FXbool Runnable::load( TiXmlElement *parent )
     if( re ) {
       m_launchid = re->Attribute( "type" );
       m_workdir = re->Attribute( "workdir" );
-      set_command( re->Attribute( "exec" ) );
+      FXString term_str = re->Attribute( "Terminal" );
+      if( !term_str.empty( ) ) { m_terminal = term_str.toInt( ); }
+      set_command( re->Attribute( "exec" ) ); 
 
       Read( re );
       resh = true;
@@ -152,6 +154,7 @@ void Runnable::dump( )
   text += "     type: "       + m_launchid + "\n";   
   text += "     command: "    + m_command  + "\n";
   text += "     workdir: "    + m_workdir  + "\n";
+  text += "     terminal: "   + FXString::value( m_terminal ) + "\n";
   text += "     executable: " + m_execute  + "\n";
   text += "   } \n";
 
