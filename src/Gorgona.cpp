@@ -171,24 +171,29 @@ long Gorgona::notify( FXuint mtype, void *mdata )
 /**************************************************************************************************/
 long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 { 
-  FXint  status;
-  struct rusage __usage;
-  
-  FXint pid = ( FXint ) wait3( &status, 0, &__usage );
-  
+  FXint    status;
+  FXString msg  = "";
+  struct   rusage __usage;
+  FXint    pid  = ( FXint ) wait3( &status, 0, &__usage );
+
   FXString key = FXString::value( pid );
   if( m_descendants.has( key ) ) {
     FXProcess *proc = m_descendants[ key ];
     if( proc != NULL ) {
       m_descendants.remove( key );
       delete proc;
-      std::cout << "Unregister the process of the descendant " << pid << ", which just finished with exit code " << status << std::endl;
+      msg = "Unregister the process of the descendant "; 
+      msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status ) + "\n";
     }
-    std::cout << "Remaining number of registered processes: " << m_descendants.used( ) << std::endl;
+    msg += "Remaining number of registered processes: ";
+    msg += FXString::value( m_descendants.used( ) );
   }
-  else { std::cout << "The process of the descendant " << pid << ", which just finished with exit code " << status << std::endl; }    
+  else { 
+    msg = "The process of the descendant ";
+    msg + FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
+  }    
   
-  
+  std::cout << msg << std::endl;  
   return 1;
 }
 
