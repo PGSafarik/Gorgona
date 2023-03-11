@@ -35,7 +35,7 @@ function Debian_Init( )
 	return setmetatable( self, Debian_mt )
 end
 
-function Debian:launcher( cmd )
+function Debian:launcher( t )
 	
 	
 end

@@ -34,8 +34,8 @@ function Q4Wine_Init( )
 	return setmetatable( self, Q4Wine_mt )
 end
 
-function Q4Wine:launcher( cmd )
-local data = split( cmd, ":" )
+function Q4Wine:launcher( t )
+local data = split( t[ 1 ], ":" )
   local prefix = data[ 1 ] or "default"
   local index  = data[ 2 ]
   if index == nil or index == "" then index = prefix end

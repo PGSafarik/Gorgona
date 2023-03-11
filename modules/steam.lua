@@ -40,8 +40,8 @@ function module_Init( )
 	return setmetatable( self, module_mt )
 end
 
-function module:launcher( appid )
-  return self.exec .. " " .. SteamUrl( "rungameid", appid )
+function module:launcher( t )
+  return self.exec .. " " .. SteamUrl( "rungameid", t[ 1 ] )
 end
 
 function module:test( str )

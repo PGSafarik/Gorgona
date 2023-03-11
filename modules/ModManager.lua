@@ -108,7 +108,6 @@ end
 
 function launcher( _client, _command )
 	-- rozlozeni prikazu hry a ziskani kompletniho spousteciho prikazu
-  
 	if _client == nil or _client == "" or _client == "native" then return "-1" end
 	local mod = Modules[ _client ]
   if mod == nil then 

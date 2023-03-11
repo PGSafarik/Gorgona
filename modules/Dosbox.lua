@@ -36,9 +36,10 @@ function Dosbox_Init( )
 end
 
 
-function Dosbox:launcher( cmd )
+function Dosbox:launcher( t )
   --print( "=== Dosbox luancher ===" )
   local l_str = ""
+  local cmd   = t[ 1 ]
   
   if string.sub( cmd, string.len( cmd ) - ( string.len( self.prefixes[ 1 ] ) - 1 ) ) == self.prefixes[ 1 ] then
     l_str = self.app .. " -conf " .. cmd

@@ -36,10 +36,10 @@ function Console_Init( )
 	return setmetatable( self, Console_mt )
 end
 
-function Console:launcher( cmd )
+function Console:launcher( t )
 	local item = { }
 	--GetSelectItem( item )
-	return self.app .. " -e " .. cmd -- .. " -title " .. "Console game"--item.title 
+	return self.app .. " -e " .. t[ 1 ] -- .. " -title " .. "Console game"--item.title 
 end
 
 function Console:test( str )

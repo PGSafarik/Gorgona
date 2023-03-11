@@ -38,8 +38,8 @@ function Doom_Init( )
 	return setmetatable( self, Doom_mt )
 end
 
-function Doom:launcher( cmd )
-	return self.app .. " " .. self.datadir .. cmd
+function Doom:launcher( t )
+	return self.app .. " " .. self.datadir .. t[ 1 ]
 end
 
 function Doom:test( str )

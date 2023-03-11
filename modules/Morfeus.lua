@@ -37,8 +37,8 @@ function module_Init( )
 	return setmetatable( self, module_mt )
 end
 
-function module:launcher( gamexml )
-  return self.exec .. " " ..  gamexml
+function module:launcher( t )  
+  return self.exec .. " " ..  t[ 1 ]
 end
 
 function module:test( str )
