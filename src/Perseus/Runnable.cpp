@@ -7,7 +7,6 @@
 
 using namespace PERSEUS;
 
-
 /*************************************************************************************************/
 FXDEFMAP( Runnable ) RUNMAP[ ] = { };
 FXIMPLEMENT( Runnable, FXObject, RUNMAP, ARRAYNUMBER( RUNMAP ) )
@@ -257,36 +256,6 @@ void Game::Write( TiXmlElement *runelement )
     FXString value = FXString::value( m_last );
     game_el->SetAttribute( "last", value.text( ) );
   }
-}
-
-
-/*************************************************************************************************/
-FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd )
-{
-/**
-   Globalni Callback volani launcheru v Lua modulu
-   p_id - typ launcheru (Dosbox, Wine, ... atd. Volani v lue je tedy napr.: Launcher( "Dosbox", cmd )
-   p_cmd   - retezec prikazu ze spoutece
- **/
-  FXString resh = FXString::null;
-
-  lua_getglobal(  a->getLua( ), "launcher"  );
-  lua_pushstring( a->getLua( ), convert_str( p_id ) );
-  lua_pushstring( a->getLua( ), convert_str( p_cmd ) );
-
-  if( lua_pcall( a->getLua( ), 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
-    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( a->getLua( ), -1 ) << std::endl;
-  }
-  else {
-    resh = lua_tostring( a->getLua( ), -1 );
-    lua_pop( a->getLua( ), -1 );
-  }
-  
-  #ifdef __DEBUG
-  std::cout << "[ DEBUG __launcher( ) ] Module: \'" << p_id << "\' Arg: \'" << p_cmd << "\'" << std::endl;
-  #endif
-  
- return resh;
 }
 
 /*** END ******************************************************************************************/
