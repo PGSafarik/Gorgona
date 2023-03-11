@@ -382,8 +382,8 @@ int luax_pushStringArray( const FXArray<FXString> &array )
     FXint num = array.no( );
     lua_newtable( l );
     for( FXint index = 0; index != num; index++ ) {  
-      lua_pushnumber( l, index++ );                   // ( -2 ) index pole ( v lue zacina 1, v C/C++ 0 - proto je nutne jej o 1 zvysit)
-      lua_pushstring( l, array[ index ].text( ) );    // ( -1 ) hodnota vlozena na dany index
+      lua_pushnumber( l, index + 1 );                   // ( -2 ) index pole ( v lue zacina 1, v C/C++ 0 - proto je nutne jej o 1 zvysit)
+      lua_pushstring( l, convert_str( array[ index ].text( ) ) );    // ( -1 ) hodnota vlozena na dany index
       lua_settable( l, -3 );                          //  Nastavi index do pole ( -3[-2] = -1 ) 
     }
   } 
@@ -445,10 +445,11 @@ FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms 
   
 
   lua_getglobal(  l, "launcher"  );
+  lua_pushstring( l, convert_str( module_id ) );
   luax_pushStringArray( prms ); 
 
-  if( lua_pcall( l, 1, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
-    std::cout << "[ERROR Module callback "<< module_id << ".launcher( prms ) ]: " << lua_tostring( l, -1 ) << std::endl;
+  if( lua_pcall( l, 2, 1, 0 ) != 0 ) { /// NOTE : VOLANA FUNKCE PREJIMA JEDEN ARGUMENT A VRACI JEDNU HODNOTU!
+    std::cout << "[ERROR Module callback "<< module_id << ".launcher( " << prms[ 0 ] << " ) ]: " << lua_tostring( l, -1 ) << std::endl;
   }
   else {
     cmd_str = lua_tostring( l, -1 );
