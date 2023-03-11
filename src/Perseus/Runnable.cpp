@@ -64,7 +64,10 @@ void Runnable::Command( const FXString &cmd )
   m_command = ( !cmd.empty( ) ? cmd : m_command );
 
   if( !m_command.empty( ) && !IsNative( ) ) {
-    m_execute = lua_Launcher_p( m_app, m_launchid, m_command );
+    
+    FXArray<FXString> prms;
+    prms.push( m_command );
+    m_execute = luams_launch( m_launchid, prms );
   }
   else { m_execute = m_command; } 
 
