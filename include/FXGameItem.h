@@ -27,7 +27,7 @@
 #include<Perseus/Runnable.h>
 
 struct FXGameItem {
-  //FXint        nop;		 // Dosavadni pocet spusteni
+  FXuint       id;		 // Identifikator polozky
   FXbool       hidel;	 // Skryt spoustec pri spusteni
   FXbool       change;   // Indikace zmeny polozky
   FXStringDictionary property; // Tabulka vlastnosti polozty
