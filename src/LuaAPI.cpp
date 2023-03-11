@@ -460,4 +460,32 @@ FXint __luanch( )
 //  std::cout << "Vysledek: " << resh.text( ) << std::endl;
 //}
 
+FXuint luam_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result )
+{
+  /* call: module_id.validate( flag_str, entry_name ): status, result */ 
+  FXuint status = 0;
+  lua_State *l = _inst->getLua( );
+
+  
+  lua_getglobal( l, "validate" );
+  lua_pushstring( l, convert_str( module_id ) ); 
+  lua_pushstring( l, convert_str( flag_str ) ); 
+  lua_pushstring( l, convert_str( entry_name ) );
+
+  if( lua_pcall( l, 2, 2, 0 ) != 0 ) {
+   std::cout << "[ERROR Module callback "<< module_id << ".validate( " << flag_str << ", " << entry_name << ") ]: " << lua_tostring( l, -1 ) << std::endl;
+   status = -1;
+  }
+  else {
+    status = lua_tointeger( l, -1 );
+    lua_pop( l, -1 );
+    if( status != 0 ) { 
+      *result = lua_tointeger( l, -2 );
+      lua_pop( l, -2 );
+    } 
+  }
+
+  return status;
+}
+
 /*** END ******************************************************************************************/
