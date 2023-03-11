@@ -7,8 +7,6 @@
 
 using namespace PERSEUS;
 
-/// Callbacky pro volani funkci z Lua scriptu ///
-FXString lua_Launcher_p( Gorgona *a, const FXString &p_id, const FXString &p_cmd ); // Spusteni prikazu pomoci scriptovaneho spoustece
 
 /*************************************************************************************************/
 FXDEFMAP( Runnable ) RUNMAP[ ] = { };
@@ -99,6 +97,17 @@ FXbool Runnable::load( TiXmlElement *parent )
       FXString term_str = re->Attribute( "Terminal" );
       if( !term_str.empty( ) ) { m_terminal = term_str.toInt( ); }
       set_command( re->Attribute( "exec" ) ); 
+
+      TiXmlElement *le = re->FirstChildElement( "Perseus:Launcher" );
+      if( le ) {
+        TiXmlAttribute *attr = le->FirstAttribute( );
+        for( attr; attr; attr = attr->Next( ) ) { 
+          FXString _name  = attr->Name( );
+          FXString _value = attr->Value( );
+          if( _name == "key" ) { m_launchid = _value; }
+          else { m_launchprms.insert( _name, _value ); }  
+        }  
+      }
 
       Read( re );
       resh = true;

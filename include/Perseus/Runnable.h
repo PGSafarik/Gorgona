@@ -34,7 +34,6 @@ namespace PERSEUS {
   class Runnable: public FXObject  {
   FXDECLARE( Runnable)
     Gorgona  *m_app;         // Ukazatel na instanci aplikace
-    FXString  m_launchid;    // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
     FXString  m_workdir;     // Pozadovany pracovni adresare
     FXString  m_command;     // Zadany prikaz ke spusteni
     FXString  m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
@@ -46,6 +45,9 @@ namespace PERSEUS {
     
     FXObject   *m_target;    // Cilovy objekt notifikaci
     FXSelector  m_message;   // notifikacni zprava
+  
+    FXString           m_launchid;   // Identifikator spoustece (pro moduly, jinak "native", nebo prazdny )
+    FXStringDictionary m_launchprms; // Seznam parametru spoustece
 
   public :
     Runnable( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
