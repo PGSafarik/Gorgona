@@ -42,9 +42,9 @@ void   l_TableWrite_str( lua_State *L, const FXString &index, const FXString &va
 void   l_TableWrite_num( lua_State *L, const FXString &index, FXint value );
 int    l_ReadLaunchers( FXArray<FXString> *keylist );
 
-// Modules call 
-FXint  luam_launch( const FXString &module_id, const FXArray<FXString> &prms );                                          // module_id.launcher( prms[] ): staus 
-FXuint luam_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result ); // module_id.validate( flag_str, entry_name ): status, result 
+// Modules services 
+FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms );                                        // module_id.launcher( prms[] ): staus 
+FXint    luams_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result ); // module_id.validate( flag_str, entry_name ): status, result 
 
 // Dialogy
 FXString inputBox( const FXString &label, const FXString &title = "Vlozte, prosim, pozadovane udaje:" );
@@ -57,8 +57,5 @@ void findItem( )    { }       // Vrati identifikatory polozek, ktere se shoduji 
 void setItemProperty( ) { }   //
 void getItemProperty( ) { }   //
 */
-// Callbacks
-FXint __luanch( );
-FXString __launcher( const FXString &cmd, const FXString &t );
 #endif /* __FXLAUNCHERLUA_H */
 /*** END ****************************************************************/

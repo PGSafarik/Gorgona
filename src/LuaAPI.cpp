@@ -416,54 +416,32 @@ void output( const FXString &value, FXbool nonl )
 }
 
 /*************************************************************************************************/
-FXint __luanch( )
+FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms )
 {
-  FXint resh = -1;
+  /* Call the module service: module_id.launcher( prms[ ] ): cmd_str */
+  FXString cmd_str = FXString::null;
+  lua_State *l = _inst->getLua( );
+  
 
-  lua_getglobal( _inst->getLua( ), "launcher" );
-  if( lua_pcall( _inst->getLua( ), 0, 1, 0 ) != 0 ){
-    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _inst->getLua( ), -1 ) << std::endl;
+  lua_getglobal(  l, "launcher"  );
+  //lua_pushstring( l, convert_str( p_id ) );
+  //lua_pushstring( l, convert_str( p_cmd ) );
+
+  if( lua_pcall( l, 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
+    std::cout << "[ERROR Module callback "<< module_id << ".launcher( prms ) ]: " << lua_tostring( l, -1 ) << std::endl;
   }
   else {
-    resh = lua_tonumber( _inst->getLua( ), -1 );
-    lua_pop( _inst->getLua( ), -1 );
+    cmd_str = lua_tostring( l, -1 );
+    lua_pop( l, -1 );
   }
-  std::cout << "Polozka byla spustena s navratovym kodem " << resh << std::endl;
-
-  return resh;
+  
+ return cmd_str;  
 }
 
-//FXString __launcher_a( const FXString &ltype, const FXString &cmd  )
-//{
-// /**
-//   Callback volani spoustece
-//   ltype - typ launcheru (Dosbox, Wine, ... atd. Volani v lue je tedy napr.: Launcher( "Dosbox", cmd )
-//   cmd   - retezec prikazu ze spoutece
-//   t
-// **/
-//  FXString resh = FXString::null;
-//
-//  lua_pushstring( _inst->getLua( ), convert_str( ltypet ) );
-//  lua_pushstring( _inst->getLua( ), convert_str( cmd ) );
-//  lua_getglobal(  _inst->getLua( ), "launcher"  );
-//
-//  if( lua_pcall( _inst->getLua( ), 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
-//    std::cout << "Chyba spusteni callbacku \'run\' - " << lua_tostring( _inst->getLua( ), -1 ) << std::endl;
-//  }
-//  else {
-//    resh = lua_tostring( _inst->getLua( ), -1 );
-//    lua_pop( _inst->getLua( ), -1 );
-//  }
-//
-//  std::cout << "__launcher( )" << std::endl;
-//  std::cout << "Spoustec \'" << t.text( ) << "\' Radek \'" << cmd.text( ) << "\'" << std::endl;
-//  std::cout << "Vysledek: " << resh.text( ) << std::endl;
-//}
-
-FXuint luam_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result )
+FXint luams_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result )
 {
   /* call: module_id.validate( flag_str, entry_name ): status, result */ 
-  FXuint status = 0;
+  FXint status = 0;
   lua_State *l = _inst->getLua( );
 
   
