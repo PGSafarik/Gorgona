@@ -225,6 +225,8 @@ int l_registry_write( lua_State *L )
    return 1;
 }
 
+
+
 int l_registry_read( lua_State *L )
 {
    FXString sect, key, def, val = FXString::null;
@@ -359,17 +361,36 @@ void l_ErrorMessage( FXint num, const FXString &msg )
   FXMessageBox::error( _inst, MBOX_OK, err_head.text( ), err_text.text( ) );
 }
 
-void l_TableWrite_str( lua_State *L, const FXString &index, const FXString &value )
+void l_TableWrite_str( lua_State *L, const FXString &key, const FXString &value )
 {
-  lua_pushstring( L, value.text( ) );
-  lua_setfield( L, -2, index.text( ) );
+  lua_pushstring( L, value.text( ) );   // Vlozi hodnotu polozky v tabulce do zasobniku
+  lua_setfield( L, -2, key.text( ) ); // Definuje klic, se kterym bude hodnota sparovana
 }
 
-void l_TableWrite_num( lua_State *L, const FXString &index, FXint value )
+void l_TableWrite_num( lua_State *L, const FXString &key, FXint value )
 {
   lua_pushnumber( L, value );
-  lua_setfield( L, -2, index.text( ) );
+  lua_setfield( L, -2, key.text( ) );
 }
+
+int luax_pushStringArray( const FXArray<FXString> &array )
+{
+  FXint status = 0;
+  lua_State *l = _inst->getLua( );
+  
+  if( l ) { 
+    FXint num = array.no( );
+    lua_newtable( l );
+    for( FXint index = 0; index != num; index++ ) {  
+      lua_pushnumber( l, index++ );                   // ( -2 ) index pole ( v lue zacina 1, v C/C++ 0 - proto je nutne jej o 1 zvysit)
+      lua_pushstring( l, array[ index ].text( ) );    // ( -1 ) hodnota vlozena na dany index
+      lua_settable( l, -3 );                          //  Nastavi index do pole ( -3[-2] = -1 ) 
+    }
+  } 
+  else { status = -1; } 
+
+  return status; 
+} 
 
 int l_ReadLaunchers( FXArray<FXString> *keylist )
 {
@@ -424,10 +445,9 @@ FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms 
   
 
   lua_getglobal(  l, "launcher"  );
-  //lua_pushstring( l, convert_str( p_id ) );
-  //lua_pushstring( l, convert_str( p_cmd ) );
+  luax_pushStringArray( prms ); 
 
-  if( lua_pcall( l, 2, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
+  if( lua_pcall( l, 1, 1, 0 ) != 0 ) { /// FIXME : FUNKCE PREJIMA DVA ARGUMENTY A VRACI JEDNU HODNOTU!
     std::cout << "[ERROR Module callback "<< module_id << ".launcher( prms ) ]: " << lua_tostring( l, -1 ) << std::endl;
   }
   else {
