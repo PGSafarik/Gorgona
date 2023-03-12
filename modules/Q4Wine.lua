@@ -35,17 +35,27 @@ function Q4Wine_Init( )
 end
 
 function Q4Wine:launcher( t )
-local data = split( t[ 1 ], ":" )
-  local prefix = data[ 1 ] or "default"
-  local index  = data[ 2 ]
+  local prefix
+  local index
+  
+  if t.key == "Q4Wine" then
+    prefix = t.prefix
+    index  = t.icon 
+  else  
+    local data = split( t[ 1 ], ":" )
+    prefix = data[ 1 ] or "default"
+    index  = data[ 2 ]
+  end
+  
   if index == nil or index == "" then index = prefix end
   
   print( "prefix = " .. prefix )
   print( "index = " .. index )
+  
   local cmd = self.app .. " -p " .. prefix .. " -i " .. index .. "" 	
-	print( "prikaz ke spusteni = " .. cmd )
-	
-	return cmd
+  print( "prikaz ke spusteni = " .. cmd )
+
+  return cmd
 end
 
 function Q4Wine:test( str )
