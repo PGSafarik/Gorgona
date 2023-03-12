@@ -41,10 +41,12 @@ void   l_ErrorMessage( FXint num, const FXString &msg = FXString::null );
 void   l_TableWrite_str( lua_State *L, const FXString &key, const FXString &value ); // t[key] = value
 void   l_TableWrite_num( lua_State *L, const FXString &key, FXint value );
 FXint  luax_pushStringArray( const FXArray<FXString> &array );
+FXint  luax_pushDictionary( const FXStringDictionary &dict );
 int    l_ReadLaunchers( FXArray<FXString> *keylist );
 
 // Modules services 
-FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms );                                        // module_id.launcher( prms[] ): staus 
+FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms );  // module_id.launcher( prms[] ): staus 
+FXString luams_launch( const FXStringDictionary &prms );                             // module_id.launcher( prms[ 'key' = 'value' ] ): cmd_str 
 FXint    luams_validate( const FXString &module_id, const FXString &flag_str, const FXString &entry_name, FXint *result ); // module_id.validate( flag_str, entry_name ): status, result 
 
 // Dialogy

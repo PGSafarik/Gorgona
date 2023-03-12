@@ -363,8 +363,8 @@ void l_ErrorMessage( FXint num, const FXString &msg )
 
 void l_TableWrite_str( lua_State *L, const FXString &key, const FXString &value )
 {
-  lua_pushstring( L, value.text( ) );   // Vlozi hodnotu polozky v tabulce do zasobniku
-  lua_setfield( L, -2, key.text( ) ); // Definuje klic, se kterym bude hodnota sparovana
+  lua_pushstring( L, convert_str( value.text( ) ) );   // Vlozi hodnotu polozky v tabulce do zasobniku
+  lua_setfield( L, -2, convert_str( key.text( ) ) ); // Definuje klic, se kterym bude hodnota sparovana
 }
 
 void l_TableWrite_num( lua_State *L, const FXString &key, FXint value )
@@ -382,15 +382,40 @@ int luax_pushStringArray( const FXArray<FXString> &array )
     FXint num = array.no( );
     lua_newtable( l );
     for( FXint index = 0; index != num; index++ ) {  
-      lua_pushnumber( l, index + 1 );                   // ( -2 ) index pole ( v lue zacina 1, v C/C++ 0 - proto je nutne jej o 1 zvysit)
-      lua_pushstring( l, convert_str( array[ index ].text( ) ) );    // ( -1 ) hodnota vlozena na dany index
-      lua_settable( l, -3 );                          //  Nastavi index do pole ( -3[-2] = -1 ) 
+      lua_pushnumber( l, index + 1 );                             // ( -2 ) index pole ( v lue zacina 1, v C/C++ 0 - proto je nutne jej o 1 zvysit)
+      lua_pushstring( l, convert_str( array[ index ].text( ) ) ); // ( -1 ) hodnota vlozena na dany index
+      lua_settable( l, -3 );                                      //  Nastavi index do pole ( -3[-2] = -1 ) 
+      status++;  
     }
   } 
   else { status = -1; } 
 
   return status; 
 } 
+
+FXint luax_pushDictionary( const FXStringDictionary &dict )
+{
+  FXint status = 0;
+  lua_State *l = _inst->getLua( );
+  
+  if( l ) { 
+    FXint num_m = dict.no( );
+
+    lua_newtable( l );
+    for( FXint pos = 0; pos != num_m; pos++ ) {
+      if( !dict.empty( pos ) ) {
+        FXString _key = dict.key( pos );
+        FXString _val = dict.data( pos ); 
+        l_TableWrite_str( l, _key, _val );
+        status++;  
+      }
+    }
+  } 
+  else { status = -1; } 
+
+  return status; 
+} 
+
 
 int l_ReadLaunchers( FXArray<FXString> *keylist )
 {
@@ -436,10 +461,10 @@ void output( const FXString &value, FXbool nonl )
   std::cout.flush( );
 }
 
-/*************************************************************************************************/
+/*** Module Services **********************************************************************************************/
 FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms )
 {
-  /* Call the module service: module_id.launcher( prms[ ] ): cmd_str */
+  /* Call the module service: module_id.launcher( prms[ 'key' = 'value' ] ): cmd_str */
   FXString cmd_str = FXString::null;
   lua_State *l = _inst->getLua( );
   
@@ -450,6 +475,28 @@ FXString luams_launch( const FXString &module_id, const FXArray<FXString> &prms 
 
   if( lua_pcall( l, 2, 1, 0 ) != 0 ) { /// NOTE : VOLANA FUNKCE PREJIMA JEDEN ARGUMENT A VRACI JEDNU HODNOTU!
     std::cout << "[ERROR Module callback "<< module_id << ".launcher( " << prms[ 0 ] << " ) ]: " << lua_tostring( l, -1 ) << std::endl;
+  }
+  else {
+    cmd_str = lua_tostring( l, -1 );
+    lua_pop( l, -1 );
+  }
+  
+ return cmd_str;  
+}
+
+FXString luams_launch( const FXStringDictionary &prms )
+{
+  /* Call the module service: module_id.launcher( prms[ ] ): cmd_str */
+  FXString cmd_str = FXString::null;
+  lua_State *l = _inst->getLua( );
+  
+
+  lua_getglobal(  l, "launcher"  );
+  lua_pushstring( l, convert_str( prms[ "key" ] ) );
+  luax_pushDictionary( prms ); 
+
+  if( lua_pcall( l, 2, 1, 0 ) != 0 ) { /// NOTE : VOLANA FUNKCE PREJIMA JEDEN ARGUMENT A VRACI JEDNU HODNOTU!
+    std::cout << "[ERROR Module callback " << prms[ "key" ] << ".launcher(  ) ]: " << lua_tostring( l, -1 ) << std::endl;
   }
   else {
     cmd_str = lua_tostring( l, -1 );
