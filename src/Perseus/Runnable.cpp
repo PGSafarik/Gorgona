@@ -48,7 +48,7 @@ FXint Runnable::run( )
   FXString chwd = ChangeWorkDir( );
   
   if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
-    std::cout << "[ERROR Runnable]: Command " << m_command << " is not running!" << std::endl; 
+    std::cout << "[ERROR Runnable]: Command " << m_execute << " is not running!" << std::endl; 
   }
   else { m_pid = pid; }
   
@@ -60,13 +60,19 @@ void Runnable::Command( const FXString &cmd )
 {
   m_command = ( !cmd.empty( ) ? cmd : m_command );
 
-  if( !m_command.empty( ) && !IsNative( ) ) {
-    
-    FXArray<FXString> prms;
-    prms.push( m_command );
-    m_execute = luams_launch( m_launchid, prms );
+  if( !IsNative( ) ) {
+    if( !m_command.empty( ) ) {
+      FXArray<FXString> prms;
+      prms.push( m_command );
+      m_execute = luams_launch( m_launchid, prms );
+    }
+    else {
+      m_execute = luams_launch( m_launchprms );
+    }
   }
-  else { m_execute = m_command; } 
+  else { 
+    m_execute = m_command; 
+  } 
 
   CheckTerminal( );
 }
@@ -91,23 +97,26 @@ FXbool Runnable::load( TiXmlElement *parent )
     TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
 
     if( re ) {
-      m_launchid = re->Attribute( "type" );
-      m_workdir = re->Attribute( "workdir" );
-      FXString term_str = re->Attribute( "Terminal" );
-      if( !term_str.empty( ) ) { m_terminal = term_str.toInt( ); }
-      set_command( re->Attribute( "exec" ) ); 
-
       TiXmlElement *le = re->FirstChildElement( "Perseus:Launcher" );
       if( le ) {
-        TiXmlAttribute *attr = le->FirstAttribute( );
-        for( attr; attr; attr = attr->Next( ) ) { 
+        for( TiXmlAttribute *attr = le->FirstAttribute( ); attr; attr = attr->Next( ) ) { 
           FXString _name  = attr->Name( );
           FXString _value = attr->Value( );
           if( _name == "key" ) { m_launchid = _value; }
-          else { m_launchprms.insert( _name, _value ); }  
-        }  
+          m_launchprms.insert( _name, _value );
+          
+        }
+        Command( ); 
+      }
+      else {
+        m_launchid = re->Attribute( "type" );
+        set_command( re->Attribute( "exec" ) );
       }
 
+      m_workdir = re->Attribute( "workdir" );
+      FXString term_str = re->Attribute( "Terminal" );
+      if( !term_str.empty( ) ) { m_terminal = term_str.toInt( ); }
+       
       Read( re );
       resh = true;
     }   
