@@ -129,14 +129,32 @@ FXbool Runnable::save( TiXmlElement *parent, FXbool force )
 {
   FXbool resh = false; 
   if( parent && ( m_change || force ) ) {
-
+    
+    // Check or create the Runnable element  
     TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
 
     if( re == NULL ) { 
       re = new TiXmlElement( "Perseus:Runnable" );
       parent->LinkEndChild( re );
     }
+ 
+    /*
+    if( ( !m_launchid.empty( ) && m_launchid != "native" )  {
+      // For items used a module service 'Launch'
+      TiXmlElement *le = re->FirstChildElement( "Perseus:Launcher" );
+      if( le == NULL ) {
+        le = new TiXmlElement( "Perseus:Launcher" );
+        re->LinkEndChild( le );
+      } 
+      
+      le->SetAttribute( "key", m_launchid );
 
+    }
+    else {
+      // For native applications
+      re->SetAttribute( "exec", m_command.text( ) );
+    }
+    */
     re->SetAttribute( "exec",       m_command.text( ) );
     re->SetAttribute( "type",       m_launchid.text( ) );
     re->SetAttribute( "workdir",    m_workdir.text( ) );
