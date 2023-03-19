@@ -1,6 +1,8 @@
 # Novinky
-    - 14/03/2023 -
+    - 19/03/2023 -
 
+---
+    
 #### 13/03/2023 Aktualizace 2 - 1.6.0.0
 * Realizace vnitrniho modulu PERSEUS a prepracovani mechanismu spousteni novych procesu a jejich zpravy ve spolupraci s tridou Gorgona
 * Prvni zmeny ve vnitrni mechanice API pro jazyka Lua  
@@ -32,3 +34,7 @@ primarniho okna.
   verzemi a původní datový xml soubor nebude správně načten. Je potreba jej ručně opravit, nebo založit nový. 
 * Nekolik drobnych oprav a zmen
     
+
+---
+
+    = Konec =

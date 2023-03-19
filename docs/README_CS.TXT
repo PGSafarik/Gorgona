@@ -1,6 +1,6 @@
 ﻿Gorgona – Správce herních kolekcí a spouštěč her pro OS Linux 
 ================================================================================
-13.03.2023 
+19.03.2023 
 
 Obsah:
   1. Základní informace
@@ -58,7 +58,7 @@ Projekt Morfeus, který se vyvíjel souběžně s Gorgonou, byl od ní oddělen,
   
 5. AUTOR A LICENCE
 =====================
-Copyright (C) 2015 - 2022 Pavel Šafařík <drakarax@seznam.cz> alias D.A.Tiger
+Copyright (C) 2015 - 2023 Pavel Šafařík <drakarax@seznam.cz> alias D.A.Tiger
 všechna práva vyhrazena.
 
 Tento soubor je součástí Gorgona.

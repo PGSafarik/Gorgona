@@ -1,6 +1,8 @@
 # PŘEKLAD A INSTALACE
     - 19/03/2023 -
-============
+
+---
+
 ### 1. Získání projektu Gorgona
 Projekt Gorgona je momentálně hostován na Githubu, na adrese: https://github.com/PGSafarik/Gorgona . V tuto chvíli je možné získat projekt pouze ve formě zdrojových kodů v aktuální verzi vývoje.  
 
@@ -19,13 +21,13 @@ Momentálně nejsou k dispozici ani samostatná vydání nebo instalcni balíky 
     * TinyXml           - DOM XML parser                   https://sourceforge.net/projects/tinyxml
     * Lua 5.1           - Iterpret jazyka Lua              https://www.lua.org
 * Doporučené (Mohou být požadovány moduly, nebo rozšiřovat funkci Gorgony):  
-    * Steam
-    * Legendary
-    * Morfeus
-    * Wine
-    * Q4Wine
-    * Dosbox
-    * xterm
+    * Steam             - Oficialni klient sluzby Steam
+    * Legendary         - Neoficialni klient pro Epic.com a GOG.com
+    * Morfeus           - Univerzal GUI wraper (nadstavba) pro herní spouštěče 
+    * Wine              - Systémová vrstva umožňující spouštění windows aplikací na Linuxu a MacOs
+    * Q4Wine            - GUI nadstavba nad Wine
+    * Dosbox            - Emulátor pro aplikace systemu DOS
+    * xterm             - Emulátor terminálu
 * Kompilační (Dodatečné závislosti pro úspěšnou kompilaci projektu)
     * cmake >= 3.10
     * g++
@@ -62,7 +64,8 @@ Program Gorgona, po uspěšné instalaci, bude zařazen do menu sekce hry, odkud
   $ Gorgona
 </code>
 
-============
+---
+
     = Konec =
 
 
