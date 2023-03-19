@@ -27,7 +27,7 @@ ADD_EXECUTABLE( ${BIN_NAME} ${SOURCES} )
 TARGET_LINK_LIBRARIES( ${BIN_NAME} FOX-1.7 FXGHI tinyxml lua5.1 )
 
 # Install build project
-INSTALL( TARGETS ${BIN_NAME} RUNTIME DESTINATION bin )
+INSTALL( TARGETS ${BIN_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )              # application 
 INSTALL( DIRECTORY modules DESTINATION ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME} )		# Module files
 INSTALL( FILES integration/medusa-head.png DESTINATION /usr/share/pixmaps/ )                # Gorgona ikon
 INSTALL( FILES integration/Gorgona.desktop DESTINATION /usr/share/applications/ )           # Gorgona desktop launch file
