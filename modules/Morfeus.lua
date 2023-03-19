@@ -22,8 +22,8 @@ local module_mt = { __index = module }
 --- Implement module ---
 function module_Init( )
   self = { }
-  self.exec = "/home/gabriel/Projects/Fox/sources/Morfeus/build/morfeus"
-  --self.steamURL = "steam://rungameid/"
+  --self.exec = "/home/gabriel/Projects/Fox/sources/Morfeus/build/morfeus"
+  self.exec = "/bin/morfeus"
   self.info = { 
     name      = "Morfeus",
 	date      = "13/01/2023",
