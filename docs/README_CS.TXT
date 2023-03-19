@@ -30,37 +30,7 @@ docs/images/screenshot.png
 
 2. PŘEKLAD A INSTALACE
 ========================
-Závislosti:
-  Foxtoolkit 1.7.81 - GUI Framework http://fox-toolkit.org/ftp/fox-1.7.81.tar.gz
-  FoxGHI 0.4.0      - https://github.com/PGSafarik/FoxGHI
-  TinyXml           - https://sourceforge.net/projects/tinyxml
-  Lua 5.1           - https://www.lua.org
-
-Dodatečné závislosti pro kompilaci  
-  cmake >= 3.10
-  g++ 
-
-Po stažení projektu z Githubu (a případném rozbaleni) přejděte do složky s projektem a zadejte následující 
-sekvenci příkazu:
-  mkdir build
-  cd build 
-  cmake .. && make
-  sudo make install
-
-Po úspěšné kompilaci a sestaveni projektu bude výsledný program, včetně spouštěcích modulu v jazyce Lua, nainstalovány do adresáře /opt/gorgona
-
-pozn.:
-Knihovna foxlib MUSÍ být v době kompilace nainstalována na vašem systému. Verze 1.7 je vývojová verze, je proto možné, ze ji nebudete mít v systému a 
-nebude ani dostupná v repositáři, proto ji budete muset doinstalovat ručně. Více informací jak to udělat najdete na stránkách foxtoolkitu. Následující 
-řádky se týkají případných úprav CMakeLists.
-
-Mate-li knihovnu nainstalovanou na jiném, než standardním umístění, je nutno tuto skutečnost zanést v souboru CMakeLists.txt v adresáři projektu. 
-Vyhledejte a změňte řádky nastavující cestu ke knihovně:
-    INCLUDE_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/include" )   #Foxlib headers
-    LINK_DIRECTORIES( "/Cesta/vasi/instalaci/foxlib/lib" )          #Foxlib library
-
-Tyto řádky jsou ve výchozím stavu zakomentovány, po úpravě tedy ještě odstraňte počáteční znaky '#', a poté soubor uložte. Dále normálně postupujte podle 
-instrukci pro sestavení a instalaci projektu výše.     
+  Viz. soubor docs/INSTALL_CS.md   
 
 3. ZNÁME CHYBY A BUGY
 ======================
