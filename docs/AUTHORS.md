@@ -3,7 +3,7 @@
 
 ---    
     
-#### Maintainer:
+## Maintainer:
 - D.A.Tiger (Pavel Šafařík) <drakarax@seznam.cz>
     
 
