@@ -18,7 +18,7 @@
 * Hru v seznam je možno nyní spustit dvojklikem na danou položku
 * Gorgona registruje počet spuštěni a datum posledního spuštěni dané hry
 * V režimu zobrazeni "detaily" se nově zobrazuje též datum posledního spuštěni a žánr hry
-* Revize a přepracování uživatelské dokumentace (v českém jazyce). 
+* Revize a přepracování základní uživatelské dokumentace (v českém jazyce). 
 * Odebrán status projektu "Pozastaveno"
 * Přípravné práce na implementaci nových funkcionalit a drobné úpravy
 
@@ -28,7 +28,7 @@
 * Nástrojové panely jsou nahrazeny FoxGHI Header Boxy
 * Upraven layout top-level oken v návaznosti na změnu správy top-level oken
 * Vyhledávání přesunuto ze seznamu položek do Header Baru 
-* Přidán modul pro podporu spouštění her pomoci Steam klienta (zatím je nutno manuálně vyhledat Steam app id a zadat do pole přikazu)
+* Přidán modul pro podporu spouštění her pomoci Steam klienta (zatím je nutno manuálně vyhledat Steam app id a zadat do pole příkazu)
 * Přidán modul pro podporu spouštění her nainstalovaných pomoci nástroje Legendary (Epic games a GOG.com. I zde je nutno manuálně zadat id hry)
 * Jednoduchý nástin validace položek. Zatím kontroluje (a ne zcela správně) validnost podle existence spustitelného souboru u nativních položek.
   Položky které jsou vyhodnoceny jako nevalidní, jsou vypsány do stdout.
@@ -74,7 +74,7 @@
 11. Podpora CSS, animace a skinovani
 12. Umožnit delegované spouštění her 
 13. Podpora obrázkových dat ve formátu SVG.
-14. Autooprava nekompatibilnich zmen v xml seznamu her
+14. Autooprava nekompatibilních změn v xml seznamu her
 16. Implementace štítků (seznam hesel, něco jako hashtagy, do tématických okruhů jako např. kategorie, platforma, atd...) 
 
 ---
