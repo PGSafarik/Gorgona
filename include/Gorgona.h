@@ -22,29 +22,8 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 * ./FoxGHICP --name Gorgona --vendor FXGameLauncher                      * 
 *************************************************************************/
-// Syscalls and system types
-#include <cstdio>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-
-// The LUA interpreter
-#include<lua5.1/lualib.h>
-#include<lua5.1/lauxlib.h>
-
-// Tiny xml - xml support
-#include<tinyxml.h>
-
-// Foxlib, the GUI library
-#include<fox-1.7/fx.h>
-
-// Internal headers
-#include<Utils.h>
-#include<IconsTheme.h>
+#include<define.h>
 #include<FXGameItem.h> 
-#include<LuaAPI.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )

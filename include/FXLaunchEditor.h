@@ -21,8 +21,7 @@
 * Dialog herni polozky (pridani, editace)                                *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fox-1.7/fx.h>
-#include<fxghi.h>
+#include<define.h>
 
 class FXGameLauncher;
 class FXGameItem;

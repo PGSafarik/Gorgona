@@ -22,34 +22,11 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 * ./FoxGHICP --name Gorgona --vendor GorgonaWindow                      * 
 *************************************************************************/
-// Syscalls and system types
-#include <cstdio>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <sys/wait.h>
-
-// The LUA interpreter
-#include<lua5.1/lualib.h>
-#include<lua5.1/lauxlib.h>
-
-// Foxlib, the GUI library
-#include<fox-1.7/fx.h>
-#include<fxghi.h>
-
-// Tiny xml - xml support
-#include<tinyxml.h>
-
-// Internal headers
 #include<Gorgona.h>
-#include<Utils.h>
 #include<Boxes.h>
-#include<IconsTheme.h>
 #include<FXGameItem.h>
 #include<Perseus/Runnable.h>
 #include<FXLaunchEditor.h>
-#include<LuaAPI.h>
 #include<FXListPane.h>
 #include<GO_Keywords.h>
 

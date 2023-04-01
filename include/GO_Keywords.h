@@ -21,11 +21,7 @@
 * %Description of this header file%                                      *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fox-1.7/fx.h>
-#include<tinyxml.h>
-
-#include<Utils.h>
-
+#include<define.h>
 
 // Vlastnosti asociovane s klicovym slovem
 struct GO_KeyEntry {

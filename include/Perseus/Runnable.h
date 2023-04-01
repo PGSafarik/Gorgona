@@ -21,10 +21,7 @@
 * Small classes representing an executable structure                     *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<iostream>
-
-#include<fox-1.7/fx.h>
-#include<tinyxml.h>
+#include<define.h>
 
 class Gorgona;
 

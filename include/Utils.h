@@ -21,10 +21,7 @@
 * Knihovna jednoduchych funkci pro ruzne uziti v ramci projektu          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<../version.h>
-
-#include<fox-1.7/fx.h>
-#include<iostream>
+#include<define.h>
 
 /////////////////////////////////////////////////
 // Global types

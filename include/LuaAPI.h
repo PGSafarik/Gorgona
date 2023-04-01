@@ -21,11 +21,7 @@
 * Data a funkce pro moduly spoustecu (Lua)                               *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<lua5.1/lualib.h>
-#include<lua5.1/lauxlib.h>
-#include<fox-1.7/fx.h>
-#include<iostream>
-#include<cstring>
+#include<define.h>
 
 //class GorgonaWindow;
 class Gorgona;

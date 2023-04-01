@@ -21,14 +21,10 @@
 * Panel zobrazujici herni polozky                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fox-1.7/fx.h>
-#include<tinyxml.h>
-#include<iostream>
-
-#include<IconsTheme.h>
+#include<define.h>
 #include<FXGameItem.h>
 #include<FXLaunchEditor.h>
-#include<Utils.h>
+
 
 class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
