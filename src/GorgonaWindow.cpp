@@ -247,11 +247,12 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 /*************************************************************************************************/
 void GorgonaWindow::load( )
 {
-  TiXmlDocument  xdoc;
+  XMLDocument  xdoc;
   FXGameItem    *it;
 
   std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
 
+  /// FIXME: GORGONA_WINDOW_004: TAKHLE NE!!!! 
   if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) != false ) ) {
 
     /* read Games Library */
@@ -289,7 +290,7 @@ void GorgonaWindow::load( )
 
 void GorgonaWindow::save( )
 {
-  TiXmlDocument     xdoc;
+  XMLDocument     xdoc;
   
   TiXmlDeclaration *xdecl = new TiXmlDeclaration( "1.0", "", "" );
   xdoc.LinkEndChild( xdecl );
@@ -386,7 +387,7 @@ void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &roo
   }
   else { rlist = gl_keywordsList.data( gl_keywordsList.find( rootname ) ); }
 
-  TiXmlDocument kwdoc;
+  XMLDocument kwdoc;
   if( ( listfile.empty( ) != true ) && ( kwdoc.LoadFile( listfile.text( ) ) != false ) ) {
     TiXmlElement *kwelem = kwdoc.RootElement( )->FirstChildElement( "Keyword" );
     while( kwelem != NULL ) {
