@@ -24,7 +24,7 @@ LINK_DIRECTORIES(    "${LIB_FXGHI}/lib/" )
 
 # Add to the executable
 ADD_EXECUTABLE( ${BIN_NAME} ${SOURCES} )
-TARGET_LINK_LIBRARIES( ${BIN_NAME} FOX-1.7 FXGHI tinyxml lua5.1 )
+TARGET_LINK_LIBRARIES( ${BIN_NAME} FOX-1.7 FXGHI tinyxml2 lua5.1 )
 
 # Install build project
 INSTALL( TARGETS ${BIN_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )              # application 
