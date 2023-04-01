@@ -36,9 +36,8 @@
 #include<lua5.1/lualib.h>
 #include<lua5.1/lauxlib.h>
 
-// Tiny xml - xml support
-#include<tinyxml.h>
-//#include<tinyxml2.h>
+// TinyXML - XML support
+#include<tinyxml2.h>
 
 // Foxlib & FoxGHI - GUI libraries
 #include<fox-1.7/fx.h>
@@ -52,7 +51,7 @@
 
 //#define __DEBUG
 
-//using namespace tinyxml2;
+using namespace tinyxml2;
 using namespace std;
 using namespace FX;
 using namespace FXGHI;
