@@ -30,6 +30,7 @@
 #include <sys/resource.h>
 #include <sys/wait.h>
 #include <iostream>
+#include <string>
 
 // The LUA interpreter
 #include<lua5.1/lualib.h>
@@ -44,12 +45,14 @@
 #include<fxghi.h>
 
 // Internal shared header files
-#include<IconsTheme.h>
+#include<../version.h>
 #include<Utils.h>
+#include<IconsTheme.h>
+#include<LuaAPI.h>
 
 //#define __DEBUG
 
-using namespace tinyxml2;
+//using namespace tinyxml2;
 using namespace std;
 using namespace FX;
 using namespace FXGHI;
