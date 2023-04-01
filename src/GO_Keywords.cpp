@@ -13,7 +13,7 @@ GO_Keywords::~GO_Keywords( )
 }
 
 /*************************************************************************************************/
-FXint GO_Keywords::read( TiXmlElement *kwelem )
+FXint GO_Keywords::read( XMLElement *kwelem )
 {
   FXint resh = 0;
 
@@ -21,7 +21,7 @@ FXint GO_Keywords::read( TiXmlElement *kwelem )
     this->k_description = kwelem->Attribute( "decription" );
     this->k_word       = kwelem->Attribute( "keyword" );
 
-    TiXmlElement *telem = kwelem->FirstChildElement( "Tag" );
+    XMLElement *telem = kwelem->FirstChildElement( "Tag" );
     while( telem != NULL ) {
       GO_KeyEntry *e = new GO_KeyEntry;
       e->description = telem->Attribute( "description" );
@@ -38,7 +38,7 @@ FXint GO_Keywords::read( TiXmlElement *kwelem )
   return resh;
 }
 
-FXbool GO_Keywords::write( TiXmlElement *kwelem )
+FXbool GO_Keywords::write( XMLElement *kwelem )
 {
 
   return true;

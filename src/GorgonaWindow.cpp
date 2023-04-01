@@ -253,29 +253,32 @@ void GorgonaWindow::load( )
   std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
 
   /// FIXME: GORGONA_WINDOW_004: TAKHLE NE!!!! 
-  if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) != false ) ) {
+  if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) == XML_SUCCESS ) ) {
 
     /* read Games Library */
-    TiXmlElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
+    XMLElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
     
-    if( xlibrary )  {        
-      for( TiXmlElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
+    if( xlibrary != NULL )  {
+      FXint num = 0;          
+      for( XMLElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
         if( ( it = new FXGameItem( m_app ) ) != NULL ) {
           it->load( xegame );
           it->checkIcons( getApp( ) );
           gl_pane->insertItem( it );
         }
         else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
-      } 
+        num++;
+      }
+      cout << "Load " << num << " library items." << endl;
     }   // Knihovna (jeste) nevytvorena. Prvni spusteni? 
-    
+    else { cout << "Library not exist" << endl; }
   }
   else {
-    std::cout << "Chyba : neni zadan soubor, nebo ma chybny format" << std::endl;
+    std::cout << "XML read error - " << xdoc.ErrorName() << "(" << xdoc.ErrorID( ) << "): " << xdoc.ErrorStr( ) << std::endl;
     gl_change = true;
   }
 
-  std::cout.flush( );
+  cout.flush( );
 
   gl_pane->showFolder( NULL, true );
   gl_pane->aktiveItem( );
@@ -291,22 +294,24 @@ void GorgonaWindow::load( )
 void GorgonaWindow::save( )
 {
   XMLDocument     xdoc;
+  xdoc.NewDeclaration( );
+
+  // Specifically for TinyXML-2:
+  // Set the element as the first in the document - i.e. the root element
+  XMLElement *xroot    = xdoc.NewElement( getApp( )->reg( ).getAppKey( ).text( ) );
+  xdoc.InsertFirstChild( xroot );   
+
+  XMLElement *xlibrary = xroot->InsertNewChildElement( "Library" );
   
-  TiXmlDeclaration *xdecl = new TiXmlDeclaration( "1.0", "", "" );
-  xdoc.LinkEndChild( xdecl );
-
-  TiXmlElement *xroot = new TiXmlElement( getApp( )->reg( ).getAppKey( ).text( ) );
-  xdoc.LinkEndChild( xroot );
-
-  TiXmlElement *xlibrary = new TiXmlElement( "Library" );
-  xroot->LinkEndChild( xlibrary );
-   
   FXGameItemArray buff;
   gl_pane->getItemList( NULL, &buff, true );
   for( FXint i = 0; i != buff.no( ); i++ ) { buff[ i ]->save( xlibrary ); }
 
   std::cout << "Saving the menu xml-file" << std::endl;
-  xdoc.SaveFile( gl_datafile.text( ) );
+  if( xdoc.SaveFile( gl_datafile.text( ) ) != XML_SUCCESS ) { 
+    std::cout << "XML writting error - " << xdoc.ErrorName() << "(" << xdoc.ErrorID( ) << "): " << xdoc.ErrorStr( ) << std::endl;
+  }
+  
 }
 
 void GorgonaWindow::read_config( )
@@ -334,7 +339,7 @@ void GorgonaWindow::read_config( )
   if( gl_view == "icons" ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_ICONS ), NULL ); }
   if( gl_view == "list"  ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_DETAIL ), NULL ); }
 
-  this->read_Keywords( "/opt/Gorgona/data/keywords.xml");
+  //this->read_Keywords( "/opt/Gorgona/data/keywords.xml");
   std::cout << "{ read_config } OK" << std::endl;
 }
 
@@ -389,7 +394,7 @@ void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &roo
 
   XMLDocument kwdoc;
   if( ( listfile.empty( ) != true ) && ( kwdoc.LoadFile( listfile.text( ) ) != false ) ) {
-    TiXmlElement *kwelem = kwdoc.RootElement( )->FirstChildElement( "Keyword" );
+    XMLElement *kwelem = kwdoc.RootElement( )->FirstChildElement( "Keyword" );
     while( kwelem != NULL ) {
       GO_Keywords *kwl = new GO_Keywords;
       rlist->append( *kwl );

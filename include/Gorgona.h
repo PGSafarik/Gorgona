@@ -45,7 +45,7 @@ FXDECLARE( Gorgona )
   FXString        m_profiledir; // Path of rofile directory 
   FXString        m_gamelist;   // Filename for list of games (xml)
   XMLDocument     *mx_document; // XML instance of the games list
-  TiXmlElement    *mx_root;     // XML root element of the games list 
+  XMLElement    *mx_root;     // XML root element of the games list 
   Library         *m_library;   // Library of games ;)
   TermInfo        *m_term;      // Terminal profile
  

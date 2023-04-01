@@ -67,8 +67,8 @@ namespace PERSEUS {
     FXbool   is_running( )                      { return m_pid > 0;   } 
 
     virtual FXint run( );
-    FXbool load( TiXmlElement *parent ); 
-    FXbool save( TiXmlElement *parent, FXbool force = false );
+    FXbool load( XMLElement *parent ); 
+    FXbool save( XMLElement *parent, FXbool force = false );
     virtual FXbool validation( );
     
     /* Debug & testing */
@@ -79,8 +79,8 @@ namespace PERSEUS {
     
     /* Helpful methods */
     virtual void Command( const FXString &cmd = FXString::null ); 
-    virtual void Write( TiXmlElement *runelement ) { }
-    virtual void Read( TiXmlElement *runelement )  { }
+    virtual void Write( XMLElement *runelement ) { }
+    virtual void Read( XMLElement *runelement )  { }
 
     FXbool IsNative( ) { return ( m_launchid.empty( ) || m_launchid == "native" ); }
     FXString ChangeWorkDir( );
@@ -115,8 +115,8 @@ namespace PERSEUS {
    
     /* Helpful routines */
     void Counter( );
-    virtual void Write( TiXmlElement *runelement );
-    virtual void Read( TiXmlElement *runelement );
+    virtual void Write( XMLElement *runelement );
+    virtual void Read( XMLElement *runelement );
 
   };
 

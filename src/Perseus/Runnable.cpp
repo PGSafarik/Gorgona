@@ -89,17 +89,17 @@ FXString Runnable::ChangeWorkDir( )
   return FXString::null;
 }
 
-FXbool Runnable::load( TiXmlElement *parent )
+FXbool Runnable::load( XMLElement *parent )
 {
   FXbool resh = false; 
 
   if( parent ) {
-    TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
+    XMLElement *re = parent->FirstChildElement( "Perseus:Runnable" );
 
     if( re ) {
-      TiXmlElement *le = re->FirstChildElement( "Perseus:Launcher" );
+      XMLElement *le = re->FirstChildElement( "Perseus:Launcher" );
       if( le ) {
-        for( TiXmlAttribute *attr = le->FirstAttribute( ); attr; attr = attr->Next( ) ) { 
+        for( const XMLAttribute *attr = le->FirstAttribute( ); attr; attr = attr->Next( ) ) { 
           FXString _name  = attr->Name( );
           FXString _value = attr->Value( );
           if( _name == "key" ) { m_launchid = _value; }
@@ -125,25 +125,21 @@ FXbool Runnable::load( TiXmlElement *parent )
   return resh;
 }
  
-FXbool Runnable::save( TiXmlElement *parent, FXbool force )
+FXbool Runnable::save( XMLElement *parent, FXbool force )
 {
   FXbool resh = false; 
   if( parent && ( m_change || force ) ) {
     
     // Check or create the Runnable element  
-    TiXmlElement *re = parent->FirstChildElement( "Perseus:Runnable" );
-
-    if( re == NULL ) { 
-      re = new TiXmlElement( "Perseus:Runnable" );
-      parent->LinkEndChild( re );
-    }
+    XMLElement *re = parent->FirstChildElement( "Perseus:Runnable" );
+    if( re == NULL ) { re = parent->InsertNewChildElement( "Perseus:Runnable" ); }
  
     /*
     if( ( !m_launchid.empty( ) && m_launchid != "native" )  {
       // For items used a module service 'Launch'
-      TiXmlElement *le = re->FirstChildElement( "Perseus:Launcher" );
+      XMLElement *le = re->FirstChildElement( "Perseus:Launcher" );
       if( le == NULL ) {
-        le = new TiXmlElement( "Perseus:Launcher" );
+        le = new XMLElement( "Perseus:Launcher" );
         re->LinkEndChild( le );
       } 
       
@@ -259,25 +255,23 @@ void Game::Counter( )
   m_last = FXDate::localDate( ).getTime( );
 }
 
-void Game::Read( TiXmlElement *runelement )
+void Game::Read( XMLElement *runelement )
 {
-  TiXmlElement *game_el= NULL;
+  XMLElement *game_el= NULL;
  
   if( runelement && ( game_el = runelement->FirstChildElement( "Perseus:Game" ) ) != NULL ) {
-      game_el->Attribute( "count", &m_used );
+      //game_el->Attribute( "count", &m_used );
+      m_used = game_el->IntAttribute( "count", 0 );
       FXString value = game_el->Attribute( "last" );
       if( !value.empty( ) ) { m_last = value.toLong( ); } else { m_last = 0; }
   }
 }
  
-void Game::Write( TiXmlElement *runelement )
+void Game::Write( XMLElement *runelement )
 {
   if( runelement ) {
-    TiXmlElement *game_el = runelement->FirstChildElement( "Perseus:Game" );
-    if( game_el == NULL ) { 
-      game_el = new TiXmlElement( "Perseus:Game" );
-      runelement->LinkEndChild( game_el ); 
-    }
+    XMLElement *game_el = runelement->FirstChildElement( "Perseus:Game" );
+    if( game_el == NULL ) { game_el = runelement->InsertNewChildElement( "Perseus:Game" ); }
 
     game_el->SetAttribute( "count", m_used );
     FXString value = FXString::value( m_last );

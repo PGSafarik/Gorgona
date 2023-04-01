@@ -111,11 +111,11 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
    return resh;
 }
 
-void FXGameItem::load( TiXmlElement *eitem )
+void FXGameItem::load( XMLElement *eitem )
 {
   FXString _name, _value, _sect, _key;
 
-  for( TiXmlElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
+  for( XMLElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );
     if( _sect.find( ":" ) >= 0 ) { continue; } // Pokud jde o data jineho modulu, preskocit
  
@@ -126,7 +126,7 @@ void FXGameItem::load( TiXmlElement *eitem )
     }
 
     // Zpracovani atributu elementu :
-    for( TiXmlAttribute *attr = elem->FirstAttribute( ); attr; attr = attr->Next( ) ) {
+    for( const XMLAttribute *attr = elem->FirstAttribute( ); attr; attr = attr->Next( ) ) {
       _name  = attr->Name( );
       _value = attr->Value( );
 
@@ -153,19 +153,17 @@ const FXString FXGameItem::read( const FXString &k ) const
   return s;
 }
 
-void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
+void FXGameItem::save( XMLElement *pNode, const FXString &ename )
 {
   #ifdef __DEBUG
   std::cout << "Writing the Game item : " << read( "Basic:title" ).text( ) << std::endl;
   //std::cout.flush( );
   #endif
 
-  TiXmlText    *e_text  = NULL;                               // Element popisoveho textu
-  TiXmlElement *e_desc  = NULL;                               // Nosny element popisu
-  TiXmlElement *e_tmp   = NULL;                               // Pomocny element
-  TiXmlElement *e_self  = new TiXmlElement( ename.text( ) );  // Eelement reprezentujici (herni) polozku
-
-  pNode->LinkEndChild( e_self );
+  //XMLText    *e_text  = NULL;                                             // Element popisoveho textu
+  XMLElement *e_desc  = NULL;                                             // Nosny element popisu
+  XMLElement *e_tmp   = NULL;                                             // Pomocny element
+  XMLElement *e_self  = pNode->InsertNewChildElement( ename.text( ) );    // Element reprezentujici (herni) polozku
 
   FXString key, value;
   for( FXival i = 0; i < this->property.no( ); i++ ) {
@@ -175,22 +173,16 @@ void FXGameItem::save( TiXmlElement *pNode, const FXString &ename )
 
     // Zapis elementu, ktere je vyhodnejsi samostane osetrit
     if( key == "Description" ) {
-      e_desc = new TiXmlElement( key.text( ) );
-      e_text = new TiXmlText( value.text( ) );
-      e_desc->LinkEndChild( e_text );
-      e_self->LinkEndChild( e_desc );
-//      std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
+      e_desc = e_self->InsertNewChildElement( key.text( ) );
+      /*XMLText *e_text = */e_desc->InsertNewText( value.text( ) );
+      // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
     }
     else {
       FXString CHName  = key.section( ":", 0 );
       FXString CHParam = key.section( ":", 1 );
-
-//      std::cout << CHName.text( ) << "->" << CHParam.text( ) << " = " << value.text( ) << std::endl;
+      // std::cout << CHName.text( ) << "->" << CHParam.text( ) << " = " << value.text( ) << std::endl;
       e_tmp = e_self->FirstChildElement( CHName.text( ) );
-      if( e_tmp == NULL ) {
-        e_tmp = new TiXmlElement( CHName.text( ) );
-        e_self->LinkEndChild( e_tmp );
-      }
+      if( e_tmp == NULL ) { e_tmp = e_self->InsertNewChildElement( CHName.text( ) ); }
       e_tmp->SetAttribute( CHParam.text( ), value.text( ) );
     }
   }
@@ -234,12 +226,12 @@ Library::~Library( )
 
 }
 
-FXbool Library::load( TiXmlElement *library_el )
+FXbool Library::load( XMLElement *library_el )
 {
   FXbool result = false; 
    
   if( library_el ) {
-    for( TiXmlElement *el = library_el->FirstChildElement( "Game" ); el; el = el->NextSiblingElement( "Game" ) ) {
+    for( XMLElement *el = library_el->FirstChildElement( "Game" ); el; el = el->NextSiblingElement( "Game" ) ) {
       FXGameItem *item = new FXGameItem( m_app );    
       if( item ) {
         item->load( el );
@@ -254,7 +246,7 @@ FXbool Library::load( TiXmlElement *library_el )
   return result; 
 }
 
-FXbool Library::save( TiXmlElement *library_el )
+FXbool Library::save( XMLElement *library_el )
 {
   FXbool result = false;
 

@@ -40,8 +40,8 @@ public :
   GO_Keywords( const FXString &w = FXString::null, const FXString &d = FXString::null );
   virtual ~GO_Keywords( );
 
-  FXint read( TiXmlElement *kwelem );
-  FXbool write( TiXmlElement *kwelem );
+  FXint read( XMLElement *kwelem );
+  FXbool write( XMLElement *kwelem );
 };
 
 typedef FXDictionaryOf<FXArray<GO_Keywords> > GO_KeyRoots;

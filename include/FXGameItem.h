@@ -54,8 +54,8 @@ struct FXGameItem {
   const FXString read( const FXString &k ) const;
   FXbool write( const FXString &k, const FXString &v, FXbool chang = true );
 
-  void load( TiXmlElement *eitem );
-  void save( TiXmlElement *pNode, const FXString &ename = "Game" );
+  void load( XMLElement *eitem );
+  void save( XMLElement *pNode, const FXString &ename = "Game" );
 
 
   FXString operator ( ) ( const FXString &key, const FXString &value = FXString::null, FXbool change = true  )
@@ -84,8 +84,8 @@ public :
   virtual ~Library( );
 
   /* Operations methods */
-  virtual FXbool load( TiXmlElement *library_el );
-  virtual FXbool save( TiXmlElement *library_el );
+  virtual FXbool load( XMLElement *library_el );
+  virtual FXbool save( XMLElement *library_el );
 };
 
 #endif /* __FXGAMEITEM_H */
