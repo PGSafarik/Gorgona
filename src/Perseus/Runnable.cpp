@@ -46,11 +46,15 @@ FXint Runnable::run( )
   }
 
   FXString chwd = ChangeWorkDir( );
-  
+
+/*  
   if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
-    std::cout << "[ERROR Runnable]: Command " << m_execute << " is not running!" << std::endl; 
+    std::cout << "[ERROR Runnable]: Command " << m_execute << " is not running! (" << pid << ")" << std::endl; 
   }
   else { m_pid = pid; }
+*/
+
+  if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { m_pid = pid; }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
   return pid;

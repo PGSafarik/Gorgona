@@ -193,6 +193,14 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
     msg + FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
   }    
   
+  // Information of the user of bad a process termaination 
+  if( status != 0 ) {
+    FXString head = "Non-standard process termination"; 
+    FXString msg = "The process " + FXString::value( pid ) + " terminated with an error. \n";
+    msg += "Exit code : " + FXString::value( status );   
+    
+    FXMessageBox::warning( this, MBOX_OK, head.text( ), msg.text( ) );
+  }  
   std::cout << msg << std::endl;  
   return 1;
 }

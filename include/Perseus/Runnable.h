@@ -52,6 +52,7 @@ namespace PERSEUS {
     virtual ~Runnable( );
 
     /* Access methods */
+    Gorgona* get_app( )                         { return m_app;       } 
     void     set_notify( FXbool value = true )  { m_notify = value;   }
     FXbool   get_notify( )                      { return m_notify;    }
     void     set_workdir( const FXString &dir ) { m_workdir = dir;    }
