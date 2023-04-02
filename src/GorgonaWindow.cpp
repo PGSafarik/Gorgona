@@ -94,9 +94,15 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   /* Search Bar */
   m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
 
-
   // Configure application & load data
   read_config( );
+
+  // If has non-stable version, show she in the window Header bar
+  if( AutoVersion::STATUS_SHORT != 'S' ) {
+    FXString wtitle = getHeader( )->getTitle( ) + " (" + AutoVersion::STATUS + ")";
+    getHeader( )->setTitle( wtitle ); 
+    getHeader( )->setText( AutoVersion::FULLVERSION_STRING ); 
+  }
 }
 
 GorgonaWindow::~GorgonaWindow( )
@@ -471,29 +477,19 @@ void GorgonaWindow::get_arguments( StringList *list )
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
-  FXint       result = 0;
-  FXString    msg;
+  //FXint       result = 0;
+  //FXString    msg;
   FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
 
   if( item != NULL ) {
-    FXString title = item->read( "Basic:title" );
-    
-    if( ( result = item->exec->run( ) ) > 0 ) {   
+    if( (*item)( ) > 0 ) { 
       gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
       gl_change = true;
     }
-    else {
-      switch( result ) {
-        case -1 :  msg = "Game " + title + " is already launched!"; break; 
-        default :  msg = "The luach of game " + title + " failed!"; break;
-      }
-    }
   }
-  else { msg = "This item does not exists!"; }
-
-  if( result <= 0 ) {
-    FXMessageBox::error( this, MBOX_OK, "Run error", msg.text( ) );
-    std::cerr << "[ERROR - GorgonaWindow::Run]: " << msg << " (" << result << ")" << std::endl;
+  else {
+    FXMessageBox::error( this, MBOX_OK, "Run error", "This item does not exists!" );
+    std::cerr << "[ERROR - GorgonaWindow::Run]: " << "This item does not exists! " << std::endl;
     return false;
   }
 

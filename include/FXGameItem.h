@@ -57,17 +57,26 @@ struct FXGameItem {
   void load( XMLElement *eitem );
   void save( XMLElement *pNode, const FXString &ename = "Game" );
 
+  FXint operator ( ) ( )
+  { 
+    FXString title = read( "Basic:title" );
+    FXint pid = exec->run( );
 
-  FXString operator ( ) ( const FXString &key, const FXString &value = FXString::null, FXbool change = true  )
-  {
-     FXString resh = FXString::null;
+    if( pid <= 0 ) {
+      FXString head = "Execution Failed";
+      FXString msg = "Error number: ";
+      msg += FXString::value( pid ) + "\n"; 
+      switch( pid ) {
+        case -1 :  msg += "Game \'" + title + "\' is already launched!"; break; 
+        default :  msg += "The luach of game \'" + title + "\' failed!"; break;
+      }
+        
+      FXMessageBox::warning( (FXApp*) exec->get_app( ), MBOX_OK, head.text( ), msg.text( ) );
+      std::cerr << "[GorgonaWindow::Run]: " << head << msg << std::endl; 
+    }
+    else  { change = true; }
 
-     if( !key.empty( ) ) {
-       if( !value.empty( ) && this->write( key, value, change ) ) { resh = this->read( key ); }
-       else { resh = this->read( key ); }
-     }
-
-     return resh;
+    return pid;
   }
 
 protected :
