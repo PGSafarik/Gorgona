@@ -7,7 +7,7 @@
   3. [Plány do budoucna](#3-Plány-do-budoucna)
     
 ---
-## 1. Novinky    
+## 1. Novinky     
 #### 13/03/2023 Aktualizace 2 - 1.6.0.0 
 * Realizace vnitřního modulu PERSEUS a přepracovaní mechanismu spouštění nových procesů.
 * První změny ve vnitřní mechanice API pro jazyka Lua  
@@ -44,12 +44,16 @@
 
 2. 11/01/2023 - Nutnost ručně zadat cestu k modulům v ModManager.lua - Otevřeno  
    Příčina je v návrhu integrace Lua skriptů v Gorgoně. Uvažuje se o dočasném workaroundu do C >LUA API, který bude dodávat cestu z nastavení Gorgony.
+   
+3. 02/04/21023  - Gorgona neinformuje o nespusteni aplikace/hry - Uzavreno.
+   Rešení (02/04/21023): Požadovaná fukčnost implementována do tříd Gorgona a PERSEUS:Runnable
+   
 
 ## 3. Plány dalšího vývoje 
 ### Následující verze (1.7.X.X)
 1. Přeložit základní technickou dokumentaci do Aj. Stručný uživatelsky manuál v Čj.
 2. Nahradit současně používanou, ale nepodporovanou TinyXml 1.x na novější TinyXml 2.x ( a to už docela hoří! )
-3. Přepracování položek jednotlivých titulu
+3. Přepracování struktury položek titulu
 
 ### Příští Stable vydání (2.0.0.0)
 1. Konfigurační GUI (nyní je možno konfigurovat Gorgonu pouze ručně v souboru)
