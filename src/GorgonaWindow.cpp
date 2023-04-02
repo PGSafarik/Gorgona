@@ -477,8 +477,6 @@ void GorgonaWindow::get_arguments( StringList *list )
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
-  //FXint       result = 0;
-  //FXString    msg;
   FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
 
   if( item != NULL ) {

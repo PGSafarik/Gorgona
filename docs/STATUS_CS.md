@@ -45,7 +45,7 @@
 2. 11/01/2023 - Nutnost ručně zadat cestu k modulům v ModManager.lua - Otevřeno  
    Příčina je v návrhu integrace Lua skriptů v Gorgoně. Uvažuje se o dočasném workaroundu do C >LUA API, který bude dodávat cestu z nastavení Gorgony.
    
-3. 02/04/21023  - Gorgona neinformuje o nespusteni aplikace/hry - Uzavreno.
+3. 02/04/21023  - Gorgona neinformuje o nespusteni aplikace/hry - FIXED.
    Rešení (02/04/21023): Požadovaná fukčnost implementována do tříd Gorgona a PERSEUS:Runnable
    
 
