@@ -23,7 +23,6 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 
   m_lua     = luaL_newstate( );  
 
-  mx_root     = NULL;
   m_library = new Library( this );
 
   m_term = new TermInfo;
@@ -73,9 +72,9 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   Welcome( this ); 
  
   FXApp::init( argc, argv, connect );
-  ReadConfig( );
+  Read_Config( );
   LuaInit( );
-  LoadLibrary( );
+  Load_Library( );
    
   /* Docasne */
   m_term->name      = "xterm";
@@ -212,7 +211,9 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
+  Save_Library( );
 
+  std::cout << "Gorgona: === BYE! ======================" << std::endl;
   return FXApp::onCmdQuit( sender, sel, data );
 }
 
@@ -266,14 +267,21 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
   }
 }
 
-void Gorgona::ReadConfig( )
+void Gorgona::Read_Config( )
 {
-  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
-  m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
+  m_initscript     = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+  m_profiledir     = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
   FXString xmllist = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
-  
+  FXString as      = reg( ).readStringEntry( "Profile", "autosave",  "false" );
+
   m_gamelist = m_profiledir + "/data/" + xmllist + ".xml";
-  
+  m_autosave = ( ( as.empty( ) or ( as == "false" ) ) ? false : true );
+}
+
+void Gorgona::Write_Config( )
+{
+  reg( ).writeStringEntry( "Profile", "autosave", ( ( m_autosave == true ) ? "true" : "false" ) );
+
 }
 
 void Gorgona::LuaInit( )
@@ -286,18 +294,42 @@ void Gorgona::LuaInit( )
   else { std::cout << "[ERROR Gorgona]: Lua its NOT opened!"; }
 }
 
-void Gorgona::LoadLibrary( )
+void Gorgona::Load_Library( )
 {
-  if( ( m_gamelist.empty( ) != true ) && ( mx_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
+  XMLDocument     x_document;  // XML instance of the games list
+  XMLElement      *x_root;     // XML root element of the games list 
+
+  if( ( m_gamelist.empty( ) != true ) && ( x_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
     std::cout << "[DEBUG - Gorgona::init] Loading Library..." << std::endl;
-    if( ( mx_root = mx_document.RootElement( ) ) != NULL ) {
-      m_library->load( mx_root->FirstChildElement( "Library" ) );
+    if( ( x_root = x_document.RootElement( ) ) != NULL ) {
+      m_library->load( x_root->FirstChildElement( "Library" ) );
     }     
   }
   else {
-    std::cout << "[Gorgona::init] XML read error - " << mx_document.ErrorName() << "(" << mx_document.ErrorID( ) << "): " << mx_document.ErrorStr( ) << std::endl;
-    //gl_change = true;
+    std::cout << "[Gorgona::init] XML read error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+    //m_change = true;
   }
+}
+
+void Gorgona::Save_Library( )
+{
+  if( m_library->isChanged( ) || m_autosave ) {
+    XMLDocument x_document;  
+    x_document.NewDeclaration( );
+
+    // Specifically for TinyXML-2:
+    // Set the element as the first in the document - i.e. the root element
+    XMLElement *x_root = x_document.NewElement( reg( ).getAppKey( ).text( ) );
+    x_document.InsertFirstChild( x_root );   
+
+    XMLElement *x_library = x_root->InsertNewChildElement( "Library" );
+    m_library->save( x_library );
+
+    std::cout << "[Gorgona::init] Saving the menu xml-file" << std::endl;
+    if( x_document.SaveFile( m_gamelist.text( ) ) != XML_SUCCESS ) { 
+      std::cout << "[Gorgona::init] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+    }
+  }  
 }
 
 /*** END ******************************************************************************************/

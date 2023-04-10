@@ -30,7 +30,6 @@ class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
   FXObject *m_tgt;         // Notify target
   FXuint    m_message;     // ID of notifikacation message
-  FXbool    m_verbose;     // Verbose mod
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
 
@@ -43,13 +42,15 @@ FXDECLARE( Gorgona )
   FXString   m_initscript; // Initialize script (lua)
 
   /* Data */
-  FXString        m_profiledir; // Path of rofile directory 
-  FXString        m_gamelist;   // Filename for list of games (xml)
-  XMLDocument     mx_document;  // XML instance of the games list
-  XMLElement      *mx_root;     // XML root element of the games list 
   Library         *m_library;   // Library of games ;)
   TermInfo        *m_term;      // Terminal profile
  
+  /* Configurations */
+  FXbool    m_verbose;     // Verbose mod
+  FXString  m_profiledir;  // Path of rofile directory 
+  FXString  m_gamelist;    // Filename for list of games (xml)
+  FXbool    m_autosave;    // Enable/desable autosave of the changes
+
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
   virtual ~Gorgona( );
@@ -69,7 +70,7 @@ public:
   PERSEUS::Process* findChild( FXint pid );
 
   TermInfo* getTerminal( )  { return m_term; }
-  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
+  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }
 
   /* Operations methods */
   virtual void create( );
@@ -94,8 +95,10 @@ protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Send of notification message, if anyone 
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
   void LuaInit( );                                                               // Initialize langugae interpret of Lua 
-  void ReadConfig( );                                                            // Load configurations data
-  void LoadLibrary( );                                                            // Load items library(ies)   
+  void Read_Config( );                                                           // Load configurations data
+  void Write_Config( );                                                          // Write configurations 
+  void Load_Library( );                                                          // Load items library(ies)   
+  void Save_Library( );                                                          // Save items library(ies)   
 };
 
 #endif /* __GORGONA_H */

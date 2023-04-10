@@ -50,7 +50,7 @@ FXDECLARE( GorgonaWindow )
   FXMenuPane *gl_mHelp;
 
   // Settings
-  FXbool    gl_autosave;        // Automaticky ukladat zmeny
+  //FXbool    gl_autosave;        // Automaticky ukladat zmeny
   FXbool    gl_hidegui;         // Skryt okno Gorgony
   FXString  gl_browser;         // Webovy prohlizec (Napoveda, web game client a web game distribution klient)
   FXString  gl_browser_args;    // Argumenty pro prohlizec
