@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __PERSEUS_H
-#define __PERSEUS_H
+#ifndef __RUNNABLE_H
+#define __RUNNABLE_H
 
 /*************************************************************************
 * Runnable.h                                                             *
@@ -122,5 +122,5 @@ namespace PERSEUS {
   };
 
 }      /* Namespace PERSEUS */
-#endif /* __PERSEUS_H */
+#endif /* __RUNNABLE_H */
 /*** END ****************************************************************/

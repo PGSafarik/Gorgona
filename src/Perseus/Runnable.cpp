@@ -1,9 +1,7 @@
 // Runnable.cpp Copyright (c) 08/05/2018;  D.A.Tiger; GNU GPL 3
 
 #include<Gorgona.h>
-#include<Utils.h>
-//#include<FXGameItem.h>
-#include<LuaAPI.h>
+#include<Perseus/Runnable.h>
 
 using namespace PERSEUS;
 
@@ -46,14 +44,6 @@ FXint Runnable::run( )
   }
 
   FXString chwd = ChangeWorkDir( );
-
-/*  
-  if( ( pid = m_app->exec( m_execute, 0 ) ) <= 0 ) { 
-    std::cout << "[ERROR Runnable]: Command " << m_execute << " is not running! (" << pid << ")" << std::endl; 
-  }
-  else { m_pid = pid; }
-*/
-
   if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { m_pid = pid; }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
@@ -202,7 +192,7 @@ FXDEFMAP( Game ) GAMEMAP[ ] = { };
 FXIMPLEMENT( Game, Runnable, GAMEMAP, ARRAYNUMBER( GAMEMAP ) )
 
 Game::Game( Gorgona *a, FXObject *tgt, FXSelector sel )
-           : Runnable( a, tgt, sel )
+    : Runnable( a, tgt, sel )
 { 
   m_used    = 0;
   m_total   = 0;
