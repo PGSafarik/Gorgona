@@ -87,16 +87,10 @@ typedef  FXArray<FXGameItem*> FXGameItemArray;
 
 class Library : public FXArray<FXGameItem*> {
   Gorgona *m_app;
- 
-  FXbool m_change = false;
 
 public :
   Library( Gorgona *app );
   virtual ~Library( );
-
-  /* Access methods */
-  FXbool isChanged( )                     { return m_change; }
-  void   setChange( FXbool value = true ) { m_change = value; } 
 
   /* Operations methods */
   virtual FXbool load( XMLElement *library_el );
