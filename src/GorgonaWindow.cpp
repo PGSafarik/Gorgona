@@ -337,9 +337,9 @@ void GorgonaWindow::read_config( )
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
   gl_browser_args    = getApp( )->reg( ).readStringEntry( "Profile", "browserargs",       FXString::null );
   gl_doubleclick_key = getApp( )->reg( ).readStringEntry( "Profile", "doubleclickaction", FXString::null );
-  //as                 = getApp( )->reg( ).readStringEntry( "Profile", "autosave",          "false" );
-  hg                 = getApp( )->reg( ).readStringEntry( "Profile", "hidegui",  "false" );
-  gl_view            = getApp( )->reg( ).readStringEntry( "Window", "OpenView",  "icons" );  /// icons, list
+  as                 = getApp( )->reg( ).readStringEntry( "Profile", "autosave",          "false" );
+  hg                 = getApp( )->reg( ).readStringEntry( "Profile", "hidegui",           "false" );
+  gl_view            = getApp( )->reg( ).readStringEntry( "Window", "OpenView",          "icons" );  /// icons, list
   gl_winmode         = getApp( )->reg( ).readStringEntry( "Window", "MainMode",  "window" );  /// window, maximize, fulscreen
 
   //gl_autosave        = ( ( as.empty( ) or ( as == "false" ) ) ? false : true );
@@ -369,7 +369,7 @@ void GorgonaWindow::write_config( )
   getApp( )->reg( ).writeStringEntry( "Profile", "DoubleClickKey",  gl_doubleclick_key.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowser",      gl_browser.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowserArgs",  gl_browser_args.text( ) );
-  //getApp( )->reg( ).writeStringEntry( "Profile", "autosave",       ( ( gl_autosave == true ) ? "true" : "false" ) );
+//  getApp( )->reg( ).writeStringEntry( "Profile", "autosave",       ( ( gl_autosave == true ) ? "true" : "false" ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "hidegui",        ( ( gl_hidegui  == true ) ? "true" : "false" ) );
   getApp( )->reg( ).writeStringEntry( "Window",  "OpenView",        gl_view.text( ) );
   this->handle( this, FXSEL( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG ), NULL );
