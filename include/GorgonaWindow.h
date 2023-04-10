@@ -50,14 +50,11 @@ FXDECLARE( GorgonaWindow )
   FXMenuPane *gl_mHelp;
 
   // Settings
-  //FXbool    gl_autosave;        // Automaticky ukladat zmeny
   FXbool    gl_hidegui;         // Skryt okno Gorgony
   FXString  gl_browser;         // Webovy prohlizec (Napoveda, web game client a web game distribution klient)
   FXString  gl_browser_args;    // Argumenty pro prohlizec
   FXString  gl_doubleclick_key; // Akce provedena pri dvojkliku na polozku
-  FXString  gl_datafile;        // Plna cesta k indexacnimu souboru
   FXString  gl_profile;         // Adresar s lokalnimi soubory Gorgony
-  FXString  gl_gamelist;        // Nazev indexacniho xml souboru
   FXString  gl_view;            // S jakym typem seznamu aplikace nastaruje: list, icons
   FXString  gl_winmode;         // V jakem rezimu bude aplikace spustena: window, fullscreen, maximize
   FXPoint   gl_WinPos;          // Pozice okna - v okenim rezimu
@@ -115,7 +112,6 @@ protected :
   GorgonaWindow( ) { }
 
   void load( );
-  void save( );
   void read_config( );
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );

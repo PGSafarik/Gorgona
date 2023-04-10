@@ -96,7 +96,7 @@ public :
 
   /* Access methods */
   FXbool isChanged( )                     { return m_change; }
-  void   setChange( FXbool value = true ) { m_change = value; } 
+  void   setChanged( FXbool value = true ) { m_change = value; } 
 
   /* Operations methods */
   virtual FXbool load( XMLElement *library_el );

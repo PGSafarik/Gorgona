@@ -22,12 +22,14 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<define.h>
+#include<Gorgona.h>
 #include<FXGameItem.h>
 #include<FXLaunchEditor.h>
 
 
 class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
+  Gorgona *m_app;   
 
   FXVerticalFrame *gl_folderframe;
   FXToolBar       *gl_folderbar;
