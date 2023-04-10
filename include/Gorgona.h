@@ -45,7 +45,7 @@ FXDECLARE( Gorgona )
   /* Data */
   FXString        m_profiledir; // Path of rofile directory 
   FXString        m_gamelist;   // Filename for list of games (xml)
-  XMLDocument     *mx_document; // XML instance of the games list
+  XMLDocument     mx_document;  // XML instance of the games list
   XMLElement      *mx_root;     // XML root element of the games list 
   Library         *m_library;   // Library of games ;)
   TermInfo        *m_term;      // Terminal profile
@@ -88,12 +88,14 @@ public:
    ID_LAST
   };
   long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
+  long onCmdQuit( FXObject *sender, FXSelector sel, void *data );
 
 protected:
   long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Send of notification message, if anyone 
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
   void LuaInit( );                                                               // Initialize langugae interpret of Lua 
   void ReadConfig( );                                                            // Load configurations data
+  void LoadLibrary( );                                                            // Load items library(ies)   
 };
 
 #endif /* __GORGONA_H */

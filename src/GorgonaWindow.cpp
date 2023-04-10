@@ -253,15 +253,15 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 /*************************************************************************************************/
 void GorgonaWindow::load( )
 {
-  XMLDocument  xdoc;
-  FXGameItem    *it;
+  //XMLDocument  xdoc;
+  //FXGameItem    *it;
 
-  std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
+  //std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
 
-  /// FIXME: GORGONA_WINDOW_004: TAKHLE NE!!!! 
+  /*// FIXME: GORGONA_WINDOW_004: TAKHLE NE!!!! 
   if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) == XML_SUCCESS ) ) {
 
-    /* read Games Library */
+    
     XMLElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
     
     if( xlibrary != NULL )  {
@@ -283,8 +283,14 @@ void GorgonaWindow::load( )
     std::cout << "XML read error - " << xdoc.ErrorName() << "(" << xdoc.ErrorID( ) << "): " << xdoc.ErrorStr( ) << std::endl;
     gl_change = true;
   }
+  */
+  //cout.flush( );
 
-  cout.flush( );
+  Library *games = m_app->getLibrary( );
+  FXint num = games->no( );
+  for( FXint i = 0; i != num ; i++ ) {
+    gl_pane->insertItem( games->at( i ) );
+  };
 
   gl_pane->showFolder( NULL, true );
   gl_pane->aktiveItem( );

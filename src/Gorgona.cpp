@@ -3,7 +3,8 @@
 #include<Gorgona.h>
 
 FXDEFMAP( Gorgona ) GORGONAMAP[ ] = { 
-  FXMAPFUNC( SEL_SIGNAL, Gorgona::SIGNAL_CHLD, Gorgona::OnSig_ExitChild )
+  FXMAPFUNC( SEL_SIGNAL, Gorgona::SIGNAL_CHLD, Gorgona::OnSig_ExitChild ),
+  FXMAPFUNC( SEL_COMMAND, FXApp::ID_QUIT, Gorgona::onCmdQuit )
 };
 
 FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
@@ -12,20 +13,18 @@ FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
 Gorgona::Gorgona( const FXString& name, const FXString& vendor )
        : FXApp( name, vendor )
 {
+  m_initscript = m_profiledir = m_gamelist = FXString::null;
+
   m_tgt         = NULL;
   m_message     = 0;
   m_verbose     = true;
   m_initialized = false;
   m_created     = false;
 
-  m_lua     = luaL_newstate( );
-  
-  m_initscript = m_profiledir = m_gamelist = FXString::null;
+  m_lua     = luaL_newstate( );  
 
-  mx_document = NULL;
   mx_root     = NULL;
-
-  m_library = NULL;
+  m_library = new Library( this );
 
   m_term = new TermInfo;
 
@@ -76,7 +75,8 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   FXApp::init( argc, argv, connect );
   ReadConfig( );
   LuaInit( );
-
+  LoadLibrary( );
+   
   /* Docasne */
   m_term->name      = "xterm";
   m_term->exec      = "/usr/bin/xterm";
@@ -210,6 +210,12 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   return 1;
 }
 
+long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
+{
+
+  return FXApp::onCmdQuit( sender, sel, data );
+}
+
 /**************************************************************************************************/
 long Gorgona::Notify( FXbool enable, FXuint mtype, void *mdata )
 {
@@ -264,7 +270,9 @@ void Gorgona::ReadConfig( )
 {
   m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
   m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
-  m_gamelist   = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
+  FXString xmllist = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
+  
+  m_gamelist = m_profiledir + "/data/" + xmllist + ".xml";
   
 }
 
@@ -276,6 +284,20 @@ void Gorgona::LuaInit( )
     std::cout << "[INFO Gorgona]: Lua initialized: " << m_initscript  << " => " << result << std::endl; 
   }
   else { std::cout << "[ERROR Gorgona]: Lua its NOT opened!"; }
+}
+
+void Gorgona::LoadLibrary( )
+{
+  if( ( m_gamelist.empty( ) != true ) && ( mx_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
+    std::cout << "[DEBUG - Gorgona::init] Loading Library..." << std::endl;
+    if( ( mx_root = mx_document.RootElement( ) ) != NULL ) {
+      m_library->load( mx_root->FirstChildElement( "Library" ) );
+    }     
+  }
+  else {
+    std::cout << "[Gorgona::init] XML read error - " << mx_document.ErrorName() << "(" << mx_document.ErrorID( ) << "): " << mx_document.ErrorStr( ) << std::endl;
+    //gl_change = true;
+  }
 }
 
 /*** END ******************************************************************************************/
