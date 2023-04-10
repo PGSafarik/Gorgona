@@ -40,14 +40,19 @@ Gorgona::~Gorgona( )
 /**************************************************************************************************/
 FXbool Gorgona::hasChild( FXint pid )     
 { 
-  if( !m_descendants.empty( ) && pid > 0 ) { 
-    return m_descendants.has( FXString::value( pid ) ); 
+  FXbool res = false;
+
+  if( !m_descendants.empty( ) ) { 
+    if( pid == 0 ) { res = true; } // Bezi aspon jeden jakykoliv potomek
+    else if( pid > 0 ) {           // Dotaz na konkretni proces 
+      res = m_descendants.has( FXString::value( pid ) ); 
+    }
   }
     
-  return false;
+  return res;
 }
   
-FXProcess* Gorgona::findChild( FXint pid )
+PERSEUS::Process* Gorgona::findChild( FXint pid )
 {
   if( hasChild( pid ) ) {
     return m_descendants[ FXString::value( pid ) ];
@@ -95,8 +100,8 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
   */
   FXint pid = 0;
 
-  FXProcess *proc = new FXProcess; 
-  if( proc->start( cmd[ 0 ], cmd.data( ) ) ) {
+  PERSEUS::Process *proc = new PERSEUS::Process; 
+  if( proc->run( cmd ) ) {
     pid = proc->id( );
 
     FXString key =  FXString::value( pid );
@@ -149,7 +154,7 @@ FXint Gorgona::execLuaFile( const FXString &script )
   return result;
 }
 
-FXint Gorgona::wait( FXProcess *process, FXbool notify )
+FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
 {
   FXint status = 0;
 
@@ -178,7 +183,7 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 
   FXString key = FXString::value( pid );
   if( m_descendants.has( key ) ) {
-    FXProcess *proc = m_descendants[ key ];
+    PERSEUS::Process *proc = m_descendants[ key ];
     if( proc != NULL ) {
       m_descendants.remove( key );
       delete proc;

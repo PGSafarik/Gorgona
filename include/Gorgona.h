@@ -24,6 +24,7 @@
 *************************************************************************/
 #include<define.h>
 #include<FXGameItem.h> 
+#include<Perseus/Process.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
@@ -34,7 +35,7 @@ FXDECLARE( Gorgona )
   FXbool    m_initialized; // Finisched the initialize proces this application
 
   /* Child process managment */
-  FXDictionaryOf<FXProcess>  m_descendants; // List of registered descendants of the Gorgona process 
+  FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
 
   /* Lua */
   lua_State *m_lua;        // Instance of the Lua language interpreter
@@ -45,7 +46,7 @@ FXDECLARE( Gorgona )
   FXString        m_profiledir; // Path of rofile directory 
   FXString        m_gamelist;   // Filename for list of games (xml)
   XMLDocument     *mx_document; // XML instance of the games list
-  XMLElement    *mx_root;     // XML root element of the games list 
+  XMLElement      *mx_root;     // XML root element of the games list 
   Library         *m_library;   // Library of games ;)
   TermInfo        *m_term;      // Terminal profile
  
@@ -64,8 +65,8 @@ public:
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
-  FXbool     hasChild( FXint pid );  
-  FXProcess* findChild( FXint pid );
+  FXbool     hasChild( FXint pid = 0 );  
+  PERSEUS::Process* findChild( FXint pid );
 
   TermInfo* getTerminal( )  { return m_term; }
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
@@ -76,7 +77,7 @@ public:
 
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );
   FXint exec( const FXString &cmd, FXuint term_opts );
-  FXint wait( FXProcess *process, FXbool notify = false );
+  FXint wait( PERSEUS::Process *process, FXbool notify = false );
   FXint execLuaFile( const FXString &script );
 
   long notify( FXuint mtype, void *mdata );
