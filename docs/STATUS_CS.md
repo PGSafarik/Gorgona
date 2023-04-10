@@ -34,6 +34,7 @@
   Položky které jsou vyhodnoceny jako nevalidní, jsou vypsány do stdout.
 * XML tagy reprezentující jednotlivé položky seznamu her jsou nyní seskupeny do xml tagu "Library". Tato změna je momentálně nekompatibilní s předchozími 
   verzemi a původní datový xml soubor nebude správně načten. Je potřeba jej ručně opravit, nebo založit nový. 
+* Dočasná deaktivace přímého spuštění procesu Gorgonou z LUA moodulu. Standardní rutina os.execute() samozřejmě funguje pořád. 
 * Několik Drobných oprav a změn
     
 ## 2. Známé bugy a nedostatky
@@ -45,12 +46,31 @@
 2. 11/01/2023 - Nutnost ručně zadat cestu k modulům v ModManager.lua - Otevřeno  
    Příčina je v návrhu integrace Lua skriptů v Gorgoně. Uvažuje se o dočasném workaroundu do C >LUA API, který bude dodávat cestu z nastavení Gorgony.
    
-3. 02/04/21023  - Gorgona neinformuje o nespusteni aplikace/hry - FIXED.
-   Rešení (02/04/21023): Požadovaná fukčnost implementována do tříd Gorgona a PERSEUS:Runnable
+3. 02/04/21023  - Spusteni hry spravovane Steamem zablokuje polozku hry i po ukonceni hry - OTEVŘENO.
+   Příčina je v asociaci PID hlavniho procesu Steam klienta s danou položkou v Gorgoně. Problém odpadne umožněním modulu spustit Steam klienta dříve než samotnou hru. Hru je také možno opakovaně spustit přímo ze Steam klienta, nebo klienta nejdřív ukončit s následně hru spustit znovu z Gorgony
+   Rešení ():  
+
+4. 08/04/2023 - Neoznamuje invalidni, nebo neexistujici data v datovem XML souboru - OTEVRENO  
+   Pri startu programu a naxitani XML datoveho souboru, Gorgona nekontroluje validnost dat, pouze zda soubor existuje. Pokud data neodpovidaji ocekavani, program se standardne chova, jako by datovy soubor nebyl vytvoren, ci byl prazdny.
+    - Program nenabizi uzivateli zadnou moznost kam a do jakeho souboru data v dany moment ulozit (pozn. rucne pres conf.soubor )
+    - Pri ukoncovani ve vyse popsane situaci automaticky, bez upozorneni, zapise prazdny datovy soubor, cimz definitivne znici puvodni data v nevalidnim souboru.
+   Reseni( ):  
    
+5. 08/04/2023 - Nedostatecna funkcionalita vyhledavani polozek v knihovne - OTEVRENO  
+   Pokud do vyhledavaciho pole neni zadan naprosto presny nazev hledane polozky, je oznamena chyba (polozka nenalezena) Vyhledavani tudiz nesplnuje nasledujici pozadavky:
+    - Non-casesensitve (napr. 'Nox' vs. 'nox')
+    - Vyhledavani polozek podle pocatecnich pismen v nazvu ( 'Dyna' -> 'Dyna Blaster' )
+    - Vyhledavani polozky podle id ( neni implementovano ) ( '4558726' -> 'Moorhuhn 3' )
+    - Vyhledavani polozek podle regularniho vyrazu    
+    - Vycenasobne vyhledavani podle casti nazvu (napr. '\*Elder Scrolls\*' -> 'The Elder Scrolls I - Arena', 'The Elder Scrolls II - Daggerfall', 'The Elder Scrolls III - Skyrim' )  
+   Reseni( ):    
+   
+6. 08/04/2023 - Vyhledavaci pole nereaguje na stisk klavesy \[ENTER\] - OTEVRENO  
+   Vyhledavani zapocne pouze stisknutim GUI tlacitka "Find". Podle specifikace ma vsak byt zapocato i stisknutim klavesy ENTER, paklize ma vyhledavaci pole focus.  
+   Reseni( ):  
 
 ## 3. Plány dalšího vývoje 
-### Následující verze (1.7.X.X)
+### Následující vývojová verze (1.7.X.X)
 1. Přeložit základní technickou dokumentaci do Aj. Stručný uživatelsky manuál v Čj.
 2. Nahradit současně používanou, ale nepodporovanou TinyXml 1.x na novější TinyXml 2.x ( a to už docela hoří! )
 3. Přepracování struktury položek titulu
