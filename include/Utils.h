@@ -27,6 +27,7 @@
 // Global types
 //
 typedef FXArray<FXString> StringList;
+typedef FXArray<const FXchar*> EntriesList;
 
 /////////////////////////////////////////////////
 // String helpers functions
