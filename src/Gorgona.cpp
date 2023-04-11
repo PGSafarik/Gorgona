@@ -3,8 +3,10 @@
 #include<Gorgona.h>
 
 FXDEFMAP( Gorgona ) GORGONAMAP[ ] = { 
-  FXMAPFUNC( SEL_SIGNAL, Gorgona::SIGNAL_CHLD, Gorgona::OnSig_ExitChild ),
-  FXMAPFUNC( SEL_COMMAND, FXApp::ID_QUIT, Gorgona::onCmdQuit )
+  FXMAPFUNC( SEL_SIGNAL,  Gorgona::SIGNAL_CHLD,    Gorgona::OnSig_ExitChild ),
+  FXMAPFUNC( SEL_COMMAND, Gorgona::SAVE_LIBRARY,   Gorgona::OnCmd_Save ),
+  FXMAPFUNC( SEL_COMMAND, Gorgona::SAVE_CONFIGURE, Gorgona::OnCmd_Save ),
+  FXMAPFUNC( SEL_COMMAND, FXApp::ID_QUIT,          Gorgona::onCmdQuit )
 };
 
 FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
@@ -209,9 +211,29 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   return 1;
 }
 
+long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
+{
+  long res = 1;
+
+  switch( FXSELID( sel ) ) {
+    case Gorgona::SAVE_LIBRARY: 
+    {
+      Save_Library( );
+      break;  
+    }
+    case Gorgona::SAVE_CONFIGURE: 
+    {
+      Write_Config( );
+      break;
+    }
+  } 
+
+  return res;
+}
+
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
-  Save_Library( );
+  if( m_library->isChanged( ) || m_autosave ) { Save_Library( ); }
 
   std::cout << "Gorgona: === BYE! ======================" << std::endl;
   return FXApp::onCmdQuit( sender, sel, data );
@@ -312,24 +334,22 @@ void Gorgona::Load_Library( )
 }
 
 void Gorgona::Save_Library( )
-{
-  if( m_library->isChanged( ) || m_autosave ) {
-    XMLDocument x_document;  
-    x_document.NewDeclaration( );
+{  
+  XMLDocument x_document;  
+  x_document.NewDeclaration( );
 
-    // Specifically for TinyXML-2:
-    // Set the element as the first in the document - i.e. the root element
-    XMLElement *x_root = x_document.NewElement( reg( ).getAppKey( ).text( ) );
-    x_document.InsertFirstChild( x_root );   
+  // Specifically for TinyXML-2:
+  // Set the element as the first in the document - i.e. the root element
+  XMLElement *x_root = x_document.NewElement( reg( ).getAppKey( ).text( ) );
+  x_document.InsertFirstChild( x_root );   
 
-    XMLElement *x_library = x_root->InsertNewChildElement( "Library" );
-    m_library->save( x_library );
+  XMLElement *x_library = x_root->InsertNewChildElement( "Library" );
+  m_library->save( x_library );
 
-    std::cout << "[Gorgona::init] Saving the menu xml-file" << std::endl;
-    if( x_document.SaveFile( m_gamelist.text( ) ) != XML_SUCCESS ) { 
-      std::cout << "[Gorgona::init] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
-    }
-  }  
+  std::cout << "[Gorgona::init] Saving the menu xml-file" << std::endl;
+  if( x_document.SaveFile( m_gamelist.text( ) ) != XML_SUCCESS ) { 
+    std::cout << "[Gorgona::init] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+  }
 }
 
 /*** END ******************************************************************************************/

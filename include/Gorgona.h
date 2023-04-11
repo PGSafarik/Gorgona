@@ -86,9 +86,15 @@ public:
   /* GUI handlers & messages */
   enum {
    SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess
+
+   /* Explicit saving */
+   SAVE_LIBRARY,                  
+   SAVE_CONFIGURE,
+
    ID_LAST
   };
   long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
+  long OnCmd_Save( FXObject *sender, FXSelector sel, void *data );
   long onCmdQuit( FXObject *sender, FXSelector sel, void *data );
 
 protected:
