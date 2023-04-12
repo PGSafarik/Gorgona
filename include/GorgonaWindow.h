@@ -61,12 +61,6 @@ FXDECLARE( GorgonaWindow )
   FXSize    gl_WinSize;         // Sizka okna - v okenim rezimu
   GO_KeyRoots gl_keywordsList;  // databaze klicovych slov a tagu
 
-  /// FIXME GORGONA_WINDOW_005: Odstranit - moduly ma na starosti trida Gorgona
-  // Moduly
-  //- FXString gl_mlaunch_pth;
-  //- FXString gl_toolkit_pth;
-  //- FXbool   gl_mlaunch;
-
   // Application state
   FXbool      gl_change;            // Doslo ke zmenam v seznamech
   FXTreeItem *gl_gameroot;          // Koren herniho stromu
@@ -88,11 +82,6 @@ public :
     MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
 
-    DATA_LOAD,         // Nacist seznam her
-    DATA_SAVE,         // Ulozit seznam her
-    DATA_SAVEAS,       // Ulozit senam her jako...
-    DATA_CHANGED,      // Seznam her byl zmenen
-
     SYSTEM_RUN,        // Spustit hru
 
     CONF_SETUP,        // Nastaveni aplikace
@@ -103,7 +92,6 @@ public :
     ID_LAST
   };
   long OnCmd_Main(FXObject *sender, FXSelector sel, void *data );
-  long OnCmd_Data( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_System( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_Config( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_List( FXObject *sender, FXSelector sel, void *data );

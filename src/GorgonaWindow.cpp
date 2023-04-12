@@ -7,7 +7,6 @@ FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_FOX,    GorgonaWindow::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::DATA_SAVE,   GorgonaWindow::OnCmd_Data ),
 };
 
 FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
@@ -64,8 +63,8 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
     new FXMenuCommand( gl_mGames, "Editovat",  gl_iconstheme->getIcon( "Actions/document-edit.png" ),    gl_pane,  FXListPane::GAME_EDIT );
     new FXMenuCommand( gl_mGames, "Odebrat",  gl_iconstheme->getIcon( "Actions/list-remove.png" ),    gl_pane, FXListPane::GAME_REMOVE );
     new FXMenuSeparator( gl_mGames, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
-    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ),    this, GorgonaWindow::DATA_SAVE );
-  new FXMenuCascade( gl_menu, "Arena", NULL, gl_mGames );
+    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ), m_app, Gorgona::SAVE_LIBRARY );
+  new FXMenuCascade( gl_menu, "Library", NULL, gl_mGames );
   gl_mTools = new FXMenuPane( gl_menu );
   new FXMenuCascade( gl_menu, "Nastroje", NULL, gl_mTools );
   new FXMenuSeparator( gl_menu, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
@@ -73,7 +72,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   new FXMenuCascade( gl_menu, "Napoveda", NULL, gl_mHelp );
   new FXMenuCommand( gl_menu, "O aplikaci", NULL, getApp( ), FXApp::ID_QUIT );
 
-  new MainBar( getHeader( ), gl_iconstheme, gl_menu );
+  new MainBar( this, gl_iconstheme, gl_menu );
 
   /* Tool bars */ 
   ToolBar *mb = new ToolBar( getHeader( ), gl_iconstheme );
@@ -152,7 +151,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
       gl_statusbar->getStatusLine( )->setText( numinfo );
 
       //gl_change = true;
-      m_app->getLibrary( )->setChanged( );
+      m_app->getLibrary( )->setChange( );
       resh = 1;
       break;
     }
@@ -169,37 +168,9 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   std::cout.flush( );
   return resh;
 }
-
-long GorgonaWindow::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
-{
-  FXlong resh = 0;
-
-  switch( FXSELID( sel ) ) {
-    case GorgonaWindow::DATA_CHANGED : {
-      //gl_change = true;
-      m_app->getLibrary( )->setChanged( );
-      resh = 1;
-      break;
-    }
-
-    case GorgonaWindow::DATA_SAVE : {
-      if( gl_change == true ) {
-        //save( );
-        resh = 1;
-        gl_change = false;
-      }
-      break;
-    }
-  }
-
-  return resh;
-}
-
+ 
 long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
 {
-  //- FXArray<const FXchar*> command;
-  //- FXString cmd;
-
   this->write_config( );
 
   /** FXIXME GORGONA_WINDOW_002: Kompletne odstranit, navrhnout radne konfiguracni rozhrani a prepracovat */
@@ -218,11 +189,6 @@ long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
       break;
     }
   }
-
-  /// FIXME GORGONA_WINDOW_001: This operation has executing Gorgona class 
-  //- parse_params( &command, cmd );
-  //- command.append( NULL );
-  //- m_app->exec( command, 0, 0, 0 );
 
   getApp( )->reg( ).clear( );
   getApp( )->reg( ).parseFile( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" );
@@ -429,7 +395,7 @@ FXbool GorgonaWindow::run( FXGameItem *it )
     if( (*item)( ) > 0 ) { 
       gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
       // gl_change = true;
-      m_app->getLibrary( )->setChanged( );
+      m_app->getLibrary( )->setChange( );
     }
   }
   else {
