@@ -86,11 +86,11 @@ void ToolBar::makeButton( const FXString &Title, const FXString &icon, FXObject 
 /*** Main Bar *************************************************************************************/
 FXIMPLEMENT( MainBar, ToolBar, NULL, 0 )
 
-MainBar::MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts )
-       : ToolBar( p, ict, opts ) 
+MainBar::MainBar( FXPrimaryWindow *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts )
+       : ToolBar( p->getHeader( ), ict, opts ) 
 {
-  
-  m_button = new FXMenuButton( this, "\t\tMenu", ict->getIcon( "Actions_big/run-build-install-root.png" ), menu, BUTTON_TOOLBAR | FRAME_RAISED | ICON_ABOVE_TEXT | LAYOUT_LEFT | LAYOUT_CENTER_Y );
+  setFrameStyle( FRAME_NONE );
+  m_button = new FXMenuButton( this, "\t\tMenu", p->getMenuIcon( ) /*ict->getIcon( "Actions_big/run-build-install-root.png" )*/, menu, BUTTON_TOOLBAR | FRAME_RAISED | ICON_ABOVE_TEXT | LAYOUT_LEFT | LAYOUT_CENTER_Y );
 }
 
 void MainBar::create( )

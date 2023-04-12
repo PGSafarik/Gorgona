@@ -86,7 +86,7 @@ FXDECLARE( MainBar )
   FXMenuButton *m_button;
   
 public:
-  MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts = 0 );
+  MainBar( FXPrimaryWindow *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts = 0 );
   virtual ~MainBar( ) { }
 
   /* Operations */
