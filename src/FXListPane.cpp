@@ -456,12 +456,9 @@ FXlong FXListPane::Notify( FXuint type_message )
   return res;
 }
 
-FXlong FXListPane::SaveNotify( ) 
-{ 
-  FXlong res = 0;
-  if( gl_target ) { res = gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::DATA_SAVE ), NULL ); } 
-
-  return res;
+void FXListPane::SaveNotify( ) 
+{   
+  m_app->getLibrary( )->setChange( );
 }
 
 /*** END ******************************************************************************************/
