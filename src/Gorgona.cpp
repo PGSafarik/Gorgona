@@ -233,8 +233,11 @@ long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
 
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
-  if( m_library->isChanged( ) || m_autosave ) { Save_Library( ); }
-
+  if( m_modify( ) ) { 
+    Save_Library( ); 
+    if( m_modify( ) ) { std::cout << "Gorgona: NEULOZENE ZMENY" << std::endl; }
+ }
+    
   std::cout << "Gorgona: === BYE! ======================" << std::endl;
   return FXApp::onCmdQuit( sender, sel, data );
 }
@@ -322,19 +325,19 @@ void Gorgona::Load_Library( )
   XMLElement      *x_root;     // XML root element of the games list 
 
   if( ( m_gamelist.empty( ) != true ) && ( x_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
-    std::cout << "[DEBUG - Gorgona::init] Loading Library..." << std::endl;
+    std::cout << "[DEBUG - Gorgona::Load_Library] Loading Library from xml-file..." << std::endl;
     if( ( x_root = x_document.RootElement( ) ) != NULL ) {
       m_library->load( x_root->FirstChildElement( "Library" ) );
     }     
   }
   else {
-    std::cout << "[Gorgona::init] XML read error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+    std::cout << "[Gorgona::Load_Library] XML read error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
     //m_change = true;
   }
 }
 
 void Gorgona::Save_Library( )
-{  
+{ 
   XMLDocument x_document;  
   x_document.NewDeclaration( );
 
@@ -346,10 +349,12 @@ void Gorgona::Save_Library( )
   XMLElement *x_library = x_root->InsertNewChildElement( "Library" );
   m_library->save( x_library );
 
-  std::cout << "[Gorgona::init] Saving the menu xml-file" << std::endl;
+  std::cout << "[Gorgona::Save_Library] Saving the menu xml-file" << std::endl;
   if( x_document.SaveFile( m_gamelist.text( ) ) != XML_SUCCESS ) { 
-    std::cout << "[Gorgona::init] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+    std::cout << "[Gorgona::Save_Library] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
   }
+
+  notify_changes( FSM_Changes::ID_DISCARD );
 }
 
 /*** END ******************************************************************************************/

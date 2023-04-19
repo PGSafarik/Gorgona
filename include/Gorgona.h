@@ -24,6 +24,7 @@
 *************************************************************************/
 #include<define.h>
 #include<FXGameItem.h> 
+#include<FSM_Changes.h>
 #include<Perseus/Process.h>
 
 class Gorgona : public FXApp {
@@ -32,6 +33,8 @@ FXDECLARE( Gorgona )
   FXuint    m_message;     // ID of notifikacation message
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
+
+  FSM_Changes m_modify;      // Modify statemat 
 
   /* Child process managment */
   FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
@@ -82,6 +85,7 @@ public:
   FXint execLuaFile( const FXString &script );
 
   long notify( FXuint mtype, void *mdata );
+  long notify_changes( FXuint mesg ) { return m_modify.handle( this, FXSEL( SEL_COMMAND, mesg ), NULL ); }  
  
   /* GUI handlers & messages */
   enum {
