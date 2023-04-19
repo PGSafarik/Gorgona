@@ -75,23 +75,23 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   new MainBar( this, gl_iconstheme, gl_menu );
 
   /* Tool bars */ 
-  ToolBar *mb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *mb = new ToolBar( this, gl_iconstheme );
   mb->makeButton( "\t\tPridat",  "Actions_big/list-add.png",      gl_pane, FXListPane::GAME_INSERT    );
   mb->makeButton( "\t\tUpravit", "Actions_big/document-edit.png", gl_pane, FXListPane::GAME_EDIT      );
   mb->makeButton( "\t\tOdebrat", "Actions_big/list-remove.png",   gl_pane, FXListPane::GAME_REMOVE    );
  
   
-  ToolBar *lb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *lb = new ToolBar( this, gl_iconstheme );
   lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, GorgonaWindow::SYSTEM_RUN );
 
-  ToolBar *vb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *vb = new ToolBar( this, gl_iconstheme );
   vb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
   vb->makeButton( "\t\tPohled Ikony",   "Actions_big/view-list-icons.png",   gl_pane, FXListPane::LIST_ICONS ); 
 
   
   
   /* Search Bar */
-  m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
+  m_findbar = new FindBar( this, gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
 
   // Configure application & load data
   read_config( );
@@ -406,8 +406,6 @@ FXbool GorgonaWindow::run( FXGameItem *it )
 
   return true;
 }
-
-
 
 /*** END ******************************************************************************************/
 
