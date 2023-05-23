@@ -7,7 +7,6 @@ FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_FOX,    GorgonaWindow::OnCmd_Config ),
-  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::DATA_SAVE,   GorgonaWindow::OnCmd_Data ),
 };
 
 FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERMAP ) )
@@ -37,7 +36,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   gl_pane->setOpenFolderIc(   gl_iconstheme->getIcon( "Status/folder-open.png" ) );
   gl_pane->setSmallItemIc(    gl_iconstheme->getIcon( "Actions/roll.png" ) );
   gl_pane->setBigItemIc(      gl_iconstheme->getIcon( "Actions_big/roll.png" ) );
-  gl_pane->folder( "Genre List" );
+  gl_pane->folder( "Categories"/*Genre List"*/ );
 
   // Status bar
   gl_statusbar = new FXStatusBar( contend, FRAME_NONE | LAYOUT_SIDE_BOTTOM | LAYOUT_FILL_X );
@@ -64,8 +63,8 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
     new FXMenuCommand( gl_mGames, "Editovat",  gl_iconstheme->getIcon( "Actions/document-edit.png" ),    gl_pane,  FXListPane::GAME_EDIT );
     new FXMenuCommand( gl_mGames, "Odebrat",  gl_iconstheme->getIcon( "Actions/list-remove.png" ),    gl_pane, FXListPane::GAME_REMOVE );
     new FXMenuSeparator( gl_mGames, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
-    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ),    this, GorgonaWindow::DATA_SAVE );
-  new FXMenuCascade( gl_menu, "Arena", NULL, gl_mGames );
+    new FXMenuCommand( gl_mGames, "Ulozit",  gl_iconstheme->getIcon( "Actions/document-save.png" ), m_app, Gorgona::SAVE_LIBRARY );
+  new FXMenuCascade( gl_menu, "Library", NULL, gl_mGames );
   gl_mTools = new FXMenuPane( gl_menu );
   new FXMenuCascade( gl_menu, "Nastroje", NULL, gl_mTools );
   new FXMenuSeparator( gl_menu, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
@@ -73,26 +72,26 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   new FXMenuCascade( gl_menu, "Napoveda", NULL, gl_mHelp );
   new FXMenuCommand( gl_menu, "O aplikaci", NULL, getApp( ), FXApp::ID_QUIT );
 
-  new MainBar( getHeader( ), gl_iconstheme, gl_menu );
+  new MainBar( this, gl_iconstheme, gl_menu );
 
   /* Tool bars */ 
-  ToolBar *mb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *mb = new ToolBar( this, gl_iconstheme );
   mb->makeButton( "\t\tPridat",  "Actions_big/list-add.png",      gl_pane, FXListPane::GAME_INSERT    );
   mb->makeButton( "\t\tUpravit", "Actions_big/document-edit.png", gl_pane, FXListPane::GAME_EDIT      );
   mb->makeButton( "\t\tOdebrat", "Actions_big/list-remove.png",   gl_pane, FXListPane::GAME_REMOVE    );
  
   
-  ToolBar *lb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *lb = new ToolBar( this, gl_iconstheme );
   lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, GorgonaWindow::SYSTEM_RUN );
 
-  ToolBar *vb = new ToolBar( getHeader( ), gl_iconstheme );
+  ToolBar *vb = new ToolBar( this, gl_iconstheme );
   vb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", gl_pane, FXListPane::LIST_DETAIL );  
   vb->makeButton( "\t\tPohled Ikony",   "Actions_big/view-list-icons.png",   gl_pane, FXListPane::LIST_ICONS ); 
 
   
   
   /* Search Bar */
-  m_findbar = new FindBar( getHeader( ), gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
+  m_findbar = new FindBar( this, gl_iconstheme, gl_pane, FXListPane::LIST_FIND, LAYOUT_RIGHT );
 
   // Configure application & load data
   read_config( );
@@ -108,7 +107,6 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
 GorgonaWindow::~GorgonaWindow( )
 {
   write_config( );
-  if( ( gl_autosave == true ) || ( gl_change == true ) ) { save( ); }
 }
 
 void GorgonaWindow::create( )
@@ -147,12 +145,13 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELTYPE( sel ) ) {
     case SEL_CHANGED :
     {
-      //std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl;
+      //std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl; // #
       FXString numinfo = "View ";
       numinfo += FXString::value( gl_pane->numItems( NULL, false ) ) + " game entries"; //!
       gl_statusbar->getStatusLine( )->setText( numinfo );
 
-      gl_change = true;
+      //gl_change = true;
+      m_app->getLibrary( )->setChange( );
       resh = 1;
       break;
     }
@@ -160,7 +159,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
     case SEL_DOUBLECLICKED :
     {
        /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?  
-       std::cout << "[GorgonaWindow::OnCmd_List] Launch active item" << std::endl;
+       // std::cout << "[GorgonaWindow::OnCmd_List] Launch active item" << std::endl; // #
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
     }
@@ -169,36 +168,9 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   std::cout.flush( );
   return resh;
 }
-
-long GorgonaWindow::OnCmd_Data( FXObject *sender, FXSelector sel, void *data )
-{
-  FXlong resh = 0;
-
-  switch( FXSELID( sel ) ) {
-    case GorgonaWindow::DATA_CHANGED : {
-      gl_change = true;
-      resh = 1;
-      break;
-    }
-
-    case GorgonaWindow::DATA_SAVE : {
-      if( gl_change == true ) {
-        save( );
-        resh = 1;
-        gl_change = false;
-      }
-      break;
-    }
-  }
-
-  return resh;
-}
-
+ 
 long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
 {
-  //- FXArray<const FXchar*> command;
-  //- FXString cmd;
-
   this->write_config( );
 
   /** FXIXME GORGONA_WINDOW_002: Kompletne odstranit, navrhnout radne konfiguracni rozhrani a prepracovat */
@@ -218,11 +190,6 @@ long GorgonaWindow::OnCmd_Config( FXObject *sender, FXSelector sel, void *data )
     }
   }
 
-  /// FIXME GORGONA_WINDOW_001: This operation has executing Gorgona class 
-  //- parse_params( &command, cmd );
-  //- command.append( NULL );
-  //- m_app->exec( command, 0, 0, 0 );
-
   getApp( )->reg( ).clear( );
   getApp( )->reg( ).parseFile( getApp( )->reg( ).getUserDirectory( ) + "/" + getApp( )->getVendorName( ) + "/" + getApp( )->getAppName( ) + ".rc" );
   getApp( )->reg( ).read( );
@@ -238,7 +205,7 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 {
   switch( FXSELID( sel ) ) {
     case GorgonaWindow::MAIN_CONFIG : {
-      std::cout << "Checking window configuration: mode-" << gl_winmode.text( ) << " " << this->getX( ) << "x" << this->getY( ) << " " << this->getWidth( ) << ", " << this->getHeight( ) << std::endl;
+      // std::cout << "Checking window configuration: mode-" << gl_winmode.text( ) << " " << this->getX( ) << "x" << this->getY( ) << " " << this->getWidth( ) << ", " << this->getHeight( ) << std::endl; // #
       gl_WinPos.set( this->getX( ), this->getY( ) );
       gl_WinSize.set( this->getWidth( ), this->getHeight( ) );
       break;
@@ -253,39 +220,6 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 /*************************************************************************************************/
 void GorgonaWindow::load( )
 {
-  //XMLDocument  xdoc;
-  //FXGameItem    *it;
-
-  //std::cout << "Loading the xml-file games list: " << gl_datafile.text( ) << std::endl;
-
-  /*// FIXME: GORGONA_WINDOW_004: TAKHLE NE!!!! 
-  if( ( gl_datafile.empty( ) != true ) && ( xdoc.LoadFile( gl_datafile.text( ) ) == XML_SUCCESS ) ) {
-
-    
-    XMLElement  *xlibrary = xdoc.RootElement( )->FirstChildElement( "Library" );
-    
-    if( xlibrary != NULL )  {
-      FXint num = 0;          
-      for( XMLElement *xegame = xlibrary->FirstChildElement( "Game" ); xegame; xegame = xegame->NextSiblingElement( "Game" ) ) {
-        if( ( it = new FXGameItem( m_app ) ) != NULL ) {
-          it->load( xegame );
-          it->checkIcons( getApp( ) );
-          gl_pane->insertItem( it );
-        }
-        else { std::cout << "CHYBA : Nelze vytvorit polozku spoustece" << std::endl; }
-        num++;
-      }
-      cout << "Load " << num << " library items." << endl;
-    }   // Knihovna (jeste) nevytvorena. Prvni spusteni? 
-    else { cout << "Library not exist" << endl; }
-  }
-  else {
-    std::cout << "XML read error - " << xdoc.ErrorName() << "(" << xdoc.ErrorID( ) << "): " << xdoc.ErrorStr( ) << std::endl;
-    gl_change = true;
-  }
-  */
-  //cout.flush( );
-
   Library *games = m_app->getLibrary( );
   FXint num = games->no( );
   for( FXint i = 0; i != num ; i++ ) {
@@ -302,30 +236,7 @@ void GorgonaWindow::load( )
   status_info += " folders )";
   gl_statusbar->getStatusLine( )->setNormalText( status_info );
 }
-
-void GorgonaWindow::save( )
-{
-  XMLDocument     xdoc;
-  xdoc.NewDeclaration( );
-
-  // Specifically for TinyXML-2:
-  // Set the element as the first in the document - i.e. the root element
-  XMLElement *xroot    = xdoc.NewElement( getApp( )->reg( ).getAppKey( ).text( ) );
-  xdoc.InsertFirstChild( xroot );   
-
-  XMLElement *xlibrary = xroot->InsertNewChildElement( "Library" );
-  
-  FXGameItemArray buff;
-  gl_pane->getItemList( NULL, &buff, true );
-  for( FXint i = 0; i != buff.no( ); i++ ) { buff[ i ]->save( xlibrary ); }
-
-  std::cout << "Saving the menu xml-file" << std::endl;
-  if( xdoc.SaveFile( gl_datafile.text( ) ) != XML_SUCCESS ) { 
-    std::cout << "XML writting error - " << xdoc.ErrorName() << "(" << xdoc.ErrorID( ) << "): " << xdoc.ErrorStr( ) << std::endl;
-  }
-  
-}
-
+ 
 void GorgonaWindow::read_config( )
 {
   FXString as, hg;
@@ -333,30 +244,33 @@ void GorgonaWindow::read_config( )
   //- gl_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
   //- gl_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
 /**/  gl_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
-/**/  gl_gamelist        = getApp( )->reg( ).readStringEntry( "Profile", "Gamelist",         "gamelist" );
   gl_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
   gl_browser_args    = getApp( )->reg( ).readStringEntry( "Profile", "browserargs",       FXString::null );
   gl_doubleclick_key = getApp( )->reg( ).readStringEntry( "Profile", "doubleclickaction", FXString::null );
+/*
+<<<<<<< HEAD
   as                 = getApp( )->reg( ).readStringEntry( "Profile", "autosave",          "false" );
+=======
+>>>>>>> devel2 */
   hg                 = getApp( )->reg( ).readStringEntry( "Profile", "hidegui",           "false" );
   gl_view            = getApp( )->reg( ).readStringEntry( "Window", "OpenView",          "icons" );  /// icons, list
   gl_winmode         = getApp( )->reg( ).readStringEntry( "Window", "MainMode",  "window" );  /// window, maximize, fulscreen
-
+/*
+<<<<<<< HEAD
   gl_autosave        = ( ( as.empty( ) or ( as == "false" ) ) ? false : true );
+=======
+>>>>>>> devel2 */
   gl_hidegui         = ( ( hg.empty( ) or ( hg == "false" ) ) ? false : true );
-
-  gl_datafile    = gl_profile + "/data/" + gl_gamelist + ".xml";
-  //- gl_datafile  = "/home/gabriel/Projects/Fox/GorgonaWindow/BETA.01.00/data/gamelist.xml";
 
   if( gl_view == "icons" ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_ICONS ), NULL ); }
   if( gl_view == "list"  ) { gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_DETAIL ), NULL ); }
 
-  //this->read_Keywords( "/opt/Gorgona/data/keywords.xml");
-  std::cout << "{ read_config } OK" << std::endl;
+  // std::cout << "{ read_config } OK" << std::endl; // #
 }
 
 void GorgonaWindow::write_config( )
 {
+/*
   if( FXStat::isDirectory( gl_profile ) == false ) {
     FXDir::create( gl_profile );
     FXDir::create( gl_profile + "/data" );
@@ -365,20 +279,24 @@ void GorgonaWindow::write_config( )
   //- getApp( )->reg( ).writeStringEntry( "Modules", "toolkitpath",     gl_toolkit_pth.text( ) );
   //- getApp( )->reg( ).writeStringEntry( "Modules", "launchers",       gl_mlaunch_pth.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "Directory",       gl_profile.text( ) );
-  getApp( )->reg( ).writeStringEntry( "Profile", "Gamelist",        gl_gamelist.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "DoubleClickKey",  gl_doubleclick_key.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowser",      gl_browser.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowserArgs",  gl_browser_args.text( ) );
+<<<<<<< HEAD
   getApp( )->reg( ).writeStringEntry( "Profile", "autosave",       ( ( gl_autosave == true ) ? "true" : "false" ) );
+=======
+>>>>>>> devel2
   getApp( )->reg( ).writeStringEntry( "Profile", "hidegui",        ( ( gl_hidegui  == true ) ? "true" : "false" ) );
+*/
   getApp( )->reg( ).writeStringEntry( "Window",  "OpenView",        gl_view.text( ) );
+  
   this->handle( this, FXSEL( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG ), NULL );
   if( gl_winmode == "window" ) {
     FXint wx, wy;
     wx = this->getX( );
     wy = this->getY( );
     this->translateCoordinatesTo( wx, wy, getRoot( ), 0, 0 );
-    std::cout << "Window config: x = " << wx << " y = " << wy << std::endl;
+    //std::cout << "Window config: x = " << wx << " y = " << wy << std::endl; //#
     getApp( )->reg( ).writeIntEntry( "Window", "Position_X", gl_WinPos.x );
     getApp( )->reg( ).writeIntEntry( "Window", "Position_Y", gl_WinPos.y );
     getApp( )->reg( ).writeIntEntry( "Window", "Size_W", gl_WinSize.w );
@@ -389,8 +307,9 @@ void GorgonaWindow::write_config( )
 
   if( getApp( )->reg( ).isModified( ) == true ) {
     getApp( )->reg( ).write( );
-    std::cout << "{ write_config } OK" << std::endl;
+    //std::cout << "{ write_config } OK" << std::endl; // #
   }
+
 }
 
 void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &rootname )
@@ -434,22 +353,22 @@ void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &roo
 
 void GorgonaWindow::checkWindowState( )
 {
-  std::cout << "{ checkWindowState }" << std::endl;
+  //std::cout << "{ checkWindowState }" << std::endl; // #
   if( gl_winmode == "window" ) {
-    std::cout << "Application Gorgona starting in window mode" << std::endl;
+    //std::cout << "Application Gorgona starting in window mode" << std::endl; // #
     gl_WinPos.x = getApp( )->reg( ).readIntEntry( "Window", "Position_X", 0 );
     gl_WinPos.y = getApp( )->reg( ).readIntEntry( "Window", "Position_Y", 0 );
     gl_WinSize.w = getApp( )->reg( ).readIntEntry( "Window", "Size_W", 800 );
     gl_WinSize.h = getApp( )->reg( ).readIntEntry( "Window", "Size_H", 700 );
     this->position( gl_WinPos.x, gl_WinPos.y, gl_WinSize.w, gl_WinSize.h );
-    std::cout << "Window config: x = " << gl_WinPos.x << " y = " << gl_WinPos.y << " w = " << gl_WinSize.h << " h = " << gl_WinSize.h << std::endl;
+    //std::cout << "Window config: x = " << gl_WinPos.x << " y = " << gl_WinPos.y << " w = " << gl_WinSize.h << " h = " << gl_WinSize.h << std::endl; // #
   }
   if( gl_winmode == "maximize" )   {
-    std::cout << "Application Gorgona starting in mximize window mode" << std::endl;
+    //std::cout << "Application Gorgona starting in mximize window mode" << std::endl; // #
     if( this->maximize( true ) != true ) { std::cout << "Window mode maximize is not possible" << std::endl; }
   }
   if( gl_winmode == "fullscreen" ) {
-    std::cout << "Application Gorgona starting in fullscreen mode" << std::endl;
+    //std::cout << "Application Gorgona starting in fullscreen mode" << std::endl; // #
     if( this->fullScreen( true ) != true ) { std::cout << "Window mode fullscreen is not possible" << std::endl;}
   }
 }
@@ -488,7 +407,8 @@ FXbool GorgonaWindow::run( FXGameItem *it )
   if( item != NULL ) {
     if( (*item)( ) > 0 ) { 
       gl_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
-      gl_change = true;
+      // gl_change = true;
+      m_app->getLibrary( )->setChange( );
     }
   }
   else {
@@ -499,8 +419,6 @@ FXbool GorgonaWindow::run( FXGameItem *it )
 
   return true;
 }
-
-
 
 /*** END ******************************************************************************************/
 

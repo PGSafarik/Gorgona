@@ -31,7 +31,7 @@ FXDECLARE( FindBar )
   FXSelector   m_message;
    
 public:
-  FindBar( FXWindowHeader *p, IconsTheme *ict, FXObject *tgt, FXSelector sel, FXuint opts );
+  FindBar( FXPrimaryWindow *p, IconsTheme *ict, FXObject *tgt, FXSelector sel, FXuint opts );
   virtual ~FindBar( ) { }
 
   /* Operations */
@@ -64,7 +64,7 @@ FXDECLARE( ToolBar )
   FXMenuButton *m_button;
   
 public:
-  ToolBar( FXWindowHeader *p, IconsTheme *ict, FXuint opts = 0 );
+  ToolBar( FXPrimaryWindow *p, IconsTheme *ict, FXuint opts = 0 );
   virtual ~ToolBar( ) { }
 
   /* Operations */
@@ -86,7 +86,7 @@ FXDECLARE( MainBar )
   FXMenuButton *m_button;
   
 public:
-  MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts = 0 );
+  MainBar( FXPrimaryWindow *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts = 0 );
   virtual ~MainBar( ) { }
 
   /* Operations */

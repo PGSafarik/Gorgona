@@ -52,7 +52,7 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   make_sect( "Statistiky","Statistiky a informace",       ic_advan );
 
   makevalue_text( "Zakladni", "Titul" );
-  makevalue_text( "Zakladni", "Zanr" );
+  makevalue_text( "Zakladni", "Category" );
   FXArray<FXString> tlist;
   tlist.push( "native" );
   l_ReadLaunchers( &tlist );
@@ -365,7 +365,7 @@ void FXLaunchEditor::load( )
 {
   if( le_item ) {
     setvalue_text( "Titul", le_item->read( "Basic:title" ) );
-    setvalue_text( "Zanr", le_item->read( "Basic:genre") );
+    setvalue_text( "Category", le_item->read( "Basic:genre") );
     setvalue_text( "Rok vydani", le_item->read( "Advanced:year" ) );
     setvalue_text( "Autor", le_item->read( "Advanced:author" ) );
     setvalue_text( "Domovska stranka", le_item->read( "Advanced:homepage" ) );
@@ -384,7 +384,7 @@ void FXLaunchEditor::save( )
 {
   if( le_item ) {
     le_item->write( "Basic:title", getvalue_text( "Titul" ) );
-    le_item->write( "Basic:genre", getvalue_text( "Zanr" ) );
+    le_item->write( "Basic:genre", getvalue_text( "Category" ) );
     le_item->write( "Advanced:year", getvalue_text( "Rok vydani" ) );
     le_item->write( "Advanced:author", getvalue_text( "Autor" ) );
     le_item->write( "Advanced:homepage", getvalue_text( "Domovska stranka" ) );

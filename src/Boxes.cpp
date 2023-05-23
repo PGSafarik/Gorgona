@@ -9,8 +9,8 @@ FXDEFMAP( FindBar ) FB_MAP[ ] = {
 
 FXIMPLEMENT( FindBar, FXHeaderBox, FB_MAP, ARRAYNUMBER( FB_MAP ) )
 
-FindBar::FindBar( FXWindowHeader *p, IconsTheme *ict,  FXObject *tgt, FXSelector sel, FXuint opts )
-       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y, 1, 2 ) 
+FindBar::FindBar( FXPrimaryWindow *p, IconsTheme *ict,  FXObject *tgt, FXSelector sel, FXuint opts )
+       : FXHeaderBox( p->getHeader( ), NULL, 0, opts | LAYOUT_CENTER_Y, 1, 2 ) 
 {
   m_target   = tgt;
   m_message  = sel;
@@ -61,8 +61,8 @@ long FindBar::Notify( )
 /*** Tool Bar *************************************************************************************/
 FXIMPLEMENT( ToolBar, FXHeaderBox, NULL, 0 )
 
-ToolBar::ToolBar( FXWindowHeader *p, IconsTheme *ict, FXuint opts )
-       : FXHeaderBox( p, NULL, 0, opts | LAYOUT_CENTER_Y | FRAME_GROOVE, 0, 0 ) 
+ToolBar::ToolBar( FXPrimaryWindow *p, IconsTheme *ict, FXuint opts )
+       : FXHeaderBox( p->getHeader( ), NULL, 0, opts | LAYOUT_CENTER_Y | FRAME_GROOVE, 0, 0 ) 
 {
   m_ict = ict;
 }
@@ -86,11 +86,12 @@ void ToolBar::makeButton( const FXString &Title, const FXString &icon, FXObject 
 /*** Main Bar *************************************************************************************/
 FXIMPLEMENT( MainBar, ToolBar, NULL, 0 )
 
-MainBar::MainBar( FXWindowHeader *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts )
+MainBar::MainBar( FXPrimaryWindow *p, IconsTheme *ict, FXMenuPane *menu, FXuint opts )
        : ToolBar( p, ict, opts ) 
 {
-  
-  m_button = new FXMenuButton( this, "\t\tMenu", ict->getIcon( "Actions_big/run-build-install-root.png" ), menu, BUTTON_TOOLBAR | FRAME_RAISED | ICON_ABOVE_TEXT | LAYOUT_LEFT | LAYOUT_CENTER_Y );
+  setFrameStyle( FRAME_NONE );
+  setLayoutHints ( LAYOUT_FILL_Y );
+  m_button = new FXMenuButton( this, "\t\tMenu", p->getMenuIcon( ) /*ict->getIcon( "Actions_big/run-build-install-root.png" )*/, menu, BUTTON_TOOLBAR | FRAME_RAISED | ICON_ABOVE_TEXT | LAYOUT_LEFT | LAYOUT_CENTER_Y  );
 }
 
 void MainBar::create( )

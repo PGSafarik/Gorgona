@@ -18,6 +18,8 @@ FXIMPLEMENT( FXListPane, FXHorizontalFrame, LISTPANE_MAP, ARRAYNUMBER( LISTPANE_
 FXListPane::FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSelector sel )
           : FXHorizontalFrame( p, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING,  1, 1 )
 {
+  m_app = (Gorgona*) getApp( );
+
   gl_icth    = icons;
   ic_search  = gl_icth->getIcon( "Actions/system-search.png" );
   ic_tcolaps = gl_icth->getIcon( "Actions/view-left-close.png" );
@@ -310,14 +312,14 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
 
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
-      std::cout << "[FXListPane] Item event doubleclick" << std::endl;
+      //std::cout << "[FXListPane] Item event doubleclick" << std::endl; //#
       if( gl_target ) { gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
       result = 1;
       break;
     }
     default : {
       if( gl_target != NULL ) {
-        std::cout << "[FXListPane] Item event other" << std::endl;
+        //std::cout << "[FXListPane] Item event other" << std::endl; // #
         gl_target->handle( this, FXSEL( mtype, gl_selector), NULL );
       }
       result = 1;
@@ -334,7 +336,7 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELID( sel ) ) {
     case FXListPane::LIST_REFRESH :
     {
-      std::cout << "Refresh list..." << std::endl;
+      // std::cout << "Refresh list..." << std::endl; // #
       FXint current = gl_itemslist->getCurrentItem( );
 
       gl_itemslist->clearItems( );
@@ -402,6 +404,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
         if( f ) { item->write( "Basic:genre", f->getText( ) ); }
         FXLaunchEditor *edit = new FXLaunchEditor( this, gl_icth, item );
         if( edit->execute( _placement ) == true ) {
+          m_app->getLibrary( )->push( item );
           this->insertItem( item );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
           gl_target->handle( this, __sel, NULL );
@@ -453,12 +456,9 @@ FXlong FXListPane::Notify( FXuint type_message )
   return res;
 }
 
-FXlong FXListPane::SaveNotify( ) 
-{ 
-  FXlong res = 0;
-  if( gl_target ) { res = gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::DATA_SAVE ), NULL ); } 
-
-  return res;
+void FXListPane::SaveNotify( ) 
+{   
+  m_app->getLibrary( )->setChange( );
 }
 
 /*** END ******************************************************************************************/

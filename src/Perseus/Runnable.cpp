@@ -225,7 +225,8 @@ FXint Game::run( )
 
   if( pid > 0 ) {
     Counter( );
-    set_change( true );
+    //set_change( true );
+    get_app( )->notify_changes( FSM_Changes::ID_CHANGE );
   }
 
   return pid;

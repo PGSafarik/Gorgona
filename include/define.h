@@ -48,6 +48,7 @@
 #include<Utils.h>
 #include<IconsTheme.h>
 #include<LuaAPI.h>
+#include<FSM_Changes.h>
 
 //#define __DEBUG
 

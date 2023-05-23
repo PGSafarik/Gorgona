@@ -3,8 +3,10 @@
 #include<Gorgona.h>
 
 FXDEFMAP( Gorgona ) GORGONAMAP[ ] = { 
-  FXMAPFUNC( SEL_SIGNAL, Gorgona::SIGNAL_CHLD, Gorgona::OnSig_ExitChild ),
-  FXMAPFUNC( SEL_COMMAND, FXApp::ID_QUIT, Gorgona::onCmdQuit )
+  FXMAPFUNC( SEL_SIGNAL,  Gorgona::SIGNAL_CHLD,    Gorgona::OnSig_ExitChild ),
+  FXMAPFUNC( SEL_COMMAND, Gorgona::SAVE_LIBRARY,   Gorgona::OnCmd_Save ),
+  FXMAPFUNC( SEL_COMMAND, Gorgona::SAVE_CONFIGURE, Gorgona::OnCmd_Save ),
+  FXMAPFUNC( SEL_COMMAND, FXApp::ID_QUIT,          Gorgona::onCmdQuit )
 };
 
 FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
@@ -210,9 +212,34 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   return 1;
 }
 
+long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
+{
+  long res = 1;
+
+  switch( FXSELID( sel ) ) {
+    case Gorgona::SAVE_LIBRARY: 
+    {
+      Save_Library( );
+      break;  
+    }
+    case Gorgona::SAVE_CONFIGURE: 
+    {
+      //Write_Config( );
+      break;
+    }
+  } 
+
+  return res;
+}
+
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
-
+  if( m_modify( ) ) { 
+    Save_Library( ); 
+    if( m_modify( ) ) { std::cout << "Gorgona: NEULOZENE ZMENY" << std::endl; }
+ }
+    
+  std::cout << "Gorgona: === BYE! ======================" << std::endl;
   return FXApp::onCmdQuit( sender, sel, data );
 }
 
@@ -288,6 +315,7 @@ void Gorgona::LuaInit( )
 
 void Gorgona::LoadLibrary( )
 {
+/*
   if( ( m_gamelist.empty( ) != true ) && ( mx_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
     std::cout << "[DEBUG - Gorgona::init] Loading Library..." << std::endl;
     if( ( mx_root = mx_document.RootElement( ) ) != NULL ) {
@@ -298,6 +326,43 @@ void Gorgona::LoadLibrary( )
     std::cout << "[Gorgona::init] XML read error - " << mx_document.ErrorName() << "(" << mx_document.ErrorID( ) << "): " << mx_document.ErrorStr( ) << std::endl;
     //gl_change = true;
   }
+}
+
+*/
+  XMLDocument     x_document;  // XML instance of the games list
+  XMLElement      *x_root;     // XML root element of the games list 
+
+  if( ( m_gamelist.empty( ) != true ) && ( x_document.LoadFile( m_gamelist.text( ) ) == XML_SUCCESS ) ) {
+    std::cout << "[DEBUG - Gorgona::Load_Library] Loading Library from xml-file..." << std::endl;
+    if( ( x_root = x_document.RootElement( ) ) != NULL ) {
+      m_library->load( x_root->FirstChildElement( "Library" ) );
+    }     
+  }
+  else {
+    std::cout << "[Gorgona::Load_Library] XML read error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+    //m_change = true;
+  }
+}
+
+void Gorgona::Save_Library( )
+{ 
+  XMLDocument x_document;  
+  x_document.NewDeclaration( );
+
+  // Specifically for TinyXML-2:
+  // Set the element as the first in the document - i.e. the root element
+  XMLElement *x_root = x_document.NewElement( reg( ).getAppKey( ).text( ) );
+  x_document.InsertFirstChild( x_root );   
+
+  XMLElement *x_library = x_root->InsertNewChildElement( "Library" );
+  m_library->save( x_library );
+
+  std::cout << "[Gorgona::Save_Library] Saving the menu xml-file" << std::endl;
+  if( x_document.SaveFile( m_gamelist.text( ) ) != XML_SUCCESS ) { 
+    std::cout << "[Gorgona::Save_Library] XML writting error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
+  }
+
+  notify_changes( FSM_Changes::ID_DISCARD );
 }
 
 /*** END ******************************************************************************************/

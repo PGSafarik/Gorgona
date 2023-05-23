@@ -22,12 +22,14 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<define.h>
+#include<Gorgona.h>
 #include<FXGameItem.h>
 #include<FXLaunchEditor.h>
 
 
 class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
+  Gorgona *m_app;   
 
   FXVerticalFrame *gl_folderframe;
   FXToolBar       *gl_folderbar;
@@ -136,31 +138,7 @@ protected :
   ///
   void erase_f( FXGameItem *item ); // Funkce odstrani polozku z dat slozky
   FXlong Notify( FXuint type_message );
-  FXlong SaveNotify( );
-  /*
-  inline FXIcon* loadExternalIcon( const FXString &ic_file, FXint width = 16, FXint height = 16 )
-  {
-     FXIcon *ic = NULL;
-     FXFileStream fstr;
-
-     if( fstr.open( ic_file ) == true ) {
-       std::cout << "Open the external icon file " << ic_file.text( ) << std::endl;
-       ic = new FXPNGIcon( getApp( ), NULL, 0, IMAGE_KEEP | IMAGE_OWNED | IMAGE_SHMI | IMAGE_ALPHACOLOR | IMAGE_ALPHAGUESS );
-       if( ic != NULL ) {
-         if( ic->loadPixels( fstr ) == true ) {
-           std::cout << "Load the external file" << std::endl;
-           ic->scale( width, height );
-           ic->create( );
-           //ic->restore( );
-           //ic->render( );
-         }
-         else { std::cout << "NOT Loading the external file" << std::endl; }
-       }
-       fstr.close( );
-     }
-     return ic;
-  }
-*/
+  void SaveNotify( ); // !
 };
 
 

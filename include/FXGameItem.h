@@ -86,11 +86,18 @@ protected :
 typedef  FXArray<FXGameItem*> FXGameItemArray;
 
 class Library : public FXArray<FXGameItem*> {
-  Gorgona *m_app;
+  Gorgona     *m_app;
+  FSM_Changes  m_change;
+
+  //FXbool   m_change = false;
 
 public :
   Library( Gorgona *app );
   virtual ~Library( );
+
+  /* Access methods */
+  FXbool isChanged( )                     { return m_change( ); }
+  void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
 
   /* Operations methods */
   virtual FXbool load( XMLElement *library_el );

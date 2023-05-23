@@ -24,6 +24,7 @@
 *************************************************************************/
 #include<define.h>
 #include<FXGameItem.h> 
+#include<FSM_Changes.h>
 #include<Perseus/Process.h>
 
 class Gorgona : public FXApp {
@@ -33,6 +34,8 @@ FXDECLARE( Gorgona )
   FXbool    m_verbose;     // Verbose mod
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
+
+  FSM_Changes m_modify;      // Modify statemat 
 
   /* Child process managment */
   FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
@@ -81,13 +84,20 @@ public:
   FXint execLuaFile( const FXString &script );
 
   long notify( FXuint mtype, void *mdata );
+  long notify_changes( FXuint mesg ) { return m_modify.handle( this, FXSEL( SEL_COMMAND, mesg ), NULL ); }  
  
   /* GUI handlers & messages */
   enum {
    SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess
+
+   /* Explicit saving */
+   SAVE_LIBRARY,                  
+   SAVE_CONFIGURE,
+
    ID_LAST
   };
   long OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data );
+  long OnCmd_Save( FXObject *sender, FXSelector sel, void *data );
   long onCmdQuit( FXObject *sender, FXSelector sel, void *data );
 
 protected:
@@ -96,6 +106,7 @@ protected:
   void LuaInit( );                                                               // Initialize langugae interpret of Lua 
   void ReadConfig( );                                                            // Load configurations data
   void LoadLibrary( );                                                            // Load items library(ies)   
+  void Save_Library( );
 };
 
 #endif /* __GORGONA_H */

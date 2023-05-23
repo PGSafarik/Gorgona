@@ -50,25 +50,16 @@ FXDECLARE( GorgonaWindow )
   FXMenuPane *gl_mHelp;
 
   // Settings
-  FXbool    gl_autosave;        // Automaticky ukladat zmeny
   FXbool    gl_hidegui;         // Skryt okno Gorgony
   FXString  gl_browser;         // Webovy prohlizec (Napoveda, web game client a web game distribution klient)
   FXString  gl_browser_args;    // Argumenty pro prohlizec
   FXString  gl_doubleclick_key; // Akce provedena pri dvojkliku na polozku
-  FXString  gl_datafile;        // Plna cesta k indexacnimu souboru
   FXString  gl_profile;         // Adresar s lokalnimi soubory Gorgony
-  FXString  gl_gamelist;        // Nazev indexacniho xml souboru
   FXString  gl_view;            // S jakym typem seznamu aplikace nastaruje: list, icons
   FXString  gl_winmode;         // V jakem rezimu bude aplikace spustena: window, fullscreen, maximize
   FXPoint   gl_WinPos;          // Pozice okna - v okenim rezimu
   FXSize    gl_WinSize;         // Sizka okna - v okenim rezimu
   GO_KeyRoots gl_keywordsList;  // databaze klicovych slov a tagu
-
-  /// FIXME GORGONA_WINDOW_005: Odstranit - moduly ma na starosti trida Gorgona
-  // Moduly
-  //- FXString gl_mlaunch_pth;
-  //- FXString gl_toolkit_pth;
-  //- FXbool   gl_mlaunch;
 
   // Application state
   FXbool      gl_change;            // Doslo ke zmenam v seznamech
@@ -91,11 +82,6 @@ public :
     MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
 
-    DATA_LOAD,         // Nacist seznam her
-    DATA_SAVE,         // Ulozit seznam her
-    DATA_SAVEAS,       // Ulozit senam her jako...
-    DATA_CHANGED,      // Seznam her byl zmenen
-
     SYSTEM_RUN,        // Spustit hru
 
     CONF_SETUP,        // Nastaveni aplikace
@@ -106,7 +92,6 @@ public :
     ID_LAST
   };
   long OnCmd_Main(FXObject *sender, FXSelector sel, void *data );
-  long OnCmd_Data( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_System( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_Config( FXObject *sender, FXSelector sel, void *data );
   long OnCmd_List( FXObject *sender, FXSelector sel, void *data );
@@ -115,7 +100,6 @@ protected :
   GorgonaWindow( ) { }
 
   void load( );
-  void save( );
   void read_config( );
   void write_config( );
   void read_Keywords( const FXString &listfile, const FXString &rootname = "game" );

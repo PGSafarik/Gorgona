@@ -160,7 +160,7 @@ void FXGameItem::save( XMLElement *pNode, const FXString &ename )
   //std::cout.flush( );
   #endif
 
-  //XMLText    *e_text  = NULL;                                             // Element popisoveho textu
+  //XMLText    *e_text  = NULL;                                           // Element popisoveho textu
   XMLElement *e_desc  = NULL;                                             // Nosny element popisu
   XMLElement *e_tmp   = NULL;                                             // Pomocny element
   XMLElement *e_self  = pNode->InsertNewChildElement( ename.text( ) );    // Element reprezentujici (herni) polozku
@@ -250,7 +250,7 @@ FXbool Library::save( XMLElement *library_el )
 {
   FXbool result = false;
 
-  if( library_el ) {
+  if( library_el && m_change( ) ) {
     FXint num = no( );
     for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el ); }
   }
