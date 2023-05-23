@@ -21,9 +21,9 @@ local module_mt = { __index = module }
 
 --- Implement module ---
 function module_Init( )
-  self = { }
-  --self.exec = "/home/gabriel/Projects/Fox/sources/Morfeus/build/morfeus"
-  self.exec = "/bin/morfeus"
+  local self = { }
+  self.exec = "/home/gabriel/Projects/Fox/sources/Morfeus/build/morfeus"
+  --self.exec = "/bin/morfeus"
   self.info = { 
     name      = "Morfeus",
 	date      = "13/01/2023",
@@ -34,7 +34,12 @@ function module_Init( )
 	descript  = "Support native Morfeus launcher"
   }
 	
-	return setmetatable( self, module_mt )
+  local cfg = {
+    { key = "exec",    default = "/usr/bin/morfeus", type = "f", label="Executable file for Morfeus utility" }; 
+    { key = "profile", default = "default",          type = "s", label="Use window profile, if-any" },   
+  } 
+  --Mod_Config( self, cfg )
+  return setmetatable( self, module_mt )
 end
 
 function module:launcher( t )  
