@@ -12,7 +12,6 @@
 <p align="center"><img src="docs/images/screenshot.png?raw=true" width="70%" />  
 
 ## 1. GENERAL INFO:
-!THIS PROJECT IS STOPPED! - see on the part 4
 
 The Gorgona project is intended as a manager and launcher of games under the Linux OS. It is written in C++ using the Fox GUI framework. Its primary task was to replace the Java application JGameLauncher by Parallel Realities. The main motivation was the need to write shell launchers for many games, or the impossibility of sorting games according to certain criteria (e.g. genre).
 
@@ -60,12 +59,6 @@ Lua launchers do not correctly return a return value after a game launched in th
 The cause is in the design of Lua script integration in Gorgona. For now, a workaround to the C->LUA API is being considered.  
 
 ## 4. PROJECT STATE AND PLANS FOR THE FUTHURE
-PROJECT STOPPED
-
-In 2019/2020, more similar programs, such as Gorgona, appeared on the Linux scene. First of all, it was Lutris, then, for example, GameHub, which at that time were already much further than Gorgona in terms of services and functions and have (IMHO) a larger developer and community base. Considering this fact and the fact that I liked the GameHub project myself, I decided to stop work on Gorgon and not continue its development (at least for now). All modifications in the project are of a maintenance nature at the moment.
-
-However, the repository of the project on Github will be preserved for any interested parties, or for future generations to know that such a project ever existed...
-
 Project Morfeus, which was developed in parallel with Gorgon, was separated from it as an independent utility and continues to be developed independently
 
 11/01/2023 Aktualize:  
