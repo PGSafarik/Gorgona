@@ -13,14 +13,24 @@
 
 ## 1. GENERAL INFO:
 
-The Gorgona project is intended as a manager and launcher of games under the Linux OS. It is written in C++ using the Fox GUI framework. Its primary task was to replace the Java application JGameLauncher by Parallel Realities. The main motivation was the need to write shell launchers for many games, or the impossibility of sorting games according to certain criteria (e.g. genre).
+The Gorgona program is used to maintain a library of installed games under the Linux operating system, sort them into categories and run them. Development Gorgona began sometime around 2015 as a replacement for Parallel Realities' Java application JGameLauncher. After a pause of several years, development of the project has resumed. 
 
-At this point, the Gorgon has more or less fulfilled its original goals and in some ways surpassed its original design. It includes a Lua interpreter and several built-in functions that allow you to write universal game launchers. At the moment, it only allows you to manually insert the game into the list and enter the necessary data about the game. Gorgona then places the game in the corresponding section, from where it can then also be launched. The list of games can be displayed in two variants (icons and a detailed list). 
+The Gorgon program is basically developed in C++ and the GUI is provided by the Fox framework. It also includes a Lua interpreter and defines simple APIs that allow you to write plugins to serve specific game requirements. The library of game titles is implemented using a markup language
+XML, which the program interacts with via the C++ DOM parser TinyXML. 
+
+Please note that Gorgona is constantly evolving and therefore - outside of the stable releases - may contain unexpected bugs, some of which features of the program may change without warning, or may be discontinued outright. Please refer to the user documentation for more information. 
 
 For this project and its parts, names from Greek mythology are used
   * Gorgona – Game manager
   * Morfeus – Univerzal GUI game launch.
   
+## 2. FEATURES
+  * Insert, edit and removed a game titles on The game library
+  * Assigning a library item to a user-defined category
+  * The game title library is implemented using XML, so no special tools are required to browse and edit it.
+  * Gorgona offers plugins to handle the launch of specific games. 
+
+
 ## 2. COMPILATION AND INSTALLATION:
 *Dependecies:*
   * [Foxtoolkit 1.7.76](http://fox-toolkit.org/ftp/fox-1.7.76.tar.gz)
