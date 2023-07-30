@@ -33,8 +33,8 @@ struct GO_KeyEntry {
 
 
 class GO_Keywords : public FXDictionaryOf<GO_KeyEntry> {
-  FXString k_description;
-  FXString k_word;
+  FXString m_description;
+  FXString m_word;
 
 public :
   GO_Keywords( const FXString &w = FXString::null, const FXString &d = FXString::null );

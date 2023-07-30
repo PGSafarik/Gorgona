@@ -26,27 +26,27 @@ FXIMPLEMENT( FXLaunchEditor, FXSecondaryWindow, LAUNCHEDITORMAP, ARRAYNUMBER( LA
 FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
                 : FXSecondaryWindow( p, "Edit Game", WINDOW_STATIC, 0, 0, 660, 320  )
 {
-  le_item     = it;
-  values_text = new FXDictionary;
-  label_size  = 150;
-  icth        = icons;
-  le_share    = "";
+  m_item     = it;
+  m_ValuesText = new FXDictionary;
+  m_LabelSize  = 150;
+  m_icth        = icons;
+  m_share    = "";
 
-  //FXIcon *ic_window = icth->getIcon( "Actions/run-build-configure.png" );
-  FXIcon *ic_basic  = icth->getIcon( "Actions/run-build-install.png" );
-  FXIcon *ic_descr  = icth->getIcon( "Actions/documentation.png" );
-  FXIcon *ic_advan  = icth->getIcon( "Actions/games-highscores.png" );
-  FXIcon *ic_accept = icth->getIcon( "Actions_big/dialog-ok-apply.png" );
-  FXIcon *ic_storno = icth->getIcon( "Actions_big/dialog-cancel.png" );
-  FXIcon *ic_bicon = ( ( it->BigIcon != NULL ) ? it->BigIcon : icth->getIcon( "Actions_big/roll.png" ) );
-  FXIcon *ic_micon = ( ( it->SmallIcon != NULL ) ? it->SmallIcon : icth->getIcon( "Actions/roll.png" ) );
+  //FXIcon *ic_window = m_m_icth->getIcon( "Actions/run-build-configure.png" );
+  FXIcon *ic_basic  = m_icth->getIcon( "Actions/run-build-install.png" );
+  FXIcon *ic_descr  = m_icth->getIcon( "Actions/documentation.png" );
+  FXIcon *ic_advan  = m_icth->getIcon( "Actions/games-highscores.png" );
+  FXIcon *ic_accept = m_icth->getIcon( "Actions_big/dialog-ok-apply.png" );
+  FXIcon *ic_storno = m_icth->getIcon( "Actions_big/dialog-cancel.png" );
+  FXIcon *ic_bicon = ( ( it->BigIcon != NULL ) ? it->BigIcon : m_icth->getIcon( "Actions_big/roll.png" ) );
+  FXIcon *ic_micon = ( ( it->SmallIcon != NULL ) ? it->SmallIcon : m_icth->getIcon( "Actions/roll.png" ) );
 
   //this->setIcon( ic_window );
   FXVerticalFrame   *content      = new FXVerticalFrame( this, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0 );
   FXHorizontalFrame *content_sect = new FXHorizontalFrame( content, FRAME_GROOVE | LAYOUT_FILL );
-  le_sections = new FXList( content_sect, this, FXLaunchEditor::SECTION_SELECT, FRAME_LINE | LIST_NORMAL | LAYOUT_FILL_Y | LAYOUT_FIX_WIDTH, 0, 0, 100 );
+  m_sections = new FXList( content_sect, this, FXLaunchEditor::SECTION_SELECT, FRAME_LINE | LIST_NORMAL | LAYOUT_FILL_Y | LAYOUT_FIX_WIDTH, 0, 0, 100 );
   new FXVerticalSeparator( content_sect, SEPARATOR_GROOVE | LAYOUT_FILL_Y );
-  le_switcher = new FXSwitcher( content_sect, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
+  m_switcher = new FXSwitcher( content_sect, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0 );
   make_sect( "Zakladni",  "Zakladni nastaveni spoustece", ic_basic );
   make_sect( "Popis",     "Informace",                    ic_descr );
   make_sect( "Statistiky","Statistiky a informace",       ic_advan );
@@ -60,18 +60,18 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   makevalue_file( "Zakladni", "Prikaz"  );
   makevalue_dir( "Zakladni", "Pracovni adresar"  );
   m_term = new FXCheckButton( get_sect( "Zakladni" ), "Run in terminal", NULL, 0 );
-  le_backg = new FXCheckButton( get_sect( "Zakladni" ), "Run in blocked mode", NULL, 0 );
+  m_backg = new FXCheckButton( get_sect( "Zakladni" ), "Run in blocked mode", NULL, 0 );
   FXHorizontalFrame *btnfr = new FXHorizontalFrame( get_sect( "Zakladni" ), FRAME_SUNKEN | LAYOUT_CENTER_X | PACK_UNIFORM_WIDTH | PACK_UNIFORM_HEIGHT, 0, 0, 0, 0,  0, 0, 0, 0,  2, 0 );
   btnfr->setBackColor( getApp( )->getShadowColor( ) );
-  le_Micon = new FXButton( btnfr, "Mala ikona",  ic_micon, this, FXLaunchEditor::ICON_SMALL, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
-  le_Bicon = new FXButton( btnfr, "Velka ikona", ic_bicon, this, FXLaunchEditor::ICON_BIG,   FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
+  m_Micon = new FXButton( btnfr, "Mala ikona",  ic_micon, this, FXLaunchEditor::ICON_SMALL, FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
+  m_Bicon = new FXButton( btnfr, "Velka ikona", ic_bicon, this, FXLaunchEditor::ICON_BIG,   FRAME_RAISED|ICON_ABOVE_TEXT|LAYOUT_FILL_Y );
 
   makevalue_text( "Popis", "Autor" );
   makevalue_text( "Popis", "Domovska stranka" );
   makevalue_text( "Popis", "Rok vydani" );
   new FXLabel( get_sect( "Popis" ), "Popis a pozadavky hry:", NULL, FRAME_NONE | LAYOUT_FILL_X );
   FXVerticalFrame *textfr = new FXVerticalFrame( get_sect( "Popis" ), FRAME_LINE | LAYOUT_FILL, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0 );
-  le_text = new FXText( textfr, NULL, 0, TEXT_WORDWRAP | LAYOUT_FILL );
+  m_text = new FXText( textfr, NULL, 0, TEXT_WORDWRAP | LAYOUT_FILL );
 
   makeinfo_Value( "Statistiky", "Pocet spusteni",               FXString::null );
   makeinfo_Value( "Statistiky", "Naposled",                     FXString::null );
@@ -108,8 +108,8 @@ long FXLaunchEditor::onCmdSection( FXObject *sender, FXSelector sel, void *data 
 {
   switch( FXSELID( sel ) ) {
     case FXLaunchEditor::SECTION_SELECT : {
-      FXint id = le_sections->getCurrentItem( );
-      if( id >= 0 ) { le_switcher->setCurrent( id ); }
+      FXint id = m_sections->getCurrentItem( );
+      if( id >= 0 ) { m_switcher->setCurrent( id ); }
       break;
     }
   }
@@ -158,19 +158,19 @@ long FXLaunchEditor::onCmd_Icon( FXObject *sender, FXSelector sel, void *data )
   if( dlg.execute( PLACEMENT_SCREEN ) == true  ) {
     switch( FXSELID( sel ) ) {
       case FXLaunchEditor::ICON_BIG : {
-        le_item->write( "Icon:big", dlg.getFilename( ) );
+        m_item->write( "Icon:big", dlg.getFilename( ) );
         //std::cout << "Zapisuji velkou ikonu : " << iconfile.text( ) << std::endl;
         break;
       }
       case FXLaunchEditor::ICON_SMALL : {
-        le_item->write( "Icon:small", dlg.getFilename( ) );
+        m_item->write( "Icon:small", dlg.getFilename( ) );
         //std::cout << "Zapisuji malou ikonu : " << iconfile.text( ) << std::endl;
         break;
       }
     }
-    le_item->checkIcons( getApp( ) );
-    le_Bicon->setIcon( le_item->BigIcon );
-    le_Micon->setIcon( le_item->SmallIcon );
+    m_item->checkIcons( getApp( ) );
+    m_Bicon->setIcon( m_item->BigIcon );
+    m_Micon->setIcon( m_item->SmallIcon );
   }
 
   return 1;
@@ -182,25 +182,25 @@ void FXLaunchEditor::make_sect( const FXString &name, const FXString &descr, FXI
 {
   FXint sect_id;
 
-  le_sections->appendItem( name, ic );
-  sect_id = le_sections->findItem( name );
+  m_sections->appendItem( name, ic );
+  sect_id = m_sections->findItem( name );
   if( sect_id >= 0 ) {
-    le_switcher->setCurrent( sect_id );
-    FXVerticalFrame *f = new FXVerticalFrame( le_switcher, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  2, 2, 2, 2,  2, 2 );
+    m_switcher->setCurrent( sect_id );
+    FXVerticalFrame *f = new FXVerticalFrame( m_switcher, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  2, 2, 2, 2,  2, 2 );
     FXLabel *l = new FXLabel( f, descr, ic, FRAME_LINE |  JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FILL_X );
     new FXHorizontalSeparator( f, FRAME_NONE | LAYOUT_FILL_X );
     l->setBackColor( getApp( )->getTipbackColor( ) );
     l->setTextColor( getApp( )->getTipforeColor( ) );
 
-    vf_array.insert( sect_id, f );
+    m_VFArray.insert( sect_id, f );
   }
 }
 
 FXVerticalFrame* FXLaunchEditor::get_sect( const FXString &name )
 {
   FXVerticalFrame *resh = NULL;
-  FXint sect_id = le_sections->findItem( name );
-  if( sect_id >= 0 ) { resh = vf_array[ sect_id ]; }
+  FXint sect_id = m_sections->findItem( name );
+  if( sect_id >= 0 ) { resh = m_VFArray[ sect_id ]; }
   return resh;
 
 }
@@ -212,12 +212,12 @@ void FXLaunchEditor::makevalue_text( const FXString &sect, const FXString &label
 
   if( sect_fr ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( sect_fr, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
-    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
     w_value = new FXTextField( f, 50, NULL, 0, TEXTFIELD_NORMAL | LAYOUT_FILL_X );
 
     if( !value.empty( ) ) { w_value->setText( value ); }
 
-    values_text->insert( label.text( ), static_cast<void*>( w_value ) );
+    m_ValuesText->insert( label.text( ), static_cast<void*>( w_value ) );
   }
 }
 
@@ -227,8 +227,8 @@ void FXLaunchEditor::makeinfo_Value( const FXString &sect, const FXString &label
 
   if( f_sect ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( f_sect, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
-    new FXLabel( f, label + ":", NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
-    new FXLabel( f, value, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, label + ":", NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
+    new FXLabel( f, value, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
   }  
 }
 
@@ -239,7 +239,7 @@ void FXLaunchEditor::makevalue_combo( const FXString &sect, const FXString &labe
 
   if( sect_fr ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( sect_fr, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
-    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
     FXHorizontalFrame *cf = new FXHorizontalFrame( f, FRAME_LINE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
     w_value = new FXComboBox( cf, 5, NULL, 0, COMBOBOX_NORMAL | LAYOUT_FILL_X );
     if( t != NULL ) {
@@ -253,7 +253,7 @@ void FXLaunchEditor::makevalue_combo( const FXString &sect, const FXString &labe
 
     if( !value.empty( ) ) { w_value->setText( value ); }
 
-    values_text->insert( label.text( ), static_cast<void*>( w_value ) );
+    m_ValuesText->insert( label.text( ), static_cast<void*>( w_value ) );
   }
 }
 
@@ -266,15 +266,15 @@ void FXLaunchEditor::makevalue_file( const FXString &sect, const FXString &label
 
   if( sect_fr ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( sect_fr, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
-    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
     w_value = new FXTextField( f, 50, NULL, 0, TEXTFIELD_NORMAL | LAYOUT_FILL_X );
 
-    w_button = new FXButton( f, "", icth->getIcon( "Actions/document-open-data.png" ), this, FXLaunchEditor::OPEN_FILE, BUTTON_NORMAL );
+    w_button = new FXButton( f, "", m_icth->getIcon( "Actions/document-open-data.png" ), this, FXLaunchEditor::OPEN_FILE, BUTTON_NORMAL );
     w_button->setUserData( (void*) w_id  );
 
     if( !value.empty( ) ) { w_value->setText( value ); }
 
-    values_text->insert( label.text( ), static_cast<void*>( w_value ) );
+    m_ValuesText->insert( label.text( ), static_cast<void*>( w_value ) );
   }
 }
 
@@ -287,28 +287,28 @@ void FXLaunchEditor::makevalue_dir( const FXString &sect, const FXString &label,
 
   if( sect_fr ) {
     FXHorizontalFrame *f = new FXHorizontalFrame( sect_fr, FRAME_NONE | LAYOUT_FILL_X, 0, 0, 0, 0,  0, 0, 0, 0 );
-    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, label_size );
+    new FXLabel( f, label, NULL, JUSTIFY_LEFT | ICON_BEFORE_TEXT | LAYOUT_FIX_WIDTH, 0, 0, m_LabelSize );
     w_value = new FXTextField( f, 50, NULL, 0, TEXTFIELD_NORMAL | LAYOUT_FILL_X );
 
-    w_button = new FXButton( f, "", icth->getIcon( "Actions/document-open-folder.png" ), this, FXLaunchEditor::OPEN_DIR, BUTTON_NORMAL );
+    w_button = new FXButton( f, "", m_icth->getIcon( "Actions/document-open-folder.png" ), this, FXLaunchEditor::OPEN_DIR, BUTTON_NORMAL );
     w_button->setUserData( (void*) w_id  );
 
     if( !value.empty( ) ) { w_value->setText( value ); }
 
-    values_text->insert( label.text( ), static_cast<void*>( w_value ) );
+    m_ValuesText->insert( label.text( ), static_cast<void*>( w_value ) );
   }
 }
 
 void FXLaunchEditor::setvalue_text( const FXString &name, const FXString &value )
 {
   FXTextField *w_value = NULL;
-  FXival pos =  values_text->find( name.text( ) );
+  FXival pos =  m_ValuesText->find( name.text( ) );
 
   if( pos == -1 ) {
     std::cerr << "INTERNAL FATAL FAIL: Widget on name " << name.text( ) << " its not found!" << std::endl;
   }
   else {
-    w_value = static_cast<FXTextField*>( values_text->data( pos ) );
+    w_value = static_cast<FXTextField*>( m_ValuesText->data( pos ) );
     w_value->setText( value );
   }
 }
@@ -317,13 +317,13 @@ FXString FXLaunchEditor::getvalue_text( const FXString &name )
 {
   FXTextField *w_value = NULL;
   FXString resh = FXString::null;
-  FXival pos = values_text->find( name.text( ) );
+  FXival pos = m_ValuesText->find( name.text( ) );
 
   if( pos == -1 ) {
     std::cerr << "INTERNAL FATAL FAIL: Widget on name " << name.text( ) << " its not found!" << std::endl;
   }
   else {
-    w_value = static_cast<FXTextField*>( values_text->data( pos ) );
+    w_value = static_cast<FXTextField*>( m_ValuesText->data( pos ) );
     resh    = w_value->getText( );
   }
 
@@ -333,13 +333,13 @@ FXString FXLaunchEditor::getvalue_text( const FXString &name )
 void FXLaunchEditor::setvalue_combo( const FXString &name, const FXString &value )
 {
   FXComboBox *w_value = NULL;
-  FXival pos = values_text->find( name.text( ) );
+  FXival pos = m_ValuesText->find( name.text( ) );
 
   if( pos == -1 ) {
     std::cerr << "INTERNAL FATAL FAIL: Widget on name " << name.text( ) << " its not found!" << std::endl;
   }
   else {
-    w_value = static_cast<FXComboBox*>( values_text->data( pos ) );
+    w_value = static_cast<FXComboBox*>( m_ValuesText->data( pos ) );
     w_value->setText( value );
   }
 }
@@ -348,13 +348,13 @@ FXString FXLaunchEditor::getvalue_combo( const FXString &name )
 {
   FXComboBox *w_value = NULL;
   FXString resh       = FXString::null;
-  FXival   pos        = values_text->find( name.text( ) );
+  FXival   pos        = m_ValuesText->find( name.text( ) );
 
   if( pos == -1 ) {
     std::cerr << "INTERNAL FATAL FAIL: Widget on name " << name.text( ) << " its not found!" << std::endl;
   }
   else{
-    w_value = static_cast<FXComboBox*>( values_text->data( pos ) );
+    w_value = static_cast<FXComboBox*>( m_ValuesText->data( pos ) );
     resh    = w_value->getText( );
   }
 
@@ -363,39 +363,39 @@ FXString FXLaunchEditor::getvalue_combo( const FXString &name )
 
 void FXLaunchEditor::load( )
 {
-  if( le_item ) {
-    setvalue_text( "Titul", le_item->read( "Basic:title" ) );
-    setvalue_text( "Category", le_item->read( "Basic:genre") );
-    setvalue_text( "Rok vydani", le_item->read( "Advanced:year" ) );
-    setvalue_text( "Autor", le_item->read( "Advanced:author" ) );
-    setvalue_text( "Domovska stranka", le_item->read( "Advanced:homepage" ) );
+  if( m_item ) {
+    setvalue_text( "Titul", m_item->read( "Basic:title" ) );
+    setvalue_text( "Category", m_item->read( "Basic:genre") );
+    setvalue_text( "Rok vydani", m_item->read( "Advanced:year" ) );
+    setvalue_text( "Autor", m_item->read( "Advanced:author" ) );
+    setvalue_text( "Domovska stranka", m_item->read( "Advanced:homepage" ) );
 
-    setvalue_combo( "Spoustec", le_item->exec->get_launchid( ) );
-    setvalue_text( "Prikaz", le_item->exec->get_command( ) );
-    setvalue_text( "Pracovni adresar", le_item->exec->get_workdir( ) );
+    setvalue_combo( "Spoustec", m_item->exec->get_launchid( ) );
+    setvalue_text( "Prikaz", m_item->exec->get_command( ) );
+    setvalue_text( "Pracovni adresar", m_item->exec->get_workdir( ) );
 
-    le_text->setText( le_item->read( "Description" ) );
-    le_backg->setCheck( le_item->hidel );
-    m_term->setCheck( le_item->exec->enabled_termnal( ) );
+    m_text->setText( m_item->read( "Description" ) );
+    m_backg->setCheck( m_item->hidel );
+    m_term->setCheck( m_item->exec->enabled_termnal( ) );
   }
 }
 
 void FXLaunchEditor::save( )
 {
-  if( le_item ) {
-    le_item->write( "Basic:title", getvalue_text( "Titul" ) );
-    le_item->write( "Basic:genre", getvalue_text( "Category" ) );
-    le_item->write( "Advanced:year", getvalue_text( "Rok vydani" ) );
-    le_item->write( "Advanced:author", getvalue_text( "Autor" ) );
-    le_item->write( "Advanced:homepage", getvalue_text( "Domovska stranka" ) );
-    le_item->write( "Description", le_text->getText( ) );
+  if( m_item ) {
+    m_item->write( "Basic:title", getvalue_text( "Titul" ) );
+    m_item->write( "Basic:genre", getvalue_text( "Category" ) );
+    m_item->write( "Advanced:year", getvalue_text( "Rok vydani" ) );
+    m_item->write( "Advanced:author", getvalue_text( "Autor" ) );
+    m_item->write( "Advanced:homepage", getvalue_text( "Domovska stranka" ) );
+    m_item->write( "Description", m_text->getText( ) );
 
-    le_item->exec->set_launchid( getvalue_combo( "Spoustec" ) );
-    le_item->exec->set_command( getvalue_text( "Prikaz" ) );
-    le_item->exec->set_workdir( getvalue_text( "Pracovni adresar" ) );
+    m_item->exec->set_launchid( getvalue_combo( "Spoustec" ) );
+    m_item->exec->set_command( getvalue_text( "Prikaz" ) );
+    m_item->exec->set_workdir( getvalue_text( "Pracovni adresar" ) );
 
-    le_item->hidel = le_backg->getCheck( );
-    le_item->exec->set_terminal( m_term->getCheck( ) ); 
+    m_item->hidel = m_backg->getCheck( );
+    m_item->exec->set_terminal( m_term->getCheck( ) ); 
   }
 
 }

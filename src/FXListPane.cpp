@@ -20,55 +20,55 @@ FXListPane::FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSele
 {
   m_app = (Gorgona*) getApp( );
 
-  gl_icth    = icons;
-  ic_search  = gl_icth->getIcon( "Actions/system-search.png" );
-  ic_tcolaps = gl_icth->getIcon( "Actions/view-left-close.png" );
-  ic_texpand = gl_icth->getIcon( "Actions/view-list-tree.png" );
-  ic_ldetail = gl_icth->getIcon( "Actions/view-list-details.png" );
-  ic_licons  = gl_icth->getIcon( "Actions/view-list-icons.png" );
-  ic_ginsert = gl_icth->getIcon( "Actions/list-add.png" );
-  ic_gremove = gl_icth->getIcon( "Actions/list-remove.png" );
-  ic_gedit   = gl_icth->getIcon( "Actions/document-edit.png" );
+  m_icth    = icons;
+  ic_search  = m_icth->getIcon( "Actions/system-search.png" );
+  ic_tcolaps = m_icth->getIcon( "Actions/view-left-close.png" );
+  ic_texpand = m_icth->getIcon( "Actions/view-list-tree.png" );
+  ic_ldetail = m_icth->getIcon( "Actions/view-list-details.png" );
+  ic_licons  = m_icth->getIcon( "Actions/view-list-icons.png" );
+  ic_ginsert = m_icth->getIcon( "Actions/list-add.png" );
+  ic_gremove = m_icth->getIcon( "Actions/list-remove.png" );
+  ic_gedit   = m_icth->getIcon( "Actions/document-edit.png" );
 
   /* Game Tree */
-  gl_folderframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL_Y, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
-  gl_foldertree  = new FXTreeList( gl_folderframe, this, FXListPane::TREE_SELECT, TREELIST_SHOWS_BOXES | TREELIST_SHOWS_LINES | LAYOUT_FILL_Y| LAYOUT_FIX_WIDTH, 0, 0, 200, 0 );
-  gl_foldertree->setSortFunc( FXTreeList::ascending );
+  m_folderframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL_Y, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
+  m_foldertree  = new FXTreeList( m_folderframe, this, FXListPane::TREE_SELECT, TREELIST_SHOWS_BOXES | TREELIST_SHOWS_LINES | LAYOUT_FILL_Y| LAYOUT_FIX_WIDTH, 0, 0, 200, 0 );
+  m_foldertree->setSortFunc( FXTreeList::ascending );
  
   /* Game list */
-  gl_listframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
-  gl_itemslist = new FXIconList( gl_listframe, this, FXListPane::ITEM_SELECT, LAYOUT_FILL_X | LAYOUT_FILL_Y | ICONLIST_DETAILED/* ICONLIST_BIG_ICONS */ | ICONLIST_EXTENDEDSELECT |  ICONLIST_BROWSESELECT );
-  gl_itemslist->appendHeader("Titul",    NULL, 350);
-  gl_itemslist->appendHeader("Spusteno", NULL, 100);
-  gl_itemslist->appendHeader("Naposled", NULL, 125);
-  gl_itemslist->appendHeader("Zanr",     NULL, 125);
-  gl_itemslist->setSortFunc( FXIconList::ascending );
+  m_listframe = new FXVerticalFrame( this, FRAME_LINE | LAYOUT_FILL, 0, 0, 0, 0,  1, 1, 1, 1,  0, 0 );
+  m_itemslist = new FXIconList( m_listframe, this, FXListPane::ITEM_SELECT, LAYOUT_FILL_X | LAYOUT_FILL_Y | ICONLIST_DETAILED/* ICONLIST_BIG_ICONS */ | ICONLIST_EXTENDEDSELECT |  ICONLIST_BROWSESELECT );
+  m_itemslist->appendHeader("Titul",    NULL, 350);
+  m_itemslist->appendHeader("Spusteno", NULL, 100);
+  m_itemslist->appendHeader("Naposled", NULL, 125);
+  m_itemslist->appendHeader("Zanr",     NULL, 125);
+  m_itemslist->setSortFunc( FXIconList::ascending );
 
-  gl_rootfd   = NULL;
-  gl_activefd = NULL;
+  m_rootfd   = NULL;
+  m_activefd = NULL;
 
   ic_ofolder = NULL;
   ic_cfolder = NULL;
   ic_bitem   = NULL;
   ic_sitem   = NULL;
 
-  gl_nitems   = gl_nfolders = 0;
-  gl_target   = tgt;
-  gl_selector = sel;
+  m_nitems   = m_nfolders = 0;
+  m_target   = tgt;
+  m_selector = sel;
 }
 
 FXListPane::~FXListPane( )
 {
-  delete gl_foldertree;
-  delete gl_itemslist;
+  delete m_foldertree;
+  delete m_itemslist;
 }
 
 /*************************************************************************************************/
 void FXListPane::create( )
 {
   FXHorizontalFrame::create( );
-  gl_foldertree->create( );
-  gl_itemslist->create( );
+  m_foldertree->create( );
+  m_itemslist->create( );
 
   if( ic_ofolder != NULL ) { ic_ofolder->create( ); }
   if( ic_cfolder != NULL ) { ic_cfolder->create( ); }
@@ -79,8 +79,8 @@ void FXListPane::create( )
 FXGameItem* FXListPane::getCurrentItem( )
 {
   FXGameItem* it = NULL;
-  FXint pos = gl_itemslist->getCurrentItem( );
-  if( pos >= 0 ) { it = ( FXGameItem* ) gl_itemslist->getItem( pos )->getData( ); }
+  FXint pos = m_itemslist->getCurrentItem( );
+  if( pos >= 0 ) { it = ( FXGameItem* ) m_itemslist->getItem( pos )->getData( ); }
 
   return it;
 }
@@ -94,26 +94,26 @@ void FXListPane::insertItem( FXGameItem *item )
   if( item != NULL ) {
     name = item->read( "Basic:genre" );
     if( name.empty( ) == true ) {
-      if( ( treeit = gl_foldertree->getCurrentItem( ) ) == NULL ) { treeit = gl_rootfd; }
+      if( ( treeit = m_foldertree->getCurrentItem( ) ) == NULL ) { treeit = m_rootfd; }
       name = treeit->getText( );
       item->write( "Basic:genre", name );
     } else { treeit = folder( name ); }
 
     // Vlozeni polozky do seznamu ve slozce
     ( ( FXGameItemArray* )treeit->getData( ) )->push( item );
-    gl_nitems++;
+    m_nitems++;
   }
 }
 
 void FXListPane::removeItem( FXint id )
 {
   FXGameItem *data;
-  FXint pos = ( ( id >= 0 ) ? id : gl_itemslist->getCurrentItem( ) );
-  if( pos <= gl_itemslist->getNumItems( ) ) {
-    data = ( FXGameItem* ) gl_itemslist->getItem( pos )->getData( );
+  FXint pos = ( ( id >= 0 ) ? id : m_itemslist->getCurrentItem( ) );
+  if( pos <= m_itemslist->getNumItems( ) ) {
+    data = ( FXGameItem* ) m_itemslist->getItem( pos )->getData( );
     std::cout << "Removing item " << data->read( "Basic:title" ).text( ) << std::endl;
     std::cout << "From items list: id = " << pos << std::endl;
-    gl_itemslist->removeItem( pos );
+    m_itemslist->removeItem( pos );
     erase_f( data );
     if( data != NULL ) {
       std::cout << "From memory" << std::endl;
@@ -154,16 +154,16 @@ void FXListPane::showItem( FXGameItem *item )
   ic_small = ( ( item->SmallIcon == NULL ) ? ic_sitem : item->SmallIcon );
   ic_big   = ( ( item->BigIcon == NULL ) ? ic_bitem : item->BigIcon );
 
-  if( ( index = gl_itemslist->findItem( text ) ) < 0 ) {
-    gl_itemslist->appendItem( text, ic_big, ic_small, item );
+  if( ( index = m_itemslist->findItem( text ) ) < 0 ) {
+    m_itemslist->appendItem( text, ic_big, ic_small, item );
   }
-  else { gl_itemslist->setItemText( index, text ); }
+  else { m_itemslist->setItemText( index, text ); }
 }
 
 /// FIXME TREE_001: Add view of items count from folder!
 void FXListPane::showFolder( FXTreeItem *__folder, FXbool sub )
 {
-  FXTreeItem *tit = ( ( __folder == NULL ) ? gl_rootfd : __folder );
+  FXTreeItem *tit = ( ( __folder == NULL ) ? m_rootfd : __folder );
 
   if( tit != NULL  ) {
     FXGameItemArray *itl = ( FXGameItemArray* )tit->getData( );
@@ -183,7 +183,7 @@ void FXListPane::showFolder( FXTreeItem *__folder, FXbool sub )
       }
     }
 
-    gl_itemslist->sortItems( );
+    m_itemslist->sortItems( );
     Notify( SEL_CHANGED );
   }
 }
@@ -192,14 +192,14 @@ FXTreeItem* FXListPane::folder( const FXString &name, FXTreeItem *parent )
 {
   FXArray<FXString>  t_buff;
   FXTreeItem        *resh = NULL;
-  FXTreeItem        *p    = ( ( parent != NULL )? parent : gl_rootfd );
+  FXTreeItem        *p    = ( ( parent != NULL )? parent : m_rootfd );
 
   split( name, &t_buff );       // Vyhledani subretezcu odpovidajicich subslozkam
   if( t_buff.no( ) == 0 ) {     // Jmeno neobsahuje zadne subslozky
-    resh = gl_foldertree->findItem( name, p );
+    resh = m_foldertree->findItem( name, p );
     if( resh == NULL ) {
-      resh = gl_foldertree->appendItem( p, new FXTreeItem( name, ic_ofolder, ic_cfolder, new FXGameItemArray ) );
-      gl_nfolders++;
+      resh = m_foldertree->appendItem( p, new FXTreeItem( name, ic_ofolder, ic_cfolder, new FXGameItemArray ) );
+      m_nfolders++;
     }
   }
   else {
@@ -207,30 +207,30 @@ FXTreeItem* FXListPane::folder( const FXString &name, FXTreeItem *parent )
     FXTreeItem *f = NULL;
     for( FXint i = 0; i != t_buff.no( ); i++ ) {
       FXString sect = t_buff[ i ];
-      f = gl_foldertree->findItem( sect, p );
+      f = m_foldertree->findItem( sect, p );
       if( f == NULL ) {
-        p = gl_foldertree->appendItem( p, new FXTreeItem( sect, ic_ofolder, ic_cfolder, new FXGameItemArray ) );
-        gl_nfolders++;
+        p = m_foldertree->appendItem( p, new FXTreeItem( sect, ic_ofolder, ic_cfolder, new FXGameItemArray ) );
+        m_nfolders++;
       }
       else { p = f; }
     }
     resh = p;
   }
   /// FIXME : SMAZAT
-  if( ( parent == NULL ) && ( gl_rootfd == NULL ) ) {
-    gl_rootfd = resh;
-    if( gl_activefd == NULL ) { gl_activefd = gl_rootfd; }
+  if( ( parent == NULL ) && ( m_rootfd == NULL ) ) {
+    m_rootfd = resh;
+    if( m_activefd == NULL ) { m_activefd = m_rootfd; }
   }
   return resh;
 }
 
 void FXListPane::aktiveItem( FXint id )
 {
-  if( (id >= 0 ) && ( id < gl_itemslist->getNumItems( ) ) ) {
-    gl_itemslist->killSelection( );
-    gl_itemslist->setCurrentItem( id );
-    gl_itemslist->selectItem( id );
-    gl_itemslist->makeItemVisible( id );
+  if( (id >= 0 ) && ( id < m_itemslist->getNumItems( ) ) ) {
+    m_itemslist->killSelection( );
+    m_itemslist->setCurrentItem( id );
+    m_itemslist->selectItem( id );
+    m_itemslist->makeItemVisible( id );
   }
 }
 
@@ -258,7 +258,7 @@ FXint FXListPane::numFolders( FXTreeItem *folder, FXbool sub )
 FXint FXListPane::getItemList( FXTreeItem *ti, FXGameItemArray *buffer, FXbool sub )
 {
   FXint resh = 0;
-  FXTreeItem *trit = ( ( ti == NULL )? gl_rootfd : ti );
+  FXTreeItem *trit = ( ( ti == NULL )? m_rootfd : ti );
 
 
   if( ( trit != NULL ) && ( buffer != NULL) ) {
@@ -287,18 +287,18 @@ long FXListPane::OnCmd_tree( FXObject *sender, FXSelector sel, void *data )
 
   switch( FXSELID( sel ) )  {
     case FXListPane::TREE_SELECT : {
-      gl_itemslist->clearItems( );
-      showFolder( trit, ( ( trit == gl_rootfd ) ? true : false ) );
-      gl_itemslist->sortItems( );
-      gl_activefd = trit;
+      m_itemslist->clearItems( );
+      showFolder( trit, ( ( trit == m_rootfd ) ? true : false ) );
+      m_itemslist->sortItems( );
+      m_activefd = trit;
       break;
     }
     case FXListPane::TREE_COLAPS : {
-      gl_foldertree->collapseTree( gl_rootfd );
+      m_foldertree->collapseTree( m_rootfd );
       break;
     }
     case FXListPane::TREE_EXPAND : {
-      gl_foldertree->expandTree( gl_rootfd );
+      m_foldertree->expandTree( m_rootfd );
       break;
     }
   }
@@ -313,14 +313,14 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
       //std::cout << "[FXListPane] Item event doubleclick" << std::endl; //#
-      if( gl_target ) { gl_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
+      if( m_target ) { m_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
       result = 1;
       break;
     }
     default : {
-      if( gl_target != NULL ) {
+      if( m_target != NULL ) {
         //std::cout << "[FXListPane] Item event other" << std::endl; // #
-        gl_target->handle( this, FXSEL( mtype, gl_selector), NULL );
+        m_target->handle( this, FXSEL( mtype, m_selector), NULL );
       }
       result = 1;
     }
@@ -337,16 +337,16 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
     case FXListPane::LIST_REFRESH :
     {
       // std::cout << "Refresh list..." << std::endl; // #
-      FXint current = gl_itemslist->getCurrentItem( );
+      FXint current = m_itemslist->getCurrentItem( );
 
-      gl_itemslist->clearItems( );
-      gl_currentit = NULL;
+      m_itemslist->clearItems( );
+      m_currentit = NULL;
     
-      showFolder( ( ( gl_activefd != NULL ) ? gl_activefd : gl_rootfd ), ( ( gl_activefd == gl_rootfd )? true : false ) );
+      showFolder( ( ( m_activefd != NULL ) ? m_activefd : m_rootfd ), ( ( m_activefd == m_rootfd )? true : false ) );
 
       if( current >= 0 ) {
         aktiveItem( current ); 
-        //gl_currentit = gl_itemslist->getItem( current );        
+        //m_currentit = m_itemslist->getItem( current );        
       } 
       
       resh = 1;
@@ -354,12 +354,12 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
     }
     case FXListPane::LIST_DETAIL :
     {
-      gl_itemslist->setListStyle( ICONLIST_DETAILED );
+      m_itemslist->setListStyle( ICONLIST_DETAILED );
       break;
     }
     case FXListPane::LIST_ICONS :
     {
-      gl_itemslist->setListStyle( ICONLIST_BIG_ICONS );
+      m_itemslist->setListStyle( ICONLIST_BIG_ICONS );
       break;
     }
     case FXListPane::LIST_FIND :
@@ -368,7 +368,7 @@ long FXListPane::OnCmd_list( FXObject *sender, FXSelector sel, void *data )
       FXString text = (char *) data;
       std::cout << "Search text " << text << std::endl; 
       if( !text.empty( ) ) {
-        pos = gl_itemslist->findItem( text );
+        pos = m_itemslist->findItem( text );
         if( pos > -1 ) { 
           aktiveItem( pos );
           resh = 1;
@@ -390,24 +390,24 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
 {
   long resh = 0;
   FXuint _placement = PLACEMENT_SCREEN;
-  FXSelector __sel = FXSEL( SEL_CHANGED, gl_selector );
+  FXSelector __sel = FXSEL( SEL_CHANGED, m_selector );
   FXGameItem *item;
   
   switch( FXSELID( sel ) ) {
     case FXListPane::GAME_INSERT :
     {
-      //gl_currentit = NULL;
+      //m_currentit = NULL;
       FXString name;
       if( FXInputDialog::getString( name, this, "Pridat novou hru do zbirky", "Zadejte nazev pridavaneho titulu: " ) == true ) {
         item = new FXGameItem( ( Gorgona *) getApp( ), name );
         FXTreeItem *f = getCurrentFolder( );
         if( f ) { item->write( "Basic:genre", f->getText( ) ); }
-        FXLaunchEditor *edit = new FXLaunchEditor( this, gl_icth, item );
+        FXLaunchEditor *edit = new FXLaunchEditor( this, m_icth, item );
         if( edit->execute( _placement ) == true ) {
           m_app->getLibrary( )->push( item );
           this->insertItem( item );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          gl_target->handle( this, __sel, NULL );
+          m_target->handle( this, __sel, NULL );
           SaveNotify( );
           resh = 1;
         }
@@ -417,10 +417,10 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
     case FXListPane::GAME_EDIT :
     {
       if( ( item = getCurrentItem( ) ) != NULL ) {
-        FXLaunchEditor *edit = new FXLaunchEditor( this, gl_icth, item );
+        FXLaunchEditor *edit = new FXLaunchEditor( this, m_icth, item );
         if( edit->execute( _placement ) == true ) {
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          gl_target->handle( this, __sel, NULL );
+          m_target->handle( this, __sel, NULL );
           SaveNotify( );
           resh = 1;
         }
@@ -435,7 +435,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
         if( FXMessageBox::question( this, MBOX_YES_NO, "Smazat titul: ", msg.text( )  ) == MBOX_CLICKED_YES ) {
           this->removeItem( );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          gl_target->handle( this, __sel, NULL );
+          m_target->handle( this, __sel, NULL );
           resh = 1;
         }
       }
@@ -451,7 +451,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
 FXlong FXListPane::Notify( FXuint type_message ) 
 {
   FXlong res = 0;
-  if( gl_target ) { res = gl_target->handle( this, FXSEL( type_message, gl_selector ), NULL ); } 
+  if( m_target ) { res = m_target->handle( this, FXSEL( type_message, m_selector ), NULL ); } 
 
   return res;
 }

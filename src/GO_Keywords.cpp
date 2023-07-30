@@ -3,8 +3,8 @@
 
 GO_Keywords::GO_Keywords( const FXString &w, const FXString &d )
 {
-   k_word = w;
-   k_description = d;
+   m_word = w;
+   m_description = d;
 }
 
 GO_Keywords::~GO_Keywords( )
@@ -18,8 +18,8 @@ FXint GO_Keywords::read( XMLElement *kwelem )
   FXint resh = 0;
 
   if( kwelem != NULL ) {
-    this->k_description = kwelem->Attribute( "decription" );
-    this->k_word       = kwelem->Attribute( "keyword" );
+    this->m_description = kwelem->Attribute( "decription" );
+    this->m_word       = kwelem->Attribute( "keyword" );
 
     XMLElement *telem = kwelem->FirstChildElement( "Tag" );
     while( telem != NULL ) {

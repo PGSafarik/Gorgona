@@ -31,18 +31,18 @@ class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
   Gorgona *m_app;   
 
-  FXVerticalFrame *gl_folderframe;
-  FXToolBar       *gl_folderbar;
-  FXTreeList      *gl_foldertree; // Adresarova struktura sekci
+  FXVerticalFrame *m_folderframe;
+  FXToolBar       *m_folderbar;
+  FXTreeList      *m_foldertree; // Adresarova struktura sekci
 
-  FXVerticalFrame *gl_listframe;
-  FXToolBar       *gl_listbar;
-  FXIconList      *gl_itemslist;  // Seznam polozek
-  FXTextField     *gl_searchfield;
+  FXVerticalFrame *m_listframe;
+  FXToolBar       *m_listbar;
+  FXIconList      *m_itemslist;  // Seznam polozek
+  FXTextField     *m_searchfield;
 
-  FXTreeItem *gl_rootfd;    // Korenovy adresar
-  FXTreeItem *gl_activefd;  // Aktualni adresar
-  FXListItem *gl_currentit; // Aktualni polozka v seznamu
+  FXTreeItem *m_rootfd;    // Korenovy adresar
+  FXTreeItem *m_activefd;  // Aktualni adresar
+  FXListItem *m_currentit; // Aktualni polozka v seznamu
 
   FXIcon *ic_cfolder;   // Obecna ikona zavrene slozky (closed folder)
   FXIcon *ic_ofolder;   // Obecna ikona otevrene slozky (opened folder)
@@ -58,13 +58,13 @@ FXDECLARE( FXListPane )
   FXIcon *ic_gedit;
 
 
-  IconsTheme  *gl_icth;
-  FXObject    *gl_target;
-  FXSelector   gl_selector;
+  IconsTheme  *m_icth;
+  FXObject    *m_target;
+  FXSelector   m_selector;
   
   FXint m_actinum;     // Pocet aktualne zobrazovanych polozek
-  FXint gl_nitems; 
-  FXint gl_nfolders;
+  FXint m_nitems; 
+  FXint m_nfolders;
 
 
 public :
@@ -84,7 +84,7 @@ public :
   void aktiveItem( FXint id = 0 );
   void signedItem( FXint id = 0, FXint state = 0 );                                     // Oznaci polozku
 
-  //void showActiveFolder( FXbool sub = false ) { showFolder( ( ( gl_activefd != NULL ) ? gl_activefd : gl_rootfd ), sub ); }
+  //void showActiveFolder( FXbool sub = false ) { showFolder( ( ( m_activefd != NULL ) ? m_activefd : m_rootfd ), sub ); }
   FXTreeItem* folder( const FXString &name = "Game list", FXTreeItem *parent = NULL );  // Vrati (vytvori) polozku ve stromu slozek
 
 
@@ -92,9 +92,9 @@ public :
   /// Access Methods
   ///
   FXint numItems( FXTreeItem *folder, FXbool sub = false );                         // Spocita polozky v zadane slozce
-  FXint numItemsAll( ) { return gl_nitems; }
+  FXint numItemsAll( ) { return m_nitems; }
   FXint numFolders( FXTreeItem *folder, FXbool sub = false );                       // Spocita podslozky v zadane slozce
-  FXint numFoldersAll( ) { return gl_nfolders; }
+  FXint numFoldersAll( ) { return m_nfolders; }
   FXint getItemList( FXTreeItem *ti, FXGameItemArray *buffer, FXbool sub = false );    // Vlozi do senamu polozky ze zadane slozky
 
   void    setOpenFolderIc( FXIcon *ic )   { ic_ofolder = ic;   }
@@ -107,7 +107,7 @@ public :
   FXIcon* getSmallItemIc( )               { return ic_sitem;   }
 
   FXGameItem* getCurrentItem( );
-  FXTreeItem* getCurrentFolder( ) { return gl_foldertree->getCurrentItem( ); }
+  FXTreeItem* getCurrentFolder( ) { return m_foldertree->getCurrentItem( ); }
   ///////////////////////////////////////////////
   ///
   ///

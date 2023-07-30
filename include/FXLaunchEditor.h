@@ -52,24 +52,24 @@ enum {
 class FXLaunchEditor : public FXSecondaryWindow /*FXDialogBox*/ {
 FXDECLARE( FXLaunchEditor )
   // Widgety dialogu
-  FXSwitcher    *le_switcher;
-  FXList        *le_sections;
-  FXText        *le_text;
-  FXCheckButton *le_backg;
+  FXSwitcher    *m_switcher;
+  FXList        *m_sections;
+  FXText        *m_text;
+  FXCheckButton *m_backg;
   FXCheckButton *m_term;
-  FXButton      *le_Bicon;
-  FXButton      *le_Micon;
+  FXButton      *m_Bicon;
+  FXButton      *m_Micon;
 
-  IconsTheme    *icth;
+  IconsTheme    *m_icth;
 
-  FXArray<FXVerticalFrame*> vf_array;
-  FXDictionary *values_text;
-  FXString le_share;
+  FXArray<FXVerticalFrame*> m_VFArray;
+  FXDictionary *m_ValuesText;
+  FXString m_share;
 
   // Data
-  FXGameItem *le_item;      // Polozka zpoustece
-  FXint       label_size;   // Delka popisku polozek
-  FXbool      le_change;    // indikator zmeny polozky
+  FXGameItem *m_item;      // Polozka zpoustece
+  FXint       m_LabelSize;   // Delka popisku polozek
+  FXbool      m_change;    // indikator zmeny polozky
 
 public :
   FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it = NULL );
