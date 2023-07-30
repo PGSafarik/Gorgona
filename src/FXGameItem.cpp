@@ -137,12 +137,13 @@ void FXGameItem::load( XMLElement *eitem )
   }
 
   exec->load( eitem ); 
-  
+  /*validate( );
+
   #ifdef __DEBUG
    dump( );
   #endif
-
-  validate( );
+  */
+  
 }
 
 const FXString FXGameItem::read( const FXString &k ) const
