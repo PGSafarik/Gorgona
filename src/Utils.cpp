@@ -157,5 +157,49 @@ void Welcome( FXApp *app )
   std::cout << "=== Message =========================================" << std::endl;
 }
 
+/*** Signal *********************************************************************************/
+FXIMPLEMENT( GSignal, FXObject, NULL, 0 )
+
+GSignal::GSignal( FXObject *owner, FXuint msg_type )
+{
+  m_emitor = ( owner ? owner : this );
+  m_type   = msg_type;
+}
+
+GSignal::~GSignal( )
+{
+
+}
+
+FXbool GSignal::connect( FXObject *target, FXuint message )
+{
+  if( target ) {
+    GSlot *slot = new GSlot( target, message, true );
+    return this->connect( slot );
+  }
+
+  return false;
+}
+
+FXbool GSignal::connect( GSlot *slot )
+{
+   FXbool res = false;
+
+   if( slot && slot->target ) { m_slots.push( slot ); res = true; }
+   return res;
+}
+
+int GSignal::emit( void *data )
+{
+  FXint res = 0;
+  FXival num = m_slots.no( );
+
+  for( FXival i = 0; i != num; i++ ) {
+    GSlot *slot = m_slots[ i ];
+    if( slot && slot->send( m_emitor, m_type, data ) == 0 ) { res++; }
+  }
+
+  return res;
+}
 
 /*** END ******************************************************************************************/

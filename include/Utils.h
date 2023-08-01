@@ -64,5 +64,46 @@ struct TermInfo {
   FXString p_workdir; // Parametr, umoznujici (u nekterych) emulatoru terminalu zmenit pracovni adresar (Gorgona jej nevyuziva)
 };
 
+//////////////////////////////////////////////////
+/* The Signal notify object                     */
+struct GSlot {
+  FXbool    clear_me; // Priznak, ze ma byt slot odklizen z pameti (neni-li uz potrebny) 
+  FXuint    msg_id;   // ID zpravy, kterou signal odesle konkretnimu cily
+  FXObject *target;   // cilovy objekt slotu
+
+  GSlot( FXObject *target, FXuint message, FXbool cls = true )
+  {
+    this->msg_id   = message;
+    this->target   = target;
+    this->clear_me = cls;
+  }
+  virtual ~GSlot( ) { }
+  long send( FXObject *sender, FXuint msg_type, void *data )
+  {
+    long res = 1; 
+
+    if( target ) { res = target->tryHandle( sender, FXSEL( msg_type, msg_id ), data ); }
+    return res;
+  }
+}; 
+
+class GSignal : public FXObject {
+FXDECLARE( GSignal )
+  FXArray<GSlot* > m_slots;      // Seznam pripojenych slotu 
+  FXObject        *m_emitor;     // Objekt, ktery bude predan jako odesilatel
+  FXuint           m_type;       // Typ zpravy, kterou bude objektum odesilana    
+
+public :
+  GSignal( FXObject *owner = NULL, FXuint msg_type = SEL_SIGNAL );
+  virtual ~GSignal( );
+
+  FXbool connect( FXObject *target, FXuint message );
+  FXbool connect( GSlot *slot );
+
+  int emit( void *data  = NULL );
+protected :
+
+};
+
 #endif /* __UTILS_H */
 /*** END ****************************************************************/
