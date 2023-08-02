@@ -75,6 +75,14 @@ namespace PERSEUS {
     /* Debug & testing */
     virtual void dump( ); 
 
+   /* Events messages & Handlers */
+   enum {
+      PROC_EXIT = 1,
+      ID_LAST
+   };
+
+   long OnSig_Process( FXObject *tgt, FXSelector sel, void  *data ); 
+ 
   protected:
     Runnable( ) { }
     

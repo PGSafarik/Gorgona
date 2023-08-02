@@ -6,7 +6,9 @@
 using namespace PERSEUS;
 
 /*************************************************************************************************/
-FXDEFMAP( Runnable ) RUNMAP[ ] = { };
+FXDEFMAP( Runnable ) RUNMAP[ ] = { 
+  FXMAPFUNC( SEL_SIGNAL, Runnable::PROC_EXIT, Runnable::OnSig_Process )
+};
 FXIMPLEMENT( Runnable, FXObject, RUNMAP, ARRAYNUMBER( RUNMAP ) )
 
 Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
@@ -28,7 +30,9 @@ Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, F
   m_notify   = false;
   m_launchid = launcher;
   m_terminal = false; 
+
   set_command( cmd );
+  
 }
 
 Runnable::~Runnable( )
@@ -44,9 +48,13 @@ FXint Runnable::run( )
   }
 
   FXString chwd = ChangeWorkDir( );
-  if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { m_pid = pid; }
+  if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { 
+    m_pid = pid; 
+    m_app->sig_child_exit->connect( this, Runnable::PROC_EXIT );
+  }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
+  
   return pid;
 }
 
@@ -186,6 +194,40 @@ void Runnable::dump( )
 
   std::cout << text;  
 }
+
+ long Runnable::OnSig_Process( FXObject *tgt, FXSelector sel, void  *data ) 
+ {
+  FXString msg  = "";
+  FXint pid = *((FXint*) data);
+   
+  if ( pid == m_pid ) { 
+    Process *proc = m_app->findChild( m_pid );
+    if( proc ) { 
+      FXint status = proc->retcode( ); 
+      if( m_app->removeChild( m_pid ) ) {
+        m_pid = 0;
+        m_app->sig_child_exit->disconnect( this );
+
+        if( status == 0 ) {
+          msg = "Unregister the process of the descendant "; 
+          msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status ) + "\n";
+        } 
+        else { 
+          // Information of the user of bad a process termaination 
+          FXString head = "Non-standard process termination"; 
+          FXString msg = "The process " + FXString::value( pid ) + " terminated with an error. \n";
+          msg += "Exit code : " + FXString::value( status );   
+    
+          FXMessageBox::warning( m_app, MBOX_OK, head.text( ), msg.text( ) );
+        }
+        std::cout << msg << std::endl;   
+      }
+    } 
+    //else { std::cout << "running!! \n"; }    
+
+  }
+  return 0;
+} 
 
 /*************************************************************************************************/
 FXDEFMAP( Game ) GAMEMAP[ ] = { };
