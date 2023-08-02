@@ -56,7 +56,7 @@ public:
   virtual ~Gorgona( );
    
   /* Signals / Slots */
-  GSignal *sig_child_exit; 
+  GSignal *sig_child_exit;  // Emitted when the program catches a child process termination system message (SIG_CHILD) 
 
   /* Access methods */
   lua_State* getLua( )                                  { return m_lua; }
@@ -68,10 +68,6 @@ public:
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
-
-  FXbool     removeChild( FXint pid, FXbool force = false );
-  FXbool     hasChild( FXint pid = 0 );       // true - if its a process with the PID in internal list
-  PERSEUS::Process* findChild( FXint pid );   // return Process object instance, if has a child process with the PID. Else NULL.
 
   TermInfo* getTerminal( )  { return m_term; }
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
@@ -85,11 +81,16 @@ public:
   FXint wait( PERSEUS::Process *process, FXbool notify = false );
   FXint execLuaFile( const FXString &script );
 
+  FXbool     removeChild( FXint pid, FXbool force = false ); // true - if its process instanse with entered pid is removed from internal list
+  FXbool     hasChild( FXint pid = 0 );                      // true - if its a process with the PID in internal list
+  PERSEUS::Process* findChild( FXint pid );                  // return Process object instance, if has a child process with the PID. Else NULL.
+
   long notify_changes( FXuint mesg ) { return m_modify.handle( this, FXSEL( SEL_COMMAND, mesg ), NULL ); }  
  
   /* GUI handlers & messages */
   enum {
-   SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess
+   /* System signals */ 
+   SIGNAL_CHLD = FXApp::ID_LAST,  // End of child proccess (SIG_CHILD)
 
    /* Explicit saving */
    SAVE_LIBRARY,                  

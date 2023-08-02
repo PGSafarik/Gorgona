@@ -235,7 +235,7 @@ int GSignal::emit( void *data )
     if( slot && slot->send( m_emitor, m_type, data ) == 0 ) { res++; }
   }
   
-  std::cout << "[GSignal] Emit " << res << " signals, for " << num << " registered slots  \n"; 
+  //std::cout << "[DEBUG - GSignal::emit]: Emit " << res << " signals, for " << num << " registered slots  \n"; 
   return res;
 }
 

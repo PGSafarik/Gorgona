@@ -9,15 +9,10 @@ FXIMPLEMENT( FSM_Changes, FXObject, FSMCH_MAP, ARRAYNUMBER( FSMCH_MAP ) )
 
 /**************************************************************************************************/
 FSM_Changes::FSM_Changes( ) 
-{
-
-}
+{ }
 
 FSM_Changes::~FSM_Changes( )
-{
-
-
-}
+{ }
 
 /**************************************************************************************************/
 long FSM_Changes::OnCmd_Change( FXObject *sender, FXSelector sel, void *data )

@@ -81,8 +81,11 @@ struct GSlot {
   long send( FXObject *sender, FXuint msg_type, void *data )
   {
     long res = 1; 
-    std::cout << "[GSlot] Send signal \n"; 
-    if( target ) { res = target->tryHandle( sender, FXSEL( msg_type, msg_id ), data ); }
+    
+    if( target ) { 
+      //std::cout << "[DEBUG - GSlot::send] Evoke a FXObject::TryHandle of target for the signal message \n"; 
+      res = target->tryHandle( sender, FXSEL( msg_type, msg_id ), data ); 
+    }
     return res;
   }
 }; 
