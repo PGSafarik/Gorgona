@@ -189,6 +189,42 @@ FXbool GSignal::connect( GSlot *slot )
    return res;
 }
 
+FXbool GSignal::disconnect( GSlot *slot )
+{
+  return disconnect( slot->target );  
+}
+
+FXbool GSignal::disconnect( FXObject *target )
+{
+  FXbool res = false;
+  
+  if( target ) {
+    FXival num = m_slots.no( );
+    FXival pos = -1;
+ 
+    for( FXival i = 0; i != num; i++ ) {
+      if( target == m_slots[ i ]->target ) {
+        pos = i;
+        break;
+      } 
+    }
+
+    if( pos >= 0 ) {
+      GSlot *slot = m_slots[ pos ];
+      m_slots.erase( pos );
+      if( slot->clear_me ) {
+        slot->target = NULL;
+        slot->msg_id = 0;
+
+        delete slot;
+      }
+      res = true; 
+    }
+  }
+
+  return res; 
+}
+
 int GSignal::emit( void *data )
 {
   FXint res = 0;
@@ -198,7 +234,8 @@ int GSignal::emit( void *data )
     GSlot *slot = m_slots[ i ];
     if( slot && slot->send( m_emitor, m_type, data ) == 0 ) { res++; }
   }
-
+  
+  std::cout << "[GSignal] Emit " << res << " signals, for " << num << " registered slots  \n"; 
   return res;
 }
 

@@ -81,7 +81,7 @@ struct GSlot {
   long send( FXObject *sender, FXuint msg_type, void *data )
   {
     long res = 1; 
-
+    std::cout << "[GSlot] Send signal \n"; 
     if( target ) { res = target->tryHandle( sender, FXSEL( msg_type, msg_id ), data ); }
     return res;
   }
@@ -97,8 +97,15 @@ public :
   GSignal( FXObject *owner = NULL, FXuint msg_type = SEL_SIGNAL );
   virtual ~GSignal( );
 
-  FXbool connect( FXObject *target, FXuint message );
+  /* Access */
+  FXuint get_type( )                { return m_type; }
+  void   set_type( FXuint type_id ) { m_type = type_id; }
+ 
+  /* operations */
+  FXbool connect( FXObject *target, FXuint message = 0 );
   FXbool connect( GSlot *slot );
+  FXbool disconnect( FXObject *target );
+  FXbool disconnect( GSlot *slot );
 
   int emit( void *data  = NULL );
 protected :
