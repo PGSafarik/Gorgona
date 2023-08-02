@@ -201,7 +201,14 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   PERSEUS::Process *proc = findChild( pid );
   if( proc ) {
       proc->exited( status );
-      sig_child_exit->emit( &pid );  
+
+      /* 
+      Potentially there is a risk of conflict when two or more objects are operated at the same 
+      signal! Object of type PERSEUS::Runnable is removed from the memory during signal handling! 
+      And that regardless of whether only the PID is sent, or a direct pointer to 
+      PERSEUS::Process. It is necessary to test well!!! 
+      */
+      sig_child_exit->emit( proc );  
   
       msg += "Remaining number of registered processes: ";
       msg += FXString::value( m_descendants.used( ) );

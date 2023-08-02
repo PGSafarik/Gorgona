@@ -198,31 +198,34 @@ void Runnable::dump( )
  long Runnable::OnSig_Process( FXObject *tgt, FXSelector sel, void  *data ) 
  {
   FXString msg  = "";
-  FXint pid = *((FXint*) data);
-   
-  if ( pid == m_pid ) { 
-    Process *proc = m_app->findChild( m_pid );
-    if( proc ) { 
+  // FXint pid = *((FXint*) data);
+
+  Process *proc = static_cast<Process*>( data );
+  
+  if ( proc && proc->id( ) == m_pid ) { 
+    //Process *proc = m_app->findChild( m_pid );
+    //if( proc ) { 
       FXint status = proc->retcode( ); 
       if( m_app->removeChild( m_pid ) ) {
-        m_pid = 0;
         m_app->sig_child_exit->disconnect( this );
 
         if( status == 0 ) {
+          // Information about process exited
           msg = "Unregister the process of the descendant "; 
-          msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status ) + "\n";
+          msg += FXString::value( m_pid ) + ", which just finished with exit code " + FXString::value( status );
         } 
         else { 
           // Information of the user of bad a process termaination 
           FXString head = "Non-standard process termination"; 
-          FXString msg = "The process " + FXString::value( pid ) + " terminated with an error. \n";
+          msg = "The process " + FXString::value( m_pid ) + " terminated with an error. \n";
           msg += "Exit code : " + FXString::value( status );   
     
           FXMessageBox::warning( m_app, MBOX_OK, head.text( ), msg.text( ) );
         }
         std::cout << msg << std::endl;   
+        m_pid = 0;
       }
-    } 
+    //} 
     //else { std::cout << "running!! \n"; }    
 
   }
