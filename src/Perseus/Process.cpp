@@ -16,8 +16,8 @@ FXbool Process::run( const EntriesList &cmd )
 {
   m_runtime = FXDate::localDate( ).getTime( );
 
-  FXbool res = this->start( cmd[ 0 ], cmd.data( ) );   
-  return res;
+  m_run = this->start( cmd[ 0 ], cmd.data( ) );   
+  return m_run;
 }
 
 /*** END ******************************************************************************************/

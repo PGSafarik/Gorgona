@@ -26,9 +26,11 @@
 namespace PERSEUS {
 
   class Process: public FXProcess  {
-    FXuint m_asid = 0; // Asociacni id polozky, ktera proces spustila
-    FXuint m_runtime = 0; // Cas startu behu procesu 
-  
+    FXuint m_asid    = 0;     // Asociacni id polozky, ktera proces spustila
+    FXuint m_runtime = 0;     // Cas startu behu procesu 
+    FXint  m_retcode = 0;     // Navratovy kod
+    FXbool m_run     = false; // indikace beziciho procesu
+
   public:
     Process( );
     virtual ~Process( );
@@ -37,10 +39,13 @@ namespace PERSEUS {
     void   set_asid( FXuint value ) { m_asid = value; } 
     FXuint asid( )                  { return m_asid; }
     FXuint runtime( )               { return m_runtime; }
-
+    FXbool is_running( )            { return m_run; }
+    FXint  retcode( )               { return m_retcode; }  
+    
     /* operations */
     FXbool run( const EntriesList &cmd );
- 
+    void   exited( FXint code ) { m_run = false; m_retcode = code; };
+
   protected:
   
   };   /* Class Process     */
