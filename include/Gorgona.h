@@ -29,8 +29,6 @@
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
-  FXObject *m_tgt;         // Notify target
-  FXuint    m_message;     // ID of notifikacation message
   FXbool    m_verbose;     // Verbose mod
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
@@ -61,7 +59,6 @@ public:
   GSignal *sig_child_exit; 
 
   /* Access methods */
-  //void setNotify( FXObject *tgt, FXuint msg )           { m_tgt = tgt; m_message = msg; sig_notify->connect( m_tgt, m_message );}
   lua_State* getLua( )                                  { return m_lua; }
   FXbool     isLuaInit( )                               { return m_luaOk; } 
   FXbool     isCreated( )                               { return m_created; }
@@ -88,7 +85,6 @@ public:
   FXint wait( PERSEUS::Process *process, FXbool notify = false );
   FXint execLuaFile( const FXString &script );
 
-  long notify( FXuint mtype, void *mdata );
   long notify_changes( FXuint mesg ) { return m_modify.handle( this, FXSEL( SEL_COMMAND, mesg ), NULL ); }  
  
   /* GUI handlers & messages */
@@ -106,7 +102,6 @@ public:
   long onCmdQuit( FXObject *sender, FXSelector sel, void *data );
 
 protected:
-  long Notify( FXbool enable, FXuint mtype = SEL_CHANGED, void *mdata = NULL );  // Send of notification message, if anyone 
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
   void LuaInit( );                                                               // Initialize langugae interpret of Lua 
   void ReadConfig( );                                                            // Load configurations data

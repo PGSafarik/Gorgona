@@ -17,8 +17,6 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 {
   m_initscript = m_profiledir = m_gamelist = FXString::null;
 
-  m_tgt         = NULL;
-  m_message     = 0;
   m_verbose     = true;
   m_initialized = false;
   m_created     = false;
@@ -132,8 +130,6 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
 
     FXString key =  FXString::value( pid );
     m_descendants.insert( key , proc ); 
-    //Notify( true, SEL_CHANGED );
-    //sig_notify->emit( &pid );
 
     if( m_verbose ) {
       std::cout << "EXECUTE the process:";
@@ -147,13 +143,11 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
       text += "PID: " + key; 
       std::cout << text << std::endl;;
     }
-
   }
   else { 
+    /* FIXME: Info in message box? */
     std::cout << "[WARNING]: Process " << cmd[ 0 ] << "is not running!" << std::endl; 
-
   }
-
 
   std::cout << "\n";
   std::cout.flush( );
@@ -191,17 +185,9 @@ FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
   if( process ) {
     process->wait( status );
     if( notify ) { sig_child_exit->emit( ); } 
-    //Notify( notify );   
   }
   
   return status;
-}
-
-long Gorgona::notify( FXuint mtype, void *mdata ) 
-{
-   long retv = -1;
-   if( m_tgt && m_message > 0 ) { retv = m_tgt->handle( this, FXSEL( mtype, m_message ), mdata ); } 
-   return retv;
 }
 
 /**************************************************************************************************/
@@ -261,11 +247,6 @@ long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 }
 
 /**************************************************************************************************/
-long Gorgona::Notify( FXbool enable, FXuint mtype, void *mdata )
-{
-  return ( enable ? notify( mtype, mdata ) : -1 );
-}
-
 void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 {
   /* Metoda provadi rozdeleni retezce prikazu do pole typu const char*, jak to pozaduje trida FXProcess
