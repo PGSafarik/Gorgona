@@ -31,6 +31,8 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_term = new TermInfo;
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
+
+  sig_child_exit = new GSignal( this, SEL_SIGNAL );
 }
 
 Gorgona::~Gorgona( )
@@ -62,6 +64,27 @@ PERSEUS::Process* Gorgona::findChild( FXint pid )
   return NULL; 
 }
 
+FXbool Gorgona::removeChild( FXint pid, FXbool force )
+{
+  FXbool res = false;
+  FXString key = FXString::value( pid );
+
+  if( m_descendants.has( key ) ) {
+    PERSEUS::Process *proc = m_descendants[ key ];
+
+    if( proc != NULL ) {
+      if( proc->is_running( ) ) { 
+        if( force && !proc->kill( ) ) { return false; }
+      }
+      
+      m_descendants.remove( key );
+      delete proc;
+      res = true;
+    } 
+  }
+
+  return res;
+}
 
 /**************************************************************************************************/
 void Gorgona::create( )
@@ -103,12 +126,14 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
   FXint pid = 0;
 
   PERSEUS::Process *proc = new PERSEUS::Process; 
+
   if( proc->run( cmd ) ) {
     pid = proc->id( );
 
     FXString key =  FXString::value( pid );
     m_descendants.insert( key , proc ); 
-    Notify( true, SEL_CHANGED );
+    //Notify( true, SEL_CHANGED );
+    //sig_notify->emit( &pid );
 
     if( m_verbose ) {
       std::cout << "EXECUTE the process:";
@@ -124,7 +149,10 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
     }
 
   }
-  else { std::cout << "[WARNING]: Process " << cmd[ 0 ] << "is not running!" << std::endl; }
+  else { 
+    std::cout << "[WARNING]: Process " << cmd[ 0 ] << "is not running!" << std::endl; 
+
+  }
 
 
   std::cout << "\n";
@@ -162,7 +190,8 @@ FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
 
   if( process ) {
     process->wait( status );
-    Notify( notify );   
+    if( notify ) { sig_child_exit->emit( ); } 
+    //Notify( notify );   
   }
   
   return status;
@@ -182,32 +211,20 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   FXString msg  = "";
   struct   rusage __usage;
   FXint    pid  = ( FXint ) wait3( &status, 0, &__usage );
-
-  FXString key = FXString::value( pid );
-  if( m_descendants.has( key ) ) {
-    PERSEUS::Process *proc = m_descendants[ key ];
-    if( proc != NULL ) {
-      m_descendants.remove( key );
-      delete proc;
-      msg = "Unregister the process of the descendant "; 
-      msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status ) + "\n";
-    }
-    msg += "Remaining number of registered processes: ";
-    msg += FXString::value( m_descendants.used( ) );
+   
+  PERSEUS::Process *proc = findChild( pid );
+  if( proc ) {
+      proc->exited( status );
+      sig_child_exit->emit( &pid );  
+  
+      msg += "Remaining number of registered processes: ";
+      msg += FXString::value( m_descendants.used( ) );
   }
   else { 
-    msg = "The process of the descendant ";
-    msg + FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
+    msg += "The UNKNOWN chidern process of the descendant ";
+    msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
   }    
   
-  // Information of the user of bad a process termaination 
-  if( status != 0 ) {
-    FXString head = "Non-standard process termination"; 
-    FXString msg = "The process " + FXString::value( pid ) + " terminated with an error. \n";
-    msg += "Exit code : " + FXString::value( status );   
-    
-    FXMessageBox::warning( this, MBOX_OK, head.text( ), msg.text( ) );
-  }  
   std::cout << msg << std::endl;  
   return 1;
 }

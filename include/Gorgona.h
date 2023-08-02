@@ -56,9 +56,12 @@ FXDECLARE( Gorgona )
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
   virtual ~Gorgona( );
+   
+  /* Signals / Slots */
+  GSignal *sig_child_exit; 
 
   /* Access methods */
-  void setNotify( FXObject *tgt, FXuint msg )           { m_tgt = tgt; m_message = msg; }
+  //void setNotify( FXObject *tgt, FXuint msg )           { m_tgt = tgt; m_message = msg; sig_notify->connect( m_tgt, m_message );}
   lua_State* getLua( )                                  { return m_lua; }
   FXbool     isLuaInit( )                               { return m_luaOk; } 
   FXbool     isCreated( )                               { return m_created; }
@@ -68,8 +71,10 @@ public:
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
-  FXbool     hasChild( FXint pid = 0 );  
-  PERSEUS::Process* findChild( FXint pid );
+
+  FXbool     removeChild( FXint pid, FXbool force = false );
+  FXbool     hasChild( FXint pid = 0 );       // true - if its a process with the PID in internal list
+  PERSEUS::Process* findChild( FXint pid );   // return Process object instance, if has a child process with the PID. Else NULL.
 
   TermInfo* getTerminal( )  { return m_term; }
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
