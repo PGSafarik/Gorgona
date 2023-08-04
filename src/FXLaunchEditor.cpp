@@ -52,6 +52,7 @@ FXLaunchEditor::FXLaunchEditor( FXWindow *p, IconsTheme *icons, FXGameItem *it )
   make_sect( "Statistiky","Statistiky a informace",       ic_advan );
 
   makevalue_text( "Zakladni", "Titul" );
+  makevalue_text( "Zakladni", "Game ID" );
   makevalue_text( "Zakladni", "Category" );
   FXArray<FXString> tlist;
   tlist.push( "native" );
@@ -365,6 +366,7 @@ void FXLaunchEditor::load( )
 {
   if( m_item ) {
     setvalue_text( "Titul", m_item->read( "Basic:title" ) );
+    setvalue_text( "Game ID", m_item->get_id( ) );  
     setvalue_text( "Category", m_item->read( "Basic:genre") );
     setvalue_text( "Rok vydani", m_item->read( "Advanced:year" ) );
     setvalue_text( "Autor", m_item->read( "Advanced:author" ) );
@@ -396,6 +398,7 @@ void FXLaunchEditor::save( )
 
     m_item->hidel = m_backg->getCheck( );
     m_item->exec->set_terminal( m_term->getCheck( ) ); 
+    m_item->set_id( getvalue_text( "Game ID" ) );
   }
 
 }
