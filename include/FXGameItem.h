@@ -21,10 +21,13 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<define.h>
-#include<Perseus/Runnable.h>
+
+
 
 struct FXGameItem {
-  FXString     id;		         // Identifikator polozky
+  Gorgona        *m_app;
+
+  FXString     m_id;		         // Identifikator polozky
   FXbool       hidel;	         // Skryt spoustec pri spusteni
   FXbool       change;         // Indikace zmeny polozky
   FXStringDictionary property; // Tabulka vlastnosti polozty
@@ -49,6 +52,8 @@ struct FXGameItem {
   void dump( FXbool force = false );
   //void clear( );
   FXbool validate( );
+  FXString  get_id( ) { return m_id; }
+  void      set_id( const FXString &value );
 
   void   checkIcons( FXApp *app );
   const FXString read( const FXString &k ) const;
@@ -85,11 +90,10 @@ protected :
 
 typedef  FXArray<FXGameItem*> FXGameItemArray;
 
-class Library : public FXArray<FXGameItem*> {
+
+class Library : public ECHIDNA::ObjectListOf<FXGameItem> {  
   Gorgona     *m_app;
   FSM_Changes  m_change;
-
-  //FXbool   m_change = false;
 
 public :
   Library( Gorgona *app );

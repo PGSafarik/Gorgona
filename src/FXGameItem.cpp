@@ -1,12 +1,17 @@
 // FXGameItem.cpp Copyright (c) 24/03/2019; D.A.Tiger; GNU GPL 3
 #include<FXGameItem.h>
-#include<Perseus/Runnable.h>
+
+
 #include<Utils.h>
+#include<FSM_Changes.h>
+#include<Gorgona.h>
 
 #include<iostream>
 
 FXGameItem::FXGameItem( Gorgona *app )
 {
+  m_app = app;
+
   this->hidel     = false;
   this->change    = false;
   
@@ -18,6 +23,8 @@ FXGameItem::FXGameItem( Gorgona *app )
 
 FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type )
 {
+  m_app = app;
+
   this->hidel     = false;
   this->change    = false;
   
@@ -44,6 +51,14 @@ void FXGameItem::clear( )
 }
 */
 
+void FXGameItem::set_id( const FXString &value ) 
+{ 
+  if( !value.empty( ) && value != m_id ) {
+    m_id = value; 
+    m_app->notify_changes( FSM_Changes::ID_CHANGE );
+  }
+}
+
 void FXGameItem::dump( FXbool force )
 {
   
@@ -69,8 +84,11 @@ void FXGameItem::dump( FXbool force )
 
 FXbool FXGameItem::validate( )
 {
-  FXString text =  "VALIDATION: The entry \"" + property[ "Basic:title" ]; 
+  FXbool repair = false;
+
+  FXString text =  "VALIDATION: \"" + property[ "Basic:title" ]; 
            text += "\" ";
+  FXString info = "";
 /*
   if( property[ "Basic:type" ] == "native" ) {
     FXString exec = property[ "Basic:exec" ];
@@ -86,8 +104,25 @@ FXbool FXGameItem::validate( )
     }
   }
 */ 
-  m_valid = exec->validation( ); 
-  if( m_valid ) { std::cout << text << "OK." << std::endl; }
+  if( m_id.empty( ) ) {
+    m_id = FXString::value( property[ "Basic:title" ].hash( ) );
+    repair = true;
+    change = true;
+
+    info = "FIX 1: The item does not have a GAME ID assigned, the program generated a replacement one.";
+    info += "This can then be changed in the item editor. ";    
+  }
+   
+   
+  if( repair or !exec->validation( )  ) {
+    std::cout << text << " [REPAIR] \n";
+    std::cout << "(" << info << ") \n";
+    m_valid = true;
+    m_app->notify_changes( FSM_Changes::ID_CHANGE );
+
+  }/*
+  else { std::cout << text << "OK. \n"; m_valid = true; } */
+
   return m_valid;
 }
 
@@ -114,6 +149,8 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
 void FXGameItem::load( XMLElement *eitem )
 {
   FXString _name, _value, _sect, _key;
+  
+  m_id = eitem->Attribute( "id" );
 
   for( XMLElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );
@@ -137,8 +174,8 @@ void FXGameItem::load( XMLElement *eitem )
   }
 
   exec->load( eitem ); 
-  /*validate( );
-
+  validate( );
+  /* 
   #ifdef __DEBUG
    dump( );
   #endif
@@ -165,6 +202,8 @@ void FXGameItem::save( XMLElement *pNode, const FXString &ename )
   XMLElement *e_desc  = NULL;                                             // Nosny element popisu
   XMLElement *e_tmp   = NULL;                                             // Pomocny element
   XMLElement *e_self  = pNode->InsertNewChildElement( ename.text( ) );    // Element reprezentujici (herni) polozku
+
+  e_self->SetAttribute( "id", m_id.text( ) );
 
   FXString key, value;
   for( FXival i = 0; i < this->property.no( ); i++ ) {
