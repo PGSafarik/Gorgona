@@ -12,31 +12,20 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#include<define.h>
+
 #ifndef __UTILS_H
 #define __UTILS_H
-
 /*************************************************************************
 * Utils.h                                                                *
 *                                                                        *
 * Knihovna jednoduchych funkci pro ruzne uziti v ramci projektu          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
 #include<Echidna/ObjectList.h>
+#include<Echidna/String_utils.h>
 
-/////////////////////////////////////////////////
-// Global types
-//
-typedef FXArray<FXString>      StringList;
-typedef FXArray<const FXchar*> CharsList;
-
-/////////////////////////////////////////////////
-// String helpers functions
-//
-extern FXint   split( const FXString &str, FXArray<FXString> *buffer, const FXString &sep = "/" ); // Vytvori seznam subretezcu dle zadaneho separatoru, vyskytuje-li se v retezci
-extern FXint   pack( FXArray<FXString> *buffer, FXString *str, const FXString &sep = "" );         // Spoji retezce z pole do jednoho (opak fce split( ))
-extern FXchar* convert_str( const FXString &str );                   // Konverze retezce FXString na FXchar[] vcetne alokace pameti
-extern void    clear_string_buffer( FXArray<const FXchar*> *buffer ); // Dealokace retezcu v bufferu, alokovanych pomoci convert_str( )
+using namespace ECHIDNA;
 
 //////////////////////////////////////////////////
 /* Aditional string (conversion) operators      */

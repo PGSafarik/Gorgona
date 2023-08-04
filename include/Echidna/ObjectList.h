@@ -13,6 +13,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#include<define.h>
+
 #ifndef __OBJECTLISTOF_H
 #define __OBJECTLISTOF_H
 
@@ -23,7 +25,6 @@
 * FXObjectListOf and FXObjectList                                        *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
 
 namespace ECHIDNA {
 
