@@ -12,7 +12,7 @@ Process::~Process( )
 { }
 
 /**************************************************************************************************/
-FXbool Process::run( const EntriesList &cmd )
+FXbool Process::run( const CharsList &cmd )
 {
   m_runtime = FXDate::localDate( ).getTime( );
 

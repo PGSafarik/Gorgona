@@ -43,7 +43,7 @@ namespace PERSEUS {
     FXint  retcode( )               { return m_retcode; }  
     
     /* operations */
-    FXbool run( const EntriesList &cmd );
+    FXbool run( const CharsList &cmd );
     void   exited( FXint code ) { m_run = false; m_retcode = code; };
 
   protected:
