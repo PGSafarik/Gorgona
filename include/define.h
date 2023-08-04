@@ -22,6 +22,8 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
 
+//#define __DEBUG
+
 // The standard routine & objects, syscalls and system types
 #include <cstdio>
 #include <unistd.h>
@@ -43,19 +45,23 @@
 #include<fox-1.7/fx.h>
 #include<fxghi.h>
 
+/* Externam namespaces */
+using namespace tinyxml2;
+using namespace std;
+using namespace FX;
+using namespace FXGHI;
+
+namespace PERSEUS { }
+namespace ECHIDNA { }
+
 // Internal shared header files
 #include<../version.h>
 #include<Utils.h>
 #include<IconsTheme.h>
 #include<LuaAPI.h>
 #include<FSM_Changes.h>
+#include<Perseus/Runnable.h>
 
-//#define __DEBUG
-
-using namespace tinyxml2;
-using namespace std;
-using namespace FX;
-using namespace FXGHI;
 
 #endif // DEFINE_H_INCLUDED
 
