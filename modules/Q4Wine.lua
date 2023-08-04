@@ -49,11 +49,11 @@ function Q4Wine:launcher( t )
   
   if index == nil or index == "" then index = prefix end
   
-  print( "prefix = " .. prefix )
-  print( "index = " .. index )
+  --print( "prefix = " .. prefix )
+  --print( "index = " .. index )
   
   local cmd = self.app .. " -p " .. prefix .. " -i " .. index .. "" 	
-  print( "prikaz ke spusteni = " .. cmd )
+  --print( "prikaz ke spusteni = " .. cmd )
 
   return cmd
 end
