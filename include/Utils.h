@@ -22,11 +22,12 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 #include<define.h>
+#include<Echidna/ObjectList.h>
 
 /////////////////////////////////////////////////
 // Global types
 //
-typedef FXArray<FXString> StringList;
+typedef FXArray<FXString>      StringList;
 typedef FXArray<const FXchar*> EntriesList;
 
 /////////////////////////////////////////////////
