@@ -27,7 +27,7 @@ struct FXGameItem {
 
   FXString     m_id;		         // Identifikator polozky
   FXbool       hidel;	         // Skryt spoustec pri spusteni
-  FXbool       change;         // Indikace zmeny polozky
+  FXbool       m_change;         // Indikace zmeny polozky
   FXStringDictionary property; // Tabulka vlastnosti polozty
 
   FXIcon *BigIcon;
@@ -45,44 +45,31 @@ struct FXGameItem {
   virtual ~FXGameItem( );
 
   ///////////////////////////////////////////////
-  ///
-  ///
-  void dump( FXbool force = false );
-  //void clear( );
-  FXbool validate( );
+  /* Overloaded operators                      */
+
+  FXint operator ( ) ( );
+  FXint operator ==( XMLElement *el ) { return Compare_with( el ); }
+  FXint operator !=( XMLElement *el ) { return !Compare_with( el ); }
+
+  ///////////////////////////////////////////////
+  /* Access methods                            */
   FXString  get_id( ) { return m_id; }
   void      set_id( const FXString &value );
 
+  ///////////////////////////////////////////////
+  /* Operations methods                        */
+  void dump( FXbool force = false );
+  FXbool validate( );
   void   checkIcons( FXApp *app );
   const FXString read( const FXString &k ) const;
   FXbool write( const FXString &k, const FXString &v, FXbool chang = true );
 
   void load( XMLElement *eitem );
-  void save( XMLElement *pNode, const FXString &ename = "Game" );
-
-  FXint operator ( ) ( )
-  { 
-    FXString title = read( "Basic:title" );
-    FXint pid = exec->run( );
-
-    if( pid <= 0 ) {
-      FXString head = "Execution Failed";
-      FXString msg = "Error number: ";
-      msg += FXString::value( pid ) + "\n"; 
-      switch( pid ) {
-        case -1 :  msg += "Game \'" + title + "\' is already launched!"; break; 
-        default :  msg += "The luach of game \'" + title + "\' failed!"; break;
-      }
-        
-      FXMessageBox::warning( (FXApp*) exec->get_app( ), MBOX_OK, head.text( ), msg.text( ) );
-      std::cerr << "[GorgonaWindow::Run]: " << head << msg << std::endl; 
-    }
-    else  { change = true; }
-
-    return pid;
-  }
+  void save( XMLElement *pNode, FXbool force = false );
 
 protected :
+  FXbool Compare_with( XMLElement *e );
+  XMLElement* FindEntry( XMLElement *parent );
 
 };
 

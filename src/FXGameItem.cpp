@@ -13,7 +13,7 @@ FXGameItem::FXGameItem( Gorgona *app )
   m_app = app;
 
   this->hidel     = false;
-  this->change    = false;
+  this->m_change    = false;
   
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
@@ -26,7 +26,7 @@ FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type
   m_app = app;
 
   this->hidel     = false;
-  this->change    = false;
+  this->m_change    = false;
   
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
@@ -50,6 +50,30 @@ void FXGameItem::clear( )
   this->property.clear( );
 }
 */
+/*** Operators ************************************************************************************/
+FXint FXGameItem::operator ( ) ( )
+{
+  FXString title = read( "Basic:title" );
+  FXint pid = exec->run( );
+
+  if( pid <= 0 ) {
+    FXString head = "Execution Failed";
+    FXString msg = "Error number: ";
+    msg += FXString::value( pid ) + "\n"; 
+    switch( pid ) {
+      case -1 :  msg += "Game \'" + title + "\' is already launched!"; break; 
+      default :  msg += "The luach of game \'" + title + "\' failed!"; break;
+    }
+        
+    FXMessageBox::warning( (FXApp*) exec->get_app( ), MBOX_OK, head.text( ), msg.text( ) );
+    std::cerr << "[GorgonaWindow::Run]: " << head << msg << std::endl; 
+  }
+  else  { m_change = true; }
+
+  return pid;
+}
+
+/*** Access ***************************************************************************************/
 
 void FXGameItem::set_id( const FXString &value ) 
 { 
@@ -68,7 +92,7 @@ void FXGameItem::dump( FXbool force )
   }
   else {
     std::cout << "Game entry "          << this->property[ "Basic:title" ] << std::endl;
-    std::cout << "Change: "             << this->change << std::endl;
+    std::cout << "Change: "             << this->m_change << std::endl;
     std::cout << "Hide GUI ON: "        << this->hidel << std::endl;
 
     for( FXival i = 0; i < this->property.no( ); i++ ) {
@@ -107,7 +131,7 @@ FXbool FXGameItem::validate( )
   if( m_id.empty( ) ) {
     m_id = FXString::value( property[ "Basic:title" ].hash( ) );
     repair = true;
-    change = true;
+    m_change = true;
 
     info = "FIX 1: The item does not have a GAME ID assigned, the program generated a replacement one.";
     info += "This can then be changed in the item editor. ";    
@@ -141,7 +165,7 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
    }
 
    if( resh ) {
-     this->change = chang;
+     this->m_change = chang;
    }
    return resh;
 }
@@ -191,44 +215,50 @@ const FXString FXGameItem::read( const FXString &k ) const
   return s;
 }
 
-void FXGameItem::save( XMLElement *pNode, const FXString &ename )
+void FXGameItem::save( XMLElement *pNode, FXbool force )
 {
-  #ifdef __DEBUG
-  std::cout << "Writing the Game item : " << read( "Basic:title" ).text( ) << std::endl;
-  //std::cout.flush( );
-  #endif
+  if( m_change || force ) {
+    FXString ename = "Game";                                                // FIXME: Ohejbak na rovnak - fixed it!
 
-  //XMLText    *e_text  = NULL;                                           // Element popisoveho textu
-  XMLElement *e_desc  = NULL;                                             // Nosny element popisu
-  XMLElement *e_tmp   = NULL;                                             // Pomocny element
-  XMLElement *e_self  = pNode->InsertNewChildElement( ename.text( ) );    // Element reprezentujici (herni) polozku
+    XMLElement *e_desc  = NULL;                                             // Nosny element popisu
+    XMLElement *e_tmp   = NULL;                                             // Pomocny element
+    XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
-  e_self->SetAttribute( "id", m_id.text( ) );
-
-  FXString key, value;
-  for( FXival i = 0; i < this->property.no( ); i++ ) {
-    key   = this->property.key( i );
-    if( key.empty( ) ) { continue; }
-    value = this->property.data( i );
-
-    // Zapis elementu, ktere je vyhodnejsi samostane osetrit
-    if( key == "Description" ) {
-      e_desc = e_self->InsertNewChildElement( key.text( ) );
-      /*XMLText *e_text = */e_desc->InsertNewText( value.text( ) );
-      // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
+    if( ( e_self = FindEntry( pNode ) ) == NULL )  {
+      e_self = pNode->InsertNewChildElement( ename.text( ) );
     }
-    else {
-      FXString CHName  = key.section( ":", 0 );
-      FXString CHParam = key.section( ":", 1 );
-      // std::cout << CHName.text( ) << "->" << CHParam.text( ) << " = " << value.text( ) << std::endl;
-      e_tmp = e_self->FirstChildElement( CHName.text( ) );
-      if( e_tmp == NULL ) { e_tmp = e_self->InsertNewChildElement( CHName.text( ) ); }
-      e_tmp->SetAttribute( CHParam.text( ), value.text( ) );
+
+    e_self->SetAttribute( "id", m_id.text( ) );
+
+    FXString key, value;
+    for( FXival i = 0; i < this->property.no( ); i++ ) {
+      key   = this->property.key( i );
+      if( key.empty( ) ) { continue; }
+      value = this->property.data( i );
+
+      // Zapis elementu, ktere je vyhodnejsi samostane osetrit
+      if( key == "Description" ) {
+        e_desc = e_self->InsertNewChildElement( key.text( ) );
+        /*XMLText *e_text = */e_desc->InsertNewText( value.text( ) );
+        // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
+      }
+      else {
+        FXString CHName  = key.section( ":", 0 );
+        FXString CHParam = key.section( ":", 1 );
+        // std::cout << CHName.text( ) << "->" << CHParam.text( ) << " = " << value.text( ) << std::endl;
+        e_tmp = e_self->FirstChildElement( CHName.text( ) );
+        if( e_tmp == NULL ) { e_tmp = e_self->InsertNewChildElement( CHName.text( ) ); }
+        e_tmp->SetAttribute( CHParam.text( ), value.text( ) );
+      }
     }
+
+    /// FIXME GAMEITEM_001: force!
+    exec->save( e_self, true );
+    #ifdef __DEBUG
+    std::cout << m_id << "\t" << read( "Basic:title" ) << " \n";
+    //std::cout.flush( );
+    #endif
   }
-
-  /// FIXME GAMEITEM_001: force!
-  exec->save( e_self, true );
 }
 
 void FXGameItem::checkIcons( FXApp *app )
@@ -252,6 +282,29 @@ void FXGameItem::checkIcons( FXApp *app )
     this->BigIcon = loadExternIcon( app, file, bis, bis );
   }
 }
+
+/*** Comparation methods **************************************************************************/
+FXbool FXGameItem::Compare_with( XMLElement *e )
+{
+  FXString tname = "Game";
+  
+  if( e && tname == e->Name( ) && m_id == e->Attribute( "id" ) ) {  
+    return true;
+  }
+
+  return false;
+}
+
+XMLElement* FXGameItem::FindEntry( XMLElement *parent )
+{
+  if( parent ) {
+    for( XMLElement *act = parent->FirstChildElement( ); act; act = act->NextSiblingElement( ) ) {
+      if( Compare_with( act ) ) { return act; }
+    } 
+  } 
+            
+  return NULL; 
+} 
 
 /**************************************************************************************************/
 Library::Library( Gorgona *app )
@@ -289,10 +342,15 @@ FXbool Library::load( XMLElement *library_el )
 FXbool Library::save( XMLElement *library_el )
 {
   FXbool result = false;
-
+   
   if( library_el && m_change( ) ) {
+    std::cout << "Save Library changes: \n";
+    std::cout << "===================== \n";
+
     FXint num = no( );
-    for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el ); }
+    for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el, true ); } // FIXME: nenene!
+    
+    std::cout << "" << num << std::endl;
   }
 
   return result;
