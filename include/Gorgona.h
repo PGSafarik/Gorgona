@@ -24,6 +24,7 @@
 *************************************************************************/
 #include<define.h>
 #include<FXGameItem.h> 
+#include<Library.h>
 #include<FSM_Changes.h>
 #include<Perseus/Process.h>
 

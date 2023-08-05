@@ -12,6 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#include<define.h>
+
 #ifndef __FXGAMEITEM_H
 #define __FXGAMEITEM_H
 /*************************************************************************
@@ -20,7 +22,6 @@
 * Herni polozka                                                          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
 
 struct FXGameItem {
   Gorgona        *m_app;
@@ -72,26 +73,5 @@ protected :
   XMLElement* FindEntry( XMLElement *parent );
 
 };
-
-typedef  FXArray<FXGameItem*> FXGameItemArray;
-
-
-class Library : public ECHIDNA::ObjectListOf<FXGameItem> {  
-  Gorgona     *m_app;
-  FSM_Changes  m_change;
-
-public :
-  Library( Gorgona *app );
-  virtual ~Library( );
-
-  /* Access methods */
-  FXbool isChanged( )                     { return m_change( ); }
-  void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
-
-  /* Operations methods */
-  virtual FXbool load( XMLElement *library_el );
-  virtual FXbool save( XMLElement *library_el );
-};
-
 #endif /* __FXGAMEITEM_H */
 /*** END ****************************************************************/
