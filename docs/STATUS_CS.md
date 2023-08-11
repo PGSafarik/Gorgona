@@ -70,6 +70,8 @@
    Reseni( ):  
 
 ## 3. Plány dalšího vývoje 
+### Poznamky k verzovaní projektu
+
 ### Následující vývojová verze (1.7.X.X)
 1. Přeložit základní technickou dokumentaci do Aj. Stručný uživatelsky manuál v Čj.
 2. Nahradit současně používanou, ale nepodporovanou TinyXml 1.x na novější TinyXml 2.x ( a to už docela hoří! )
