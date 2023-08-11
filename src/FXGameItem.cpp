@@ -217,7 +217,11 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( XMLElement *pNode, FXbool force )
 {
-  if( m_change || force ) {
+    #ifdef __DEBUG
+    std::cout << m_id << "\t" << read( "Basic:title" ) << " \n";
+    //std::cout.flush( );
+    #endif
+
     FXString ename = "Game";                                                // FIXME: Ohejbak na rovnak - fixed it!
 
     XMLElement *e_desc  = NULL;                                             // Nosny element popisu
@@ -225,11 +229,14 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
     XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
     if( ( e_self = FindEntry( pNode ) ) == NULL )  {
+      std::cout << "Create new Element \n";
       e_self = pNode->InsertNewChildElement( ename.text( ) );
     }
 
     e_self->SetAttribute( "id", m_id.text( ) );
 
+  if( m_change || force ) {
+    std::cout << "FORCE or CHANGES SAVE ITEM!! \n"; 
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );
@@ -254,10 +261,7 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
 
     /// FIXME GAMEITEM_001: force!
     exec->save( e_self, true );
-    #ifdef __DEBUG
-    std::cout << m_id << "\t" << read( "Basic:title" ) << " \n";
-    //std::cout.flush( );
-    #endif
+
   }
 }
 
@@ -288,7 +292,11 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
 {
   FXString tname = "Game";
   
-  if( e && tname == e->Name( ) && m_id == e->Attribute( "id" ) ) {  
+  FXString e_name = e->Name( );
+  FXString e_id    = e->Attribute( "id" );
+
+  //std::cout << "COMPARE with: " << e_id << " ( " << e_name << " ) \n";
+  if( e && tname == e_name && m_id == e_id ) {
     return true;
   }
 
@@ -298,8 +306,13 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
 XMLElement* FXGameItem::FindEntry( XMLElement *parent )
 {
   if( parent ) {
-    for( XMLElement *act = parent->FirstChildElement( ); act; act = act->NextSiblingElement( ) ) {
-      if( Compare_with( act ) ) { return act; }
+    cout << "Find in element " << parent->Name( ) << endl;
+    for( XMLElement *act = parent->FirstChildElement( "Game" ); act; act = act->NextSiblingElement( "Game" ) ) {
+      if( Compare_with( act ) ) { 
+        //cout << "found \n"; 
+        return act; 
+      }
+      //else { cout << "not found \n"; }  
     } 
   } 
             

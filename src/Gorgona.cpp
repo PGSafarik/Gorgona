@@ -35,7 +35,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 
 Gorgona::~Gorgona( )
 {
-
+  m_library->close( );
 }
 
 /**************************************************************************************************/
@@ -98,7 +98,10 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   FXApp::init( argc, argv, connect );
   ReadConfig( );
   LuaInit( );
-  LoadLibrary( );
+  //LoadLibrary( );
+  m_library->open( m_gamelist );
+  m_library->load( );
+  
    
   /* Docasne */
   m_term->name      = "xterm";
@@ -229,7 +232,8 @@ long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELID( sel ) ) {
     case Gorgona::SAVE_LIBRARY: 
     {
-      Save_Library( );
+      //Save_Library( );
+      m_library->save( );
       break;  
     }
     case Gorgona::SAVE_CONFIGURE: 
