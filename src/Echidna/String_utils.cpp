@@ -29,9 +29,19 @@ namespace ECHIDNA {
     return count;
   }
 
-  FXint pack( StringList *buffer, FXString *str, const FXString &sep )
+  FXString pack( const StringList &buffer, const FXString &sep )
   {
-    return 0;
+    FXString str = FXString::null;
+    FXint    num = buffer.no( );
+
+    for( FXint i = 0; i != num; i++ ) {
+       if( i == 0 ) { str = buffer[ 0 ]; }
+       else { str += buffer[ i ]; }
+       
+       if( i + 1 < num ) { str += sep; }
+    }     
+    
+    return str;
   }
 
   FXchar* convert_str( const FXString &str )
