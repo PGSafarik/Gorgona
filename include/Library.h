@@ -13,10 +13,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
 #include<define.h>
-#include<FSM_Changes.h>
 #include<Gorgona.h>
-
-#include<iostream>
 
 /*************************************************************************
 * Library.h                                                              *
@@ -31,21 +28,40 @@
 /* Global buffer type                           */  
 typedef  FXArray<FXGameItem*> FXGameItemArray;
 
+//////////////////////////////////////////////////
+/* Main class                                   */
 class Library : public ECHIDNA::ObjectListOf<FXGameItem> {  
   Gorgona     *m_app;
   FSM_Changes  m_change;
 
+  FXbool       m_opened = false; // Flag indicate open library 
+  FXString     m_file;           // Name and path to actual document 
+  FXString     m_elname;         // The name of items tags  
+  XMLDocument  m_xdoc;           // XML item Databaze 
+  XMLElement  *m_xroot;          // Root element for this opened document
+  XMLElement  *m_xbase;          // Element grouped by all items elemts
+     
 public :
-  Library( Gorgona *app );
+  Library( Gorgona *app, const FXString &elname = "Game" );
+  Library( Gorgona *app, const FXString &filename, const FXString &elname = "Game" );
   virtual ~Library( );
 
   /* Access methods */
+  FXbool isOpen( )                        { return m_opened; } 
   FXbool isChanged( )                     { return m_change( ); }
   void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
 
   /* Operations methods */
+  FXbool open( const FXString &filename );
+  FXbool close( FXbool force = false);
+  
+  FXint save( );
+  FXint load( ); 
   virtual FXbool load( XMLElement *library_el );
   virtual FXbool save( XMLElement *library_el );
+
+protected:
+  XMLElement* FindElementBy( XMLElement *parent, const FXString &attr, FXString &value );
 };
 
 #endif /*__LIBRARY_H */
