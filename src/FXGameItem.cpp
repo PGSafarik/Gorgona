@@ -217,23 +217,23 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( XMLElement *pNode, FXbool force )
 {
-    #ifdef __DEBUG
+  #ifdef __DEBUG
     std::cout << m_id << "\t" << read( "Basic:title" ) << " \n";
     //std::cout.flush( );
-    #endif
+  #endif
 
-    FXString ename = "Game";                                                // FIXME: Ohejbak na rovnak - fixed it!
+  FXString ename = "Game";         // FIXME: Ohejbak na rovnak - fixed it!
 
-    XMLElement *e_desc  = NULL;                                             // Nosny element popisu
-    XMLElement *e_tmp   = NULL;                                             // Pomocny element
-    XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
+  XMLElement *e_desc  = NULL;      // Nosny element popisu
+  XMLElement *e_tmp   = NULL;      // Pomocny element
+  XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
-    if( ( e_self = FindEntry( pNode ) ) == NULL )  {
-      std::cout << "Create new Element \n";
-      e_self = pNode->InsertNewChildElement( ename.text( ) );
-    }
+  if( ( e_self = FindEntry( pNode ) ) == NULL )  {
+    std::cout << "Create new Element \n";
+    e_self = pNode->InsertNewChildElement( ename.text( ) );
+  }
 
-    e_self->SetAttribute( "id", m_id.text( ) );
+  e_self->SetAttribute( "id", m_id.text( ) );
 
   if( m_change || force ) {
     std::cout << "FORCE or CHANGES SAVE ITEM!! \n"; 
