@@ -1,5 +1,5 @@
 # Project gorgon status and future plans 
-  - 11/08/23 -
+    = 11/08/23 =
   
 *Content:*  
   1. [News](#1-News)

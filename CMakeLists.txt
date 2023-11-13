@@ -4,8 +4,8 @@ PROJECT( Gorgona VERSION 1.5 DESCRIPTION "Gorgona its manager of your game libra
 # The project settings
 SET( BIN_NAME "gorgona" )                   # Executable binnary filename
 SET( CMAKE_INSTALL_PREFIX "/usr" )          # Install target directory
-SET( LIB_FOX   "/opt/foxlib/1.7/81" )       # Fox toolkit path
-SET( LIB_FXGHI "/opt/foxghi/0.4"  )         # Fox GHI path
+SET( LIB_FOX   "/opt/foxlib/1.7/84" )       # Fox toolkit path
+SET( LIB_FXGHI "/opt/foxghi/0.4/1"  )       # Fox GHI path
 SET( CMAKE_CXX_STANDARD 11 )                # C++ Standard
 SET( CMAKE_CXX_STANDARD_REQUIRED ON )       # C++ Standard
 #add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -13,7 +13,8 @@ SET( CMAKE_CXX_STANDARD_REQUIRED ON )       # C++ Standard
 
 # Configure project
 #CONFIGURE_FILE( MakeConfig.h.in MakeConfig.h )
-FILE( GLOB SOURCES src/*.cpp src/Perseus/*.cpp )                          # List of implementation files
+FILE( GLOB SOURCES src/*.cpp src/Perseus/*.cpp )                          # List of implementation files for the internal module PERSEUS 
+FILE( GLOB SOURCES src/*.cpp src/Echidna/*.cpp )                          # List of implementation files for the internal module ECHIDNA  
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
 
 # Add directories for project dependecies

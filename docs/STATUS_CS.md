@@ -74,6 +74,8 @@ Duležita jsou prvni dvě pozice čísla verze. Stabilni verze je obvykle ta, kt
 
 Vzdy jedna vývojová verze těsně pred vydaním stabilní bude zamražena a vyhrazena na testovaní provedených změn v projektu a ve statusu bude označena jako "Testing". To znamena, že se do ní v té době nebudou přidávat žádné nové funkce a pokud se bude zasahovat do kodu projektu, tak jedine pro opravu nalezených chyb.  
 
+
+
 ### Následující vývojová verze (1.7.0.0)
 1. Přeložit základní technickou dokumentaci do Aj. Stručný uživatelsky manuál v Čj.
 2. Nahradit současně používanou, ale nepodporovanou TinyXml 1.x na novější TinyXml 2.x ( a to už docela hoří! )
