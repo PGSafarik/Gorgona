@@ -345,10 +345,10 @@ void l_Error( const FXString &str )
   lua_error( _inst->getLua( ) );
 }
 
-void l_ErrorMessage( FXint num, const FXString &msg )
+void l_ErrorMessage( FXint num, const FXString &msg, FXbool gui )
 {
   FXString err_text;
-  FXString err_head = "Script runtime error ( ";
+  FXString err_head = "Lua Script runtime error ( ";
   err_head += FXString::value( num ) + " )";
 
   if( msg.empty( ) ) {
@@ -358,7 +358,7 @@ void l_ErrorMessage( FXint num, const FXString &msg )
   else { err_text = msg; }
 
   output( err_head + "\n" + err_text );
-  FXMessageBox::error( _inst, MBOX_OK, err_head.text( ), err_text.text( ) );
+  if( gui ) { FXMessageBox::error( _inst, MBOX_OK, err_head.text( ), err_text.text( ) ); }
 }
 
 void l_TableWrite_str( lua_State *L, const FXString &key, const FXString &value )

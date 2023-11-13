@@ -33,7 +33,7 @@ void       l_close( );
 // Pomocne rutiny
 FXbool l_Script( const FXString &script );
 void   l_Error( const FXString &str );
-void   l_ErrorMessage( FXint num, const FXString &msg = FXString::null );
+void   l_ErrorMessage( FXint num, const FXString &msg = FXString::null, FXbool gui = true );
 void   l_TableWrite_str( lua_State *L, const FXString &key, const FXString &value ); // t[key] = value
 void   l_TableWrite_num( lua_State *L, const FXString &key, FXint value );
 FXint  luax_pushStringArray( const FXArray<FXString> &array );
