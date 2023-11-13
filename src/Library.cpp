@@ -70,16 +70,29 @@ FXint Library::load( )
 FXint Library::save( )
 {
   FXint res = -1;
-
-  if( m_opened ) { 
-   XMLElement *root = m_xdoc.RootElement( );
-   ( save( root->FirstChildElement( "Library" ) )? res = 1 : res = 0 ); 
-  }
+  FXString msg = "[Gorgona::Save_Library] ";
   
-  if( ( res > 0 ) && m_xdoc.SaveFile( m_file.text( ) ) != XML_SUCCESS ) { 
-    std::cout << "[Gorgona::Save_Library] XML writting error - " << m_xdoc.ErrorName() << "(" << m_xdoc.ErrorID( ) << "): " << m_xdoc.ErrorStr( ) << std::endl;
+  if( m_opened ) {
+    XMLElement *root = m_xdoc.RootElement( );
+    if( this->save( root->FirstChildElement( "Library" ) ) ) {
+      msg += "Write XML library ";
+      if( m_xdoc.SaveFile( m_file.text( ) ) == XML_SUCCESS ) { 
+        msg += "SUCCESS";
+        res = 0; 
+      }
+      else { 
+        res = m_xdoc.ErrorID( );   
+        msg += "FAILED: "; 
+        msg += m_xdoc.ErrorName( ); 
+        msg += "("; 
+        msg += FXString::value( res ) + "): "; 
+        msg += m_xdoc.ErrorStr( );
+      }  
+    }
+    else { msg += "There is nothing to store"; }
   }
 
+  std::cout << msg << std::endl;  
   return res;
 }
 
@@ -119,6 +132,7 @@ FXbool Library::save( XMLElement *library_el )
     for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el, force ); } // FIXME: nenene!
     
     std::cout << "" << num << std::endl;
+    result = true;
   }
 
   return result;
