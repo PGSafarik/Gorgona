@@ -21,12 +21,11 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_initialized = false;
   m_created     = false;
 
-  m_lua     = luaL_newstate( );  
+  m_lua = luaL_newstate( );  
 
-  mx_root     = NULL;
+  mx_root   = NULL;
   m_library = new Library( this );
-
-  m_term = new TermInfo;
+  m_term    = new TermInfo;
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 
@@ -94,8 +93,16 @@ void Gorgona::create( )
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
   Welcome( this ); 
- 
+  
   FXApp::init( argc, argv, connect );
+
+#ifdef __DEBUG
+  std::cout << reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "] \n";
+  std::cout << "System configure directory:: " << reg( ).getSystemDirectories( ) << std::endl;
+  std::cout << "User configure directory: " << reg( ).getUserDirectory( ) << std::endl;
+  std::cout << "User home directory:" << FXSystem::getHomeDirectory( ) << std::endl;
+#endif
+
   ReadConfig( );
   LuaInit( );
   //LoadLibrary( );
@@ -175,7 +182,7 @@ FXint Gorgona::execLuaFile( const FXString &script )
   FXint result = -1;
 
   if( m_lua ) {
-    if( ( result = luaL_dofile( m_lua, script.text( ) ) ) != 0 ) { l_ErrorMessage( result ); }    
+    if( ( result = luaL_dofile( m_lua, script.text( ) ) ) != 0 ) { l_ErrorMessage( result, FXString::null, false ); }    
   }
 
   return result;
@@ -249,7 +256,8 @@ long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
   if( m_modify( ) ) { 
-    Save_Library( ); 
+    //Save_Library( ); 
+    m_library->save( ); 
     if( m_modify( ) ) { std::cout << "Gorgona: NEULOZENE ZMENY" << std::endl; }
  }
     
@@ -304,7 +312,7 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 
 void Gorgona::ReadConfig( )
 {
-  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
+  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/opt/Gorgona/share/games/Gorgona/modules/Launchers.lua" );
   m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
   FXString xmllist = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
   
@@ -314,12 +322,12 @@ void Gorgona::ReadConfig( )
 
 void Gorgona::LuaInit( )
 {
-  if( l_open( this ) ) { 
-    FXint result = execLuaFile( m_initscript );
-    m_luaOk = ( result == 0 ); 
-    std::cout << "[INFO Gorgona]: Lua initialized: " << m_initscript  << " => " << result << std::endl; 
-  }
-  else { std::cout << "[ERROR Gorgona]: Lua its NOT opened!"; }
+  FXString msg = "[INFO Gorgona]: Lua initialize ";
+
+  if( l_open( this ) && execLuaFile( m_initscript ) ) { msg += "OK"; }
+  else { msg += " FAILED"; }
+
+  std::cout << msg << std::endl; 
 }
 
 void Gorgona::LoadLibrary( )
@@ -338,6 +346,7 @@ void Gorgona::LoadLibrary( )
 }
 
 */
+/*
   XMLDocument     x_document;  // XML instance of the games list
   XMLElement      *x_root;     // XML root element of the games list 
 
@@ -351,10 +360,13 @@ void Gorgona::LoadLibrary( )
     std::cout << "[Gorgona::Load_Library] XML read error - " << x_document.ErrorName() << "(" << x_document.ErrorID( ) << "): " << x_document.ErrorStr( ) << std::endl;
     //m_change = true;
   }
+*/
+
 }
 
 void Gorgona::Save_Library( )
 { 
+/*
   XMLDocument x_document;  
   x_document.NewDeclaration( );
 
@@ -372,6 +384,7 @@ void Gorgona::Save_Library( )
   }
 
   notify_changes( FSM_Changes::ID_DISCARD );
+  */
 }
 
 /*** END ******************************************************************************************/
