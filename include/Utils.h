@@ -24,6 +24,7 @@
 *************************************************************************/
 #include<Echidna/ObjectList.h>
 #include<Echidna/String_utils.h>
+#include<Echidna/XMLUtils.h>
 
 using namespace ECHIDNA;
 
