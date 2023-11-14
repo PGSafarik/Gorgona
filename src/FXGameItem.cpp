@@ -296,8 +296,8 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
   FXString e_id    = e->Attribute( "id" );
 
   //std::cout << "COMPARE with: " << e_id << " ( " << e_name << " ) \n";
-  if( e && tname == e_name && m_id == e_id ) {
-    return true;
+  if( e && tname == e_name  ) {
+    if( e_id.empty( ) || m_id == e_id  ) { return true; }
   }
 
   return false;
