@@ -19,18 +19,32 @@ Library::~Library( )
 /**************************************************************************************************/
 FXbool Library::open( const FXString &filename )
 {
+  if( !filename.empty( ) ) {
+    m_file = filename;
+    if( m_opened ) { close( ); }
+  }
+
   if( !isOpen( ) && !filename.empty( ) && ( m_xdoc.LoadFile( filename.text( ) ) == XML_SUCCESS ) ) {
     std::cout << "[DEBUG - Library::open] Loading Library from file: " << filename << std::endl;
     if( ( m_xroot = m_xdoc.RootElement( ) ) != NULL ) {
       if( ( m_xbase  = m_xroot->FirstChildElement( "Library" ) ) != NULL ) {
-        m_file   = filename;
         //m_elname = elname;
         m_opened = true;
       }
     }     
   }
   else { // FIXME  - samostane metody.
-    std::cout << "[ERROR Library::open] XML read error - " << m_xdoc.ErrorName() << "(" << m_xdoc.ErrorID( ) << "): " << m_xdoc.ErrorStr( ) << std::endl;
+    int err_id = m_xdoc.ErrorID( ); 
+    std::cout << "[ERROR Library::open] XML read error - " << m_xdoc.ErrorName() << "(" << err_id << "): " << m_xdoc.ErrorStr( ) << std::endl;
+    if( err_id == 3 ) {  /* Pozadovany soubor knihovny nenalezen, nebo (jeste) nevytvorena. Prvni spusteni? */
+      m_xroot = m_xdoc.NewElement( "Gorgona" );
+      m_xbase = m_xdoc.NewElement( "Library" );
+      
+      m_xroot->InsertFirstChild( m_xbase );
+      m_xdoc.InsertFirstChild( m_xroot ); 
+
+      m_opened = true;
+    }
   }    
 
   return m_opened;
@@ -74,6 +88,10 @@ FXint Library::save( )
   
   if( m_opened ) {
     XMLElement *root = m_xdoc.RootElement( );
+    if( !root ) {
+      std::cout << "Library store file is not exist" << std::endl;
+      return -1;
+    }
     if( this->save( root->FirstChildElement( "Library" ) ) ) {
       msg += "Write XML library ";
       if( m_xdoc.SaveFile( m_file.text( ) ) == XML_SUCCESS ) { 
@@ -112,7 +130,7 @@ FXbool Library::load( XMLElement *library_el )
       else { std::cout << "[WARNING ItemList::Load( )] : Unable to create a trigger item" << std::endl; }  
       result = true;
     }
-  } /* Knihovna (jeste) nevytvorena. Prvni spusteni? */ 
+  } 
 
   return result; 
 }
