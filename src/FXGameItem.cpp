@@ -240,13 +240,13 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );
-      if( key.empty( ) ) { continue; }
       value = this->property.data( i );
+      if( key.empty( ) || value.empty( ) ) { continue; }
 
-      // Zapis elementu, ktere je vyhodnejsi samostane osetrit
+      // Zapis Polozek, ktere je vyhodnejsi osetrit samostatne
       if( key == "Description" ) {
         e_desc = e_self->InsertNewChildElement( key.text( ) );
-        /*XMLText *e_text = */e_desc->InsertNewText( value.text( ) );
+        e_desc->InsertNewText( value.text( ) );
         // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
       }
       else {
