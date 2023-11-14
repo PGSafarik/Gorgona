@@ -26,9 +26,9 @@
 struct FXGameItem {
   Gorgona        *m_app;
 
-  FXString     m_id;		         // Identifikator polozky
+  FXString     m_id;		       // Identifikator polozky
   FXbool       hidel;	         // Skryt spoustec pri spusteni
-  FXbool       m_change;         // Indikace zmeny polozky
+  FXbool       m_change;       // Indikace zmeny polozky
   FXStringDictionary property; // Tabulka vlastnosti polozty
 
   FXIcon *BigIcon;
@@ -39,7 +39,16 @@ struct FXGameItem {
 
   FXbool  m_valid;     // 
   
-  PERSEUS::Game *exec;  // Spoustec  
+  PERSEUS::Game *exec;  // Spoustec 
+
+  /* Item state flags */
+  enum {  
+    STATE_NORMAL = 0,  // Default state
+    STATE_NEW,         // New item  
+    STATE_CHANGE,      // This item is changed
+    STATE_REMOVE,      // This item has be removed
+    STATE_LAST
+  };
 
   FXGameItem( Gorgona *app );
   FXGameItem( Gorgona *app, const FXString &name, const FXString &type = "native" );
