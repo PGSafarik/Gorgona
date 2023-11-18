@@ -29,25 +29,41 @@ namespace PERSEUS {
     FXuint m_asid    = 0;     // Asociacni id polozky, ktera proces spustila
     FXuint m_runtime = 0;     // Cas startu behu procesu 
     FXint  m_retcode = 0;     // Navratovy kod
-    FXbool m_run     = false; // indikace beziciho procesu
+
+    /*** Control state-mat ***/ 
+    FXuint m_control_state;         // Stav ve kterem se objekt prave nachazi 
+    FXuint m_control_trans[ 4 ][ 4 ]; // Tabulka moznych prechodu z jednoho stavu do nasledujiciho
+    FXuint m_control_ends;          // Stav ve kterem automat skoncil
 
   public:
     Process( );
     virtual ~Process( );
+    
+    /* Controls states */
+    enum {
+      ST_INIT = 0,  // Inicializace
+      ST_RUNNING,   // Spusten
+      ST_ERROR,     // Chyba
+      ST_STOPPED,   // Zastaveno
+      ST_LAST 
+    }; 
 
     /* Access methods */
-    void   set_asid( FXuint value ) { m_asid = value; } 
     FXuint asid( )                  { return m_asid; }
     FXuint runtime( )               { return m_runtime; }
-    FXbool is_running( )            { return m_run; }
+    FXbool is_running( )            { return ( m_control_state == Process::ST_RUNNING ); }
     FXint  retcode( )               { return m_retcode; }  
-    
+    FXuint get_state( )             { return m_control_state; }
+    void   set_asid( FXuint value ); 
+
     /* operations */
     FXbool run( const CharsList &cmd );
-    void   exited( FXint code ) { m_run = false; m_retcode = code; };
+    void   exited( FXint code );
 
   protected:
-  
+    void   InitControlMat( );
+    FXbool CheckStateMat( FXuint next_state, FXbool fast = false );
+
   };   /* Class Process     */
 }      /* Namespace PERSEUS */
 #endif /* __PROCESS_H       */
