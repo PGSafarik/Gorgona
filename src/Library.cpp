@@ -89,7 +89,7 @@ FXint Library::save( )
   if( m_opened ) {
     XMLElement *root = m_xdoc.RootElement( );
     if( !root ) {
-      std::cout << "Library store file is not exist" << std::endl;
+      std::cerr << "[Gorgona::Save_Library] FATAL: Store not have root element!" << std::endl;
       return -1;
     }
     if( this->save( root->FirstChildElement( "Library" ) ) ) {
