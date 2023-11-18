@@ -13,8 +13,9 @@ FXGameItem::FXGameItem( Gorgona *app )
   m_app = app;
 
   this->hidel     = false;
-  this->m_change    = false;
-  
+  this->m_change  = false; //(depracated)
+  m_state         = FXGameItem::STATE_NEW;
+
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
 
@@ -26,8 +27,9 @@ FXGameItem::FXGameItem( Gorgona *app, const FXString &name, const FXString &type
   m_app = app;
 
   this->hidel     = false;
-  this->m_change    = false;
-  
+  this->m_change  = false; //(depracated)
+  m_state         = FXGameItem::STATE_NEW;
+ 
   this->BigIcon   = NULL;
   this->SmallIcon = NULL;
   

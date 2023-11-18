@@ -28,7 +28,8 @@ struct FXGameItem {
 
   FXString     m_id;		       // Identifikator polozky
   FXbool       hidel;	         // Skryt spoustec pri spusteni
-  FXbool       m_change;       // Indikace zmeny polozky
+  FXbool       m_change;       // Indikace zmeny polozky (depracated)
+  FXuint       m_state;        // Indikace aktualniho stavu polozky 
   FXStringDictionary property; // Tabulka vlastnosti polozty
 
   FXIcon *BigIcon;
