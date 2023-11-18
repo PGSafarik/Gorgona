@@ -19,6 +19,10 @@ Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
   m_change   = false;
   m_notify   = false;
   m_terminal = false;
+  m_workdir = FXString::null;     
+  m_command = FXString::null;     
+  m_execute = FXString::null; 
+  m_pid     = 0;     
 }
 
 Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
@@ -30,9 +34,12 @@ Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, F
   m_notify   = false;
   m_launchid = launcher;
   m_terminal = false; 
+  m_workdir = FXString::null;     
+  m_command = FXString::null;     
+  m_execute = FXString::null;     
+  m_pid     = 0;
 
   set_command( cmd );
-  
 }
 
 Runnable::~Runnable( )
