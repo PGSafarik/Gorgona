@@ -53,6 +53,17 @@ struct TermInfo {
   FXString p_run;     // Parametr predavajici prikaz ke spusteni v terminalu
   FXString p_noclose; // Parametr zabranujici ukonceni emulatoru po provedeni prikazu
   FXString p_workdir; // Parametr, umoznujici (u nekterych) emulatoru terminalu zmenit pracovni adresar (Gorgona jej nevyuziva)
+
+  TermInfo( )
+  {
+     name = FXString::null;
+     exec = FXString::null; 
+     p_run = FXString::null;
+     p_noclose = FXString::null;
+     p_workdir  = FXString::null;
+  }
+
+  ~TermInfo( ) { }
 };
 
 //////////////////////////////////////////////////
