@@ -2,12 +2,25 @@
 #include<Library.h>
 
 Library::Library( Gorgona *app, const FXString &elname )
-       : m_app( app ), m_elname( elname ) 
-{ }
+{ 
+  m_app    = app;
+  m_elname = elname;
+
+  m_opened = false;        
+  m_file   = FXString::null;
+  m_xroot  = NULL;          
+  m_xbase  = NULL;          
+}
 
 Library::Library( Gorgona *app, const FXString &filename, const FXString &elname )
-       : m_app( app ), m_elname( elname )
 {
+  m_app    = app;
+  m_elname = elname;
+  m_opened = false;        
+  m_file   = FXString::null;
+  m_xroot  = NULL;          
+  m_xbase  = NULL;          
+
   open( filename );
 }
 
@@ -55,13 +68,18 @@ FXbool Library::close( FXbool force )
   if( !m_opened ) { return m_opened; }
   if( !m_change( ) || force ) {
     if( m_change( ) ) { m_change.handle( m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_DISCARD ), NULL ); }
-    FXint num = no( );
-    for( FXint i = 0; i != num; i++ ) { 
-      FXGameItem *it = at( i );
-      erase( i );
-      if( it ) { delete it; }  
+    
+    FXint num = this->no( );
+    while( num > 0 ) {
+      FXGameItem *it = this->tail( );
+      if( it ) {
+        erase( num - 1 );
+        delete it; 
+      }
+      num = this->no( ); 
     }
     clear( );
+
     m_xbase = NULL;
     m_xroot = NULL;
     m_xdoc.Clear( );

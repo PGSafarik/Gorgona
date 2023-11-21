@@ -34,12 +34,12 @@ class Library : public ECHIDNA::ObjectListOf<FXGameItem> {
   Gorgona     *m_app;
   FSM_Changes  m_change;
 
-  FXbool       m_opened = false; // Flag indicate open library 
-  FXString     m_file;           // Name and path to actual document 
-  FXString     m_elname;         // The name of items tags  
-  XMLDocument  m_xdoc;           // XML item Databaze 
-  XMLElement  *m_xroot;          // Root element for this opened document
-  XMLElement  *m_xbase;          // Element grouped by all items elemts
+  FXbool       m_opened; // Flag indicate open library 
+  FXString     m_file;   // Name and path to actual document 
+  FXString     m_elname; // The name of items tags  
+  XMLDocument  m_xdoc;   // XML item Databaze 
+  XMLElement  *m_xroot;  // Root element for this opened document
+  XMLElement  *m_xbase;  // Element grouped by all items elemts
      
 public :
   Library( Gorgona *app, const FXString &elname = "Game" );
