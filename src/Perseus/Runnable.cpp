@@ -240,8 +240,7 @@ void Runnable::dump( )
 } 
 
 /*************************************************************************************************/
-FXDEFMAP( Game ) GAMEMAP[ ] = { };
-FXIMPLEMENT( Game, Runnable, GAMEMAP, ARRAYNUMBER( GAMEMAP ) )
+FXIMPLEMENT( Game, Runnable, NULL, 0 )
 
 Game::Game( Gorgona *a, FXObject *tgt, FXSelector sel )
     : Runnable( a, tgt, sel )
