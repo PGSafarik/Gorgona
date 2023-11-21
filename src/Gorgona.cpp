@@ -24,8 +24,8 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_lua = luaL_newstate( );  
 
   mx_root   = NULL;
-  m_library = new Library( this );
-  m_term    = new TermInfo;
+  m_library = std::unique_ptr<Library>( new Library( this ) );
+  m_term    = std::unique_ptr<TermInfo>( new TermInfo );
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 
@@ -35,6 +35,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 Gorgona::~Gorgona( )
 {
   m_library->close( );
+  //if( m_library ) { delete m_library; }
 }
 
 /**************************************************************************************************/
@@ -68,6 +69,7 @@ FXbool Gorgona::removeChild( FXint pid, FXbool force )
 
   if( m_descendants.has( key ) ) {
     PERSEUS::Process *proc = m_descendants[ key ];
+    //auto proc =  m_descendants[ key ];
 
     if( proc != NULL ) {
       if( proc->is_running( ) ) { 
@@ -139,7 +141,7 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
     pid = proc->id( );
 
     FXString key =  FXString::value( pid );
-    m_descendants.insert( key , proc ); 
+    m_descendants.insert( key.text( ), proc ); 
 
     if( m_verbose ) {
       std::cout << "EXECUTE the process:";
@@ -281,9 +283,10 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
   FXint    start, nargs;  // Aktualni sekce, ktera predstavuje argument; Pocet parametru v retezci
   FXString section_str;   // Subsekce retezce
  
+  if( cmd.empty( ) ) { return; }
 
   clear_string_buffer( buffer );
-  if( !cmd.empty( ) && ( cmd != "" ) ) {
+  //if( !cmd.empty( ) && ( cmd != "" ) ) {
     nargs = cmd.contains( " " );
     if( nargs > 0 ) {
       nargs++;
@@ -300,7 +303,7 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
       start = nargs = 1;
       buffer->append( convert_str( cmd ) );
     }
-  }
+  //}
 
   if( nargs == start ) {
     buffer->append( NULL );

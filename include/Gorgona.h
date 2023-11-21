@@ -37,8 +37,9 @@ FXDECLARE( Gorgona )
   FSM_Changes m_modify;      // Modify statemat 
 
   /* Child process managment */
-  FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
-
+  //FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
+  FXDictionaryOf<PERSEUS::Process> m_descendants;
+  \
   /* Lua */
   lua_State *m_lua;        // Instance of the Lua language interpreter
   FXbool     m_luaOk;      // True indicate succeful initialize the Lua language ;) 
@@ -49,8 +50,10 @@ FXDECLARE( Gorgona )
   FXString        m_gamelist;   // Filename for list of games (xml)
   XMLDocument     mx_document;  // XML instance of the games list
   XMLElement      *mx_root;     // XML root element of the games list 
-  Library         *m_library;   // Library of games ;)
-  TermInfo        *m_term;      // Terminal profile
+  //Library         *m_library;   // Library of games ;)
+  std::unique_ptr<Library> m_library;
+  //TermInfo        *m_term;      // Terminal profile
+  std::unique_ptr<TermInfo> m_term;
  
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
@@ -64,27 +67,27 @@ public:
   FXbool     isLuaInit( )                               { return m_luaOk; } 
   FXbool     isCreated( )                               { return m_created; }
   FXbool     isInitialized( )                           { return m_initialized; }      
-  Library*   getLibrary( )                              { return m_library; }
+  Library*   getLibrary( )                              { return m_library.get( ); }
   FXString   getProfileDir( )                           { return m_profiledir; }
   void       setProfileDir( const FXString &directory ) { m_profiledir = directory; };
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
 
-  TermInfo* getTerminal( )  { return m_term; }
-  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                        
+  TermInfo* getTerminal( )  { return m_term.get( ); }              
+  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                       
 
   /* Operations methods */
-  virtual void create( );
-  virtual void init( int& argc, char** argv, FXbool connect = true );
+  virtual void create( );                                              
+  virtual void init( int& argc, char** argv, FXbool connect = true );  
 
-  FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );
-  FXint exec( const FXString &cmd, FXuint term_opts );
-  FXint wait( PERSEUS::Process *process, FXbool notify = false );
-  FXint execLuaFile( const FXString &script );
+  FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );   
+  FXint exec( const FXString &cmd, FXuint term_opts );               
+  FXint wait( PERSEUS::Process *process, FXbool notify = false );    
+  FXint execLuaFile( const FXString &script );                        
 
-  FXbool     removeChild( FXint pid, FXbool force = false ); // true - if its process instanse with entered pid is removed from internal list
-  FXbool     hasChild( FXint pid = 0 );                      // true - if its a process with the PID in internal list
-  PERSEUS::Process* findChild( FXint pid );                  // return Process object instance, if has a child process with the PID. Else NULL.
+  FXbool removeChild( FXint pid, FXbool force = false ); // true - if its process instanse with entered pid is removed from internal list
+  FXbool hasChild( FXint pid = 0 );                      // true - if its a process with the PID in internal list
+  PERSEUS::Process* findChild( FXint pid );              // return Process object instance, if has a child process with the PID. Else NULL.
 
   long notify_changes( FXuint mesg ) { return m_modify.handle( this, FXSEL( SEL_COMMAND, mesg ), NULL ); }  
  
