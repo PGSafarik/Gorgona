@@ -26,17 +26,21 @@
 
 // The standard routine & objects, syscalls and system types
 #include <cstdio>
+#include <iostream>
+#include <string>
+#include <memory>
+
+// The LUA interpreter
+extern "C" {
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
-#include <iostream>
-#include <string>
 
-// The LUA interpreter
 #include<lua5.1/lualib.h>
 #include<lua5.1/lauxlib.h>
+}
 
 // TinyXML - XML support
 #include<tinyxml2.h>
