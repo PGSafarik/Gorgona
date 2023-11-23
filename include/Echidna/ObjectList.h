@@ -35,9 +35,9 @@ namespace ECHIDNA {
     /* Opertions methods */ 
     FXival find( const OBJECT *object, FXival start = 0 ) 
     {
-       FXival pos = FXMAX( 0, pos );
+       FXival pos = FXMAX( 0, start );
        FXival num = FXArray<OBJECT*>::no( );
-       OBJECT *p  = FXArray<OBJECT*>::data( );
+       OBJECT **p  = FXArray<OBJECT*>::data( );
      
        while( pos < num ) {
          if( p[ pos ] == object ) { return pos; }
@@ -50,7 +50,7 @@ namespace ECHIDNA {
     FXival rfind( const OBJECT *object, FXival start = 2147483647 )
     {
       FXival pos = FXMIN( start, FXArray<OBJECT*>::no( ) - 1 ); 
-      OBJECT *p  = FXArray<OBJECT*>::data( );
+      OBJECT **p  = FXArray<OBJECT*>::data( );
 
       while( 0 <= pos ) {
         if( p[ pos ] == object ) { return pos; }
@@ -63,7 +63,7 @@ namespace ECHIDNA {
     void save( FXStream &store )
     {
       FXint num = FXArray<OBJECT*>::no( );
-      OBJECT *p = FXArray<OBJECT*>::data( );
+      OBJECT **p = FXArray<OBJECT*>::data( );
 
       store << num;
       for( FXival i = 0; i != num; i++ ) { store << p[ i ]; }       
@@ -75,7 +75,7 @@ namespace ECHIDNA {
       store >> num;
   
       if( FXArray<OBJECT*>::no( num ) ) {
-        OBJECT *p = FXArray<OBJECT*>::data( ); 
+        OBJECT **p = FXArray<OBJECT*>::data( ); 
         for( FXival i = 0; i != num; i++ ) { store >> p[ i ]; } 
       } 
     } 
