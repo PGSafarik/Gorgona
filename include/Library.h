@@ -52,6 +52,7 @@ public :
   void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
 
   /* Operations methods */
+  FXbool remove( FXGameItem *it );
   FXbool open( const FXString &filename );
   FXbool close( FXbool force = false);
   

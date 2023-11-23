@@ -30,6 +30,32 @@ Library::~Library( )
 }
 
 /**************************************************************************************************/
+FXbool Library::remove( FXGameItem *it )
+{
+  FXbool res = false;
+  FXival pos = find( it );
+
+  if( pos >= 0 ) {
+    FXString name = it->read( "Basic:title" );
+    FXString id   = it->get_id( );
+
+    // Odstraneni instance polozky z knihovny
+    erase( pos );
+    if( it ) { delete it; }
+
+    // Vymaz zaznamu polozky z XML databaze
+    XMLElement *record = FindElementBy( m_xbase, "id", id );
+    if( !record ) { record = FindElementBy( m_xbase, "title", name ); }
+    if( record ) {
+      m_xdoc.DeleteNode( record );
+      res = true;
+    }
+	}
+  
+  return res;
+}
+
+ 
 FXbool Library::open( const FXString &filename )
 {
   if( !filename.empty( ) ) {
