@@ -115,12 +115,15 @@ void FXListPane::removeItem( FXint id )
     std::cout << "From items list: id = " << pos << std::endl;
     m_itemslist->removeItem( pos );
     erase_f( data );
+    m_app->getLibrary( )->remove( data );
+    /*
     if( data != NULL ) {
       std::cout << "From memory" << std::endl;
       //data->clear( FXString::null );
       delete data;
     }
     data = NULL;
+    */
   }
   std::cout.flush( );
 }
