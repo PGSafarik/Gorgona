@@ -21,6 +21,7 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+/* asan;-fsanitize=address > project */
 
 //#define __DEBUG
 
@@ -60,11 +61,12 @@ namespace ECHIDNA { }
 
 // Internal shared header files
 #include<../version.h>
-#include<Utils.h>
+//#include<Gorgona.h>
 #include<IconsTheme.h>
 #include<LuaAPI.h>
 #include<FSM_Changes.h>
 #include<Perseus/Runnable.h>
+#include<Utils.h>
 
 
 #endif // DEFINE_H_INCLUDED
