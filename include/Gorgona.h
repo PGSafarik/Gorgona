@@ -110,8 +110,6 @@ protected:
   void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
   void LuaInit( );                                                               // Initialize langugae interpret of Lua 
   void ReadConfig( );                                                            // Load configurations data
-  void LoadLibrary( );                                                            // Load items library(ies)   
-  void Save_Library( );
 };
 
 #endif /* __GORGONA_H */
