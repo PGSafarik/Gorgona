@@ -6,7 +6,7 @@ namespace AutoVersion{
 	static const char DATE[]                 = "21";
 	static const char MONTH[]                = "11";
 	static const char YEAR[]                 = "2023";
-	static const char UBUNTU_VERSION_STYLE[] =  "11.23";
+	static const char UBUNTU_VERSION_STYLE[] = "11.23";
 	
 	//Software Status
 	static const char STATUS[]     = "Devel"; // Alpha, Beta, Devel, Testing, Stable
@@ -16,15 +16,14 @@ namespace AutoVersion{
 	static const long MAJOR    = 1;
 	static const long MINOR    = 6;
 	static const long BUILD    = 5;
-	static const long REVISION = 0;
+	static const long REVISION = 1;
 	
 	//Miscellaneous Version Types
-	static const long BUILDS_COUNT  = 1;
-	#define RC_FILEVERSION 1,6,5,0
-	#define RC_FILEVERSION_STRING "1, 6, 5, 0\0"
-	static const char FULLVERSION_STRING [] = "1.6.5.0";
+	#define RC_FILEVERSION 1,6,5,1
+	#define RC_FILEVERSION_STRING "1, 6, 5, 1\0"
+	static const char FULLVERSION_STRING [] = "1.6.5.1";
 	
-	//These values are to keep track of your versioning state, don't modify them.
-	static const long BUILD_HISTORY  = 0;
+	static const long BUILDS_COUNT  = 1;
+	static const long BUILD_HISTORY = 0;
 }
 #endif //VERSION_H
