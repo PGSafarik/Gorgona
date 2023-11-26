@@ -116,14 +116,6 @@ void FXListPane::removeItem( FXint id )
     m_itemslist->removeItem( pos );
     erase_f( data );
     m_app->getLibrary( )->remove( data );
-    /*
-    if( data != NULL ) {
-      std::cout << "From memory" << std::endl;
-      //data->clear( FXString::null );
-      delete data;
-    }
-    data = NULL;
-    */
   }
   std::cout.flush( );
 }
@@ -393,7 +385,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
 {
   long resh = 0;
   FXuint _placement = PLACEMENT_SCREEN;
-  FXSelector __sel = FXSEL( SEL_CHANGED, m_selector );
+  FXSelector notify = FXSEL( SEL_CHANGED, m_selector );
   FXGameItem *item;
   
   switch( FXSELID( sel ) ) {
@@ -410,7 +402,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
           m_app->getLibrary( )->push( item );
           this->insertItem( item );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          m_target->handle( this, __sel, NULL );
+          m_target->handle( this, notify, NULL );
           SaveNotify( );
           resh = 1;
         }
@@ -423,7 +415,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
         FXLaunchEditor *edit = new FXLaunchEditor( this, m_icth, item );
         if( edit->execute( _placement ) == true ) {
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          m_target->handle( this, __sel, NULL );
+          m_target->handle( this, notify, NULL );
           SaveNotify( );
           resh = 1;
         }
@@ -438,7 +430,7 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
         if( FXMessageBox::question( this, MBOX_YES_NO, "Smazat titul: ", msg.text( )  ) == MBOX_CLICKED_YES ) {
           this->removeItem( );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
-          m_target->handle( this, __sel, NULL );
+          m_target->handle( this, notify, NULL );
           resh = 1;
         }
       }
