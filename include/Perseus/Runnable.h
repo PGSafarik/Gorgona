@@ -59,7 +59,7 @@ namespace PERSEUS {
     FXString get_workdir( )                     { return m_workdir;   } 
     void     set_launchid( const FXString &id ) { m_launchid = id;    }
     FXString get_launchid( )                    { return m_launchid;  }
-    void     set_command( const FXString &cmd ) { Command( cmd );     }
+    void     set_command( const FXString &cmd ) { Command( cmd );     } // FIXME RUNNABLE_001: Run module launcher!
     FXString get_command( )                     { return m_command;   } 
     void     set_change( FXbool value )         { m_change = value;   }
     FXbool   is_changed( )                      { return m_change;    }

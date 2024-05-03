@@ -28,7 +28,7 @@ FXbool Process::run( const CharsList &cmd )
     if( res ) { 
       m_runtime = FXDate::localDate( ).getTime( );
     }
-    else { CheckStateMat( Process::ST_STOPPED ); }
+    else { CheckStateMat( Process::ST_ERROR ); }
   }
 
   return res;
@@ -62,13 +62,16 @@ void Process::InitControlMat( ) {
 
 FXbool Process::CheckStateMat( FXuint next_state, FXbool fast ) 
 { 
+  FXbool result = false;
+ 
   if( m_control_trans[ m_control_state ][ next_state ] == 1 || fast ) 
   { 
     m_control_state = next_state;    
-    return true; 
+    result = true; 
   }
  
-  return false;
+  std::cout << "Process " << id( ) << " state: " << m_control_state << std::endl;  
+  return result;
 }
 
 /*** END ******************************************************************************************/

@@ -39,7 +39,7 @@ Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, F
   m_execute = FXString::null;     
   m_pid     = 0;
 
-  set_command( cmd );
+  set_command( cmd ); // FIXME RUNNABLE_001: Run module launcher!
 }
 
 Runnable::~Runnable( )
@@ -115,11 +115,11 @@ FXbool Runnable::load( XMLElement *parent )
           m_launchprms.insert( _name, _value );
           
         }
-        Command( ); 
+        Command( ); // FIXME RUNNABLE_001: Run module launcher! 
       }
       else {
         m_launchid = re->Attribute( "type" );
-        set_command( re->Attribute( "exec" ) );
+        set_command( re->Attribute( "exec" ) ); // FIXME RUNNABLE_001: Run module launcher!
       }
 
       m_workdir = re->Attribute( "workdir" );
@@ -182,7 +182,7 @@ FXbool Runnable::validation( )
 void Runnable::CheckTerminal( )
 {
   if( m_terminal && m_app->hasTerminal( ) ) {
-    TermInfo *tnfo = m_app->getTerminal( );
+    PERSEUS::TermProfile *tnfo = m_app->getTerminal( );
     FXString  tcmd = tnfo->exec + " ";
     if( !tnfo->p_noclose.empty( ) ) { tcmd += tnfo->p_noclose + " "; }
     m_execute = tcmd + tnfo->p_run + " " + m_execute;

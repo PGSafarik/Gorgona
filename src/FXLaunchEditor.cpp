@@ -393,7 +393,7 @@ void FXLaunchEditor::save( )
     m_item->write( "Description", m_text->getText( ) );
 
     m_item->exec->set_launchid( getvalue_combo( "Spoustec" ) );
-    m_item->exec->set_command( getvalue_text( "Prikaz" ) );
+    m_item->exec->set_command( getvalue_text( "Prikaz" ) ); 
     m_item->exec->set_workdir( getvalue_text( "Pracovni adresar" ) );
 
     m_item->hidel = m_backg->getCheck( );

@@ -148,7 +148,7 @@ FXbool FXGameItem::validate( )
 
   }/*
   else { std::cout << text << "OK. \n"; m_valid = true; } */
-
+  //std::cout << text << " Loaded \n";
   return m_valid;
 }
 
