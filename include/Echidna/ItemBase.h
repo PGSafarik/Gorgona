@@ -81,6 +81,7 @@ public :
   FXint  load( XMLElement *store );
   FXint  save( XMLElement *store );
   FXbool clear( FXbool force = false );
+  virtual void dump( FXbool force = false, FXuint distance = 0 );
 
 protected: 
   ItemBase( ) { }

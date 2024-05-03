@@ -119,6 +119,28 @@ FXbool ItemBase::clear( FXbool force )
   return res;
 }
 
+void ItemBase::dump( FXbool force, FXuint distance )
+{
+  FXString d_str1 = "";
+  FXString d_str2 = "\t";
+  if( distance > 0 ) {
+    FXString n = "";
+    for( FXuint i = 0; i != distance; i++ ) { n += "\t"; }
+    d_str1 += n;
+    d_str2 += n;
+  }   
+    
+  std::cout << d_str1 << "[DEBUG - ItemBase::dump( ) ] " << m_type << " state: " << m_csa_state << std::endl;
+  FXint p_num = m_property.no( );
+  for( FXint i = 0; i != p_num; i++ ) {
+    if( !m_property.empty( i ) ) {
+      FXString p_key = m_property.key( i );
+      FXString p_val = m_property.data( i );
+      std::cout << d_str2 << m_type << "[" << p_key << "] = " << p_val << std::endl;
+    }
+  } 
+}
+
 /**************************************************************************************************/
 void ItemBase::InitStateMat( )
 {  
