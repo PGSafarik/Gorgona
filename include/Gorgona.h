@@ -27,6 +27,7 @@
 #include<Library.h>
 #include<FSM_Changes.h>
 #include<Perseus/Process.h>
+#include<Perseus/TermProfile.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
@@ -37,9 +38,8 @@ FXDECLARE( Gorgona )
   FSM_Changes m_modify;      // Modify statemat 
 
   /* Child process managment */
-  //FXDictionaryOf<PERSEUS::Process>  m_descendants; // List of registered descendants of the Gorgona process 
-  FXDictionaryOf<PERSEUS::Process> m_descendants;
-  \
+  FXDictionaryOf<PERSEUS::Process> m_descendants; // List of registered descendants of the Gorgona process 
+  
   /* Lua */
   lua_State *m_lua;        // Instance of the Lua language interpreter
   FXbool     m_luaOk;      // True indicate succeful initialize the Lua language ;) 
@@ -53,7 +53,7 @@ FXDECLARE( Gorgona )
   //Library         *m_library;   // Library of games ;)
   std::unique_ptr<Library> m_library;
   //TermInfo        *m_term;      // Terminal profile
-  std::unique_ptr<TermInfo> m_term;
+  std::unique_ptr<PERSEUS::TermProfile> m_term;
  
 public:
   Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
@@ -73,7 +73,7 @@ public:
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
 
-  TermInfo* getTerminal( )  { return m_term.get( ); }              
+  PERSEUS::TermProfile* getTerminal( )  { return m_term.get( ); }              
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                       
 
   /* Operations methods */

@@ -25,7 +25,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 
   mx_root   = NULL;
   m_library = std::unique_ptr<Library>( new Library( this ) );
-  m_term    = std::unique_ptr<TermInfo>( new TermInfo );
+  m_term    = std::unique_ptr<PERSEUS::TermProfile>( new PERSEUS::TermProfile );
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
 
@@ -314,7 +314,7 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 
 void Gorgona::ReadConfig( )
 {
-  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/opt/Gorgona/share/games/Gorgona/modules/Launchers.lua" );
+  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/opt/Gorgona/share/games/Gorgona/scripts/Launchers.lua" );
   m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
   FXString xmllist = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
   

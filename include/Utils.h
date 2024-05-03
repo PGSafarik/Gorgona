@@ -47,27 +47,6 @@ extern FXIcon* createIconType( FXApp *a, const FXString &type, FXuint opts = IMA
 extern void Welcome( FXApp *app );
 
 //////////////////////////////////////////////////
-/* Terminal profile struct                      */
-struct TermInfo {
-  FXString name;      // Nazev, identifikator terminalu
-  FXString exec;      // Spustitelny soubor emulatoru
-  FXString p_run;     // Parametr predavajici prikaz ke spusteni v terminalu
-  FXString p_noclose; // Parametr zabranujici ukonceni emulatoru po provedeni prikazu
-  FXString p_workdir; // Parametr, umoznujici (u nekterych) emulatoru terminalu zmenit pracovni adresar (Gorgona jej nevyuziva)
-
-  TermInfo( )
-  {
-     name = FXString::null;
-     exec = FXString::null; 
-     p_run = FXString::null;
-     p_noclose = FXString::null;
-     p_workdir  = FXString::null;
-  }
-
-  ~TermInfo( ) { }
-};
-
-//////////////////////////////////////////////////
 /* The Signal notify object                     */
 struct GSlot {
   FXbool    clear_me; // Priznak, ze ma byt slot odklizen z pameti (neni-li uz potrebny) 
