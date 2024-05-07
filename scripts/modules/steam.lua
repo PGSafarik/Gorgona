@@ -25,22 +25,31 @@ end
 --- Implement module ---
 function module_Init( )
   self = { }
-  self.exec = "/usr/bin/steam"
+  --self.exec = "/usr/bin/steam"
   --self.steamURL = "steam://rungameid/"
+  
   self.info = { 
     name      = "Steam",
-	date      = "13/01/2023",
-	version   = "0.0.1",
-	modmanver = "0.1.0",
-	author    = "D.A.Tiger; drakarax@seznam.cz",
-	licencion = "GNU GPL v3 or latter",
-	descript  = "Support for the Steam game launcher"
+	  date      = "13/01/2023",
+	  version   = "0.0.1",
+	  modmanver = "0.1.0",
+	  author    = "D.A.Tiger; drakarax@seznam.cz",
+	  licencion = "GNU GPL v3 or latter",
+	  descript  = "Support for the Steam game launcher"
   }
 	
+  local _name = string.lower( self.info.name )
+  self.exec = os.which( _name )
+  
+  if Register_read( "Steam", "Autostart", "0" ) == "1" then
+    local _pid  = os.process( _name )
+    if _pid == 0 then _pid = Execute( self.exec ) end
+  end
+  
 	return setmetatable( self, module_mt )
 end
 
-function module:launcher( t )
+function module:launcher( t )  
   return self.exec .. " " .. SteamUrl( "rungameid", t[ 1 ] )
 end
 
