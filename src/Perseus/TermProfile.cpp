@@ -1,5 +1,5 @@
 // TermProfile.cpp; Gorgona/Perseus; Copyright (c) 27/04/2024;  D.A.Tiger; GNU GPL 3
-#include<TermProfile.h>
+#include<Perseus/TermProfile.h>
 using namespace PERSEUS;
 
 /**************************************************************************************************/
