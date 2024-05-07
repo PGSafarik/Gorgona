@@ -177,7 +177,7 @@ int l_launcher_exec( lua_State *L )
     */
   }
   
-  return 0;
+  return 1;
 }
 
 

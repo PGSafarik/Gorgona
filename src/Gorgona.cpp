@@ -43,8 +43,8 @@ FXbool Gorgona::hasChild( FXint pid )
   FXbool res = false;
 
   if( !m_descendants.empty( ) ) { 
-    if( pid == 0 ) { res = true; } // Bezi aspon jeden jakykoliv potomek
-    else if( pid > 0 ) {           // Dotaz na konkretni proces 
+    if( pid == 0 ) { res = true; } // Is there even one descendant of the Gorgon?
+    else if( pid > 0 ) {           // Does a Gorgon descendant run with this particular PID? 
       res = m_descendants.has( FXString::value( pid ) ); 
     }
   }
@@ -68,7 +68,6 @@ FXbool Gorgona::removeChild( FXint pid, FXbool force )
 
   if( m_descendants.has( key ) ) {
     PERSEUS::Process *proc = m_descendants[ key ];
-    //auto proc =  m_descendants[ key ];
 
     if( proc != NULL ) {
       if( proc->is_running( ) ) { 
@@ -97,12 +96,10 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   
   FXApp::init( argc, argv, connect );
 
-#ifdef __DEBUG
-  std::cout << reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "] \n";
-  std::cout << "System configure directory:: " << reg( ).getSystemDirectories( ) << std::endl;
-  std::cout << "User configure directory: " << reg( ).getUserDirectory( ) << std::endl;
-  std::cout << "User home directory:" << FXSystem::getHomeDirectory( ) << std::endl;
-#endif
+  DEBUG_OUT( reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "]" )
+  DEBUG_OUT( "System configure directory:: " << reg( ).getSystemDirectories( ) )
+  DEBUG_OUT( "User configure directory: " << reg( ).getUserDirectory( ) )
+  DEBUG_OUT( "User home directory:" << FXSystem::getHomeDirectory( ) )
 
   ReadConfig( );
   LuaInit( );
@@ -133,11 +130,14 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
      FIXME GORGONA_003: Dopracovat spousteci priznaky
   */
   FXint pid = 0;
-
+  
+  DEBUG_OUT( "Create new process" )
   PERSEUS::Process *proc = new PERSEUS::Process; 
 
+  DEBUG_OUT( "Run new process" )
   if( proc->run( cmd ) ) {
     pid = proc->id( );
+    DEBUG_OUT( "New process OK. PID is: " << pid )
 
     FXString key =  FXString::value( pid );
     m_descendants.insert( key.text( ), proc ); 
@@ -326,7 +326,7 @@ void Gorgona::LuaInit( )
 {
   FXString msg = "[INFO Gorgona]: Lua initialize ";
 
-  if( l_open( this ) && execLuaFile( m_initscript ) ) { msg += "OK"; }
+  if( l_open( this ) && ( execLuaFile( m_initscript ) == 0 ) ) { msg += "OK"; }
   else { msg += " FAILED"; }
 
   std::cout << msg << std::endl; 

@@ -30,7 +30,7 @@
 using namespace ECHIDNA;
 //////////////////////////////////////////////////
 /* Print debug log                               */
-#ifdef DEBUG
+#ifdef __DEBUG
 #define DEBUG_OUT(text) std::cout << "[DEBUG " << __FILE__ << " " << __LINE__ << "]: " << text << std::endl; 
 #else
 #define DEBUG_OUT(text)

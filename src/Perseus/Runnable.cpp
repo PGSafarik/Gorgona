@@ -50,14 +50,17 @@ FXint Runnable::run( )
   FXint pid = 0; 
 
   if( m_pid > 0 ) {
+    DEBUG_OUT( "Test is item runned" )
     if( !m_app->hasChild( m_pid ) ) { m_pid = 0; }
     else { return -1; }
   }
 
   FXString chwd = ChangeWorkDir( );
+  DEBUG_OUT( "Runned item" )
   if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { 
     m_pid = pid; 
     m_app->sig_child_exit->connect( this, Runnable::PROC_EXIT );
+    DEBUG_OUT( "OK PID is " << m_pid )
   }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
@@ -197,6 +200,7 @@ void Runnable::dump( )
   text += "     workdir: "    + m_workdir  + "\n";
   text += "     terminal: "   + FXString::value( m_terminal ) + "\n";
   text += "     executable: " + m_execute  + "\n";
+  text += "     PID: "        + FXString::value( m_pid ) + "\n"; 
   text += "   } \n";
 
   std::cout << text;  

@@ -69,6 +69,8 @@ FXint FXGameItem::operator ( ) ( )
         
     FXMessageBox::warning( (FXApp*) exec->get_app( ), MBOX_OK, head.text( ), msg.text( ) );
     std::cerr << "[GorgonaWindow::Run]: " << head << msg << std::endl; 
+    //std::cerr << "=====================================" << std::endl;
+    //dump( true );
   }
   else  { m_change = true; }
 
