@@ -21,15 +21,16 @@ local module_mt = { __index = module }
 --- Implement module ---
 function module_Init( )
   self = { }
-  self.exec = "/usr/local/bin/legendary"
+  self.exec = os.which( "legendary" )
+  
   self.info = { 
     name      = "Legendary",
-	date      = "12/01/2023",
-	version   = "0.0.1",
-	modmanver = "0.1.0",
-	author    = "D.A.Tiger; drakarax@seznam.cz",
-	licencion = "GNU GPL v3 or latter",
-	descript  = "Support for the Legendary game launcher"
+	  date      = "12/01/2023",
+	  version   = "0.0.1",
+	  modmanver = "0.1.0",
+	  author    = "D.A.Tiger; drakarax@seznam.cz",
+	  licencion = "GNU GPL v3 or latter",
+	  descript  = "Support for the Legendary game launcher"
   }
 	
 	return setmetatable( self, module_mt )

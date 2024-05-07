@@ -22,7 +22,9 @@ Q4Wine_mt = { __index = Q4Wine }
 --- Implement module ---
 function Q4Wine_Init( )
   self = { }
-	self.app = "/usr/bin/q4wine-cli"
+	--self.app = "/usr/bin/q4wine-cli"
+  self.app = os.which( "q4wine-cli" )
+  
 	self.info = { 
 		name      = "Q4Wine",
 		date      = "27/07/2016",
