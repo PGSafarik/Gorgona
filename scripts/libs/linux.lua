@@ -40,7 +40,16 @@ local function _eval_shell_exist( file )
   assert( file ~= "" )
   
   return _eval_shell_test( file, "e" ) 
-end    
+end   
+
+local function _eval_shell_process( exec_name )
+  assert( type( exec_name ) == "string" )
+  assert( exec_name ~= "" )
+  
+  local pid = _eval_shell_cmd( "ps -C " .. exec_name .. " -o pid=" ) 
+  if not pid or pid == "" then pid = "0" end
+  return tonumber( pid )
+end
 
 local function _file_name( path ) return path:gsub( "(.*/)(.*)", "%2" ) end
 local function _dir_name( path ) return path:gsub( "(.*/)(.*)", "%1" ) end    
@@ -57,6 +66,7 @@ os.fext       = _file_extension     -- Rozdeli nazev souboru (bez cesty) na jemn
 os.which      = _eval_shell_which   -- Binding prikazu which - vrati cestu ke spustitelnemu souboru podle jeho nazvu
 os.test       = _eval_shell_test    -- Binding prikazu test  - man test. Pouze na testovani souboru 
 os.exist      = _eval_shell_exist   -- True, pokud soubor existuje
+os.process    = _eval_shell_process -- Pokud process bezi, vrati jeho PID jinak 0
 
 io.cmdstream  = _eval_shell_cmd     -- Spusti shellovy prikaz a vrati jeho vystup
 
