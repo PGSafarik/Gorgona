@@ -16,6 +16,7 @@ scripts_dir     = "/home/gabriel/Projects/Fox/sources/Gorgona/scripts"
 package.path = package.path .. ";" .. scripts_dir .. "/libs/?.lua"
  
 require "extstring"
+require "linux"
 
 
 --- Rutiny rizeni modulu ---
