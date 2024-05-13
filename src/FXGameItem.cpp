@@ -221,10 +221,7 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( XMLElement *pNode, FXbool force )
 {
-  #ifdef __DEBUG
-    std::cout << m_id << "\t" << read( "Basic:title" ) << " \n";
-    //std::cout.flush( );
-  #endif
+ DEBUG_OUT( m_id << "\t" << read( "Basic:title" ) )
 
   FXString ename = "Game";         // FIXME: Ohejbak na rovnak - fixed it!
 
@@ -233,14 +230,13 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
   XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
   if( ( e_self = FindMyXMLElement( pNode ) ) == NULL )  {
-    std::cout << "Create new Element \n";
     e_self = pNode->InsertNewChildElement( ename.text( ) );
   }
 
   e_self->SetAttribute( "id", m_id.text( ) );
 
   if( m_change || force ) {
-    std::cout << "FORCE or CHANGES SAVE ITEM!! \n"; 
+    DEBUG_OUT( "FORCE or CHANGES SAVE ITEM!!!" ) 
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );
@@ -257,7 +253,6 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
       else {
         FXString CHName  = key.section( ":", 0 );
         FXString CHParam = key.section( ":", 1 );
-        // std::cout << CHName.text( ) << "->" << CHParam.text( ) << " = " << value.text( ) << std::endl;
         e_tmp = e_self->FirstChildElement( CHName.text( ) );
         if( e_tmp == NULL ) { e_tmp = e_self->InsertNewChildElement( CHName.text( ) ); }
         e_tmp->SetAttribute( CHParam.text( ), value.text( ) );
@@ -296,17 +291,12 @@ void FXGameItem::checkIcons( FXApp *app )
 XMLElement* FXGameItem::FindMyXMLElement( XMLElement *parent, const FXString &fname )
 {
   if( parent ) {
-    cout << "Find element: "<< fname << " in element " << parent->Name( );
     for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
       const char *_id = m_id.text( ); 
-      if( act->QueryStringAttribute( "id", &_id ) == XML_SUCCESS ) { 
-        cout << " found \n"; 
-        return act; 
-      } 
+      if( act->QueryStringAttribute( "id", &_id ) == XML_SUCCESS ) { return act; } 
     } 
   } 
-  
-  cout << " not found \n";          
+      
   return NULL; 
 } 
 
