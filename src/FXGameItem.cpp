@@ -232,7 +232,7 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
   XMLElement *e_tmp   = NULL;      // Pomocny element
   XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
-  if( ( e_self = FindEntry( pNode ) ) == NULL )  {
+  if( ( e_self = FindMyXMLElement( pNode ) ) == NULL )  {
     std::cout << "Create new Element \n";
     e_self = pNode->InsertNewChildElement( ename.text( ) );
   }
@@ -251,10 +251,8 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
       if( key == "Description" ) {
         if( ( e_desc = e_self->FirstChildElement( key.text( ) ) ) == NULL ) {
           e_desc = e_self->InsertNewChildElement( key.text( ) );
-          //e_desc->InsertNewText( value.text( ) );
         }
         e_desc->SetText( value.text( ) );
-        // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
       }
       else {
         FXString CHName  = key.section( ":", 0 );
@@ -310,16 +308,22 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
   return false;
 }
 
-XMLElement* FXGameItem::FindEntry( XMLElement *parent, const FXString &fname )
+XMLElement* FXGameItem::FindMyXMLElement( XMLElement *parent, const FXString &fname )
 {
   if( parent ) {
     cout << "Find element: "<< fname << " in element " << parent->Name( );
     for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
+      /*
       if( Compare_with( act ) ) { 
         cout << " found \n"; 
         return act; 
       }
-      //else {  }  
+       */
+      const char *_id = m_id.text( ); 
+      if( act->QueryStringAttribute( "id", &_id ) == XML_SUCCESS ) { 
+        cout << " found \n"; 
+        return act; 
+      } 
     } 
   } 
   

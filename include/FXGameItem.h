@@ -80,7 +80,7 @@ struct FXGameItem {
 
 protected :
   FXbool Compare_with( XMLElement *e );
-  XMLElement* FindEntry( XMLElement *parent, const FXString &fname = "Game" );
+  XMLElement* FindMyXMLElement( XMLElement *parent, const FXString &fname = "Game" );
 };
 
 #endif /* __FXGAMEITEM_H */
