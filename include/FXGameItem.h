@@ -57,11 +57,8 @@ struct FXGameItem {
 
   ///////////////////////////////////////////////
   /* Overloaded operators                      */
-
   FXint operator ( ) ( );
-  FXint operator ==( XMLElement *el ) { return Compare_with( el ); }
-  FXint operator !=( XMLElement *el ) { return !Compare_with( el ); }
-
+  
   ///////////////////////////////////////////////
   /* Access methods                            */
   FXString  get_id( ) { return m_id; }
@@ -79,7 +76,6 @@ struct FXGameItem {
   void save( XMLElement *pNode, FXbool force = false );
 
 protected :
-  FXbool Compare_with( XMLElement *e );
   XMLElement* FindMyXMLElement( XMLElement *parent, const FXString &fname = "Game" );
 };
 

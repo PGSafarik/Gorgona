@@ -248,7 +248,7 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
       if( key.empty( ) || value.empty( ) ) { continue; }
 
       // Zapis Polozek, ktere je vyhodnejsi osetrit samostatne
-      if( key == "Description" ) {
+      if( key == "Description" && !value.empty( ) ) {
         if( ( e_desc = e_self->FirstChildElement( key.text( ) ) ) == NULL ) {
           e_desc = e_self->InsertNewChildElement( key.text( ) );
         }
@@ -293,32 +293,11 @@ void FXGameItem::checkIcons( FXApp *app )
 }
 
 /*** Comparation methods **************************************************************************/
-FXbool FXGameItem::Compare_with( XMLElement *e )
-{
-  FXString tname = "Game";
-  
-  FXString e_name = e->Name( );
-  FXString e_id    = e->Attribute( "id" );
-
-  //std::cout << "COMPARE with: " << e_id << " ( " << e_name << " ) \n";
-  if( e && tname == e_name  ) {
-    if( e_id.empty( ) || m_id == e_id  ) { return true; }
-  }
-
-  return false;
-}
-
 XMLElement* FXGameItem::FindMyXMLElement( XMLElement *parent, const FXString &fname )
 {
   if( parent ) {
     cout << "Find element: "<< fname << " in element " << parent->Name( );
     for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
-      /*
-      if( Compare_with( act ) ) { 
-        cout << " found \n"; 
-        return act; 
-      }
-       */
       const char *_id = m_id.text( ); 
       if( act->QueryStringAttribute( "id", &_id ) == XML_SUCCESS ) { 
         cout << " found \n"; 
