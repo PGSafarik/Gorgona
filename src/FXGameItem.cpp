@@ -307,19 +307,20 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
   return false;
 }
 
-XMLElement* FXGameItem::FindEntry( XMLElement *parent )
+XMLElement* FXGameItem::FindEntry( XMLElement *parent, const FXString &fname )
 {
   if( parent ) {
-    cout << "Find in element " << parent->Name( ) << endl;
-    for( XMLElement *act = parent->FirstChildElement( "Game" ); act; act = act->NextSiblingElement( "Game" ) ) {
+    cout << "Find element: "<< fname << "in element " << parent->Name( );
+    for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
       if( Compare_with( act ) ) { 
-        //cout << "found \n"; 
+        cout << " found \n"; 
         return act; 
       }
-      //else { cout << "not found \n"; }  
+      //else {  }  
     } 
   } 
-            
+  
+  cout << " not found \n";          
   return NULL; 
 } 
 
