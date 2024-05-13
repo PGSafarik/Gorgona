@@ -249,8 +249,11 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
 
       // Zapis Polozek, ktere je vyhodnejsi osetrit samostatne
       if( key == "Description" ) {
-        e_desc = e_self->InsertNewChildElement( key.text( ) );
-        e_desc->InsertNewText( value.text( ) );
+        if( ( e_desc = e_self->FirstChildElement( key.text( ) ) ) == NULL ) {
+          e_desc = e_self->InsertNewChildElement( key.text( ) );
+          //e_desc->InsertNewText( value.text( ) );
+        }
+        e_desc->SetText( value.text( ) );
         // std::cout << key.text( ) << "->TEXT = " << value.text( ) << std::endl;
       }
       else {
@@ -310,7 +313,7 @@ FXbool FXGameItem::Compare_with( XMLElement *e )
 XMLElement* FXGameItem::FindEntry( XMLElement *parent, const FXString &fname )
 {
   if( parent ) {
-    cout << "Find element: "<< fname << "in element " << parent->Name( );
+    cout << "Find element: "<< fname << " in element " << parent->Name( );
     for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
       if( Compare_with( act ) ) { 
         cout << " found \n"; 
