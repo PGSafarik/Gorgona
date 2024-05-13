@@ -24,8 +24,8 @@ Prosím, vezměte na vědomí, že program Gorgona se neustále vyvíjí a proto
 1. Vkládaní, editace, odebírání spouštěčů her do knihovny
 2. Zařazení položky v knihovně do uživatelsky definované kategorie
 3. Gorgona nabízí zásuvné moduly (pluginy) pro ošetření spouštění specifických her.  
-    1. **Console** - umožňuje spouštět hry v textovém režimu (pozn.1).
-    2. **Dolom**      - Modul pro spouštění her typu Doom 1, 2, FreeDoom. *Vyžaduje nainstalovaný Pr boom*
+    1. **Console**   - umožňuje spouštět hry v textovém režimu (pozn.1).
+    2. **Dolom**     - Modul pro spouštění her typu Doom 1, 2, FreeDoom. *Vyžaduje nainstalovaný Pr boom*
     3. **Dosbox**    - Modul pro spouštění DOSových her. *Vyžaduje nainstalovaný emulátor Dosbox* 
     4. **Legenadry** - Umožní spouštět hry instalované z Epic store. *Vyžaduje nainstalovanou aplikaci legendary*
     5. **Steam**     - Spouští hry ze služby Steam (pozn 2). *Vyžaduje klienta služby Steam*

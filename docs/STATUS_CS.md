@@ -7,7 +7,12 @@
   3. [Plány do budoucna](#3-Plány-do-budoucna)
     
 ---
-## 1. Novinky     
+## 1. Novinky  
+#### 13/05/2024 Oprava - 1.6.6.0
+* FIXED - Opravena duplikace XML elementu "description" v knihovně herních titulů.
+* FIXED - Opravena chyba se špatnou navratovou hodnotou, vracenou Lua funkci pro přimé spouštění procesu. 
+* WORKAROUND - Modul Steamu dočasně umožnuje spustit klienta služby Steam při svém zavedení do paměti. Tím se předejde zablokovaní Steam her, při opětovném spuštění.
+
 #### 13/03/2023 Aktualizace 2 - 1.6.0.0 
 * Realizace vnitřního modulu PERSEUS a přepracovaní mechanismu spouštění nových procesů.
 * První změny ve vnitřní mechanice API pro jazyka Lua  
@@ -38,29 +43,24 @@
 * Několik Drobných oprav a změn
     
 ## 2. Známé bugy a nedostatky
-1. 28/03/2019 – Chybná návratová hodnota Lua spouštěčů - Uzavřeno  
-   Lua spouštěče nevrací správně návratovou hodnotu po skončení takto spuštěné hry. Pravděpodobně jde o špatně vyzvednutou hodnotu z Lua bufferu.  
-     
-   Řešeni (11/01/2023): Do finálního přepisu LUA API není poskytovana funkce pro spouštění procesu z LUA modulu
-
-2. 11/01/2023 - Nutnost ručně zadat cestu k modulům v ModManager.lua - Otevreno
+1. 11/01/2023 - Nutnost ručně zadat cestu k modulům v ModManager.lua - Otevreno
    Příčina je v návrhu integrace Lua skriptů v Gorgoně. Uvažuje se o dočasném workaroundu do C >LUA API, který bude dodávat cestu z nastavení Gorgony.
    Reseni() :   
    
-3. 02/04/21023  - Spusteni hry spravovane Steamem zablokuje polozku hry i po ukonceni hry - OTEVŘENO.
+2. 02/04/21023  - Spusteni hry spravovane Steamem zablokuje polozku hry i po ukonceni hry - OTEVŘENO.
    Příčina je v asociaci PID hlavniho procesu Steam klienta s danou položkou v Gorgoně. Problém odpadne umožněním modulu spustit Steam klienta dříve než samotnou hru. Hru je také možno opakovaně spustit přímo ze Steam klienta, nebo klienta nejdřív ukončit s následně hru spustit znovu z Gorgony
-   Rešení ():  
+   Rešení (): V sekci "Steam" v konfiguračním souboru Gorgony, nastavit položku "Autostart" na hodnotu 1. Modul Steamu pak spustí klienta Steamu pri svem zavedení do paměti (pokud již není spuštěn). Jedna se o dočasný workaround, v nově chystané druhé verzi modulů nebude toto opatření. 
 
-4. 08/04/2023 - Neoznamuje invalidni, nebo neexistujici data v datovem XML souboru - OTEVRENO  
+3. 08/04/2023 - Neoznamuje invalidni, nebo neexistujici data v datovem XML souboru - OTEVRENO  
    Pri startu programu a naxitani XML datoveho souboru, Gorgona nekontroluje validnost dat, pouze zda soubor existuje. Pokud data neodpovidaji ocekavani, program se standardne chova, jako by datovy soubor nebyl vytvoren, ci byl prazdny.
     - Program nenabizi uzivateli zadnou moznost kam a do jakeho souboru data v dany moment ulozit (pozn. rucne pres conf.soubor )
     - Pri ukoncovani ve vyse popsane situaci automaticky, bez upozorneni, zapise prazdny datovy soubor, cimz definitivne znici puvodni data v nevalidnim souboru.
    Reseni( ):  
    
-5. 08/04/2023 - Nedostatecna funkcionalita vyhledavani polozek v knihovne - Uzavreno
+4. 08/04/2023 - Nedostatecna funkcionalita vyhledavani polozek v knihovne - Uzavreno
    Reseni(11/08/2023): Prepracovat, pridano do seznamu ukolu  
    
-6. 08/04/2023 - Vyhledavaci pole nereaguje na stisk klavesy \[ENTER\] - Uzavreno
+5. 08/04/2023 - Vyhledavaci pole nereaguje na stisk klavesy \[ENTER\] - Uzavreno
    Vyhledavani zapocne pouze stisknutim GUI tlacitka "Find". Podle specifikace ma vsak byt zapocato i stisknutim klavesy ENTER, paklize ma vyhledavaci pole focus.  
    Reseni(11/08/2023): viz bod 5.  
 

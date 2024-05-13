@@ -8,6 +8,11 @@
 
 ---
 ## 1. News
+#### 13/05/2024 Oprava - 1.6.6.0
+* FIXED - Fixed duplication of the "description" XML element in the game title library.
+* FIXED - Fixed a bug with a bad return value returning a Lua function to directly start a process. 
+* WORKAROUND - The Steam module temporarily allows the Steam client to run when loaded into memory. This will prevent Steam games from crashing when restarted.
+
 #### 13/03/2023 update 2 - 1.6.0.0
 * Reopen the project Gorgona. Removed the project status "Stopped"
 * Realization of the PERSEUS internal module and redesign of the mechanism for launching new processes.
