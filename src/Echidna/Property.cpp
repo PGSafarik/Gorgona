@@ -73,6 +73,34 @@ void Property::dump( )
 }
 
 /**************************************************************************************************/
+Properties::Properties( const FXString &lb, FXObject *tgt, FXSelector sel )
+          : FXDictionaryOf<Property>( ), m_label( lb ), m_target( tgt ), m_selector( sel )
+{
+   m_change = false; 
+}
+  
+Properties::~Properties( )
+{ }
+
+Property* Properties::Create( const FXString &name, const FXString &value )
+{ 
+   Property *n_prop = new Property( name, value, m_target, m_selector );
+   return FXDictionaryOf<Property>::insert( name, n_prop ); 
+}
+
+Property*& Properties::operator [ ]( const FXString &key ) 
+{ 
+  if( !has( key ) ) { Create( key ); }
+  return at( key );     
+}
+/*
+Property* const & Properties::operator [ ]( const FXString &key ) const 
+{ 
+  
+  
+}*/
+/**************************************************************************************************/
+
 }; /* namespace ECHIDNA */
 
 /**************************************************************************************************/

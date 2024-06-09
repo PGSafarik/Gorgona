@@ -65,8 +65,34 @@ public:
   FXString to_string( const FXString &separator = "=" );
   void from_string( const FXString &str, const FXString &separator = "=" );
   void dump( );
-  
-};      /* class Property */    
+}; /* class Property */    
+
+class Properties : public FXDictionaryOf<Property> {
+  FXString    m_label;
+  FXbool      m_change; 
+  FXObject   *m_target;
+  FXSelector  m_selector;
+   
+public:
+  Properties( const FXString &lb = FXString::null, FXObject *tgt = NULL, FXSelector sel = 0 );
+  virtual ~Properties( );
+
+  Property* Create( const FXString &key, const FXString &value = FXString::null ); 
+  virtual Property*& operator [ ]( const FXString &key );
+  // virtual Property* const & operator [ ]( const FXString &key ) const;
+};
 
 };     /* namespace ECHIDNA */
 #endif /* __PROPERTY_H */
+
+/*
+  Propertie section( "Gamebase" );
+  section.create( "Name", "Arena" );
+  section.create( "Serie", "The Elder Scrolls" );
+  section.create( "Charpter", "I." )
+    
+  Properties section( "Ttile" )
+  section[ "Name" ]     = "Arena";
+  section[ "Serie" ]    = "The Elder Scrolls";
+  section[ "Charpter" ] = "I.";
+*/
