@@ -1,6 +1,7 @@
 tmp/
 build/
 GORGONA-AN/
+tests/
 *.srctrlbm
 *.srctrldb
 *.srctrlprj
