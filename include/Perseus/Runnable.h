@@ -31,14 +31,16 @@ namespace PERSEUS {
   class Runnable: public FXObject  {
   FXDECLARE( Runnable)
     Gorgona  *m_app;         // Ukazatel na instanci aplikace
+    
     FXString  m_workdir;     // Pozadovany pracovni adresare
     FXString  m_command;     // Zadany prikaz ke spusteni
     FXString  m_execute;     // Skutecny prikaz ke spusteni ( po zpracovani )
     FXbool    m_terminal;    // Spustit program v (emulatoru) terminalu
     FXbool    m_notify;      // Indikator notifikace opreaci
 
-    FXbool m_change;         // Indikuje zmenu objektu
-    FXint  m_pid;            // Process ID
+    FXString m_appid;        // Application ID  
+    FXbool   m_change;       // Indikuje zmenu objektu
+    FXint    m_pid;          // Process ID
     
     FXObject   *m_target;    // Cilovy objekt notifikaci
     FXSelector  m_message;   // notifikacni zprava
@@ -47,8 +49,8 @@ namespace PERSEUS {
     FXStringDictionary m_launchprms; // Seznam parametru spoustece
 
   public :
-    Runnable( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
-    Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher = "native", FXObject *tgt = NULL, FXSelector sel = 0 );
+    Runnable( Gorgona *a, const FXString &appid = FXString::null, FXObject *tgt = NULL, FXSelector sel = 0 );
+    Runnable( Gorgona *a, const FXString &appid, const FXString &cmd, const FXString &launcher = "native", FXObject *tgt = NULL, FXSelector sel = 0 );
     virtual ~Runnable( );
 
     /* Access methods */
@@ -66,6 +68,8 @@ namespace PERSEUS {
     void     set_terminal( FXbool value )       { m_terminal = value; Command( ); }
     FXbool   enabled_termnal( )                 { return m_terminal;  }                        
     FXbool   is_running( )                      { return m_pid > 0;   } 
+    void     set_appid( const FXString &value ) { m_appid = value;    }
+    FXString get_appid( )                       { return m_appid;     }  
 
     virtual FXint run( );
     FXbool load( XMLElement *parent ); 
@@ -106,7 +110,7 @@ namespace PERSEUS {
     FXlong  m_longest;     // Nejdelsi doba behu vubec  
 
   public:
-    Game( Gorgona *a, FXObject *tgt = NULL, FXSelector sel = 0 );
+    Game( Gorgona *a, const FXString &appid = FXString::null, FXObject *tgt = NULL, FXSelector sel = 0 );
     virtual ~Game( );
     
     /* Access methods */

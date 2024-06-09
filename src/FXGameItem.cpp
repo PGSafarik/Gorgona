@@ -83,6 +83,7 @@ void FXGameItem::set_id( const FXString &value )
 { 
   if( !value.empty( ) && value != m_id ) {
     m_id = value; 
+    exec->set_appid( value );
     m_app->notify_changes( FSM_Changes::ID_CHANGE );
   }
 }
@@ -91,7 +92,8 @@ void FXGameItem::dump( FXbool force )
 {
   
   if( force == false ) {
-    std::cout << "Game entry [" << exec->get_launchid( ) << "] = " << this->property[ "Basic:title" ] << std::endl;
+    //std::cout << "Game entry [" << exec->get_launchid( ) << "] = " << this->property[ "Basic:title" ] << std::endl;
+    std::cout << "Game entry " << exec->get_appid( ) << " ( " << this->property[ "Basic:title" ] << ", " << exec->get_launchid( ) << ")" << std::endl;   
     std::cout.flush( );
   }
   else {
@@ -133,9 +135,10 @@ FXbool FXGameItem::validate( )
   }
 */ 
   if( m_id.empty( ) ) {
-    m_id = FXString::value( property[ "Basic:title" ].hash( ) );
+    //m_id = FXString::value( property[ "Basic:title" ].hash( ) );
+    set_id( FXString::value( property[ "Basic:title" ].hash( ) ) );
     repair = true;
-    m_change = true;
+    //m_change = true;
 
     info = "FIX 1: The item does not have a GAME ID assigned, the program generated a replacement one.";
     info += "This can then be changed in the item editor. ";    
@@ -143,7 +146,7 @@ FXbool FXGameItem::validate( )
    
    
   if( repair or !exec->validation( )  ) {
-    std::cout << text << " [REPAIR] \n";
+    std::cout << text << " " << m_id << " [REPAIR] \n";
     std::cout << "(" << info << ") \n";
     m_valid = true;
     m_app->notify_changes( FSM_Changes::ID_CHANGE );
@@ -179,6 +182,7 @@ void FXGameItem::load( XMLElement *eitem )
   FXString _name, _value, _sect, _key;
   
   m_id = eitem->Attribute( "id" );
+  exec->set_appid( m_id );
 
   for( XMLElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );

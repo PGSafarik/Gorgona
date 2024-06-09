@@ -11,7 +11,7 @@ FXDEFMAP( Runnable ) RUNMAP[ ] = {
 };
 FXIMPLEMENT( Runnable, FXObject, RUNMAP, ARRAYNUMBER( RUNMAP ) )
 
-Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
+Runnable::Runnable( Gorgona *a, const FXString &appid, FXObject *tgt, FXSelector sel )
 {
   m_app      = a;
   m_target   = tgt;
@@ -21,11 +21,12 @@ Runnable::Runnable( Gorgona *a, FXObject *tgt, FXSelector sel )
   m_terminal = false;
   m_workdir = FXString::null;     
   m_command = FXString::null;     
-  m_execute = FXString::null; 
+  m_execute = FXString::null;
+  m_appid   = appid, 
   m_pid     = 0;     
 }
 
-Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
+Runnable::Runnable( Gorgona *a, const FXString &appid, const FXString &cmd, const FXString &launcher, FXObject *tgt, FXSelector sel )
 {
   m_app      = a;
   m_target   = tgt;
@@ -37,6 +38,7 @@ Runnable::Runnable( Gorgona *a, const FXString &cmd, const FXString &launcher, F
   m_workdir = FXString::null;     
   m_command = FXString::null;     
   m_execute = FXString::null;     
+  m_appid   = appid;
   m_pid     = 0;
 
   set_command( cmd ); // FIXME RUNNABLE_001: Run module launcher!
@@ -50,17 +52,17 @@ FXint Runnable::run( )
   FXint pid = 0; 
 
   if( m_pid > 0 ) {
-    DEBUG_OUT( "Test is item runned" )
+    DEBUG_OUT( "[" << m_appid << "]: Test is item runned" )
     if( !m_app->hasChild( m_pid ) ) { m_pid = 0; }
     else { return -1; }
   }
 
   FXString chwd = ChangeWorkDir( );
-  DEBUG_OUT( "Runned item" )
+  DEBUG_OUT( "[" << m_appid << "]: Runned item" )
   if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { 
     m_pid = pid; 
     m_app->sig_child_exit->connect( this, Runnable::PROC_EXIT );
-    DEBUG_OUT( "OK PID is " << m_pid )
+    DEBUG_OUT( "[" << m_appid << "]: OK PID is " << m_pid )
   }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }
@@ -195,6 +197,7 @@ void Runnable::CheckTerminal( )
 void Runnable::dump( ) 
 {
   FXString text = "   Runnable = { \n";
+  text += "     app id: "     + m_appid    + "\n"; 
   text += "     type: "       + m_launchid + "\n";   
   text += "     command: "    + m_command  + "\n";
   text += "     workdir: "    + m_workdir  + "\n";
@@ -208,46 +211,42 @@ void Runnable::dump( )
 
  long Runnable::OnSig_Process( FXObject *tgt, FXSelector sel, void  *data ) 
  {
-  FXString msg  = "";
-  // FXint pid = *((FXint*) data);
+  FXString msg  =  "[";
+  msg  += m_appid + "]: "; 
 
   Process *proc = static_cast<Process*>( data );
   
   if ( proc && proc->id( ) == m_pid ) { 
-    //Process *proc = m_app->findChild( m_pid );
-    //if( proc ) { 
-      FXint status = proc->retcode( ); 
-      if( m_app->removeChild( m_pid ) ) {
-        m_app->sig_child_exit->disconnect( this );
+    FXint status = proc->retcode( ); 
+    if( m_app->removeChild( m_pid ) ) {
+      m_app->sig_child_exit->disconnect( this );
 
-        if( status == 0 ) {
-          // Information about process exited
-          msg = "Unregister the process of the descendant "; 
-          msg += FXString::value( m_pid ) + ", which just finished with exit code " + FXString::value( status );
-        } 
-        else { 
-          // Information of the user of bad a process termaination 
-          FXString head = "Non-standard process termination"; 
-          msg = "The process " + FXString::value( m_pid ) + " terminated with an error. \n";
-          msg += "Exit code : " + FXString::value( status );   
+      if( status == 0 ) {
+        // Information about process exited
+        msg += "Unregister the process of the descendant "; 
+        msg += FXString::value( m_pid ) + ", which just finished with exit code " + FXString::value( status );
+      } 
+      else { 
+        // Information of the user of bad a process termaination 
+        FXString head = "Non-standard process termination"; 
+        msg += "The process " + FXString::value( m_pid ) + " terminated with an error. \n";
+        msg += "Exit code : " + FXString::value( status );   
     
-          FXMessageBox::warning( m_app, MBOX_OK, head.text( ), msg.text( ) );
-        }
-        std::cout << msg << std::endl;   
-        m_pid = 0;
+        FXMessageBox::warning( m_app, MBOX_OK, head.text( ), msg.text( ) );
       }
-    //} 
-    //else { std::cout << "running!! \n"; }    
-
+      std::cout << msg << std::endl;   
+      m_pid = 0;
+    }
   }
+  
   return 0;
 } 
 
 /*************************************************************************************************/
 FXIMPLEMENT( Game, Runnable, NULL, 0 )
 
-Game::Game( Gorgona *a, FXObject *tgt, FXSelector sel )
-    : Runnable( a, tgt, sel )
+Game::Game( Gorgona *a, const FXString &appid, FXObject *tgt, FXSelector sel )
+    : Runnable( a, appid, tgt, sel )
 { 
   m_used    = 0;
   m_total   = 0;
