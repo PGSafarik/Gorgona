@@ -70,7 +70,7 @@ FXint Runnable::run( )
   return pid;
 }
 
-void Runnable::Command( const FXString &cmd )
+void Runnable::Prepare( const FXString &cmd )
 {
   m_command = ( !cmd.empty( ) ? cmd : m_command );
 
@@ -120,7 +120,7 @@ FXbool Runnable::load( XMLElement *parent )
           m_launchprms.insert( _name, _value );
           
         }
-        Command( ); // FIXME RUNNABLE_001: Run module launcher! 
+        Prepare( ); // FIXME RUNNABLE_001: Run module launcher! 
       }
       else {
         m_launchid = re->Attribute( "type" );

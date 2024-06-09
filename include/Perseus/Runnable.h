@@ -61,11 +61,11 @@ namespace PERSEUS {
     FXString get_workdir( )                     { return m_workdir;   } 
     void     set_launchid( const FXString &id ) { m_launchid = id;    }
     FXString get_launchid( )                    { return m_launchid;  }
-    void     set_command( const FXString &cmd ) { Command( cmd );     } // FIXME RUNNABLE_001: Run module launcher!
+    void     set_command( const FXString &cmd ) { Prepare( cmd );     } // FIXME RUNNABLE_001: Run module launcher!
     FXString get_command( )                     { return m_command;   } 
     void     set_change( FXbool value )         { m_change = value;   }
     FXbool   is_changed( )                      { return m_change;    }
-    void     set_terminal( FXbool value )       { m_terminal = value; Command( ); }
+    void     set_terminal( FXbool value )       { m_terminal = value; Prepare( ); }
     FXbool   enabled_termnal( )                 { return m_terminal;  }                        
     FXbool   is_running( )                      { return m_pid > 0;   } 
     void     set_appid( const FXString &value ) { m_appid = value;    }
@@ -91,7 +91,7 @@ namespace PERSEUS {
     Runnable( ) { }
     
     /* Helpful methods */
-    virtual void Command( const FXString &cmd = FXString::null ); 
+    virtual void Prepare( const FXString &cmd = FXString::null ); 
     virtual void Write( XMLElement *runelement ) { }
     virtual void Read( XMLElement *runelement )  { }
 
