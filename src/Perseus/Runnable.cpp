@@ -62,7 +62,7 @@ FXint Runnable::run( )
   if( ( pid = m_app->exec( m_execute, 0 ) ) > 0 ) { 
     m_pid = pid; 
     m_app->sig_child_exit->connect( this, Runnable::PROC_EXIT );
-    DEBUG_OUT( "[" << m_appid << "]: OK PID is " << m_pid )
+    DEBUG_OUT( "[" << m_appid << "]: Execute OK, process PID is " << m_pid )
   }
   
   if( !chwd.empty( ) ) { FXSystem::setCurrentDirectory( chwd ); }

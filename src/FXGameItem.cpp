@@ -207,11 +207,11 @@ void FXGameItem::load( XMLElement *eitem )
 
   exec->load( eitem ); 
   validate( );
-  /* 
+   
   #ifdef __DEBUG
    dump( );
   #endif
-  */
+  
   
 }
 
@@ -225,7 +225,7 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( XMLElement *pNode, FXbool force )
 {
- DEBUG_OUT( m_id << "\t" << read( "Basic:title" ) )
+ DEBUG_OUT( "FXGameItem::Save( ) " << m_id << "\t" << read( "Basic:title" ) )
 
   FXString ename = "Game";         // FIXME: Ohejbak na rovnak - fixed it!
 
@@ -234,13 +234,13 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
   XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
 
   if( ( e_self = FindMyXMLElement( pNode ) ) == NULL )  {
+    DEBUG_OUT( "FXGameItem::Save( ) Create new XML element" ) 
     e_self = pNode->InsertNewChildElement( ename.text( ) );
+    e_self->SetAttribute( "id", m_id.text( ) );
   }
 
-  e_self->SetAttribute( "id", m_id.text( ) );
-
   if( m_change || force ) {
-    DEBUG_OUT( "FORCE or CHANGES SAVE ITEM!!!" ) 
+    DEBUG_OUT( "FXGameItem::Save( ) FORCE or CHANGES SAVE ITEM!!!" << m_id << "\t" << ( e_self->Attribute( "id" ) ) ) 
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );
@@ -296,8 +296,10 @@ XMLElement* FXGameItem::FindMyXMLElement( XMLElement *parent, const FXString &fn
 {
   if( parent ) {
     for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
-      const char *_id = m_id.text( ); 
-      if( act->QueryStringAttribute( "id", &_id ) == XML_SUCCESS ) { return act; } 
+      FXString _id = act->Attribute( "id" );      
+      FXbool resh = ( _id == m_id );
+      //DEBUG_OUT( "FXGameItem::FindMyXMLElement( ) Compare " << _id << " x " << m_id << " result : " << resh )
+      if( resh ) { return act; } 
     } 
   } 
       

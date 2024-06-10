@@ -181,6 +181,7 @@ FXbool Library::load( XMLElement *library_el )
 
 FXbool Library::save( XMLElement *library_el )
 {
+  DEBUG_OUT( "Library::save( )" )
   FXbool result = false;
    
   if( library_el && m_change( ) ) {
