@@ -63,7 +63,8 @@ FXint FXGameItem::operator ( ) ( )
     FXString msg = "Error number: ";
     msg += FXString::value( pid ) + "\n"; 
     switch( pid ) {
-      case -1 :  msg += "Game \'" + title + "\' is already launched!"; break; 
+      case -1 :  msg += "Game \'" + title + "\' is already launched!"; break;
+      case -2 :  msg += "Game \'" + title + "\' is not have the launcher set!"; break;
       default :  msg += "The luach of game \'" + title + "\' failed!"; break;
     }
         
