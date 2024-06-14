@@ -227,14 +227,13 @@ const FXString FXGameItem::read( const FXString &k ) const
 
 void FXGameItem::save( XMLElement *x_record, FXbool force )
 {
- DEBUG_OUT( "FXGameItem::Save( ) " << m_id << "\t" << read( "Basic:title" ) )
-
   FXString ename = "Game";         // FIXME: Ohejbak na rovnak - fixed it!
   XMLElement *e_desc  = NULL;      // Nosny element popisu
   XMLElement *e_tmp   = NULL;      // Pomocny element
   
   if( m_change || force ) {
-    DEBUG_OUT( "FXGameItem::Save( ) FORCE or CHANGES SAVE ITEM!!!" << m_id << "\t" << ( x_record->Attribute( "id" ) ) ) 
+    //DEBUG_OUT( "FXGameItem::Save( ) FORCE or CHANGES SAVE ITEM!!!" << m_id << "\t" << ( x_record->Attribute( "id" ) ) ) 
+    DEBUG_OUT( "FXGameItem::Save( ) " << m_id << "\t" << read( "Basic:title" ) ) 
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );

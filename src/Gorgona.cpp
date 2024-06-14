@@ -157,7 +157,7 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
   }
   else { 
     /* FIXME: Info in message box? */
-    std::cout << "[WARNING]: Process " << cmd[ 0 ] << "is not running!" << std::endl; 
+    std::cout << "[WARNING]: Process " << cmd[ 0 ] << " is not running!" << std::endl; 
   }
 
   std::cout << "\n";
