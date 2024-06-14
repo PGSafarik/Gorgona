@@ -68,7 +68,7 @@ struct FXGameItem {
   /* Operations methods                        */
   void dump( FXbool force = false );
   FXbool validate( );
-  void   checkIcons( FXApp *app );
+  void   checkIcons( );
   const FXString read( const FXString &k ) const;
   FXbool write( const FXString &k, const FXString &v, FXbool chang = true );
 

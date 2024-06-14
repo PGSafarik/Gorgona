@@ -204,7 +204,9 @@ void FXGameItem::load( XMLElement *eitem )
       this->write( _key, _value, false );
     } 
   }
-
+  
+  checkIcons( );
+  
   exec->load( eitem ); 
   validate( );
    
@@ -269,7 +271,7 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
   }
 }
 
-void FXGameItem::checkIcons( FXApp *app )
+void FXGameItem::checkIcons( )
 {
   FXString file;
   FXint sms = 22; // smal size
@@ -279,15 +281,15 @@ void FXGameItem::checkIcons( FXApp *app )
   if( this->SmallIcon != NULL ) { delete this->SmallIcon; }
 
   if( ( file = this->read( "Icon:all" ) ) != FXString::null ){
-    this->SmallIcon = loadExternIcon( app, file, sms, sms );
-    this->BigIcon   = loadExternIcon( app, file, bis, bis );
+    this->SmallIcon = loadExternIcon( m_app, file, sms, sms );
+    this->BigIcon   = loadExternIcon( m_app, file, bis, bis );
     return;
   }
   if( ( file = this->read( "Icon:small" ) ) != FXString::null ){
-    this->SmallIcon = loadExternIcon( app, file, sms, sms );
+    this->SmallIcon = loadExternIcon( m_app, file, sms, sms );
   }
   if( ( file = this->read( "Icon:big" ) ) != FXString::null ){
-    this->BigIcon = loadExternIcon( app, file, bis, bis );
+    this->BigIcon = loadExternIcon( m_app, file, bis, bis );
   }
 }
 

@@ -169,7 +169,7 @@ long FXLaunchEditor::onCmd_Icon( FXObject *sender, FXSelector sel, void *data )
         break;
       }
     }
-    m_item->checkIcons( getApp( ) );
+    m_item->checkIcons( );
     m_Bicon->setIcon( m_item->BigIcon );
     m_Micon->setIcon( m_item->SmallIcon );
   }
