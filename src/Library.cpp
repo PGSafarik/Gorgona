@@ -30,31 +30,96 @@ Library::~Library( )
 }
 
 /**************************************************************************************************/
+FXGameItem* Library::make( const FXString &name, const FXString &id )
+{
+  FXGameItem *it = NULL;
+  
+  if( find_title( name ) == -1 ) {
+    // Crete new Game item and generate default game identifier (if-not)
+    it = new FXGameItem( m_app, name );
+    FXString _id = ( id.empty( ) ? FXString::value( name.hash( ) ) : id );
+    
+    // Make XML record for new game item
+    XMLElement *x_root  = m_xdoc.RootElement( );
+    XMLElement *x_lib   = x_root->FirstChildElement( "Library" );
+    XMLElement *x_record = x_lib->InsertNewChildElement( "Game" );
+    x_record->SetAttribute( "id", _id.text( ) ); 
+    
+    // Internal association game identifier with XML record
+    m_xmap.insert( _id, x_record );
+    it->set_id( _id );
+    
+    // Insert new game item on library
+    push( it );
+  }
+  
+  return it;
+}
+
+FXbool Library::change_id( const FXString &id_old, const FXString &id_new )
+{
+  FXbool result = false;
+  
+  if( !id_new.empty( ) ) {
+    XMLElement *x_record = m_xmap[ id_old ];
+    if( x_record ) {
+      m_xmap.remove( id_old );
+      x_record->SetAttribute( "id", id_new.text( ) );
+      m_xmap.insert( id_new, x_record );
+      
+      result = true;
+    }
+  }
+  
+  return result;
+}
+
 FXbool Library::remove( FXGameItem *it )
 {
   FXbool res = false;
-  FXival pos = find( it );
+  FXival pos = -1;
+  
+  if( it ) { 
+    pos = find( it );
 
-  if( pos >= 0 ) {
-    FXString name = it->read( "Basic:title" );
-    FXString id   = it->get_id( );
+    if( pos >= 0 ) {
+      FXString name = it->read( "Basic:title" );
+      FXString id   = it->get_id( );
 
-    // Odstraneni instance polozky z knihovny
-    erase( pos );
-    if( it ) { delete it; }
-
-    // Vymaz zaznamu polozky z XML databaze
-    XMLElement *record = FindElementBy( m_xbase, "id", id );
-    if( !record ) { record = FindElementBy( m_xbase, "title", name ); }
-    if( record ) {
-      m_xdoc.DeleteNode( record );
-      res = true;
+      // Odstraneni instance polozky z knihovny
+      erase( pos );
+      delete it;
+    
+      // Vymaz zaznamu polozky z XML databaze
+      if( !( res = EraseElement( id ) ) ) {
+        XMLElement *record = FindElementBy( m_xbase, "id", id );
+        if( !record ) { record = FindElementBy( m_xbase, "title", name ); }
+        if( record ) {
+          m_xdoc.DeleteNode( record );
+          res = true;
+        }
+      }
     }
-	}
+  }
   
   return res;
 }
 
+FXival Library::find_title( const FXString &text ) 
+{
+  if( !text.empty( ) ) {
+    FXival pos = 0;
+    FXival num = no( );
+    FXGameItem **p = data( );
+     
+    while( pos < num ) {
+      if( p[ pos ]->read( "Basic:title" ) == text ) { return pos; }
+      ++pos;     
+    }  
+  }
+     
+  return -1;
+}
  
 FXbool Library::open( const FXString &filename )
 {
@@ -105,10 +170,12 @@ FXbool Library::close( FXbool force )
       num = this->no( ); 
     }
     clear( );
-
+    m_xdoc.Clear( ); // FIXME LIBRAR_001 : Maybe include on Library::clear( )
+    
     m_xbase = NULL;
     m_xroot = NULL;
-    m_xdoc.Clear( );
+    m_xmap.clear( );
+     
     m_elname = FXString::null;
     m_file   = FXString::null;
     m_opened = false;
@@ -119,10 +186,18 @@ FXbool Library::close( FXbool force )
 
 FXint Library::load( )
 {
-  FXint res = -1;
-  if( m_opened ) { ( load( m_xbase ) ? res = 1 : res = 0 ); }
+  FXint result = -1;
+  if( m_opened ) { 
+    for( XMLElement *el = m_xbase->FirstChildElement( m_elname.text( ) ); el; el = el->NextSiblingElement( m_elname.text( ) ) ) {
+      FXGameItem *item = InsertElement( el );
+      if( item ) { 
+        push( item ); 
+        result = 0;  
+      }
+    }
+  }
   
-  return res;
+  return result;
 }
 
 FXint Library::save( )
@@ -158,27 +233,24 @@ FXint Library::save( )
   return res;
 }
 
-
+/* DEPRACATED
 FXbool Library::load( XMLElement *library_el )
 {
   FXbool result = false; 
    
   if( library_el ) {
     for( XMLElement *el = library_el->FirstChildElement( m_elname.text( ) ); el; el = el->NextSiblingElement( m_elname.text( ) ) ) {
-      FXGameItem *item = new FXGameItem( m_app );    
-      if( item ) {
-        item->load( el );
-        item->checkIcons( ( FXApp*) m_app );  // ?  FIXME ItemList_001: FXGameItem::CheckIcons muze (ted uz) volat i metoda FXGameItem::Load( )
-        push( item );
+      FXGameItem *item = InsertElement( el );
+      if( item ) { 
+        push( item ); 
+        result = true;  
       }
-      else { std::cout << "[WARNING ItemList::Load( )] : Unable to create a trigger item" << std::endl; }  
-      result = true;
     }
   } 
 
   return result; 
 }
-
+*/
 FXbool Library::save( XMLElement *library_el )
 {
   DEBUG_OUT( "Library::save( )" )
@@ -192,7 +264,11 @@ FXbool Library::save( XMLElement *library_el )
     if( force ) { cout << "WARNING: Element \"Library\" has no subelements. Using force saving. \n"; }
 
     FXint num = no( );
-    for( FXint i = 0; i != num; i++ ) { at( i )->save( library_el, force ); } // FIXME: nenene!
+    for( FXint i = 0; i != num; i++ ) { 
+      /*at( i )->save( library_el, force ); */
+      FXGameItem *it = at( i );
+      it->save( m_xmap[ it->get_id( ) ], force );  // FIXME: nenene!
+    } 
     
     std::cout << "" << num << std::endl;
     result = true;
@@ -212,4 +288,36 @@ XMLElement* Library::FindElementBy( XMLElement *parent, const FXString &attr, FX
   }
 
   return NULL;   
+}
+
+FXGameItem* Library::InsertElement( XMLElement *record )
+{
+  FXGameItem *it = NULL;
+  FXString id; 
+  
+  if( record ) {
+    it = new FXGameItem( m_app );
+      
+    it->load( record );
+    m_xmap.insert( it->get_id( ), record ); 
+  }  
+  
+  return it;
+}
+
+
+FXbool Library::EraseElement( const FXString &id )
+{
+  FXbool res = false; 
+  XMLElement *record = NULL;
+  
+  if( !id.empty( ) ) {
+    if( ( record = m_xmap[ id ] ) != NULL ) {
+      m_xmap.remove( id );
+      m_xdoc.DeleteNode( record );
+      res = true;      
+    }
+  }
+  
+  return res;
 }

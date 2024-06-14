@@ -394,15 +394,19 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
       //m_currentit = NULL;
       FXString name;
       if( FXInputDialog::getString( name, this, "Pridat novou hru do zbirky", "Zadejte nazev pridavaneho titulu: " ) == true ) {
-        item = new FXGameItem( ( Gorgona *) getApp( ), name );
+        //item = new FXGameItem( ( Gorgona *) getApp( ), name );
+        item = m_app->getLibrary( )->make( name );
+        
         FXTreeItem *f = getCurrentFolder( );
         if( f ) { item->write( "Basic:genre", f->getText( ) ); }
+        
         FXLaunchEditor *edit = new FXLaunchEditor( this, m_icth, item );
         if( edit->execute( _placement ) == true ) {
-          m_app->getLibrary( )->push( item );
+          //m_app->getLibrary( )->push( item );
           this->insertItem( item );
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
           m_target->handle( this, notify, NULL );
+          
           SaveNotify( );
           resh = 1;
         }
@@ -412,8 +416,15 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
     case FXListPane::GAME_EDIT :
     {
       if( ( item = getCurrentItem( ) ) != NULL ) {
+        FXString old_id = item->get_id( );
         FXLaunchEditor *edit = new FXLaunchEditor( this, m_icth, item );
         if( edit->execute( _placement ) == true ) {
+          
+          // Check change of Game ID
+          if( old_id != item->get_id( ) ) {
+            m_app->getLibrary( )->change_id( old_id, item->get_id( ) );  
+          }
+          
           this->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
           m_target->handle( this, notify, NULL );
           SaveNotify( );

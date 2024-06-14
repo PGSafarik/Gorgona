@@ -35,7 +35,7 @@ FXDECLARE( GorgonaWindow )
   Gorgona  *m_app;
 
   // Window Objects
-  FindBar            *m_findbar;        // Vyhledavaci panel
+  FindBar            *m_findbar;       // Vyhledavaci panel
   FXSwitcher         *m_switcher;      // Prepinac aktivnich panelu
   FXListPane         *m_pane;          // Panel seznamu polozek
   FXStatusBar        *m_statusbar;     // Status bar

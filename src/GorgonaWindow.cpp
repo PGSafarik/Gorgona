@@ -13,7 +13,7 @@ FXIMPLEMENT( GorgonaWindow, FXPrimaryWindow, LAUNCHERMAP, ARRAYNUMBER( LAUNCHERM
 
 /**************************************************************************************************/
 GorgonaWindow::GorgonaWindow( Gorgona *app )
-              : FXPrimaryWindow( app, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) // (Fox Game Launcher - BETA.00.01)
+              : FXPrimaryWindow( app, "Gorgona", NULL, NULL, WINDOW_MAIN | CONTROLS_NORMAL, 0, 0, 800, 700 ) 
 { 
   m_app = app; 
  
@@ -45,7 +45,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
   // Aplication menu
   FXMenuPane *m_menu = new FXMenuPane( this );
   m_mGorgona = new FXMenuPane( m_menu );
-    new FXMenuCommand( m_mGorgona, "Pohled Detaily", m_iconstheme->getIcon( "Actions/view-list-details.png" ), m_pane, FXListPane::LIST_DETAIL );
+    new FXMenuCommand( m_mGorgona, "Pohled Detaily", (*m_iconstheme)[ "Actions/view-list-details.png" ], m_pane, FXListPane::LIST_DETAIL );
     new FXMenuCommand( m_mGorgona, "Pohled Ikony", m_iconstheme->getIcon( "Actions/view-list-icons.png" ), m_pane, FXListPane::LIST_ICONS );
     new FXMenuSeparator( m_mGorgona, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
     new FXMenuCommand( m_mGorgona, "Rozbalit strom", m_iconstheme->getIcon( "Actions/view-list-tree.png" ), m_pane, FXListPane::TREE_EXPAND );
@@ -129,7 +129,7 @@ long GorgonaWindow::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELID( sel ) ) {
     /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?
     case GorgonaWindow::SYSTEM_RUN : {
-      std::cout << "[DEBUG - GorgonaWindow::OnCmd_System] Launch active game item ..." << std::endl;
+      //DEBUG_OUT( "[GorgonaWindow::OnCmd_System] Launch active game item" )
       resh = ( ( this->run( ) == true ) ? 1 : 0 );
       break;
     }
@@ -145,12 +145,11 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELTYPE( sel ) ) {
     case SEL_CHANGED :
     {
-      //std::cout << "[GorgonaWindow::OnCmd_List] List must be updated ..." << std::endl; // #
+      //DEBUG_OUT( "[GorgonaWindow::OnCmd_List] List must be updated ..." ) // #
       FXString numinfo = "View ";
       numinfo += FXString::value( m_pane->numItems( NULL, false ) ) + " game entries"; //!
       m_statusbar->getStatusLine( )->setText( numinfo );
 
-      //m_change = true;
       m_app->getLibrary( )->setChange( );
       resh = 1;
       break;
@@ -159,7 +158,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
     case SEL_DOUBLECLICKED :
     {
        /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?  
-       // std::cout << "[GorgonaWindow::OnCmd_List] Launch active item" << std::endl; // #
+       //DEBUG_OUT( "[GorgonaWindow::OnCmd_List] Launch active item" ) // #
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
     }
@@ -205,7 +204,6 @@ long GorgonaWindow::OnCmd_Main( FXObject *sender, FXSelector sel, void *data )
 {
   switch( FXSELID( sel ) ) {
     case GorgonaWindow::MAIN_CONFIG : {
-      // std::cout << "Checking window configuration: mode-" << m_winmode.text( ) << " " << this->getX( ) << "x" << this->getY( ) << " " << this->getWidth( ) << ", " << this->getHeight( ) << std::endl; // #
       m_WinPos.set( this->getX( ), this->getY( ) );
       m_WinSize.set( this->getWidth( ), this->getHeight( ) );
       break;
@@ -241,31 +239,25 @@ void GorgonaWindow::read_config( )
 {
   FXString as, hg;
 
-  //- m_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
-  //- m_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );
-/**/  m_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
+  m_profile         = getApp( )->reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/GorgonaWindow" ).text( ) );
   m_browser         = getApp( )->reg( ).readStringEntry( "Profile", "browsercommand",    FXString::null );
   m_browser_args    = getApp( )->reg( ).readStringEntry( "Profile", "browserargs",       FXString::null );
   m_doubleclick_key = getApp( )->reg( ).readStringEntry( "Profile", "doubleclickaction", FXString::null );
-/*
-<<<<<<< HEAD
-  as                 = getApp( )->reg( ).readStringEntry( "Profile", "autosave",          "false" );
-=======
->>>>>>> devel2 */
   hg                 = getApp( )->reg( ).readStringEntry( "Profile", "hidegui",           "false" );
   m_view            = getApp( )->reg( ).readStringEntry( "Window", "OpenView",          "icons" );  /// icons, list
   m_winmode         = getApp( )->reg( ).readStringEntry( "Window", "MainMode",  "window" );  /// window, maximize, fulscreen
-/*
-<<<<<<< HEAD
-  m_autosave        = ( ( as.empty( ) or ( as == "false" ) ) ? false : true );
-=======
->>>>>>> devel2 */
   m_hidegui         = ( ( hg.empty( ) or ( hg == "false" ) ) ? false : true );
+/*
+  m_toolkit_pth     = getApp( )->reg( ).readStringEntry( "Modules", "toolkitpath", "/usr/" );
+  m_mlaunch_pth     = getApp( )->reg( ).readStringEntry( "Modules", "launchers", "/usr/share/Gorgona/modules/Launchers.lua" );  
+  FXbool as          = getApp( )->reg( ).readStringEntry( "Profile", "autosave",          "false" );
+  m_autosave        = ( ( as.empty( ) or ( as == "false" ) ) ? false : true );
+ */  
 
   if( m_view == "icons" ) { m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_ICONS ), NULL ); }
   if( m_view == "list"  ) { m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_DETAIL ), NULL ); }
 
-  // std::cout << "{ read_config } OK" << std::endl; // #
+  DEBUG_OUT( "[GorgonaWindow::read_config] OK" ) // #
 }
 
 void GorgonaWindow::write_config( )
@@ -282,10 +274,8 @@ void GorgonaWindow::write_config( )
   getApp( )->reg( ).writeStringEntry( "Profile", "DoubleClickKey",  m_doubleclick_key.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowser",      m_browser.text( ) );
   getApp( )->reg( ).writeStringEntry( "Profile", "WebBrowserArgs",  m_browser_args.text( ) );
-<<<<<<< HEAD
+
   getApp( )->reg( ).writeStringEntry( "Profile", "autosave",       ( ( m_autosave == true ) ? "true" : "false" ) );
-=======
->>>>>>> devel2
   getApp( )->reg( ).writeStringEntry( "Profile", "hidegui",        ( ( m_hidegui  == true ) ? "true" : "false" ) );
 */
   getApp( )->reg( ).writeStringEntry( "Window",  "OpenView",        m_view.text( ) );
@@ -296,7 +286,7 @@ void GorgonaWindow::write_config( )
     wx = this->getX( );
     wy = this->getY( );
     this->translateCoordinatesTo( wx, wy, getRoot( ), 0, 0 );
-    //std::cout << "Window config: x = " << wx << " y = " << wy << std::endl; //#
+    
     getApp( )->reg( ).writeIntEntry( "Window", "Position_X", m_WinPos.x );
     getApp( )->reg( ).writeIntEntry( "Window", "Position_Y", m_WinPos.y );
     getApp( )->reg( ).writeIntEntry( "Window", "Size_W", m_WinSize.w );
@@ -307,13 +297,13 @@ void GorgonaWindow::write_config( )
 
   if( getApp( )->reg( ).isModified( ) == true ) {
     getApp( )->reg( ).write( );
-    //std::cout << "{ write_config } OK" << std::endl; // #
+    DEBUG_OUT( "[GorgonaWindow::write_config] OK" ) // #
   }
 
 }
 
 void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &rootname )
-{
+{/*
   FXArray<GO_Keywords> *rlist;
 
   // Maping root of keyvords list?
@@ -348,34 +338,33 @@ void GorgonaWindow::read_Keywords( const FXString &listfile, const FXString &roo
   }
   std::cout << "{ read_keywords } OK" << std::endl;
   std::cout.flush( );
+  */
 }
 
 
 void GorgonaWindow::checkWindowState( )
 {
-  //std::cout << "{ checkWindowState }" << std::endl; // #
   if( m_winmode == "window" ) {
-    //std::cout << "Application Gorgona starting in window mode" << std::endl; // #
+    //DEBUG_OUT( "[GorgonaWindow::checkWindowState] "Application Gorgona starting in window mode" << std::endl; // #
     m_WinPos.x = getApp( )->reg( ).readIntEntry( "Window", "Position_X", 0 );
     m_WinPos.y = getApp( )->reg( ).readIntEntry( "Window", "Position_Y", 0 );
     m_WinSize.w = getApp( )->reg( ).readIntEntry( "Window", "Size_W", 800 );
     m_WinSize.h = getApp( )->reg( ).readIntEntry( "Window", "Size_H", 700 );
     this->position( m_WinPos.x, m_WinPos.y, m_WinSize.w, m_WinSize.h );
-    //std::cout << "Window config: x = " << m_WinPos.x << " y = " << m_WinPos.y << " w = " << m_WinSize.h << " h = " << m_WinSize.h << std::endl; // #
+    //DEBUG_OUT( "Window config: x = " << m_WinPos.x << " y = " << m_WinPos.y << " w = " << m_WinSize.h << " h = " << m_WinSize.h ) // #
   }
   if( m_winmode == "maximize" )   {
-    //std::cout << "Application Gorgona starting in mximize window mode" << std::endl; // #
+    //DEBUG_OUT( "[GorgonaWindow::checkWindowState] Application Gorgona starting in mximize window mode" ) // #
     if( this->maximize( true ) != true ) { std::cout << "Window mode maximize is not possible" << std::endl; }
   }
   if( m_winmode == "fullscreen" ) {
-    //std::cout << "Application Gorgona starting in fullscreen mode" << std::endl; // #
+    //DEBUG_OUT( "[GorgonaWindow::checkWindowState] Application Gorgona starting in fullscreen mode" ) // #
     if( this->fullScreen( true ) != true ) { std::cout << "Window mode fullscreen is not possible" << std::endl;}
   }
 }
 
 void GorgonaWindow::layout( )
 {
-  //std::cout << "{ layout }" << std::endl;
   FXPrimaryWindow::layout( );
   if( m_app->isCreated( )  && !this->isMinimized( ) ) {
   // Kontrola stavu modu okna muze byt uzita teprve az po ukonceni konfigurace aplikace a
@@ -386,7 +375,7 @@ void GorgonaWindow::layout( )
     else if( this->isFullScreen( ) == true ) { m_winmode = "fullscreen"; }
     else { m_winmode = "window"; }
   }
-  //std::cout << "winmode:" << m_winmode.text( ) << std::endl;
+  // DEBUG_OUT( "[GorgonaWindow::layout] winmode:" << m_winmode.text( ) )
 }
 
 /*

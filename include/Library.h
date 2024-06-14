@@ -41,6 +41,8 @@ class Library : public ECHIDNA::ObjectListOf<FXGameItem> {
   XMLDocument  m_xdoc;   // XML item Databaze 
   XMLElement  *m_xroot;  // Root element for this opened document
   XMLElement  *m_xbase;  // Element grouped by all items elemts
+  
+  FXDictionaryOf<XMLElement> m_xmap; 
      
 public :
   Library( Gorgona *app, const FXString &elname = "Game" );
@@ -53,17 +55,22 @@ public :
   void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
 
   /* Operations methods */
+  FXGameItem* make( const FXString &name, const FXString &id = FXString::null );   // MAKE NEW empty item by name
+  FXbool change_id( const FXString &id_old, const FXString &id_new );  
   FXbool remove( FXGameItem *it );
   FXbool open( const FXString &filename );
   FXbool close( FXbool force = false);
+  FXival find_title( const FXString &text );
   
   FXint save( );
   FXint load( ); 
-  virtual FXbool load( XMLElement *library_el );
+  //virtual FXbool load( XMLElement *library_el ); // DEPRACATED
   virtual FXbool save( XMLElement *library_el );
 
 protected:
   XMLElement* FindElementBy( XMLElement *parent, const FXString &attr, FXString &value );
+  FXGameItem* InsertElement( XMLElement *record );                                            // ONLY ADD EMPTY item by id
+  FXbool      EraseElement( const FXString &id );
 };
 
 #endif /*__LIBRARY_H */

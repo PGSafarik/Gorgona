@@ -177,14 +177,14 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
    return resh;
 }
 
-void FXGameItem::load( XMLElement *eitem )
+void FXGameItem::load( XMLElement *x_record )
 {
   FXString _name, _value, _sect, _key;
   
-  m_id = eitem->Attribute( "id" );
+  m_id = x_record->Attribute( "id" );
   exec->set_appid( m_id );
 
-  for( XMLElement *elem = eitem->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
+  for( XMLElement *elem = x_record->FirstChildElement( ); elem; elem = elem->NextSiblingElement( ) ){
     _sect = elem->Value( );
     if( _sect.find( ":" ) >= 0 ) { continue; } // Pokud jde o data jineho modulu, preskocit
  
@@ -207,7 +207,7 @@ void FXGameItem::load( XMLElement *eitem )
   
   checkIcons( );
   
-  exec->load( eitem ); 
+  exec->load( x_record ); 
   validate( );
    
   #ifdef __DEBUG
@@ -225,24 +225,16 @@ const FXString FXGameItem::read( const FXString &k ) const
   return s;
 }
 
-void FXGameItem::save( XMLElement *pNode, FXbool force )
+void FXGameItem::save( XMLElement *x_record, FXbool force )
 {
  DEBUG_OUT( "FXGameItem::Save( ) " << m_id << "\t" << read( "Basic:title" ) )
 
   FXString ename = "Game";         // FIXME: Ohejbak na rovnak - fixed it!
-
   XMLElement *e_desc  = NULL;      // Nosny element popisu
   XMLElement *e_tmp   = NULL;      // Pomocny element
-  XMLElement *e_self  =  NULL;     // Element reprezentujici (herni) polozku
-
-  if( ( e_self = FindMyXMLElement( pNode ) ) == NULL )  {
-    DEBUG_OUT( "FXGameItem::Save( ) Create new XML element" ) 
-    e_self = pNode->InsertNewChildElement( ename.text( ) );
-    e_self->SetAttribute( "id", m_id.text( ) );
-  }
-
+  
   if( m_change || force ) {
-    DEBUG_OUT( "FXGameItem::Save( ) FORCE or CHANGES SAVE ITEM!!!" << m_id << "\t" << ( e_self->Attribute( "id" ) ) ) 
+    DEBUG_OUT( "FXGameItem::Save( ) FORCE or CHANGES SAVE ITEM!!!" << m_id << "\t" << ( x_record->Attribute( "id" ) ) ) 
     FXString key, value;
     for( FXival i = 0; i < this->property.no( ); i++ ) {
       key   = this->property.key( i );
@@ -251,22 +243,22 @@ void FXGameItem::save( XMLElement *pNode, FXbool force )
 
       // Zapis Polozek, ktere je vyhodnejsi osetrit samostatne
       if( key == "Description" && !value.empty( ) ) {
-        if( ( e_desc = e_self->FirstChildElement( key.text( ) ) ) == NULL ) {
-          e_desc = e_self->InsertNewChildElement( key.text( ) );
+        if( ( e_desc = x_record->FirstChildElement( key.text( ) ) ) == NULL ) {
+          e_desc = x_record->InsertNewChildElement( key.text( ) );
         }
         e_desc->SetText( value.text( ) );
       }
       else {
         FXString CHName  = key.section( ":", 0 );
         FXString CHParam = key.section( ":", 1 );
-        e_tmp = e_self->FirstChildElement( CHName.text( ) );
-        if( e_tmp == NULL ) { e_tmp = e_self->InsertNewChildElement( CHName.text( ) ); }
+        e_tmp = x_record->FirstChildElement( CHName.text( ) );
+        if( e_tmp == NULL ) { e_tmp = x_record->InsertNewChildElement( CHName.text( ) ); }
         e_tmp->SetAttribute( CHParam.text( ), value.text( ) );
       }
     }
 
     /// FIXME GAMEITEM_001: force!
-    exec->save( e_self, true );
+    exec->save( x_record, true );
 
   }
 }
