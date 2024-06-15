@@ -262,15 +262,18 @@ FXbool Library::save( XMLElement *library_el )
 
     FXbool force = library_el->NoChildren( );
     if( force ) { cout << "WARNING: Element \"Library\" has no subelements. Using force saving. \n"; }
-
-    FXint num = no( );
-    for( FXint i = 0; i != num; i++ ) { 
-      /*at( i )->save( library_el, force ); */
+    
+    FXint num = 0;
+    FXint size = no( );
+    for( FXint i = 0; i != size; i++ ) { 
       FXGameItem *it = at( i );
-      it->save( m_xmap[ it->get_id( ) ], force );  // FIXME: nenene!
+      if( it->save( m_xmap[ it->get_id( ) ], force ) ) {  // NOTE: force?
+        num++;
+        m_app->notify_changes( FSM_Changes::ID_ACCEPT );
+      }
     } 
     
-    std::cout << "" << num << std::endl;
+    std::cout << "Sumarize: " << num << "/" << size << " save items from " << m_elname << " library" << std::endl;
     result = true;
   }
 

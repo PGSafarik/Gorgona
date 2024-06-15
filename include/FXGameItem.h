@@ -72,11 +72,11 @@ struct FXGameItem {
   const FXString read( const FXString &k ) const;
   FXbool write( const FXString &k, const FXString &v, FXbool chang = true );
 
-  void load( XMLElement *eitem );
-  void save( XMLElement *pNode, FXbool force = false );
+  void   load( XMLElement *eitem );
+  FXbool save( XMLElement *x_record, FXbool force = false );
 
 protected :
-  XMLElement* FindMyXMLElement( XMLElement *parent, const FXString &fname = "Game" );
+  //XMLElement* FindMyXMLElement( XMLElement *parent, const FXString &fname = "Game" ); DEPRACATED
 };
 
 #endif /* __FXGAMEITEM_H */
