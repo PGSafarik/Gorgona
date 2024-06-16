@@ -285,21 +285,4 @@ void FXGameItem::checkIcons( )
     this->BigIcon = loadExternIcon( m_app, file, bis, bis );
   }
 }
-
-/*** Comparation methods **************************************************************************/
-/* DEPRACATED
-XMLElement* FXGameItem::FindMyXMLElement( XMLElement *parent, const FXString &fname )
-{
-  if( parent ) {
-    for( XMLElement *act = parent->FirstChildElement( fname.text( ) ); act; act = act->NextSiblingElement( fname.text( ) ) ) {
-      FXString _id = act->Attribute( "id" );      
-      FXbool resh = ( _id == m_id );
-      //DEBUG_OUT( "FXGameItem::FindMyXMLElement( ) Compare " << _id << " x " << m_id << " result : " << resh )
-      if( resh ) { return act; } 
-    } 
-  } 
-      
-  return NULL; 
-} */
-
 /*** END ******************************************************************************************/

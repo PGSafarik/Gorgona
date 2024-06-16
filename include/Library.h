@@ -65,11 +65,9 @@ public :
   
   FXint save( );
   FXint load( ); 
-  //virtual FXbool load( XMLElement *library_el ); // DEPRACATED
   virtual FXbool save( XMLElement *library_el );
 
 protected:
-  XMLElement* FindElementBy( XMLElement *parent, const FXString &attr, FXString &value );
   FXGameItem* InsertElement( XMLElement *record );                                            // ONLY ADD EMPTY item by id
   FXbool      EraseElement( const FXString &id );
 };

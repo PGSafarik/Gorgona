@@ -91,14 +91,7 @@ FXbool Library::remove( FXGameItem *it )
       delete it;
     
       // Vymaz zaznamu polozky z XML databaze
-      if( !( res = EraseElement( id ) ) ) {
-        XMLElement *record = FindElementBy( m_xbase, "id", id );
-        if( !record ) { record = FindElementBy( m_xbase, "title", name ); }
-        if( record ) {
-          m_xdoc.DeleteNode( record );
-          res = true;
-        }
-      }
+      res = EraseElement( id );
     }
   }
   
@@ -233,33 +226,12 @@ FXint Library::save( )
   return res;
 }
 
-/* DEPRACATED
-FXbool Library::load( XMLElement *library_el )
-{
-  FXbool result = false; 
-   
-  if( library_el ) {
-    for( XMLElement *el = library_el->FirstChildElement( m_elname.text( ) ); el; el = el->NextSiblingElement( m_elname.text( ) ) ) {
-      FXGameItem *item = InsertElement( el );
-      if( item ) { 
-        push( item ); 
-        result = true;  
-      }
-    }
-  } 
-
-  return result; 
-}
-*/
 FXbool Library::save( XMLElement *library_el )
 {
   DEBUG_OUT( "Library::save( )" )
   FXbool result = false;
    
   if( library_el && m_change( ) ) {
-    std::cout << "Save Library changes: \n";
-    std::cout << "===================== \n";
-
     FXbool force = library_el->NoChildren( );
     if( force ) { cout << "WARNING: Element \"Library\" has no subelements. Using force saving. \n"; }
     
@@ -273,7 +245,7 @@ FXbool Library::save( XMLElement *library_el )
       }
     } 
     
-    std::cout << "Sumarize: " << num << "/" << size << " save items from " << m_elname << " library" << std::endl;
+    std::cout << "Sumarize: save the " << num << "/" << size << " items from " << m_elname << " library" << std::endl;
     result = true;
   }
 
@@ -281,18 +253,6 @@ FXbool Library::save( XMLElement *library_el )
 }
 
 /**************************************************************************************************/
-XMLElement* Library::FindElementBy( XMLElement *parent, const FXString &attr, FXString &value )
-{
-  if( parent ) {
-    for( XMLElement *act = parent->FirstChildElement( ); act; act = act->NextSiblingElement( ) ) {
-      FXString ret = act->Attribute( attr.text( ) ); 
-      if( ret == value ) { return act; }
-    } 
-  }
-
-  return NULL;   
-}
-
 FXGameItem* Library::InsertElement( XMLElement *record )
 {
   FXGameItem *it = NULL;

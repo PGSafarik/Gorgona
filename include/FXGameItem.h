@@ -76,7 +76,6 @@ struct FXGameItem {
   FXbool save( XMLElement *x_record, FXbool force = false );
 
 protected :
-  //XMLElement* FindMyXMLElement( XMLElement *parent, const FXString &fname = "Game" ); DEPRACATED
 };
 
 #endif /* __FXGAMEITEM_H */

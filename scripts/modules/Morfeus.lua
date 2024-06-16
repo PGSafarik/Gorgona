@@ -43,7 +43,7 @@ function module_Init( )
 end
 
 function module:launcher( t )  
-  print( "Module Morfeus launch subprocess" )
+  print( "Module Morfeus prepare launch command" )
   return self.exec .. " " ..  t[ 1 ]
   --Execute( self.exec .. " " .. t[ 1 ] )
 end
