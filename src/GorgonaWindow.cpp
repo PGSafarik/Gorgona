@@ -2,7 +2,6 @@
 #include<GorgonaWindow.h>
 
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
-  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CHANGED,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
@@ -123,23 +122,6 @@ void GorgonaWindow::create( )
 }
 
 /*************************************************************************************************/
-long GorgonaWindow::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
-{
-  FXlong resh = 0;
-
-  switch( FXSELID( sel ) ) {
-    /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?
-    case GorgonaWindow::SYSTEM_RUN : {
-      //DEBUG_OUT( "[GorgonaWindow::OnCmd_System] Launch active game item" )
-      DEBUG_OUT( "[GorgonaWindow::OnCmd_System] SEL_COMMAND" )
-      resh = ( ( this->run( ) == true ) ? 1 : 0 );
-      break;
-    }
-  }
-
-  return resh;
-}
-
 long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 {
   FXlong resh       = 0;

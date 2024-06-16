@@ -80,10 +80,9 @@ public :
   enum {
     MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
-    SYSTEM_RUN,        // Spustit hru
     CONF_SETUP,        // Nastaveni aplikace
     CONF_FOX,          // Nastaveni frameworku Fox
-    LIST_EVENT,        //
+    LIST_EVENT,        // Akce s polozkou v knihovne
     ID_LAST
   };
   long OnCmd_Main(FXObject *sender, FXSelector sel, void *data );
