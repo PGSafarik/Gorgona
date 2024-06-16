@@ -16,11 +16,11 @@
 #define __GORGONAWINDOW_H
 
 /*************************************************************************
-* GorgonaWindow.h                                                       *
+* GorgonaWindow.h                                                        *
 *                                                                        *
-* Hlavni okno aplikace                                                   *
+* Main window                                                            *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
-* ./FoxGHICP --name Gorgona --vendor GorgonaWindow                      * 
+* ./FoxGHICP --name Gorgona --vendor GorgonaWindow                       * 
 *************************************************************************/
 #include<Gorgona.h>
 #include<Boxes.h>
@@ -58,7 +58,7 @@ FXDECLARE( GorgonaWindow )
   FXString  m_view;            // S jakym typem seznamu aplikace nastaruje: list, icons
   FXString  m_winmode;         // V jakem rezimu bude aplikace spustena: window, fullscreen, maximize
   FXPoint   m_WinPos;          // Pozice okna - v okenim rezimu
-  FXSize    m_WinSize;         // Sizka okna - v okenim rezimu
+  FXSize    m_WinSize;         // Sirka okna - v okenim rezimu
   GO_KeyRoots m_keywordsList;  // databaze klicovych slov a tagu
 
   // Application state
@@ -72,7 +72,7 @@ public :
   /* Access methods */
   virtual void create( );
   IconsTheme* get_IconsTheme( ) { return m_iconstheme; }
-  FXGameItem* get_ActiveItem( ) { return m_pane->getCurrentItem( ); }
+  //FXGameItem* get_ActiveItem( ) { return m_pane->getCurrentItem( ); }
 
   /* Operations */
   virtual void layout( );
@@ -81,14 +81,10 @@ public :
   enum {
     MAIN_ABOUT = FXPrimaryWindow::ID_LAST,
     MAIN_CONFIG,
-
     SYSTEM_RUN,        // Spustit hru
-
     CONF_SETUP,        // Nastaveni aplikace
     CONF_FOX,          // Nastaveni frameworku Fox
-
     LIST_EVENT,        //
-
     ID_LAST
   };
   long OnCmd_Main(FXObject *sender, FXSelector sel, void *data );

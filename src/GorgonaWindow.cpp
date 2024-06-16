@@ -130,6 +130,7 @@ long GorgonaWindow::OnCmd_System( FXObject *sender, FXSelector sel, void *data )
     /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?
     case GorgonaWindow::SYSTEM_RUN : {
       //DEBUG_OUT( "[GorgonaWindow::OnCmd_System] Launch active game item" )
+      DEBUG_OUT( "[GorgonaWindow::OnCmd_System] SEL_COMMAND" )
       resh = ( ( this->run( ) == true ) ? 1 : 0 );
       break;
     }
@@ -157,8 +158,7 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
 
     case SEL_DOUBLECLICKED :
     {
-       /// FIXME GORGONA_WINDOW_003: Musi to tu byt dvakrat?  
-       //DEBUG_OUT( "[GorgonaWindow::OnCmd_List] Launch active item" ) // #
+       DEBUG_OUT( "[GorgonaWindow::OnCmd_List] SEL_DOUBLECLICKED ..." ) // # 
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
     }
@@ -391,12 +391,11 @@ void GorgonaWindow::get_arguments( StringList *list )
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
-  FXGameItem *item = ( ( it != NULL ) ? it : get_ActiveItem( ) );
+  FXGameItem *item = ( ( it != NULL ) ? it : m_pane->getCurrentItem( ) ); //get_ActiveItem( ) );
 
   if( item != NULL ) {
     if( (*item)( ) > 0 ) { 
       m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
-      // m_change = true;
       m_app->getLibrary( )->setChange( );
     }
   }
