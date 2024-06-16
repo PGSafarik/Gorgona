@@ -307,17 +307,17 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
 
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
-      //std::cout << "[FXListPane] Item event doubleclick" << std::endl; //#
-      if( m_target ) { m_target->handle( this, FXSEL( SEL_COMMAND, GorgonaWindow::SYSTEM_RUN ), NULL ); }
-      result = 1;
+      DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_DOUBLECLICKED" ) //#
+      result = Notify( SEL_COMMAND );
+      break;
+    }
+    case SEL_COMMAND : {
+      DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_COMMAND" )  //#
+      //result = Notify( SEL_CHANGED );
       break;
     }
     default : {
-      if( m_target != NULL ) {
-        //std::cout << "[FXListPane] Item event other" << std::endl; // #
-        m_target->handle( this, FXSEL( mtype, m_selector), NULL );
-      }
-      result = 1;
+      result = Notify( mtype );
     }
   }
 

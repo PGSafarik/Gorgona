@@ -3,6 +3,7 @@
 
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::SYSTEM_RUN,  GorgonaWindow::OnCmd_System ),
+  FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CHANGED,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),
   FXMAPFUNC( SEL_CONFIGURE, GorgonaWindow::MAIN_CONFIG, GorgonaWindow::OnCmd_Main ),
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::CONF_SETUP,  GorgonaWindow::OnCmd_Config ),
@@ -57,7 +58,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
     new FXMenuCommand( m_mGorgona, "Ukoncit", m_iconstheme->getIcon( "Actions/window-close.png" ), getApp( ), FXApp::ID_QUIT );
   new FXMenuCascade( m_menu, "Gorgona", NULL, m_mGorgona );
   m_mGames = new FXMenuPane( m_menu );
-    new FXMenuCommand( m_mGames, "Spustit", m_iconstheme->getIcon( "Actions/system-run.png" ), this, GorgonaWindow::SYSTEM_RUN );
+    new FXMenuCommand( m_mGames, "Spustit", m_iconstheme->getIcon( "Actions/system-run.png" ), this, GorgonaWindow::LIST_EVENT );
     new FXMenuSeparator( m_mGames, NULL, 0, FRAME_GROOVE | LAYOUT_FILL_X );
     new FXMenuCommand( m_mGames, "Pridat",  m_iconstheme->getIcon( "Actions/list-add.png" ),    m_pane, FXListPane::GAME_INSERT );
     new FXMenuCommand( m_mGames, "Editovat",  m_iconstheme->getIcon( "Actions/document-edit.png" ),    m_pane,  FXListPane::GAME_EDIT );
@@ -82,7 +83,7 @@ GorgonaWindow::GorgonaWindow( Gorgona *app )
  
   
   ToolBar *lb = new ToolBar( this, m_iconstheme );
-  lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, GorgonaWindow::SYSTEM_RUN );
+  lb->makeButton( "\t\tSpustit", "Actions_big/system-run.png", this, GorgonaWindow::LIST_EVENT );
 
   ToolBar *vb = new ToolBar( this, m_iconstheme );
   vb->makeButton( "\t\tPohled Detaily", "Actions_big/view-list-details.png", m_pane, FXListPane::LIST_DETAIL );  
@@ -146,7 +147,8 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELTYPE( sel ) ) {
     case SEL_CHANGED :
     {
-      //DEBUG_OUT( "[GorgonaWindow::OnCmd_List] List must be updated ..." ) // #
+      // FIXME : Zkotrolovat jak, kdy, proc a kym je odesilana tato zprava.
+      //DEBUG_OUT( "[GorgonaWindow::OnCmd_List] SEL_CHANGED" ) // #
       FXString numinfo = "View ";
       numinfo += FXString::value( m_pane->numItems( NULL, false ) ) + " game entries"; //!
       m_statusbar->getStatusLine( )->setText( numinfo );
@@ -156,9 +158,9 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
       break;
     }
 
-    case SEL_DOUBLECLICKED :
+    case SEL_COMMAND :
     {
-       DEBUG_OUT( "[GorgonaWindow::OnCmd_List] SEL_DOUBLECLICKED ..." ) // # 
+       DEBUG_OUT( "[GorgonaWindow::OnCmd_List] SEL_COMMAND" ) // # 
        resh = ( ( this->run( ) == true ) ? 1 : 0 );
        break;
     }
