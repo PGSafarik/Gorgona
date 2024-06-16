@@ -72,7 +72,6 @@ public :
   /* Access methods */
   virtual void create( );
   IconsTheme* get_IconsTheme( ) { return m_iconstheme; }
-  //FXGameItem* get_ActiveItem( ) { return m_pane->getCurrentItem( ); }
 
   /* Operations */
   virtual void layout( );

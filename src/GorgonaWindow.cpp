@@ -391,7 +391,7 @@ void GorgonaWindow::get_arguments( StringList *list )
 
 FXbool GorgonaWindow::run( FXGameItem *it )
 {
-  FXGameItem *item = ( ( it != NULL ) ? it : m_pane->getCurrentItem( ) ); //get_ActiveItem( ) );
+  FXGameItem *item = ( ( it != NULL ) ? it : m_pane->getCurrentItem( ) ); 
 
   if( item != NULL ) {
     if( (*item)( ) > 0 ) { 
