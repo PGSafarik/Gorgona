@@ -113,6 +113,23 @@ FXival Library::find_title( const FXString &text )
      
   return -1;
 }
+
+FXival Library::find_id( const FXString &value )
+{
+  if( !value.text( ) ) { 
+    FXival pos = 0;
+    FXival num = no( );
+    FXGameItem **p = data( );
+     
+    while( pos < num ) {
+      if( p[ pos ]->get_id( ) == value ) { return pos; }
+      ++pos;     
+    }  
+  }
+  
+  return -1;
+  
+}
  
 FXbool Library::open( const FXString &filename )
 {
