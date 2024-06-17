@@ -62,7 +62,7 @@ public :
   FXbool open( const FXString &filename );
   FXbool close( FXbool force = false);
   FXival find_title( const FXString &text );
-  FXival find_id( const FXString &value );
+  FXival findById( const FXString &value );
   
   FXint save( );
   FXint load( ); 

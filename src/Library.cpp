@@ -114,7 +114,7 @@ FXival Library::find_title( const FXString &text )
   return -1;
 }
 
-FXival Library::find_id( const FXString &value )
+FXival Library::findById( const FXString &value )
 {
   if( !value.text( ) ) { 
     FXival pos = 0;
