@@ -116,7 +116,7 @@ FXival Library::find_title( const FXString &text )
 
 FXival Library::findById( const FXString &value )
 {
-  if( !value.text( ) ) { 
+  if( !value.empty( ) ) { 
     FXival pos = 0;
     FXival num = no( );
     FXGameItem **p = data( );
@@ -275,6 +275,7 @@ FXbool Library::run( const FXString &id )
   
   if( !id.empty( ) ) {
     FXival pos = findById( id );
+    DEBUG_OUT( "Library run " << id << " on index " << pos )
     if( pos >= 0 && (*at( pos ) )( ) > 0 )  {
       //m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
       setChange( );
