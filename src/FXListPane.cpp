@@ -308,18 +308,14 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
       DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_DOUBLECLICKED" ) //#
-      FXString id; 
-      FXGameItem   *it = getCurrentItem( ); 
-      if( it ) { id = it->get_id( ); }
-      
-      result = Notify( SEL_COMMAND, id.text( ) );
+      result = Notify( SEL_COMMAND, m_activeid.text( ) );
       break;
     }
     case SEL_COMMAND : {
       DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_COMMAND" )  //#
       FXGameItem *it = getCurrentItem( );
       m_activeid = ( it ? it->get_id( ) : FXString::null );
-      DEBUG_OUT( m_activeid )
+      //DEBUG_OUT( m_activeid )
       //result = Notify( SEL_CHANGED );
       break;
     }
