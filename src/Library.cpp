@@ -269,6 +269,25 @@ FXbool Library::save( XMLElement *library_el )
   return result;
 }
 
+FXbool Library::run( const FXString &id ) 
+{
+  FXbool result = false;
+  
+  if( !id.empty( ) ) {
+    FXival pos = findById( id );
+    if( pos >= 0 && (*at( pos ) )( ) > 0 )  {
+      //m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
+      setChange( );
+      result = true;
+    }
+  }
+  
+  return result;  
+  
+  
+}
+
+
 /**************************************************************************************************/
 FXGameItem* Library::InsertElement( XMLElement *record )
 {

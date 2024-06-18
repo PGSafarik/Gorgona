@@ -63,6 +63,7 @@ public :
   FXbool close( FXbool force = false);
   FXival find_title( const FXString &text );
   FXival findById( const FXString &value );
+  FXbool run( const FXString &id );
   
   FXint save( );
   FXint load( ); 
