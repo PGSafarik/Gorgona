@@ -143,11 +143,9 @@ long GorgonaWindow::OnCmd_List( FXObject *sender, FXSelector sel, void *data )
     case SEL_COMMAND :
     {
        DEBUG_OUT( "[GorgonaWindow::OnCmd_List] SEL_COMMAND" ) // # 
-       //resh = ( ( this->run( ) == true ) ? 1 : 0 );
        FXchar *_id = NULL; 
        if( data ) {
          _id = static_cast<FXchar*>( data );
-         DEBUG_OUT( _id )
          if( m_app->getLibrary( )->run( _id ) ) {
            m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL );
          }

@@ -275,17 +275,14 @@ FXbool Library::run( const FXString &id )
   
   if( !id.empty( ) ) {
     FXival pos = findById( id );
-    DEBUG_OUT( "Library run " << id << " on index " << pos )
+    //DEBUG_OUT( "Library run " << id << " on index " << pos )
     if( pos >= 0 && (*at( pos ) )( ) > 0 )  {
-      //m_pane->handle( this, FXSEL( SEL_COMMAND, FXListPane::LIST_REFRESH ), NULL ); 
       setChange( );
       result = true;
     }
   }
   
   return result;  
-  
-  
 }
 
 

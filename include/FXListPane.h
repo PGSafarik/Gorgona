@@ -65,7 +65,8 @@ FXDECLARE( FXListPane )
   FXint m_actinum;     // Pocet aktualne zobrazovanych polozek
   FXint m_nitems; 
   FXint m_nfolders;
-
+  
+  FXString m_activeid; 
 
 public :
   FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSelector sel );
@@ -106,6 +107,7 @@ public :
   void    setSmallItemIc( FXIcon *ic )    { ic_sitem = ic;     }
   FXIcon* getSmallItemIc( )               { return ic_sitem;   }
 
+  FXString    getActiveItemId( )          { return m_activeid; } 
   FXGameItem* getCurrentItem( );
   FXTreeItem* getCurrentFolder( ) { return m_foldertree->getCurrentItem( ); }
   ///////////////////////////////////////////////

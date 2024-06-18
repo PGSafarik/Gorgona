@@ -312,12 +312,14 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
       FXGameItem   *it = getCurrentItem( ); 
       if( it ) { id = it->get_id( ); }
       
-      DEBUG_OUT( id )
       result = Notify( SEL_COMMAND, id.text( ) );
       break;
     }
     case SEL_COMMAND : {
       DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_COMMAND" )  //#
+      FXGameItem *it = getCurrentItem( );
+      m_activeid = ( it ? it->get_id( ) : FXString::null );
+      DEBUG_OUT( m_activeid )
       //result = Notify( SEL_CHANGED );
       break;
     }
