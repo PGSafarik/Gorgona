@@ -137,7 +137,7 @@ protected :
   ///
   ///
   void erase_f( FXGameItem *item ); // Funkce odstrani polozku z dat slozky
-  FXlong Notify( FXuint type_message );
+  FXlong Notify( FXuint type_message, void *data = NULL );
   void SaveNotify( ); // !
 };
 

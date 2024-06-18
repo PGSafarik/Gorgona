@@ -308,6 +308,7 @@ long FXListPane::OnCmd_item( FXObject *sender, FXSelector sel, void *data )
   switch( mtype ) {
     case SEL_DOUBLECLICKED : {
       DEBUG_OUT( "[FXListPane::OnCmd_Item] SEL_DOUBLECLICKED" ) //#
+      
       result = Notify( SEL_COMMAND );
       break;
     }
@@ -454,10 +455,10 @@ long FXListPane::OnCmd_game( FXObject *sender, FXSelector sel, void *data )
 }
 
 
-FXlong FXListPane::Notify( FXuint type_message ) 
+FXlong FXListPane::Notify( FXuint type_message, void *data ) 
 {
   FXlong res = 0;
-  if( m_target ) { res = m_target->handle( this, FXSEL( type_message, m_selector ), NULL ); } 
+  if( m_target ) { res = m_target->handle( this, FXSEL( type_message, m_selector ), data ); } 
 
   return res;
 }
