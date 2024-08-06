@@ -26,7 +26,8 @@
 struct FXGameItem {
   Gorgona        *m_app;
 
-  FXString     m_id;		       // Identifikator polozky
+  ECHIDNA::Identifier m_id;    // Identifikator polozky
+  
   FXbool       hidel;	         // Skryt spoustec pri spusteni
   FXbool       m_change;       // Indikace zmeny polozky (depracated)
   FXuint       m_state;        // Indikace aktualniho stavu polozky 
