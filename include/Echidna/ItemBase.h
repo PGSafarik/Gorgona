@@ -38,7 +38,10 @@ class ItemBase : public FXObject {
 FXDECLARE( ItemBase )
   // <TYPE param1="data" param="data" />
   Gorgona            *m_app;      // Ukazatel na instanci aplikace 
+  
+  ECHIDNA::Identifier m_id;
   FXString            m_type;      // Typ polozky   ( "Game", "tool", "label" )  
+  
   FXStringDictionary  m_property;  // data polozky ve stylu: pozice -> klic = hodnota
   
   /* Control State automation */

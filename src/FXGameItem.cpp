@@ -178,6 +178,56 @@ FXbool FXGameItem::write( const FXString &k, const FXString &v, FXbool chang )
    return resh;
 }
 
+
+void FXGameItem::__T_load( XMLElement *x_record )
+{
+   /* Item */
+   m_type       = x_record->Name( );   
+  
+   /* Base data for this item */
+   m_id         = x_record->Attribute( "id" );
+   m_name       = x_record->Attribute( "title" );
+   m_collection = x_record->Attribute( "collection" );
+   m_number     = x_record->Attribute( "serial" ); 
+  
+   /* Properties */
+   //m_description->load( x_record );
+   //m_visual->load( x_record );
+   //m_properties->load( x_record );
+   
+   /* Trigger */
+   exec->set_appid( m_id );
+   exec->load( x_record );
+   
+   /* Finally */
+   checkIcons( );
+   validate( );  
+   
+   DEBUG_OUT( "FXGameItem::Load( ) " << m_id << "\t" << m_name )
+}
+
+void FXGameItem::__T_save( XMLElement *x_record, FXbool force )
+{
+  if( m_change || force ) {
+    /* Basic item data */
+    x_record->SetAttribute( "id",         m_id.text( ) );
+    x_record->SetAttribute( "title",      m_name.text( ) );
+    x_record->SetAttribute( "collection", m_collection.text( ) );
+    x_record->SetAttribute( "serial",     m_number.text( ) );
+    
+    /* Properties */
+    //m_description->save( x_record, force );
+    //m_visual->save( x_record, force );    
+    //m_properties->save( x_record, force );
+    
+    /* Trigger */
+    exec->save( x_record, force );
+    
+    /* Finally */
+    DEBUG_OUT( "FXGameItem::Save( ) " << m_id << "\t" << m_name )  
+  }    
+}
+
 void FXGameItem::load( XMLElement *x_record )
 {
   FXString _name, _value, _sect, _key;

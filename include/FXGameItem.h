@@ -26,22 +26,25 @@
 struct FXGameItem {
   Gorgona        *m_app;
 
-  ECHIDNA::Identifier m_id;    // Identifikator polozky
+  ECHIDNA::Identifier m_id;         // Item identifier
+  FXString            m_name;       // Name of item
+  FXString            m_collection; // Collection (Series) name
+  FXString            m_number;     // Serial number of the item in the series
+  FXString            m_type;       // Item type ( "Game", Tool, Server, DLC ... )
   
-  FXbool       hidel;	         // Skryt spoustec pri spusteni
-  FXbool       m_change;       // Indikace zmeny polozky (depracated)
-  FXuint       m_state;        // Indikace aktualniho stavu polozky 
-  FXStringDictionary property; // Tabulka vlastnosti polozty
+  FXbool       hidel;	         // Hide in run
+  FXbool       m_change;       // Change (depracated)
+  FXuint       m_state;        // Indication actual state 
+  FXStringDictionary property; // Properties table
 
-  FXIcon *BigIcon;
-  FXIcon *SmallIcon;
+  FXIcon *BigIcon;    // Big   item icon instance
+  FXIcon *SmallIcon;  // Small item icon instance
 
-  FXint   numist;    // Pocet spusteni ( bezicich instanci hry )
-  FXbool  one;       // Spoustet jen jednu instanci
-
-  FXbool  m_valid;     // 
+  FXint   numist;    // Number of concurrently running instances (if multi-run is enabled) 
+  FXbool  one;       // true disabeld multi-run (default)
+  FXbool  m_valid;     // flag of validation status
   
-  PERSEUS::Game *exec;  // Spoustec 
+  PERSEUS::Game *exec;  // Trigger for this item
 
   /* Item state flags */
   enum {  
@@ -72,9 +75,13 @@ struct FXGameItem {
   void   checkIcons( );
   const FXString read( const FXString &k ) const;
   FXbool write( const FXString &k, const FXString &v, FXbool chang = true );
-
+    
   void   load( XMLElement *eitem );
   FXbool save( XMLElement *x_record, FXbool force = false );
+
+  /*Temporarily*/
+  void __T_load( XMLElement *x_record );
+  void __T_save( XMLElement *x_record, FXbool force = false );
 
 protected :
 };
