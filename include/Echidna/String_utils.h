@@ -27,9 +27,32 @@
 *************************************************************************/
 namespace ECHIDNA {
   /////////////////////////////////////////////////
+  /* String classes                              */ 
+  class Identifier : public FXString {
+  public :
+    Identifier( ) : FXString( ) { }
+    Identifier(const FXString& s) : FXString( s ) { }
+    Identifier(const FXchar* s) : FXString( s ) { }
+    Identifier(const FXnchar* s) : FXString( s ) { }
+    Identifier(const FXwchar* s) : FXString( s ) { }
+    Identifier(const FXchar* s,FXint n) : FXString( s, n ) { }
+    Identifier(const FXnchar* s,FXint n) : FXString( s, n ) { }
+    Identifier(const FXwchar* s,FXint n)  : FXString( s, n ) { }
+    Identifier(FXchar c,FXint n) : FXString( c, n ) { }
+
+    void set_key( const FXString &src = FXString::null );
+    FXString get_key( );
+    void set_value( const FXString &val = FXString::null );
+    FXString get_value( );
+    FXint verify( );
+    void make( const FXString &src, const FXString &pattern = FXString::null );
+  };
+
+  /////////////////////////////////////////////////
   /* Global types                                */ 
   typedef FXArray<FXString>      StringList;
   typedef FXArray<const FXchar*> CharsList;
+  typedef FXArray<Identifier>    IdentList;
   
   /////////////////////////////////////////////////
   /* String helpers functions                    */
