@@ -6,3 +6,4 @@ tests/
 *.srctrldb
 *.srctrlprj
 *.kate-swp
+.directory
