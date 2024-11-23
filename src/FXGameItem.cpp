@@ -11,7 +11,12 @@
 FXGameItem::FXGameItem( Gorgona *app )
 {
   m_app = app;
-
+  
+  m_name       = FXString::null;
+  m_type       = FXString::null;
+  m_collection = FXString::null;
+  m_number     = FXString::null;
+  
   this->hidel     = false;
   this->m_change  = false; //(depracated)
   m_state         = FXGameItem::STATE_NEW;
