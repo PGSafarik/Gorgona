@@ -28,9 +28,10 @@ struct FXGameItem {
 
   ECHIDNA::Identifier m_id;         // Item identifier
   FXString            m_name;       // Name of item
+  FXString            m_type;       // Item type ( "Game", Tool, Server, DLC ... )
   FXString            m_collection; // Collection (Series) name
   FXString            m_number;     // Serial number of the item in the series
-  FXString            m_type;       // Item type ( "Game", Tool, Server, DLC ... )
+  
   
   FXbool       hidel;	         // Hide in run
   FXbool       m_change;       // Change (depracated)
