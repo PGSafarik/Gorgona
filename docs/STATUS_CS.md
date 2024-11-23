@@ -1,5 +1,5 @@
 # STAV PROJEKTU GORGONA A PLÁNY DO BUDOUCNA
-    = 11/08/2023 =
+    = 23/11/2024 =
 
 *Content:*
   1. [Novinky](#1-Novinky)
@@ -8,6 +8,10 @@
     
 ---
 ## 1. Novinky  
+#### 23/11/2024 - Aktualizace 1.6.6.3
+* DŮLEŽITE: Přechod na novou verzi knihovny FoxGHI (0.4.4.1). Tato verze - mimo jiné - umožňuje klientským programům zjistit verzi libFXGHI přímo, a je zpětně
+  nekompatibilní (na urovni zdrojoveho kodu. Již preložené starší verze Gorgony by měli i po upgradu FoxGHI nadále fungovat).
+
 #### 13/05/2024 Oprava - 1.6.6.0
 * FIXED - Opravena duplikace XML elementu "description" v knihovně herních titulů.
 * FIXED - Opravena chyba se špatnou navratovou hodnotou, vracenou Lua funkci pro přimé spouštění procesu. 

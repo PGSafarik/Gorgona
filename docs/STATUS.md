@@ -8,6 +8,9 @@
 
 ---
 ## 1. News
+#### 23/11/2024 - Update the FoxGHI default version 1.6.6.3
+*IMPORTANT: Transition to a new version of the FoxGHI library (24.11 0.4.4.1 ALPHA). This version - among other things - allows client programs to detect the libFXGHI version directly, and is backward incompatible (at the source code level. Already compiled older versions of Gorgona should continue to work after the FoxGHI upgrade).
+
 #### 13/05/2024 Oprava - 1.6.6.0
 * FIXED - Fixed duplication of the "description" XML element in the game title library.
 * FIXED - Fixed a bug with a bad return value returning a Lua function to directly start a process. 
