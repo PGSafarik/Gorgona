@@ -59,6 +59,7 @@ public:
   virtual ~Gorgona( );
    
   /* Signals / Slots */
+  // ECHIDNA::SIGNAL *Sig_ChildTerminate;
   GSignal *sig_child_exit;  // Emitted when the program catches a child process termination system message (SIG_CHILD) 
 
   /* Access methods */
