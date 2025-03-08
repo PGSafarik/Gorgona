@@ -23,8 +23,6 @@
 *************************************************************************/
 /* asan;-fsanitize=address > project */
 
-//#define __DEBUG
-
 // The standard routine & objects, syscalls and system types
 #include <cstdio>
 #include <iostream>
@@ -68,6 +66,18 @@ namespace ECHIDNA { }
 #include<Perseus/Runnable.h>
 #include<Utils.h>
 
+/* Types of the Gorgona jobs */
+#define JOB_NORMAL   1
+#define JOB_RESERVED 2
+#define JOB_SYSTEM   3
+
+/* */
+#define ID_NORMAL_MAX 99
+#define ID_RESERVED_MAX 10
+
+
+/* Aktive the DEBUG mode */
+#define __DEBUG 1
 
 #endif // DEFINE_H_INCLUDED
 
