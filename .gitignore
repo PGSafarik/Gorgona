@@ -1,5 +1,7 @@
+.idea/
 tmp/
 build/
+cmake-build-debug/
 GORGONA-AN/
 tests/
 *.srctrlbm
