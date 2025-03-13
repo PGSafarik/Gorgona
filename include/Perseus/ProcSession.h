@@ -56,7 +56,7 @@ namespace PERSEUS {
     FXint    sid( )           { return static_cast<FXint>( m_sid ); }
     FXString name( )          { return m_name; }
     FXbool   has( FXint pid ) { auto it = find( pid ); return it != end( ); }
-    FXint    set_job( FXuint type = JOB_SYSTEM );
+    FXint    set_job( FXuint type );
  
     /* opeartions */
     FXbool  start( );                               // Start to the process session
