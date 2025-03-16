@@ -12,10 +12,9 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#include<define.h>
-
 #ifndef __UTILS_H
 #define __UTILS_H
+
 /*************************************************************************
 * Utils.h                                                                *
 *                                                                        *
@@ -31,7 +30,7 @@ using namespace ECHIDNA;
 //////////////////////////////////////////////////
 /* Print debug log                               */
 #ifdef __DEBUG
-#define DEBUG_OUT(text) std::cout << "[DEBUG " << __FILE__ << " " << __LINE__ << "]: " << text << std::endl; 
+#define DEBUG_OUT(text) std::cout << "[DEBUG " << __FILE__ << " " << __LINE__ << "]: " << text << std::endl;
 #else
 #define DEBUG_OUT(text)
 #endif
