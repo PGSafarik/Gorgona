@@ -37,6 +37,13 @@ FXDECLARE( Gorgona )
 
   FSM_Changes m_modify;    // Modify statemat
 
+  FXString      m_datadir;
+  FXString      m_configdir;
+  FXString      m_localdatadir;
+  FXString      m_localconfdir;
+  FXSettings    m_defaultcfg;
+
+
   /* Child process managment */
   FXDictionaryOf<PERSEUS::Process> m_descendants; // List of registered descendants of the Gorgona process 
   PERSEUS::ProcSession m_session;
