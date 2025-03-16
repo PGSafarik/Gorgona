@@ -27,6 +27,7 @@
 #include<Library.h>
 #include<Perseus/Process.h>
 #include<Perseus/TermProfile.h>
+#include<Perseus/ProcSession.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
@@ -34,11 +35,12 @@ FXDECLARE( Gorgona )
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
 
-  FSM_Changes m_modify;      // Modify statemat 
+  FSM_Changes m_modify;    // Modify statemat
 
   /* Child process managment */
   FXDictionaryOf<PERSEUS::Process> m_descendants; // List of registered descendants of the Gorgona process 
-  
+  PERSEUS::ProcSession m_session;
+
   /* Lua */
   lua_State *m_lua;        // Instance of the Lua language interpreter
   FXbool     m_luaOk;      // True indicate succeful initialize the Lua language ;) 

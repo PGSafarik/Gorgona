@@ -93,7 +93,8 @@ void Gorgona::create( )
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
   Welcome( this ); 
-  
+  m_session.start( );
+
   FXApp::init( argc, argv, connect );
 
   DEBUG_OUT( reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "]" )
@@ -115,6 +116,9 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   m_term->p_noclose = "+hold";
   m_term->p_workdir = FXString::null;
 
+  m_session.check( );
+
+
   m_initialized = true;
 }
 
@@ -135,12 +139,16 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
   PERSEUS::Process *proc = new PERSEUS::Process; 
 
   DEBUG_OUT( "Run new process" )
+  FXint jid = m_session.set_job( JOB_NORMAL );
   if( proc->run( cmd ) ) {
     pid = proc->id( );
-    DEBUG_OUT( "New process OK. PID is: " << pid )
+    m_session.insert( std::pair<FXint, PERSEUS::Process* >( pid, proc ) );
+    DEBUG_OUT( "New process OK. PID: " << pid << " Job ID: " << jid );
 
+    //! [
     FXString key =  FXString::value( pid );
     m_descendants.insert( key.text( ), proc ); 
+    //]
 
     if( m_verbose ) {
       std::cout << "EXECUTE the process:";
@@ -162,6 +170,10 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
 
   std::cout << "\n";
   std::cout.flush( );
+
+  DEBUG_OUT( "Update internal list of the  process session" )
+  m_session.set_job( JOB_SYSTEM );
+  m_session.check( );
 
   return pid;
 }
@@ -203,7 +215,7 @@ FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
 
 /**************************************************************************************************/
 long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
-{ 
+{
   FXint    status;
   FXString msg  = "";
   struct   rusage __usage;
