@@ -77,6 +77,10 @@ namespace ECHIDNA { }
 /* Data separators */
 #define ENVPATHSEPSTRING ":"
 
+/* System and predefined data files */
+#define DEF_CFG_FILE  "default.cfg" // The name of the file with an default configurations
+//#define MIMESLISTFILE "mime/types"  // The relative path of mime types list file
+
 /* Aktive the DEBUG mode */
 #define __DEBUG 1
 
