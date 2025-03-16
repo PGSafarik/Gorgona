@@ -66,12 +66,12 @@ namespace ECHIDNA {
   typedef FXArray<const FXchar*> CharsList;
   typedef FXArray<Identifier>    IdentList;
   
-  /////////////////////////////////////////////////
-  /* String helpers functions                    */
-  extern FXint    split( const FXString &str, StringList *buffer, const FXString &sep = "/" ); // Vytvori seznam subretezcu dle zadaneho separatoru, vyskytuje-li se v retezci
-  extern FXString pack( const StringList &buffer, const FXString &sep = "" );                  // Spoji retezce z pole do jednoho (opak fce split( ))
-  extern FXchar*  convert_str( const FXString &str );                                          // Konverze retezce FXString na FXchar[] vcetne alokace pameti
-  extern void     clear_string_buffer( CharsList *buffer );                                    // Dealokace retezcu v bufferu, alokovanych pomoci convert_str( )
+/*** Functions ************************************************************************************/
+  extern FXint    split( const FXString &str, FXStringList *buffer, const FXString &sep = "/" ); // Vytvori seznam subretezcu dle zadaneho separatoru, vyskytuje-li se v retezci
+  extern FXString pack( const FXStringList &buffer, const FXString &sep = "" );                  // Spoji retezce z pole do jednoho (opak fce split( ))
+  extern FXchar*  convert_str( const FXString &str );                                               // Konverze retezce FXString na FXchar[] vcetne alokace pameti
+  extern void     clear_string_buffer( CharsList *buffer );                                         // Dealokace retezcu v bufferu, alokovanych pomoci convert_str( )
+  extern FXbool   check_number( const FXString &str );                                              // Returned true if string is number. Detecting negative or positive number. Empty string is false.
 
 };     /* ECHIDNA */
 #endif /*__STRING_UTILS_H*/
