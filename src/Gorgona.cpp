@@ -239,6 +239,10 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
   else { 
     msg += "The UNKNOWN chidern process of the descendant ";
     msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
+
+    /* Restoring SIGCHLD settings – workaround due to boost::process */
+    removeSignal( SIGCHLD );
+    addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
   }    
   
   std::cout << msg << std::endl;  
