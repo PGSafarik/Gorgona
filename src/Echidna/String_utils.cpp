@@ -4,6 +4,76 @@
 using namespace ECHIDNA;
 
 namespace ECHIDNA {
+/*** String list class ****************************************************************************/
+  FXStringList::FXStringList( )
+              : FXArray<FXString>( )
+  { }
+
+  FXStringList::~FXStringList( )
+  { }
+
+  /************************************************************************************************/
+  FXString FXStringList::join( const FXString &sep, FXint n )
+  {
+    FXString str;
+
+    if( n <= 0 ) { n = no( ); }
+    else if ( n > no( ) ) { n = no( ); }
+
+    for( int i = 0; i != n; i++ ) {
+      if( i > 0 ) { str += sep; }
+      str += at( i );
+    }
+
+    return str;
+  }
+
+  FXint FXStringList::split( const FXString &str, const FXString &sep )
+  {
+    if( str.empty( ) ) { return 0; }
+
+    int num, count;
+    count = num = 0;
+
+    if( !sep.empty( ) ) {
+      num = str.contains( sep );
+      if( str.right( 1 ) != sep ) { num += 1; }
+
+      for( int i = 0; i != num; i++ ) {
+        FXString substr = str.section( sep, i );
+
+        if( i == 0 && substr.empty( ) ) { continue; }
+        if( !substr.empty( ) ) { substr.trim( ); }
+
+        push( substr );
+        count++;
+      }
+    }
+    else {
+      push( str );
+      count = 1;
+    }
+
+    return count;
+  }
+
+  void FXStringList::sort( )
+  {
+    ::qsort( data( ), no( ), sizeof( FXString ), [](const void* a, const void* b)
+    {
+      const FXString _a = *static_cast<const FXString*>( a );
+      const FXString _b = *static_cast<const FXString*>( b );
+
+      if( _a != _b ) {
+        if( _a < _b ) { return -1; }
+        else { return 1; }
+      }
+
+      return 0;
+    });
+
+  }
+
 /*** Identifier class *****************************************************************************/
   //SRC_KEY:ID_VALUE
   void Identifier::set_key( const FXString &src )
@@ -83,8 +153,8 @@ namespace ECHIDNA {
     assign( value( src.hash( ) ) ); 
   }
   
-/*** String buffering *****************************************************************************/
-  FXint split( const FXString &str, StringList *buffer, const FXString &sep )
+/*** String buffering & utils *********************************************************************/
+  FXint split( const FXString &str, FXStringList *buffer, const FXString &sep )
   {
     FXint count = 0;
     FXint nstr, pos;
@@ -108,7 +178,7 @@ namespace ECHIDNA {
     return count;
   }
 
-  FXString pack( const StringList &buffer, const FXString &sep )
+  FXString pack( const FXStringList &buffer, const FXString &sep )
   {
     FXString str = FXString::null;
     FXint    num = buffer.no( );
@@ -142,6 +212,23 @@ namespace ECHIDNA {
       }
       buffer->clear( );
     }
+  }
+
+  FXbool check_number( const FXString &str )
+  {
+    if( !str.empty( ) ) {
+      FXuint size = str.length( );
+      for( FXuint i = 0; i != size; i++ ) {
+        FXchar c = str[ i ];
+        if( i == 0 && c == '-' ) { continue; }
+        if( c < '0' || c > '9' ) {
+          return false;
+        }
+      }
+    }
+    else { return false; }
+
+    return true;
   }
 
 } /* ECHIDNA */

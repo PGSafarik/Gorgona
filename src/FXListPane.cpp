@@ -185,9 +185,10 @@ void FXListPane::showFolder( FXTreeItem *__folder, FXbool sub )
 
 FXTreeItem* FXListPane::folder( const FXString &name, FXTreeItem *parent )
 {
-  FXArray<FXString>  t_buff;
-  FXTreeItem        *resh = NULL;
-  FXTreeItem        *p    = ( ( parent != NULL )? parent : m_rootfd );
+  //FXArray<FXString>  t_buff;
+  FXStringList  t_buff;
+  FXTreeItem   *resh = NULL;
+  FXTreeItem   *p    = ( ( parent != NULL )? parent : m_rootfd );
 
   split( name, &t_buff );       // Vyhledani subretezcu odpovidajicich subslozkam
   if( t_buff.no( ) == 0 ) {     // Jmeno neobsahuje zadne subslozky

@@ -27,7 +27,7 @@
 struct GO_KeyEntry {
   FXString   description;	// Popis znacky
   FXString   actionid;		// Akce asociovana s touto znackou
-  StringList vlist;		    // Seznam moznych hodnot
+  FXStringList vlist;		    // Seznam moznych hodnot
   FXint      priority;	 	// priorita pri vyhodnocovani vice tagu ( def: 0, min: -10, max 10 )
 };
 

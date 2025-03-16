@@ -26,8 +26,21 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 namespace ECHIDNA {
-  /////////////////////////////////////////////////
-  /* String classes                              */ 
+/*** String classes *******************************************************************************/
+  class FXStringList : public FXArray<FXString> {
+
+    public :
+      FXStringList( );
+    virtual ~FXStringList( );
+
+    /* Operations */
+    FXString join( const FXString &sep = "", FXint n = 0 );    // Join content in this array
+    FXint    split( const FXString &str, const FXString &sep );   // Splits the specified string into individual substrings separated by a separator
+    void     sort( );
+
+    protected :
+  };
+
   class Identifier : public FXString {
   public :
     Identifier( ) : FXString( ) { }
@@ -48,9 +61,8 @@ namespace ECHIDNA {
     void make( const FXString &src, const FXString &pattern = FXString::null );
   };
 
-  /////////////////////////////////////////////////
-  /* Global types                                */ 
-  typedef FXArray<FXString>      StringList;
+/*** Global types *********************************************************************************/
+  //typedef FXArray<FXString>      StringList;
   typedef FXArray<const FXchar*> CharsList;
   typedef FXArray<Identifier>    IdentList;
   
