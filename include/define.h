@@ -71,10 +71,11 @@ namespace ECHIDNA { }
 #define JOB_RESERVED 2
 #define JOB_SYSTEM   3
 
-/* */
 #define ID_NORMAL_MAX 99
 #define ID_RESERVED_MAX 10
 
+/* Data separators */
+#define ENVPATHSEPSTRING ":"
 
 /* Aktive the DEBUG mode */
 #define __DEBUG 1

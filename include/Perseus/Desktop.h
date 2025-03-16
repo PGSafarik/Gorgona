@@ -24,8 +24,6 @@
 //#include<core.h>
 #include <define.h>
 
-#define ENVPATHSEPSTRING ":" 
-
 namespace PERSEUS {
 /*** Environment Variables ***********************************************************************/
   FXString CheckEnv( const FXString &env, const FXString &def_val = FXString::null );
