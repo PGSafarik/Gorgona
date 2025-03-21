@@ -201,6 +201,7 @@ FXint Gorgona::execLuaFile( const FXString &script )
   return result;
 }
 
+/* !
 FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
 {
   FXint status = 0;

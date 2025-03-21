@@ -91,7 +91,7 @@ public:
 
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );   
   FXint exec( const FXString &cmd, FXuint term_opts );               
-  FXint wait( PERSEUS::Process *process, FXbool notify = false );    
+  //!FXint wait( PERSEUS::Process *process, FXbool notify = false );
   FXint execLuaFile( const FXString &script );                        
 
   FXbool removeChild( FXint pid, FXbool force = false ); // true - if its process instanse with entered pid is removed from internal list
