@@ -26,15 +26,10 @@
 #include<map>
 #include<string>
 #include<vector>
+#include<cstdio>
 
 #include<define.h>
 #include<Perseus/Process.h>
-
-//#include<boost/filesystem.hpp>
-#include<boost/asio.hpp>
-#include<boost/process.hpp>
-
-namespace BP = boost::process;
 
 namespace PERSEUS {
   
