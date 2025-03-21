@@ -213,40 +213,45 @@ FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
   
   return status;
 }
-
+*/
 /**************************************************************************************************/
 long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 {
-  FXint    status;
+  DEBUG_OUT(  "SIGCHLD - START" )
+
+  int    status;
+  FXint  pid = 0;
   FXString msg  = "";
-  struct   rusage __usage;
-  FXint    pid  = ( FXint ) wait3( &status, 0, &__usage );
-   
-  PERSEUS::Process *proc = findChild( pid );
-  if( proc ) {
+  while( ( pid = waitpid( -1, &status, WNOHANG ) ) > 0 ) {
+    std::cout << "PID :" << pid << std::endl;
+    PERSEUS::Process *proc = findChild( pid );
+    if( proc ) {
       proc->exited( status );
 
-      /* 
-      Potentially there is a risk of conflict when two or more objects are operated at the same 
-      signal! Object of type PERSEUS::Runnable is removed from the memory during signal handling! 
-      And that regardless of whether only the PID is sent, or a direct pointer to 
-      PERSEUS::Process. It is necessary to test well!!! 
+      /*
+      Potentially there is a risk of conflict when two or more objects are operated at the same
+      signal! Object of type PERSEUS::Runnable is removed from the memory during signal handling!
+      And that regardless of whether only the PID is sent, or a direct pointer to
+      PERSEUS::Process. It is necessary to test well!!!
       */
-      sig_child_exit->emit( proc );  
-  
+      sig_child_exit->emit( proc );
+
       msg += "Remaining number of registered processes: ";
       msg += FXString::value( m_descendants.used( ) );
+    }
+    else {
+      msg += "The UNKNOWN chidern process of the descendant " + FXString::value( pid ) + ", ";
+      if( WIFEXITED( status ) ) {
+        msg +=  "which just finished with exit code " + FXString::value( WEXITSTATUS( status ) );
+      } else if( WIFSIGNALED( status ) ) {
+        msg += strsignal( WTERMSIG( status ) );
+      }
+    }
+    std::cout << msg << std::endl;
   }
-  else { 
-    msg += "The UNKNOWN chidern process of the descendant ";
-    msg += FXString::value( pid ) + ", which just finished with exit code " + FXString::value( status );
-
-    /* Restoring SIGCHLD settings – workaround due to boost::process */
-    removeSignal( SIGCHLD );
-    addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
-  }    
   
-  std::cout << msg << std::endl;  
+  DEBUG_OUT(  "SIGCHLD - FINISH" )
+  std::cout.flush( );
   return 1;
 }
 
