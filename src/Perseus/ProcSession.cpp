@@ -91,7 +91,7 @@ FXint ProcSession::set_job( FXuint type )
     m_actjob = result;
   }
 
-  return -1;
+  return result;
 }
 
 FXint ProcSession::check( )
