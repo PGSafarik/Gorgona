@@ -1,4 +1,4 @@
-// Gorgona.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
+// Gorgona.cpp; Copyright (c) 2025 D.A.Tiger; GNU GPL 3
 
 #include<Gorgona.h>
 
