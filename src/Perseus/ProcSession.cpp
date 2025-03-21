@@ -18,8 +18,9 @@ ProcSession::~ProcSession( )
 /**************************************************************************************************/
 FXbool ProcSession::start( )
 {
-  if( ( m_sid = setsid( ) ) < 0 ) { 
-    std::cerr << "[ProcSession WARNING]: Failed of setsid( ) call. Is this process already the session leader? ("  << m_sid << ")" << std::endl;
+  if( ( m_sid = setsid( ) ) < 0 ) {
+    int error_no = errno;
+    std::cerr << "[ProcSession WARNING]: Failed of setsid( ) call: " << strerror( error_no ) << " ("  << error_no <<  ")" << std::endl;
   }
   
   if( m_id.empty( ) ) { m_id = ( m_sid >= 1 ? FXString::value( m_sid ) : "1" ); }
@@ -27,7 +28,7 @@ FXbool ProcSession::start( )
 
   m_jobs.resize( ID_NORMAL_MAX + 1, 0 );
   set_job( JOB_SYSTEM );
-  DEBUG_OUT( "[ProcSession::start] starting process session " << m_name << " (" << m_sid << ")" )
+  DEBUG_OUT( "[ProcSession::start] starting process session " << m_name << " (" << m_id << ")" )
 
   return true;  
 }
