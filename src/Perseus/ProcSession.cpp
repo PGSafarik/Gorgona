@@ -99,22 +99,27 @@ FXint ProcSession::check( )
 {
   FXint pid_value;
   FXString checker = "/home/gabriel/Projects/Fox/sources/Gorgona/tmp/utils/grpchecker.sh";
-  
-  boost::asio::io_service ios3;
-  std::future<std::string> fdata;
-  BP::child filesystems( checker.text( ), BP::std_in.close( ), BP::std_out > fdata, BP::std_err > BP::null, ios3 );
-  ios3.run( );
 
+  FILE *fd = popen( checker.text( ), "r" );
+  if( fd == NULL ) {
+    return -1;
+  }
+
+  char buffer[ 128 ];  // 1024
   m_maintable.clear( );
-  std::istringstream _out;
-  _out.str( fdata.get( ) );
-  for( std::string line; std::getline( _out, line); ) { m_maintable.push_back( std::stoi( line ) ); }
-  
-  std::cout << "Gorgana Session processes: " << std::endl;
-  std::cout << "===========================" << std::endl;
+  while( fgets( buffer, 128, fd ) != NULL ) {
+    m_maintable.push_back( std::stoi( buffer ) );
+  }
+
+  pclose( fd );
+
+#ifdef __DEBUG
+  std::cout << "Gorgana Session processes (" << m_maintable.size( ) << ")" <<  std::endl;
+  std::cout << "=================================" << std::endl;
   for( int i = 0; i != m_maintable.size( ); i++ ) { std::cout << m_maintable[ i ] << std::endl; }   
   std::cout << std::endl;
-    
+#endif
+
   return (FXint) m_maintable.size( );
 }
 
