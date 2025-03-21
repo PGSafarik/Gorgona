@@ -92,24 +92,38 @@ void Gorgona::create( )
 
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
-  Welcome( this ); 
+  Welcome( this );
   m_session.start( );
 
   FXApp::init( argc, argv, connect );
 
+  FXStringList buff;
+
+  m_localdatadir = PERSEUS::HomeDataDirectory( ) + PATHSEPSTRING + getAppName( );
+  m_localconfdir = PERSEUS::HomeConfigDirectory( ) + PATHSEPSTRING + getVendorName( ) + PATHSEPSTRING + getAppName( );
+
+  PERSEUS::SystemConfigDirectories( buff );
+  m_configdir = FindSubDirectory( buff, getAppName( ) );
+  buff.clear( );
+
+  PERSEUS::SystemDataDirectories( buff );
+  m_datadir = FindSubDirectory( buff, getAppName( ) );
+  buff.clear( );
+
   DEBUG_OUT( reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "]" )
-  DEBUG_OUT( "System configure directory:: " << reg( ).getSystemDirectories( ) )
-  DEBUG_OUT( "User configure directory: " << reg( ).getUserDirectory( ) )
-  DEBUG_OUT( "User home directory:" << FXSystem::getHomeDirectory( ) )
+  DEBUG_OUT( "User home directory:"          << FXSystem::getHomeDirectory( ) )
+  DEBUG_OUT( "System configure directory:: " << getConfDir( false ) )
+  DEBUG_OUT( "User configure directory: "    << getConfDir( ) )
+  DEBUG_OUT( "System data directory: "       << getDataDir( false ) )
+  DEBUG_OUT( "User data directory: "         << getDataDir( ) << "\n" )
 
   ReadConfig( );
   LuaInit( );
   //LoadLibrary( );
   m_library->open( m_gamelist );
   m_library->load( );
-  
-   
-  /* Docasne */
+
+  /* terminal emulator - Docasne */
   m_term->name      = "xterm";
   m_term->exec      = "/usr/bin/xterm";
   m_term->p_run     = "-e";
@@ -336,8 +350,8 @@ void Gorgona::ParseCommand( const FXString &cmd, FXArray<const char*> *buffer )
 
 void Gorgona::ReadConfig( )
 {
-  m_initscript = reg( ).readStringEntry( "Modules", "launchers", "/opt/Gorgona/share/games/Gorgona/scripts/Launchers.lua" );
-  m_profiledir = reg( ).readStringEntry( "Profile", "Directory", ( FXSystem::getHomeDirectory( ) + "/.config/Gorgona" ).text( ) );
+  m_initscript = reg( ).readStringEntry( "Modules", "launchers", ( getDataDir( false ) + "/scripts/Launchers.lua" ).text( ) );
+  m_profiledir = reg( ).readStringEntry( "Profile", "Directory", getConfDir( ).text( ) );
   FXString xmllist = reg( ).readStringEntry( "Profile", "Gamelist",  "gamelist" );
   
   m_gamelist = m_profiledir + "/data/" + xmllist + ".xml";
@@ -352,6 +366,20 @@ void Gorgona::LuaInit( )
   else { msg += " FAILED"; }
 
   std::cout << msg << std::endl; 
+}
+
+FXString Gorgona::FindSubDirectory( const FXStringList &buff, const FXString &dir_name )
+{
+  FXString dir;
+
+  FXuint num = buff.no( );
+  for( FXuint i = 0; i != num; i++ ) {
+    dir = buff[ i ] + PATHSEPSTRING + dir_name;
+    DEBUG_OUT( dir.text( ) )
+    if( FXStat::exists( dir ) ) { break; } else { dir.clear( ); }
+  }
+
+  return dir;
 }
 
 /*** END ******************************************************************************************/

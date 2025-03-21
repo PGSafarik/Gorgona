@@ -25,9 +25,11 @@
 #include<define.h>
 #include<FXGameItem.h> 
 #include<Library.h>
+#include<Perseus/Desktop.h>
 #include<Perseus/Process.h>
 #include<Perseus/TermProfile.h>
 #include<Perseus/ProcSession.h>
+#include<Utils.h>
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
@@ -37,12 +39,12 @@ FXDECLARE( Gorgona )
 
   FSM_Changes m_modify;    // Modify statemat
 
+  /* Application directories */
   FXString      m_datadir;
   FXString      m_configdir;
   FXString      m_localdatadir;
   FXString      m_localconfdir;
   FXSettings    m_defaultcfg;
-
 
   /* Child process managment */
   FXDictionaryOf<PERSEUS::Process> m_descendants; // List of registered descendants of the Gorgona process 
@@ -82,6 +84,9 @@ public:
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
 
+  const FXString getDataDir( FXbool local = true ) const { return ( ( local ) ? m_localdatadir : m_datadir ); }
+  const FXString getConfDir( FXbool local = true ) const { return ( ( local ) ? m_localconfdir : m_configdir ); }
+
   PERSEUS::TermProfile* getTerminal( )  { return m_term.get( ); }              
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                       
 
@@ -116,9 +121,10 @@ public:
   long onCmdQuit( FXObject *sender, FXSelector sel, void *data );
 
 protected:
-  void ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );        // Split one substring from the command string on array
-  void LuaInit( );                                                               // Initialize langugae interpret of Lua 
-  void ReadConfig( );                                                            // Load configurations data
+  void     ParseCommand( const FXString &cmd, FXArray<const char*> *buffer );          // Split one substring from the command string on array
+  void     LuaInit( );                                                                 // Initialize langugae interpret of Lua
+  void     ReadConfig( );                                                              // Load configurations data
+  FXString FindSubDirectory( const FXStringList &sys_dirs, const FXString &dir_name ); //
 };
 
 #endif /* __GORGONA_H */

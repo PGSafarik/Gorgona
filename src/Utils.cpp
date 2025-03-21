@@ -104,7 +104,16 @@ void Welcome( FXApp *app )
   std::cout << " [" << AutoVersion::STATUS << "]" << std::endl;
   std::cout << "lib Fox    : " << FOX_MAJOR << "." << FOX_MINOR << "." << FOX_LEVEL << std::endl;
   std::cout << "lib FoxGHI : " << 0 << "." << 4 << "." << 1 << std::endl;
+/*
+  std::cout << app->reg( ).getAppKey( ) << " [" << app->reg( ).getVendorKey( ) << "]" << std::endl;
+  std::cout << "User home directory:"          << FXSystem::getHomeDirectory( ) << std::endl;
+  std::cout << "System configure directory:: " << app->getConfDir( false ) << std::endl;
+  std::cout << "User configure directory: "    << app->getConfDir( ) << std::endl;
+  std::cout << "System data directory: "       << app->getDataDir( false ) << std::endl;
+  std::cout << "User data directory: "         << app->getDataDir( ) << std::endl;
+*/
   std::cout << "=== Message =========================================" << std::endl;
+
 }
 
 /*** Signal *********************************************************************************/

@@ -3,7 +3,6 @@
 
 using namespace PERSEUS;
 namespace PERSEUS {
-
 FXString CheckEnv( const FXString &env, const FXString &def_val )
 {
   // Funkce vrati prednastavenou hodnotu  v env (XDG_*). Pokud neni definovana vraci hodnotu zadanou parametrem def. 
@@ -25,22 +24,8 @@ FXuint CheckEnvList( const FXString &xdg_env, const FXString &def_val, FXStringL
   if( !value.empty( ) ) {
     if( value.left( 1 ) == ENVPATHSEPSTRING ) { value = def_val + value; }
     res = list.split( value, ENVPATHSEPSTRING);
-  /* (cs)
-   * Za normalnich okolnosti by stacil POUZE StringList.split a bylo by vymalovano. Jenze inovace v obsahu XDG_DATA_DIRS vymyslena
-   * a zavedena naozajstnymi KOKOTY si vynutila tento zasrany workarround, ktery odstrani vsechny ZKURVENE duplicitni cesty ukocene 
-   * pathseparatorem. A protoze lidska blbost ma tendeci se nekontrolovatelne mnozit, je nutno tuto hruzu aplikovat ted na vsechny 
-   * ENV jejichz obsahem je nejaky seznam cest ve filesystemu. Ilustruje to fakt, ze uz i na Linuxu se ridi drive ciste korporatni 
-   * zasadou: KRETENI VPRED! Minimalne poslednich deset let urcite...
-   * PS. Na distribuci Debianu / GNU Linux to zamrzi obzvlast bolestive.
-   * 
-   * (en)
-   * Under normal circumstances ONLY StringList.split would be enough and it would be painted. An innovation in the content of 
-   * XDG_DATA_DIRS invented and implemented by real PICKS forced this shitty workaround, which removes all FUCKING duplicate paths 
-   * terminated by pathseparator. And because human stupidity tends to multiply uncontrollably, it is necessary to apply this burden 
-   * to all ENVs whose content is some list of paths in the filesystem. This is illustrated by the fact that even on Linux drives are 
-   * governed by a purely corporate principle: IDIOTS FORWARD! At least the last ten years for sure...
-   * P.S. This is particularly painful for the Debian / GNU Linux distribution.
-   */    
+
+   /* Workarround for eliminate an duplication entries */
     list.sort( );
     FXuint num = list.no( );
     FXString tested; 
