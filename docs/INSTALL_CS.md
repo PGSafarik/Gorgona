@@ -1,5 +1,5 @@
 # PŘEKLAD A INSTALACE
-    - 23/11/2024 -
+    - 22/03/2025 -
 
 *Content:*
   1. [Získání projektu Gorgona](#1-Získání-projektu-Gorgona)

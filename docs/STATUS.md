@@ -1,5 +1,5 @@
 # Project gorgon status and future plans 
-    = 11/08/23 =
+    = 22/03/2025 =
   
 *Content:*  
   1. [News](#1-News)

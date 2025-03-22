@@ -1,5 +1,5 @@
 # STAV PROJEKTU GORGONA A PLÁNY DO BUDOUCNA
-    = 23/11/2024 =
+    = 22/03/2025 =
 
 *Content:*
   1. [Novinky](#1-Novinky)

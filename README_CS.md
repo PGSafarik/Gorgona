@@ -1,6 +1,6 @@
 ﻿
 # Gorgona, knihovna her pro OS Linux   
-    - 30.03.2023 -
+    - 22.03.2025 -
 
 *Obsah:*
 

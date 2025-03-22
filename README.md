@@ -1,5 +1,5 @@
 # Gorgona - Game collection manager and launcher for Linux OS 
--14/01/2023-
+-22/03/2025-
 
 *Content:*
   1. [General info](#1-general-info)
