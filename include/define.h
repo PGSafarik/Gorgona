@@ -77,6 +77,16 @@ namespace ECHIDNA { }
 /* Data separators */
 #define ENVPATHSEPSTRING ":"
 
+/* System directories */
+#define SCRIPTS_DIR "scripts"
+#define UTILS_DIR   "utils"
+#define MODULES_DIR "modules"
+#define LUALIBS_DIR "libs"
+
+/* Utils filenames */
+#define GROUP_CHECKER   "grpcheck.sh"
+#define MODULES_MANAGER "ModManager.lua"
+
 /* System and predefined data files */
 #define DEF_CFG_FILE  "default.cfg" // The name of the file with an default configurations
 //#define MIMESLISTFILE "mime/types"  // The relative path of mime types list file
