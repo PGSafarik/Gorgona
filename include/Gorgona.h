@@ -47,7 +47,6 @@ FXDECLARE( Gorgona )
   FXSettings    m_defaultcfg;
 
   /* Child process managment */
-  FXDictionaryOf<PERSEUS::Process> m_descendants; // List of registered descendants of the Gorgona process 
   PERSEUS::ProcSession m_session;
 
   /* Lua */

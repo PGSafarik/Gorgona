@@ -42,10 +42,11 @@ FXbool Gorgona::hasChild( FXint pid )
 { 
   FXbool res = false;
 
-  if( !m_descendants.empty( ) ) { 
+
+  if( !m_session.empty( ) ) {
     if( pid == 0 ) { res = true; } // Is there even one descendant of the Gorgon?
-    else if( pid > 0 ) {           // Does a Gorgon descendant run with this particular PID? 
-      res = m_descendants.has( FXString::value( pid ) ); 
+    else if( pid > 0 ) {           // Does a Gorgon descendant run with this particular PID?
+      res = m_session.has( pid );
     }
   }
     
@@ -54,30 +55,25 @@ FXbool Gorgona::hasChild( FXint pid )
   
 PERSEUS::Process* Gorgona::findChild( FXint pid )
 {
-  if( hasChild( pid ) ) {
-    return m_descendants[ FXString::value( pid ) ];
-  }
-
-  return NULL; 
+  auto it = m_session.find( pid );
+  if( it != m_session.end( ) ) { return it->second; }
+  return NULL;
 }
 
 FXbool Gorgona::removeChild( FXint pid, FXbool force )
 {
   FXbool res = false;
-  FXString key = FXString::value( pid );
 
-  if( m_descendants.has( key ) ) {
-    PERSEUS::Process *proc = m_descendants[ key ];
+  auto it = m_session.find( pid );
+  if( it != m_session.end( ) ) {
+    PERSEUS::Process *proc = it->second;
+    if( proc->is_running( ) ) {
+      if( force && !proc->kill( ) ) { return false; }
+    }
 
-    if( proc != NULL ) {
-      if( proc->is_running( ) ) { 
-        if( force && !proc->kill( ) ) { return false; }
-      }
-      
-      m_descendants.remove( key );
-      delete proc;
-      res = true;
-    } 
+    m_session.erase( it );
+    delete proc;
+    res = true;
   }
 
   return res;
@@ -119,7 +115,7 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
 
   ReadConfig( );
   LuaInit( );
-  //LoadLibrary( );
+
   m_library->open( m_gamelist );
   m_library->load( );
 
@@ -159,11 +155,6 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
     m_session.insert( std::pair<FXint, PERSEUS::Process* >( pid, proc ) );
     DEBUG_OUT( "New process OK. PID: " << pid << " Job ID: " << jid );
 
-    //! [
-    FXString key =  FXString::value( pid );
-    m_descendants.insert( key.text( ), proc ); 
-    //]
-
     if( m_verbose ) {
       std::cout << "EXECUTE the process:";
       FXString text = "";
@@ -173,7 +164,7 @@ FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
         text += cmd[ i ]; 
       }
       text += "\n";
-      text += "PID: " + key; 
+      text += "PID: " + FXString::value( pid );
       std::cout << text << std::endl;;
     }
   }
@@ -250,8 +241,7 @@ long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
       */
       sig_child_exit->emit( proc );
 
-      msg += "Remaining number of registered processes: ";
-      msg += FXString::value( m_descendants.used( ) );
+      msg += "Remaining number of registered processes: " + FXString::value( m_session.size( ) );
     }
     else {
       msg += "The UNKNOWN chidern process of the descendant " + FXString::value( pid ) + ", ";

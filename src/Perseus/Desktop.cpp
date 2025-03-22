@@ -25,7 +25,7 @@ FXuint CheckEnvList( const FXString &xdg_env, const FXString &def_val, FXStringL
     if( value.left( 1 ) == ENVPATHSEPSTRING ) { value = def_val + value; }
     res = list.split( value, ENVPATHSEPSTRING);
 
-   /* Workarround for eliminate an duplication entries */
+   /* Workarround for eliminate a duplication entries */
     list.sort( );
     FXuint num = list.no( );
     FXString tested; 
