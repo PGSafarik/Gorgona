@@ -106,13 +106,6 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   m_datadir = FindSubDirectory( buff, getAppName( ) );
   buff.clear( );
 
-  DEBUG_OUT( reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "]" )
-  DEBUG_OUT( "User home directory:"          << FXSystem::getHomeDirectory( ) )
-  DEBUG_OUT( "System configure directory:: " << getConfDir( false ) )
-  DEBUG_OUT( "User configure directory: "    << getConfDir( ) )
-  DEBUG_OUT( "System data directory: "       << getDataDir( false ) )
-  DEBUG_OUT( "User data directory: "         << getDataDir( ) << "\n" )
-
   ReadConfig( );
   LuaInit( );
 
@@ -130,6 +123,21 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
 
 
   m_initialized = true;
+
+  DEBUG_OUT( reg( ).getAppKey( ) << " [" << reg( ).getVendorKey( ) << "]" )
+  DEBUG_OUT( "User home directory:"           << FXSystem::getHomeDirectory( ) )
+  DEBUG_OUT( "System configure directory:: "  << getConfDir( false ) )
+  DEBUG_OUT( "User configure directory: "     << getConfDir( ) )
+  DEBUG_OUT( "System data directory: "        << getDataDir( false ) )
+  DEBUG_OUT( "User data directory: "          << getDataDir( ) )
+  DEBUG_OUT( "System Scripts directory: "     << getScriptDir( false ) )
+  DEBUG_OUT( "User Scripts directory: "       << getScriptDir( ) )
+  DEBUG_OUT( "System Utils directory: "       << getUtilsDir( false ) )
+  DEBUG_OUT( "User Utilss directory: "        << getUtilsDir( ) )
+  DEBUG_OUT( "System lua libs directory: "    << getLualibsDir( false ) )
+  DEBUG_OUT( "User lua libs directory: "      << getLualibsDir( ) )
+  DEBUG_OUT( "System Lua modules directory: " << getLuamodsDir( false ) )
+  DEBUG_OUT( "User Lua modules directory: "   << getLuamodsDir( ) << "\n" )
 }
 
 FXint Gorgona::exec( const FXArray<const FXchar*> &cmd, FXuint proc_opts )
