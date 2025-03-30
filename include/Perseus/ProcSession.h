@@ -42,6 +42,7 @@ namespace PERSEUS {
     std::vector<FXint>  m_maintable; // Maintable ALL descedants pid runned in this session
     std::vector<FXint>  m_jobs;      // Table of job groups
 
+    FXString m_grpcheck; // Path to the group check utility
   public:
     ProcSession( const FXString &name = "GORGONA_SESSION", const FXString &id = FXString::null );
     virtual ~ProcSession( );
@@ -54,7 +55,7 @@ namespace PERSEUS {
     FXint    set_job( FXuint type );
  
     /* opeartions */
-    FXbool  start( );                               // Start to the process session
+    FXbool  start( const FXString &check_utility );                               // Start to the process session
     FXbool  terminate( FXbool fast = false);        // End to the process session     
     FXbool  join( FXint pid, FXint group_id = 0 );  // Add pid to main table
     FXint   check( );                               // Checking processes in Session

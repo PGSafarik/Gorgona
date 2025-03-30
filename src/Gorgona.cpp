@@ -89,8 +89,6 @@ void Gorgona::create( )
 void Gorgona::init( int& argc, char** argv, FXbool connect )
 {
   Welcome( this );
-  m_session.start( );
-
   FXApp::init( argc, argv, connect );
 
   FXStringList buff;
@@ -106,6 +104,7 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   m_datadir = FindSubDirectory( buff, getAppName( ) );
   buff.clear( );
 
+  m_session.start( getUtilsDir( false ) + PATHSEPSTRING + GROUP_CHECKER );
   ReadConfig( );
   LuaInit( );
 
@@ -359,8 +358,10 @@ void Gorgona::ReadConfig( )
 void Gorgona::LuaInit( )
 {
   FXString msg = "[INFO Gorgona]: Lua initialize ";
+  FXString init_script = getUtilsDir( false ) + PATHSEPSTRING + MODULES_MANAGER;
+  DEBUG_OUT(  "Lua init script:"  << init_script )
 
-  if( l_open( this ) && ( execLuaFile( m_initscript ) == 0 ) ) { msg += "OK"; }
+  if( l_open( this ) && ( execLuaFile( init_script ) == 0 ) ) { msg += "OK"; }
   else { msg += " FAILED"; }
 
   std::cout << msg << std::endl; 

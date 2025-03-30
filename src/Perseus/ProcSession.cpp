@@ -5,7 +5,7 @@ using namespace PERSEUS;
 namespace PERSEUS {
 
 /**************************************************************************************************/
-ProcSession::ProcSession( const FXString &name, const FXString &id ) : m_name( name ), m_id( id ) 
+ProcSession::ProcSession( const FXString &name, const FXString &id ) : m_name( name ), m_id( id )
 { 
    
 }
@@ -16,8 +16,11 @@ ProcSession::~ProcSession( )
 }
 
 /**************************************************************************************************/
-FXbool ProcSession::start( )
+FXbool ProcSession::start(  const FXString &check_utility )
 {
+  m_grpcheck = check_utility;
+  DEBUG_OUT( "Gorgona session checker utility: " << m_grpcheck << std::endl );
+
   if( ( m_sid = setsid( ) ) < 0 ) {
     int error_no = errno;
     std::cerr << "[ProcSession WARNING]: Failed of setsid( ) call: " << strerror( error_no ) << " ("  << error_no <<  ")" << std::endl;
@@ -98,9 +101,11 @@ FXint ProcSession::set_job( FXuint type )
 FXint ProcSession::check( )
 {
   FXint pid_value;
+  /* !! FIXME PROCSESSION_001: The path to the utility must be supplied by the application instance!
   FXString checker = "/home/gabriel/Projects/Fox/sources/Gorgona/tmp/utils/grpchecker.sh";
+  */
 
-  FILE *fd = popen( checker.text( ), "r" );
+  FILE *fd = popen( m_grpcheck.text( ), "r" );
   if( fd == NULL ) {
     return -1;
   }
