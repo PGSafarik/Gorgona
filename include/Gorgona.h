@@ -58,10 +58,8 @@ FXDECLARE( Gorgona )
   FXString        m_profiledir; // Path of rofile directory 
   FXString        m_gamelist;   // Filename for list of games (xml)
   XMLDocument     mx_document;  // XML instance of the games list
-  XMLElement      *mx_root;     // XML root element of the games list 
-  //Library         *m_library;   // Library of games ;)
-  std::unique_ptr<Library> m_library;
-  //TermInfo        *m_term;      // Terminal profile
+  XMLElement      *mx_root;     // XML root element of the games list
+  std::unique_ptr<Library>              m_library;
   std::unique_ptr<PERSEUS::TermProfile> m_term;
  
 public:
@@ -69,7 +67,6 @@ public:
   virtual ~Gorgona( );
    
   /* Signals / Slots */
-  // ECHIDNA::SIGNAL *Sig_ChildTerminate;
   GSignal *sig_child_exit;  // Emitted when the program catches a child process termination system message (SIG_CHILD) 
 
   /* Access methods */
@@ -98,8 +95,7 @@ public:
   virtual void init( int& argc, char** argv, FXbool connect = true );  
 
   FXint exec( const FXArray<const FXchar*> &cmd, FXuint term_opts );   
-  FXint exec( const FXString &cmd, FXuint term_opts );               
-  //!FXint wait( PERSEUS::Process *process, FXbool notify = false );
+  FXint exec( const FXString &cmd, FXuint term_opts );
   FXint execLuaFile( const FXString &script );                        
 
   FXbool removeChild( FXint pid, FXbool force = false ); // true - if its process instanse with entered pid is removed from internal list

@@ -27,7 +27,6 @@ FXbool ProcSession::start(  const FXString &check_utility )
   }
   
   if( m_id.empty( ) ) { m_id = ( m_sid >= 1 ? FXString::value( m_sid ) : "1" ); }
-  //FXSystem::setEnvironment( m_name, m_id );
 
   m_jobs.resize( ID_NORMAL_MAX + 1, 0 );
   set_job( JOB_SYSTEM );
@@ -101,9 +100,6 @@ FXint ProcSession::set_job( FXuint type )
 FXint ProcSession::check( )
 {
   FXint pid_value;
-  /* !! FIXME PROCSESSION_001: The path to the utility must be supplied by the application instance!
-  FXString checker = "/home/gabriel/Projects/Fox/sources/Gorgona/tmp/utils/grpchecker.sh";
-  */
 
   FILE *fd = popen( m_grpcheck.text( ), "r" );
   if( fd == NULL ) {

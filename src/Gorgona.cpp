@@ -213,19 +213,6 @@ FXint Gorgona::execLuaFile( const FXString &script )
   return result;
 }
 
-/* !
-FXint Gorgona::wait( PERSEUS::Process *process, FXbool notify )
-{
-  FXint status = 0;
-
-  if( process ) {
-    process->wait( status );
-    if( notify ) { sig_child_exit->emit( ); } 
-  }
-  
-  return status;
-}
-*/
 /**************************************************************************************************/
 long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )
 {
@@ -273,7 +260,6 @@ long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
   switch( FXSELID( sel ) ) {
     case Gorgona::SAVE_LIBRARY: 
     {
-      //Save_Library( );
       m_library->save( );
       break;  
     }
@@ -289,8 +275,7 @@ long Gorgona::OnCmd_Save( FXObject *sender, FXSelector sel, void *data )
 
 long Gorgona::onCmdQuit( FXObject *sender, FXSelector sel, void *data )
 {
-  if( m_modify( ) ) { 
-    //Save_Library( ); 
+  if( m_modify( ) ) {
     m_library->save( ); 
     if( m_modify( ) ) { std::cout << "Gorgona: NEULOZENE ZMENY" << std::endl; }
  }
