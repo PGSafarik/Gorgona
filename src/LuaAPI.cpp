@@ -13,6 +13,7 @@ FXRegistry& get_registry( ) { return _inst->reg( ); }
 int static l_launcher_input( lua_State *L );     // Input box
 int static l_launcher_message( lua_State *L );   // Message box
 int static l_launcher_exec( lua_State *L );      // exec ( Run program )
+
 //int static l_launcher_selitem( lua_State *L );   // Select game item
 
 // Manipulation with Gorgona cfg register
@@ -20,6 +21,7 @@ int static l_registry_write( lua_State *L );     // Read registry value
 int static l_registry_read( lua_State *L );      // Write registry value
 int static l_registry_test( lua_State *L );      // Test on existing Head or Key
 int static l_registry_delete( lua_State *L );     // Remove header or Key
+
 
 
 /*************************************************************************************************/
@@ -67,6 +69,14 @@ FXbool l_open( Gorgona *app )
     l_TableWrite_num( state, "error",       3 );
     l_TableWrite_num( state, "question",    4 );
     lua_setglobal( state, "mbox_type" );
+
+    lua_newtable( state );
+    l_TableWrite_str( state, "data",        _inst->getDataDir( false ) );
+    l_TableWrite_str( state, "configure",   _inst->getConfDir( false ) );
+    l_TableWrite_str( state, "utils",       _inst->getUtilsDir( false ) );
+    l_TableWrite_str( state, "lua_modules", _inst->getLuamodsDir( false ) );
+    l_TableWrite_str( state, "lua_libs",    _inst->getLualibsDir( false ) );
+    lua_setglobal( state, "system_paths" );
 
     result = true;
   }
@@ -179,7 +189,6 @@ int l_launcher_exec( lua_State *L )
   
   return 1;
 }
-
 
 /*
 int l_launcher_selitem( lua_State *L )
