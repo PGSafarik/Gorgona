@@ -84,14 +84,14 @@ namespace ECHIDNA { }
 #define LUALIBS_DIR "libs"
 
 /* Utils filenames */
-#define GROUP_CHECKER   "grpcheck.sh"
-#define MODULES_MANAGER "ModManager.lua"
+#define GROUP_CHECKER   "grpchecker.sh"
+#define MODULES_MANAGER "init.lua"
 
 /* System and predefined data files */
 #define DEF_CFG_FILE  "default.cfg" // The name of the file with an default configurations
 //#define MIMESLISTFILE "mime/types"  // The relative path of mime types list file
 
-/* Aktive the DEBUG mode */
+/* Active the DEBUG mode */
 #define __DEBUG 1
 //////////////////////////////////////////////////
 /* Print debug log                               */
