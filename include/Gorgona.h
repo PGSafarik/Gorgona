@@ -80,12 +80,12 @@ public:
   FXString   getLibraryFilenme( )                       { return m_gamelist; }
   void       setLibraryFilenme( const FXString &name )  {  m_gamelist = name; }
 
-  const FXString getDataDir( FXbool local = true ) const    { return ( ( local ) ? m_localdatadir : m_datadir ); }
-  const FXString getConfDir( FXbool local = true ) const    { return ( ( local ) ? m_localconfdir : m_configdir ); }
-  const FXString getScriptDir( FXbool local = true ) const  { return ( getDataDir( local ) + PATHSEPSTRING + SCRIPTS_DIR ); }
-  const FXString getUtilsDir( FXbool local = true ) const   { return ( getDataDir( local ) + PATHSEPSTRING + UTILS_DIR ); }
-  const FXString getLuamodsDir( FXbool local = true ) const { return ( getScriptDir( local ) + PATHSEPSTRING + MODULES_DIR ); }
-  const FXString getLualibsDir( FXbool local = true ) const { return ( getScriptDir( local ) + PATHSEPSTRING + LUALIBS_DIR ); }
+  const FXString getDataDir(    FXbool local = true ) const { return ( ( local ) ? m_localdatadir : m_datadir ); }
+  const FXString getConfDir(    FXbool local = true ) const { return ( ( local ) ? m_localconfdir : m_configdir ); }
+  const FXString getScriptDir(  FXbool local = true ) const { return ( getDataDir( local ) + PATHSEPSTRING + SCRIPTS_DIR ); }
+  const FXString getUtilsDir(   FXbool local = true ) const { return ( getDataDir( local ) + PATHSEPSTRING + UTILS_DIR ); }
+  const FXString getLuamodsDir( FXbool local = true ) const { return ( getDataDir( local ) + PATHSEPSTRING + MODULES_DIR ); }
+  const FXString getLualibsDir( FXbool local = true ) const { return ( getDataDir( local ) + PATHSEPSTRING + LUALIBS_DIR ); }
 
   PERSEUS::TermProfile* getTerminal( )  { return m_term.get( ); }              
   FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                       
