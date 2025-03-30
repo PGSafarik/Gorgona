@@ -12,20 +12,15 @@
  You should have received a copy of the GNU General Public License      
  along with this program.  If not, see <https://www.gnu.org/licenses/>. 
 --]]
-scripts_dir     = "/home/gabriel/Projects/Fox/sources/Gorgona/scripts"
-package.path = package.path .. ";" .. scripts_dir .. "/libs/?.lua"
- 
+package.path = package.path .. ";" .. system_paths.lua_libs .. "/?.lua"
 require "extstring"
 require "linux"
-
 
 --- Rutiny rizeni modulu ---
 function Mod_Initialize( ) 
 	if Modules == nil then Modules = { } end 
 	if ltable == nil then ltable = { } end 
 	
-	-- FIXME MOD_01 : Get this path from Gorgona !!!
-	--Mod_Load( "/usr/share/Gorgona/modules/" )
     Mod_Load( )
     
 	print( "List of Launchers id: " )
@@ -56,10 +51,10 @@ function Mod_Register( _name, _mod )
 end
 
 function Mod_Load( )
-    local modules_dir = scripts_dir .. "/modules"
+    local modules_dir = system_paths.lua_modules
 	local list = io.popen( "ls -1 " .. modules_dir )
 	for file in list:lines(  ) do
-      if file ~= "Launchers.lua" and file ~= "ModManager.lua" and file ~= "template.lua" and file ~= "libs" then
+      if file ~= "template.lua" then
 	    file = modules_dir .. "/" .. file
 	    print( file )
 	    dofile( file )
