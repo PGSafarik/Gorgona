@@ -54,6 +54,7 @@ namespace ECHIDNA {
     void set_value( const FXString &val = FXString::null );
     FXString get_value( );
     FXint verify( );
+    FXbool is_valid( ) { return ( verify( ) == 0 ? true : false ); }
     void make( const FXString &src, const FXString &pattern = FXString::null );
   };
 
