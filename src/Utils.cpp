@@ -116,6 +116,8 @@ void Welcome( FXApp *app )
 
 }
 
+//FXuint GetNow( ) { return FXDate::localDate( ).getTime( ); }
+
 /*** Signal *********************************************************************************/
 FXIMPLEMENT( GSignal, FXObject, NULL, 0 )
 

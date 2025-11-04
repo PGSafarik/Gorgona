@@ -43,7 +43,8 @@ extern FXIcon* createIconType( FXApp *a, const FXString &type, FXuint opts = IMA
 
 //////////////////////////////////////////////////
 /* More helpers function                        */
-extern void Welcome( FXApp *app );
+extern void Welcome( FXApp *app );  // Print 'welcome' message to stdout (for start of this program)
+//extern FXuint GetNow( );               // Get now - time --> 1.1.1970 :(
 
 //////////////////////////////////////////////////
 /* The Signal notify object                     */
