@@ -22,14 +22,11 @@
 * FXObjectListOf and FXObjectList                                        *
 * Copyright (c) 17/05/2024 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-
-
-#define SIGNAL_OK     0  // Operace notifikatoru probehla uspesne
-#define SIGNAL_ERR   -1  // Obecna chyba signalu/slotu
-#define SIGNAL_OWNER -2  // Tuto operaci muze provest jen vlasnik signalu
-#define SIGNAL_EXIST -3  // Pokus o registraci jiz existujiciho signalu/slotu
-#define SIGNAL_NOT   -4  // Pozadovany signal nebyl nalezen (neni zaregistrovan)
+#define SIGNAL_OK     0    // Operace notifikatoru probehla uspesne
+#define SIGNAL_ERR   (-1)  // Obecna chyba signalu/slotu
+#define SIGNAL_OWNER (-2)  // Tuto operaci muze provest jen vlasnik signalu
+#define SIGNAL_EXIST (-3)  // Pokus o registraci jiz existujiciho signalu/slotu
+#define SIGNAL_NOT   (-4)  // Pozadovany signal nebyl nalezen (neni zaregistrovan)
 
 
 namespace ECHIDNA {
