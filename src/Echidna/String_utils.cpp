@@ -2,7 +2,6 @@
 #include<Echidna/String_utils.h>
 
 using namespace ECHIDNA;
-
 namespace ECHIDNA {
 /*** String list class ****************************************************************************/
   FXStringList::FXStringList( )

@@ -18,13 +18,12 @@
 * Gorgona - spravce her                                                  *
 * Copyright (c) 08/02/2015 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fox-1.7/fx.h>
 #include<Gorgona.h>
 #include<GorgonaWindow.h>
 
 int main( int argc, char **argv )
 {
-  Gorgona app( "Gorgona", "FXGameLauncher" );
+  ::Gorgona app( "Gorgona", "FXGameLauncher" );
   app.init( argc, argv );
   new GorgonaWindow( &app );
   app.create( );

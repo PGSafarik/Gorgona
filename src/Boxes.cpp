@@ -1,5 +1,6 @@
 // Boxes.cpp Copyright (c) 08/01/2023;  D.A.Tiger; GNU GPL 3
 #include<Boxes.h>
+#include<IconsTheme.h>
 
 /*** FIND BAR *************************************************************************************/
 FXDEFMAP( FindBar ) FB_MAP[ ] = {

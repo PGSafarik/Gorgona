@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __RUNNABLE_H
-#define __RUNNABLE_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * Runnable.h                                                             *
@@ -21,12 +21,9 @@
 * Small classes representing an executable structure                     *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-
 class Gorgona;
 
 namespace PERSEUS {
-
   /* Obecna trida definujici spustitelny objekt Gorgony */
   class Runnable: public FXObject  {
   FXDECLARE( Runnable)
@@ -134,5 +131,4 @@ namespace PERSEUS {
   };
 
 }      /* Namespace PERSEUS */
-#endif /* __RUNNABLE_H */
 /*** END ****************************************************************/

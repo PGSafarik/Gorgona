@@ -1,5 +1,12 @@
 // GorgonaWindow.cpp Copyright (c) %date%;  D.A.Tiger; GNU GPL 3
 #include<GorgonaWindow.h>
+#include<../version.h>
+#include<Gorgona.h>
+#include<Library.h>
+#include<IconsTheme.h>
+#include<Boxes.h>
+#include<FXGameItem.h>
+#include<FXListPane.h>
 
 FXDEFMAP( GorgonaWindow ) LAUNCHERMAP[ ] = {
   FXMAPFUNC( SEL_COMMAND,   GorgonaWindow::LIST_EVENT,  GorgonaWindow::OnCmd_List ),

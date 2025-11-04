@@ -1,6 +1,6 @@
 // Utils.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<Utils.h>
-#include<iostream>
+#include<../version.h>
 
 /*************************************************************************************************/
 FX::FXString& operator <<( FX::FXString &dest, const std::string &source ) {

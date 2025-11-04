@@ -12,8 +12,9 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __GORGONA_H
-#define __GORGONA_H
+#pragma once
+#include<define.h>
+#include<Perseus/ProcSession.h>
 
 /*************************************************************************
 * Gorgona.h                                                       *
@@ -22,14 +23,12 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 * ./FoxGHICP --name Gorgona --vendor FXGameLauncher                      * 
 *************************************************************************/
-#include<define.h>
-#include<FXGameItem.h> 
-#include<Library.h>
-#include<Perseus/Desktop.h>
-#include<Perseus/Process.h>
-#include<Perseus/TermProfile.h>
-#include<Perseus/ProcSession.h>
-#include<Utils.h>
+namespace PERSEUS {
+  class Process;
+  struct TermProfile;
+}
+class Library;
+class FSM_Changes;
 
 class Gorgona : public FXApp {
 FXDECLARE( Gorgona )
@@ -37,7 +36,7 @@ FXDECLARE( Gorgona )
   FXbool    m_created;     // Application created (finised the function call craete )
   FXbool    m_initialized; // Finisched the initialize proces this application
 
-  FSM_Changes m_modify;    // Modify statemat
+  ECHIDNA::FSM_Changes m_modify;    // Modify statemat
 
   /* Application directories */
   FXString      m_datadir;
@@ -88,7 +87,7 @@ public:
   const FXString getLualibsDir( FXbool local = true ) const { return ( getDataDir( local ) + PATHSEPSTRING + LUALIBS_DIR ); }
 
   PERSEUS::TermProfile* getTerminal( )  { return m_term.get( ); }              
-  FXbool    hasTerminal( )  { return ( !m_term->exec.empty( ) ); }                       
+  FXbool    hasTerminal( );
 
   /* Operations methods */
   virtual void create( );                                              
@@ -126,4 +125,5 @@ protected:
   FXString FindSubDirectory( const FXStringList &sys_dirs, const FXString &dir_name ); //
 };
 
-#endif /* __GORGONA_H */
+/*** END ******************************************************************************************/
+

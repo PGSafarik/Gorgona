@@ -1,12 +1,13 @@
 /***************************************************************************************************
-* File:      define                                                                                *
+* File:      define.h                                                                              *
 * Project:   Gorgona                                                                               *
-* Copyright: Copyriright (C) 2023 by D.A.Tiger GNU GPL v3                                   *
+* Copyright: Copyriright (C) 2023 by D.A.Tiger GNU GPL v3                                          *
 * Author(s): D.A.Tiger ( drakarax@seznam.cz )                                                      *
-* Note:      The internal definitions for Morfeus application                                      *
+* Note:      The internal definitions for Gorgona application                                      *
 ***************************************************************************************************/
-#ifndef DEFINE_H_INCLUDED
-#define DEFINE_H_INCLUDED
+#pragma once
+/* asan;-fsanitize=address > project */
+
 /*************************************************************************
 * This program is free software: you can redistribute it and/or modify   *
 * it under the terms of the GNU General Public License as published by   *
@@ -21,8 +22,6 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-/* asan;-fsanitize=address > project */
-
 // The standard routine & objects, syscalls and system types
 #include <cstdio>
 #include <iostream>
@@ -37,8 +36,8 @@ extern "C" {
 #include <sys/resource.h>
 #include <sys/wait.h>
 
-#include<lua5.1/lualib.h>
-#include<lua5.1/lauxlib.h>
+#include<lua5.4/lualib.h>
+#include<lua5.4/lauxlib.h>
 }
 
 // TinyXML - XML support
@@ -57,14 +56,15 @@ using namespace FXGHI;
 namespace PERSEUS { }
 namespace ECHIDNA { }
 
-// Internal shared header files
-#include<../version.h>
-//#include<Gorgona.h>
-#include<IconsTheme.h>
-#include<LuaAPI.h>
-#include<FSM_Changes.h>
-#include<Perseus/Runnable.h>
+/* Internal shared header files */
 #include<Utils.h>
+
+/* Definitions of Global types */
+class Gorgona;      // The Application object
+class IconsTheme;   // Icons theme manager
+class FXGameItem;   // Game object representation
+
+typedef FXArray<FXGameItem*> FXGameItemArray;
 
 /* Types of the Gorgona jobs */
 #define JOB_NORMAL   1
@@ -100,7 +100,5 @@ namespace ECHIDNA { }
 #else
 #define DEBUG_OUT(text)
 #endif
-
-#endif // DEFINE_H_INCLUDED
 
 /*** END *****************************************************************************************/

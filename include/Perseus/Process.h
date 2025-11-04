@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __PROCESS_H
-#define __PROCESS_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * Process.h                                                              *
@@ -21,10 +21,7 @@
 * Small classes representing an process child                            *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-
 namespace PERSEUS {
-
   class Process: public FXProcess  {
     FXuint m_asid    = 0;     // Asociacni id polozky, ktera proces spustila
     FXuint m_runtime = 0;     // Cas startu behu procesu 
@@ -66,6 +63,4 @@ namespace PERSEUS {
 
   };   /* Class Process     */
 }      /* Namespace PERSEUS */
-#endif /* __PROCESS_H       */
-
 /*** END ****************************************************************/

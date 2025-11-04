@@ -1,5 +1,7 @@
 // Library.cpp Copyright (c) 05/08/2019; D.A.Tiger; GNU GPL 3
 #include<Library.h>
+#include<Gorgona.h>
+#include<FXGameItem.h>
 
 Library::Library( Gorgona *app, const FXString &elname )
 { 
@@ -168,7 +170,7 @@ FXbool Library::close( FXbool force )
 {
   if( !m_opened ) { return m_opened; }
   if( !m_change( ) || force ) {
-    if( m_change( ) ) { m_change.handle( m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_DISCARD ), NULL ); }
+    if( m_change( ) ) { m_change.handle( m_app, FXSEL( SEL_COMMAND, ECHIDNA::FSM_Changes::ID_DISCARD ), NULL ); }
     
     FXint num = this->no( );
     while( num > 0 ) {
@@ -258,7 +260,7 @@ FXbool Library::save( XMLElement *library_el )
       FXGameItem *it = at( i );
       if( it->save( m_xmap[ it->get_id( ) ], force ) ) {  // NOTE: force?
         num++;
-        m_app->notify_changes( FSM_Changes::ID_ACCEPT );
+        m_app->notify_changes( ECHIDNA::FSM_Changes::ID_ACCEPT );
       }
     } 
     
@@ -318,3 +320,5 @@ FXbool Library::EraseElement( const FXString &id )
   
   return res;
 }
+
+/*** END ******************************************************************************************/

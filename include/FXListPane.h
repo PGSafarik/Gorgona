@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __FXGAMELIST_H
-#define __FXGAMELIST_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * FXListPane.h                                                           *
@@ -21,15 +21,9 @@
 * Panel zobrazujici herni polozky                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-#include<Gorgona.h>
-#include<FXGameItem.h>
-#include<FXLaunchEditor.h>
-
-
 class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
-  Gorgona *m_app;   
+  ::Gorgona *m_app;
 
   FXVerticalFrame *m_folderframe;
   FXToolBar       *m_folderbar;
@@ -88,7 +82,6 @@ public :
   //void showActiveFolder( FXbool sub = false ) { showFolder( ( ( m_activefd != NULL ) ? m_activefd : m_rootfd ), sub ); }
   FXTreeItem* folder( const FXString &name = "Game list", FXTreeItem *parent = NULL );  // Vrati (vytvori) polozku ve stromu slozek
 
-
   ///////////////////////////////////////////////
   /// Access Methods
   ///
@@ -143,6 +136,4 @@ protected :
   void SaveNotify( ); // !
 };
 
-
-#endif
 /*** END ****************************************************************/

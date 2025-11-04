@@ -12,12 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#pragma once
 #include<fox-1.7/fx.h>
-#include<string>
-#include<iostream>
-
-#ifndef __STRING_UTILS_H
-#define __STRING_UTILS_H
 
 /*************************************************************************
 * String_utils.h                                                         *
@@ -26,11 +22,11 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
 namespace ECHIDNA {
-/*** String classes *******************************************************************************/
+  /*** String classes *******************************************************************************/
   class FXStringList : public FXArray<FXString> {
 
-    public :
-      FXStringList( );
+  public :
+    FXStringList( );
     virtual ~FXStringList( );
 
     /* Operations */
@@ -38,7 +34,7 @@ namespace ECHIDNA {
     FXint    split( const FXString &str, const FXString &sep );   // Splits the specified string into individual substrings separated by a separator
     void     sort( );
 
-    protected :
+  protected :
   };
 
   class Identifier : public FXString {
@@ -61,17 +57,16 @@ namespace ECHIDNA {
     void make( const FXString &src, const FXString &pattern = FXString::null );
   };
 
-/*** Global types *********************************************************************************/
+  /*** Global types *********************************************************************************/
   //typedef FXArray<FXString>      StringList;
   typedef FXArray<const FXchar*> CharsList;
   typedef FXArray<Identifier>    IdentList;
-  
-/*** Functions ************************************************************************************/
+
+  /*** Functions ************************************************************************************/
   extern FXint    split( const FXString &str, FXStringList *buffer, const FXString &sep = "/" ); // Vytvori seznam subretezcu dle zadaneho separatoru, vyskytuje-li se v retezci
   extern FXString pack( const FXStringList &buffer, const FXString &sep = "" );                  // Spoji retezce z pole do jednoho (opak fce split( ))
   extern FXchar*  convert_str( const FXString &str );                                               // Konverze retezce FXString na FXchar[] vcetne alokace pameti
   extern void     clear_string_buffer( CharsList *buffer );                                         // Dealokace retezcu v bufferu, alokovanych pomoci convert_str( )
   extern FXbool   check_number( const FXString &str );                                              // Returned true if string is number. Detecting negative or positive number. Empty string is false.
+} /* ECHIDNA */
 
-};     /* ECHIDNA */
-#endif /*__STRING_UTILS_H*/

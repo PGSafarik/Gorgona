@@ -12,8 +12,13 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __UTILS_H
-#define __UTILS_H
+#pragma once
+#include<Echidna/ObjectList.h>
+#include<Echidna/String_utils.h>
+#include<Echidna/XMLUtils.h>
+#include<Echidna/FSM_Changes.h>
+#include<Echidna/ItemBase.h>
+
 
 /*************************************************************************
 * Utils.h                                                                *
@@ -21,13 +26,7 @@
 * Knihovna jednoduchych funkci pro ruzne uziti v ramci projektu          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<Echidna/ObjectList.h>
-#include<Echidna/String_utils.h>
-#include<Echidna/XMLUtils.h>
-#include<Echidna/ItemBase.h>
-
 using namespace ECHIDNA;
-
 
 //////////////////////////////////////////////////
 /* Aditional string (conversion) operators      */
@@ -96,6 +95,4 @@ public :
 protected :
 
 };
-
-#endif /* __UTILS_H */
 /*** END ****************************************************************/

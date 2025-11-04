@@ -1,10 +1,7 @@
 // FXGameItem.cpp Copyright (c) 24/03/2019; D.A.Tiger; GNU GPL 3
 #include<FXGameItem.h>
-
-
-#include<Utils.h>
-#include<FSM_Changes.h>
 #include<Gorgona.h>
+#include<Perseus/Runnable.h>
 
 #include<iostream>
 
@@ -90,7 +87,7 @@ void FXGameItem::set_id( const FXString &value )
   if( !value.empty( ) && value != m_id ) {
     m_id = value; 
     exec->set_appid( value );
-    m_app->notify_changes( FSM_Changes::ID_CHANGE );
+    m_app->notify_changes( ECHIDNA::FSM_Changes::ID_CHANGE );
   }
 }
 
@@ -155,7 +152,7 @@ FXbool FXGameItem::validate( )
     std::cout << text << " " << m_id << " [REPAIR] \n";
     std::cout << "(" << info << ") \n";
     m_valid = true;
-    m_app->notify_changes( FSM_Changes::ID_CHANGE );
+    m_app->notify_changes( ECHIDNA::FSM_Changes::ID_CHANGE );
 
   }/*
   else { std::cout << text << "OK. \n"; m_valid = true; } */

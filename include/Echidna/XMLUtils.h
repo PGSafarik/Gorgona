@@ -12,10 +12,7 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#include<define.h>
-
-#ifndef __XMLUTILS_H
-#define __XMLUTILS_H
+#pragma once
 
 /*************************************************************************
 * XMLUtils.h                                                             *
@@ -24,7 +21,6 @@
 * FXObjectListOf and FXObjectList                                        *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-
 /* Policy xml stream element */
 template<class T> struct XMLElementStream : public T 
 {
@@ -32,4 +28,3 @@ template<class T> struct XMLElementStream : public T
   void operator >>( XMLElement &target )       { T::write( target ); } 
 };
 
-#endif /* __XMLUTILS_H */

@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __ICONSTHEME_H
-#define __ICONSTHEME_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * IconsTheme.h                                                           *
@@ -21,8 +21,6 @@
 * Trida obsluhujici nacitani ikon                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h> 
-
 typedef  FXDictionaryOf<FXIconCache> impl;
 
 class IconsTheme : public impl
@@ -90,6 +88,4 @@ public:
 protected:
   IconsTheme( ) { }
 };
-
-#endif /* __ICONSTHEME_H */
 /*** END ****************************************************************/

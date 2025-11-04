@@ -12,17 +12,15 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#pragma once
+#include <define.h>
 
-#ifndef PERSEUS_DESKTOP_H
-#define PERSEUS_DESKTOP_H
 /*************************************************************************
 * DesktopServices.h                                                      *
 *                                                                        *
 *                                                                        *
 * Copyright (c) 15/09/2025 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-//#include<core.h>
-#include <define.h>
 
 namespace PERSEUS {
 /*** Environment Variables ***********************************************************************/
@@ -40,5 +38,5 @@ namespace PERSEUS {
 /*** Mime-type ************************************************************************************/
   FXint getMimeList( FXStringList &store, const FXString &file );
 
-}      /* namespace PERSEUS */
-#endif /* PERSEUS_DESKTOP_H */
+} /* namespace PERSEUS */
+

@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __FXLAUNCHEDITOR_H
-#define __FXLAUNCHEDITOR_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * FXLauncherEditor.h                                                     *
@@ -21,7 +21,7 @@
 * Dialog herni polozky (pridani, editace)                                *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
+
 
 class FXGameLauncher;
 class FXGameItem;
@@ -122,5 +122,4 @@ protected :
   void save( );
 };
 
-#endif /* __FXLAUNCHEDITOR_H */
 /*** END ****************************************************************/

@@ -1,6 +1,11 @@
 // FXListPane.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<FXListPane.h>
-#include<GorgonaWindow.h>
+#include<Gorgona.h>
+#include<IconsTheme.h>
+#include<Library.h>
+#include<FXGameItem.h>
+#include<FXLaunchEditor.h>
+#include<Perseus/Runnable.h>
 
 FXDEFMAP( FXListPane ) LISTPANE_MAP[ ] = {
   FXMAPFUNC( SEL_COMMAND, FXListPane::TREE_SELECT, FXListPane::OnCmd_tree ),
@@ -18,7 +23,7 @@ FXIMPLEMENT( FXListPane, FXHorizontalFrame, LISTPANE_MAP, ARRAYNUMBER( LISTPANE_
 FXListPane::FXListPane( FXComposite *p, IconsTheme *icons, FXObject *tgt, FXSelector sel )
           : FXHorizontalFrame( p, FRAME_NONE | LAYOUT_FILL, 0, 0, 0, 0,  DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING,  1, 1 )
 {
-  m_app = (Gorgona*) getApp( );
+  m_app = (::Gorgona*) getApp( );
 
   m_icth    = icons;
   ic_search  = m_icth->getIcon( "Actions/system-search.png" );

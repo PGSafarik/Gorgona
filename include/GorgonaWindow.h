@@ -12,8 +12,9 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __GORGONAWINDOW_H
-#define __GORGONAWINDOW_H
+#pragma once
+#include<define.h>
+#include <Echidna/Keywords.h>
 
 /*************************************************************************
 * GorgonaWindow.h                                                        *
@@ -22,13 +23,10 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 * ./FoxGHICP --name Gorgona --vendor GorgonaWindow                       * 
 *************************************************************************/
-#include<Gorgona.h>
-#include<Boxes.h>
-#include<FXGameItem.h>
-#include<Perseus/Runnable.h>
-#include<FXLaunchEditor.h>
-#include<FXListPane.h>
-#include<GO_Keywords.h>
+class FindBar;
+class FXGameItem;
+class FXListPane;
+
 
 class GorgonaWindow : public FXPrimaryWindow {
 FXDECLARE( GorgonaWindow )
@@ -103,6 +101,4 @@ protected :
   /// FIXME GORGONA_WINDOW_007: Nebude lepsi vytvorit rovnou univerzalni event?
   FXbool run( FXGameItem *it = NULL );
 };
-
-#endif /* __GORGONAWINDOW_H */
 /*** END ****************************************************************/

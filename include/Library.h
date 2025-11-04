@@ -12,10 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#pragma once
 #include<define.h>
-#include<Gorgona.h>
-#include<FSM_Changes.h>
-#include<Utils.h>
 
 /*************************************************************************
 * Library.h                                                              *
@@ -23,22 +21,14 @@
 * Knihovna polozek                                                       *
 * Copyright (c) 05/08/2023 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#ifndef __LIBRARY_H
-#define __LIBRARY_H
 
-//////////////////////////////////////////////////
-/* Global buffer type                           */  
-typedef  FXArray<FXGameItem*> FXGameItemArray;
-
-//////////////////////////////////////////////////
-/* Main class                                   */
-class Library : public ECHIDNA::ObjectListOf<FXGameItem> {  
-  Gorgona     *m_app;
-  FSM_Changes  m_change;
+class Library : public ECHIDNA::ObjectListOf<FXGameItem> {
+  ::Gorgona     *m_app;
+  ECHIDNA::FSM_Changes  m_change;
 
   FXbool       m_opened; // Flag indicate open library 
   FXString     m_file;   // Name and path to actual document 
-  FXString     m_elname; // The name of items tags  
+  FXString     m_elname; // The name of items tags
   XMLDocument  m_xdoc;   // XML item Databaze 
   XMLElement  *m_xroot;  // Root element for this opened document
   XMLElement  *m_xbase;  // Element grouped by all items elemts
@@ -53,7 +43,7 @@ public :
   /* Access methods */
   FXbool isOpen( )                        { return m_opened; } 
   FXbool isChanged( )                     { return m_change( ); }
-  void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, FSM_Changes::ID_CHANGE ), NULL ); } 
+  void   setChange( FXbool value = true ) { m_change.handle( ( FXObject *) m_app, FXSEL( SEL_COMMAND, ECHIDNA::FSM_Changes::ID_CHANGE ), NULL ); }
 
   /* Operations methods */
   FXGameItem* make( const FXString &name, const FXString &id = FXString::null );   // MAKE NEW empty item by name
@@ -73,5 +63,4 @@ protected:
   FXGameItem* InsertElement( XMLElement *record );                                            // ONLY ADD EMPTY item by id
   FXbool      EraseElement( const FXString &id );
 };
-
-#endif /*__LIBRARY_H */
+/*** END ******************************************************************************************/

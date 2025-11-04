@@ -1,10 +1,8 @@
 // FXLauncherLua.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<LuaAPI.h>
-#include<GorgonaWindow.h>
-#include<FXGameItem.h>
-#include<Utils.h>
+#include<Gorgona.h>
 
-Gorgona *_inst;   // Instance obsluzneho objektu
+::Gorgona *_inst;   // Instance obsluzneho objektu
 
 // Auxiliary functions
 FXRegistry& get_registry( ) { return _inst->reg( ); }
@@ -447,7 +445,7 @@ int l_ReadLaunchers( FXArray<FXString> *keylist )
       lua_pop( _inst->getLua( ) , 1 );
     }
    */
-    num = luaL_getn( _inst->getLua( ), t );
+    num = luaL_len( _inst->getLua( ), t );
     for( FXint i = 1; i <= num; i++ ) {
       lua_rawgeti( _inst->getLua( ), t, i );
       FXString key = lua_tostring( _inst->getLua( ), -1 );

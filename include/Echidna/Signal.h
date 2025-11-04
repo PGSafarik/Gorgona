@@ -12,10 +12,9 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-//#include<define.h>
+#pragma once
+#include<define.h>
 
-#ifndef __SIGNAL_H
-#define __SIGNAL_H
 /*************************************************************************
 * Signal.h                                                               *
 *                                                                        *
@@ -75,5 +74,5 @@ namespace ECHIDNA {
     //FXint HasSlot( FXObject *obj );  // if return value -1, object not connect        
   
   };    /* class __SIGNAL */ 
-};      /* namespace ECHIDNA */
-#endif  /* __SIGNAL_H */
+} /* namespace ECHIDNA */
+

@@ -12,16 +12,15 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __BOXES_H
-#define __BOXES_H
+#pragma once
+#include<define.h>
+
 /*************************************************************************
 * Boxes.h                                                                *
 *                                                                        *
 * Male Widgety pro Window Header                                         *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-
 /*** FindBar **************************************************************************************/
 class FindBar : public FXHeaderBox {
 FXDECLARE( FindBar )
@@ -99,8 +98,5 @@ public:
 protected:
   MainBar( ) { }  
 };
-
-
-#endif /*__BOXES_H */
 
 /*** END ******************************************************************************************/

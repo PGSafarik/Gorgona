@@ -13,10 +13,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#pragma once
 #include<define.h>
-
-#ifndef __OBJECTLISTOF_H
-#define __OBJECTLISTOF_H
 
 /*************************************************************************
 * OjectListOf.h                                                          *
@@ -25,13 +23,9 @@
 * FXObjectListOf and FXObjectList                                        *
 * Copyright (c) 05/05/2018 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-
 namespace ECHIDNA {
-
   template<class OBJECT> class ObjectListOf: public FXArray<OBJECT*> {
-   
   public:
-  
     /* Opertions methods */ 
     FXival find( const OBJECT *object, FXival start = 0 ) 
     {
@@ -85,5 +79,5 @@ namespace ECHIDNA {
   //typedef ObjectListOf<FXObject> ObjectList;
   class ObjectList : public ObjectListOf<FXObject> { }; 
 
-}      /* ECHIDNA */
-#endif /* __OBJECTLISTOF_H */
+} /* ECHIDNA */
+

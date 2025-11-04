@@ -12,8 +12,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __TERMINFO_H
-#define __TERMINFO_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
 * TermInfo.h                                                             *
@@ -21,9 +21,7 @@
 * Small classes representing a terminal emulator (TE) profile            *
 * Copyright (c) 27/04/2024 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
 namespace PERSEUS {
-  
   struct TermProfile {
     FXString name;      // Name (identifier) on TE
     FXString exec;      // Runnable file for TE
@@ -37,6 +35,5 @@ namespace PERSEUS {
     FXbool load( const FXSettings &conf, const FXString ident = FXString::null );
     FXbool save( FXSettings &conf, const FXString ident = FXString::null );
   };
-  
-}      /* Namespace PERSEUS */
-#endif /* __TERMINFO_H */
+} /* Namespace PERSEUS */
+

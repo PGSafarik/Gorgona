@@ -12,19 +12,21 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
+#pragma once
 #include<define.h>
 
-#ifndef __FXGAMEITEM_H
-#define __FXGAMEITEM_H
 /*************************************************************************
 * FXGameItem.h                                                           *
 *                                                                        *
 * Herni polozka                                                          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
+namespace PERSEUS {
+  class Game;
+}
 
 struct FXGameItem {
-  Gorgona        *m_app;
+  ::Gorgona *m_app;
 
   ECHIDNA::Identifier m_id;         // Item identifier
   FXString            m_name;       // Name of item
@@ -56,8 +58,8 @@ struct FXGameItem {
     STATE_LAST
   };
 
-  FXGameItem( Gorgona *app );
-  FXGameItem( Gorgona *app, const FXString &name, const FXString &type = "native" );
+  FXGameItem( ::Gorgona *app );
+  FXGameItem( ::Gorgona *app, const FXString &name, const FXString &type = "native" );
   virtual ~FXGameItem( );
 
   ///////////////////////////////////////////////
@@ -87,5 +89,4 @@ struct FXGameItem {
 protected :
 };
 
-#endif /* __FXGAMEITEM_H */
 /*** END ****************************************************************/

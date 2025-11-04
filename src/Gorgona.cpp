@@ -1,5 +1,9 @@
 // Gorgona.cpp; Copyright (c) 2025 D.A.Tiger; GNU GPL 3
-
+#include<Library.h>
+#include<Perseus/Desktop.h>
+#include<Perseus/TermProfile.h>
+#include<Perseus/Process.h>
+#include<LuaAPI.h>
 #include<Gorgona.h>
 
 FXDEFMAP( Gorgona ) GORGONAMAP[ ] = { 
@@ -212,6 +216,8 @@ FXint Gorgona::execLuaFile( const FXString &script )
 
   return result;
 }
+
+FXbool Gorgona::hasTerminal( )  { return ( !m_term->exec.empty( ) ); }
 
 /**************************************************************************************************/
 long Gorgona::OnSig_ExitChild( FXObject *sender, FXSelector sel, void *data )

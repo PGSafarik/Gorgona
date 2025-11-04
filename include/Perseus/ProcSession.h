@@ -12,8 +12,10 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef GORGONA_PROCESESSION_H
-#define GORGONA_PROCESESSION_H
+#pragma once
+#include<define.h>
+#include<map>
+#include<vector>
 
 /*************************************************************************
 * ProcSession.h                                                          *
@@ -21,18 +23,9 @@
 * Small class representing a process session                             *
 * Copyright (c) 21/01/2025 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fcntl.h>
-
-#include<map>
-#include<string>
-#include<vector>
-#include<cstdio>
-
-#include<define.h>
-#include<Perseus/Process.h>
-
 namespace PERSEUS {
-  
+  class Process;
+
   class ProcSession : public std::map<FXint, PERSEUS::Process* > {
     FXString m_name;       // Name of the Gorgona sesion
     FXString m_id;         // ID string of the Gorgona sesion
@@ -62,6 +55,5 @@ namespace PERSEUS {
 
   protected:
   };
-  
 }      /* Namespace PERSEUS     */
-#endif /* GORGONA_PROCESESION_H */
+

@@ -12,22 +12,16 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __FXLAUNCHERLUA_H
-#define __FXLAUNCHERLUA_H
+#pragma once
+#include<define.h>
 
 /*************************************************************************
-* FXLauncherLua.h                                                        *
+* FXLuaAPI.h                                                        *
 *                                                                        *
 * Data a funkce pro moduly spoustecu (Lua)                               *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<define.h>
-
-//class GorgonaWindow;
-class Gorgona;
-
-// Zaklad skriptovaciho jazyka Lua
-FXbool     l_open( Gorgona *app );
+FXbool     l_open( ::Gorgona *app );
 void       l_close( );
 
 // Pomocne rutiny
@@ -56,5 +50,4 @@ void findItem( )    { }       // Vrati identifikatory polozek, ktere se shoduji 
 void setItemProperty( ) { }   //
 void getItemProperty( ) { }   //
 */
-#endif /* __FXLAUNCHERLUA_H */
 /*** END ****************************************************************/
