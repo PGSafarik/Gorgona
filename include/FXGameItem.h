@@ -82,10 +82,10 @@ struct FXGameItem {
   void   load( XMLElement *eitem );
   FXbool save( XMLElement *x_record, FXbool force = false );
 
-  /*Temporarily*/
+  /*Temporarily
   void __T_load( XMLElement *x_record );
   void __T_save( XMLElement *x_record, FXbool force = false );
-
+  */
 protected :
 };
 
