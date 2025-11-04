@@ -92,7 +92,7 @@ typedef FXArray<FXGameItem*> FXGameItemArray;
 //#define MIMESLISTFILE "mime/types"  // The relative path of mime types list file
 
 /* Active the DEBUG mode */
-#define __DEBUG 1
+// #define __DEBUG 1
 //////////////////////////////////////////////////
 /* Print debug log                               */
 #ifdef __DEBUG
