@@ -4,8 +4,8 @@ PROJECT( Gorgona VERSION 1.5 DESCRIPTION "Gorgona its manager of your game libra
 # The project settings
 SET( BIN_NAME "gorgona" )                   # Executable binnary filename
 SET( CMAKE_INSTALL_PREFIX "/usr" )          # Install target directory
-SET( LIB_FOX   "/opt/foxlib/1.7/84" )       # Fox toolkit path
-SET( LIB_FXGHI "/opt/foxghi/0.5/2"  )       # Fox GHI path
+SET( LIB_FOX   "/opt/foxlib/1.7/86" )       # Fox toolkit path
+SET( LIB_FXGHI "/opt/foxghi/0.4/4"  )       # Fox GHI path
 SET( CMAKE_CXX_STANDARD 11 )                # C++ Standard
 SET( CMAKE_CXX_STANDARD_REQUIRED ON )       # C++ Standard
 #add_compile_options(-Wall -Wextra -pedantic -Werror)
@@ -27,7 +27,7 @@ LINK_DIRECTORIES(    "${LIB_FXGHI}/lib/" )
 
 # Add to the executable
 ADD_EXECUTABLE( ${BIN_NAME} ${SOURCES} )
-TARGET_LINK_LIBRARIES( ${BIN_NAME} FOX-1.7 FXGHI tinyxml2 lua5.1 )
+TARGET_LINK_LIBRARIES( ${BIN_NAME} FOX-1.7 FXGHI tinyxml2 lua5.4 )
 
 # Install build project
 INSTALL( TARGETS ${BIN_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )                              # application
