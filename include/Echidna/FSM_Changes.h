@@ -13,8 +13,8 @@
 * You should have received a copy of the GNU General Public License      *
 * along with this program.  If not, see <https://www.gnu.org/licenses/>. *
 *************************************************************************/
-#ifndef __FSMCHANGES_H
-#define __FSMCHANGES_H
+#pragma once
+#include<fox-1.7/fx.h>
 
 /*************************************************************************
 * GorgonaWindow.h                                                        *
@@ -23,37 +23,35 @@
 * application                                                            *
 * Copyright (c) 15/04/2023 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-#include<fox-1.7/fx.h>
+namespace ECHIDNA {
+  class FSM_Changes : public FXObject {
+  FXDECLARE( FSM_Changes )
+    FXuint m_counter = 0;
+    FXbool m_cv = false;
+  
+  public :
+    FSM_Changes( );
+    virtual ~FSM_Changes( );
+  
+    /* Access methods */
+    FXbool operator ( )( ) { return ( m_counter > 0 ); }
+  
+    /* Messages & handlers */
+    enum {
+      ID_CHANGE = 1,
+      ID_ACCEPT,
+      ID_DISCARD,
+      ID_IGNORE,
+      ID_LAST
+    };
 
-class FSM_Changes : public FXObject {
-FXDECLARE( FSM_Changes )
-  FXuint m_counter = 0;
-  FXbool m_cv = false;
+    long OnCmd_Change( FXObject *sender, FXSelector sel, void *data );
+    long OnCmd_Accept( FXObject *sender, FXSelector sel, void *data );
   
-public :
-  FSM_Changes( );
-  virtual ~FSM_Changes( );
-  
-  /* Access methods */
-  FXbool operator ( )( ) { return ( m_counter > 0 ); }
-  
-  /* Messages & handlers */
-  enum {
-    ID_CHANGE = 1,
-    ID_ACCEPT,
-    ID_DISCARD,
-    ID_IGNORE,
-    ID_LAST
+  protected :
+    friend class Gorgona;
+    void SetCondition( FXbool value = true ) { m_cv = value; }
   };
-
-  long OnCmd_Change( FXObject *sender, FXSelector sel, void *data );
-  long OnCmd_Accept( FXObject *sender, FXSelector sel, void *data ); 
-  
-protected :
-  friend class Gorgona;  
-  void SetCondition( FXbool value = true ) { m_cv = value; }
-};
-
-#endif /* __FSMCHANGES_H */
+} /* ECHIDNA */
 
 /*** END ******************************************************************************************/
