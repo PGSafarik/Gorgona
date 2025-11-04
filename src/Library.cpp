@@ -196,6 +196,25 @@ FXbool Library::close( FXbool force )
   return m_opened;
 }
 
+tinyxml2::XMLElement* Library::first_item_element( )
+{
+  return ( m_opened ) ? m_xbase->FirstChildElement( "Game" ) : NULL;
+}
+
+tinyxml2::XMLElement* Library::find_item_element( const Identifier &id )
+{
+  if( m_opened ) {
+    tinyxml2::XMLElement *element = first_item_element( );
+
+    while( element ) {
+      if( element->Attribute( "id"  ) == id ) { return element; }
+      element = element->NextSiblingElement( "Game" );
+    }
+  }
+
+  return nullptr;
+}
+
 FXint Library::load( )
 {
   FXint result = -1;

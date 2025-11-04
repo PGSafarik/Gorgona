@@ -54,7 +54,10 @@ public :
   FXival find_title( const FXString &text );
   FXival findById( const FXString &value );
   FXbool run( const FXString &id );
-  
+
+  tinyxml2::XMLElement* first_item_element( );
+  tinyxml2::XMLElement* find_item_element( const Identifier &id );
+
   FXint save( );
   FXint load( ); 
   virtual FXbool save( XMLElement *library_el );
