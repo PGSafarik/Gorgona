@@ -1,4 +1,4 @@
-// FXLauncherLua.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
+// FXLauAPI.cpp Copyright (c) 24/03/2019;  D.A.Tiger; GNU GPL 3
 #include<LuaAPI.h>
 #include<Gorgona.h>
 
