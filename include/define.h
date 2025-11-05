@@ -56,9 +56,6 @@ using namespace FXGHI;
 namespace PERSEUS { }
 namespace ECHIDNA { }
 
-/* Internal shared header files */
-#include<Utils.h>
-
 /* Definitions of Global types */
 class IconsTheme;   // Icons theme manager
 class FXGameItem;   // Game object representation
