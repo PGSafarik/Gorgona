@@ -1,10 +1,10 @@
 // Gorgona.cpp; Copyright (c) 2025 D.A.Tiger; GNU GPL 3
+#include<Gorgona.h>
 #include<Library.h>
 #include<Perseus/Desktop.h>
 #include<Perseus/TermProfile.h>
 #include<Perseus/Process.h>
 #include<LuaAPI.h>
-#include<Gorgona.h>
 
 FXDEFMAP( Gorgona ) GORGONAMAP[ ] = { 
   FXMAPFUNC( SEL_SIGNAL,  Gorgona::SIGNAL_CHLD,    Gorgona::OnSig_ExitChild ),

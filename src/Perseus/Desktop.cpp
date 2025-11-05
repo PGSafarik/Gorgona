@@ -20,7 +20,7 @@ FXuint CheckEnvList( const FXString &xdg_env, const FXString &def_val, FXStringL
   // Podobne jako CheckEnv, s tim rozdilem, ze hodnotu rozseka na jednotlive slozky podle zavedenho separatorem ":"
   FXuint   res = 0;
   FXString value = CheckEnv( xdg_env, def_val );
-  
+
   if( !value.empty( ) ) {
     if( value.left( 1 ) == ENVPATHSEPSTRING ) { value = def_val + value; }
     res = list.split( value, ENVPATHSEPSTRING);
