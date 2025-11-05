@@ -1,5 +1,6 @@
 // Property.cpp Copyright (c) 17/05/2024;  D.A.Tiger; GNU GPL 3
 #include<Echidna/Property.h>
+#include<Utils.h>
 
 using namespace ECHIDNA;
 namespace ECHIDNA {

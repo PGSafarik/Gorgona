@@ -14,6 +14,9 @@
 *************************************************************************/
 #pragma once
 #include<define.h>
+#include<Echidna/ObjectList.h>
+#include<Echidna/FSM_Changes.h>
+#include<Echidna/String_utils.h>
 
 /*************************************************************************
 * Library.h                                                              *

@@ -14,10 +14,11 @@
 *************************************************************************/
 #pragma once
 #include<define.h>
+#include<Utils.h>
 #include<Perseus/ProcSession.h>
 
 /*************************************************************************
-* Gorgona.h                                                       *
+* Gorgona.h                                                              *
 *                                                                        *
 * Trida reprezentuje instanci aplikace a komunikuje se systemem          *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
@@ -30,7 +31,7 @@ namespace PERSEUS {
 class Library;
 class FSM_Changes;
 
-class Gorgona : public FXApp {
+class Gorgona final : public FXApp {
 FXDECLARE( Gorgona )
   FXbool    m_verbose;     // Verbose mod
   FXbool    m_created;     // Application created (finised the function call craete )
@@ -62,8 +63,8 @@ FXDECLARE( Gorgona )
   std::unique_ptr<PERSEUS::TermProfile> m_term;
  
 public:
-  Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
-  virtual ~Gorgona( );
+  explicit Gorgona( const FXString& name = "Gorgona", const FXString& vendor = FXString::null );
+  ~Gorgona( ) override;
    
   /* Signals / Slots */
   GSignal *sig_child_exit;  // Emitted when the program catches a child process termination system message (SIG_CHILD) 
@@ -111,6 +112,8 @@ public:
    /* Explicit saving */
    SAVE_LIBRARY,                  
    SAVE_CONFIGURE,
+
+   /* Other */
 
    ID_LAST
   };
