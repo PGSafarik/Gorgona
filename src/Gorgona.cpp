@@ -42,6 +42,8 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
 Gorgona::~Gorgona( )
 {
   m_library->close( );
+  l_close(  );
+
   delete sig_child_exit;
 }
 
