@@ -28,7 +28,7 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_luaOk       = false;
   mx_root       = nullptr;
 
-  m_lua = luaL_newstate( );  
+  m_lua = luaL_newstate( );
 
   m_library = std::unique_ptr<Library>( new Library( this ) );
   m_term    = std::unique_ptr<PERSEUS::TermProfile>( new PERSEUS::TermProfile );
@@ -353,9 +353,9 @@ void Gorgona::LuaInit( )
   FXString init_script = getUtilsDir( false ) + PATHSEPSTRING + MODULES_MANAGER;
   DEBUG_OUT(  "Lua init script:"  << init_script )
 
-  if( l_open( this ) && ( execLuaFile( init_script ) == 0 ) ) { msg += "OK"; }
-  else { msg += " FAILED"; }
+  if( l_open( this ) && ( execLuaFile( init_script ) == 0 ) ) { m_luaOk = true; }
 
+  msg += ( m_luaOk ? "OK" : "FAILED" );
   std::cout << msg << std::endl; 
 }
 
