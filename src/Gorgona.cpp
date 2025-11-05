@@ -19,15 +19,17 @@ FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
 Gorgona::Gorgona( const FXString& name, const FXString& vendor )
        : FXApp( name, vendor )
 {
-  m_initscript = m_profiledir = m_gamelist = FXString::null;
-
+  m_initscript  = FXString::null;
+  m_profiledir  = FXString::null;
+  m_gamelist    = FXString::null;
   m_verbose     = true;
   m_initialized = false;
   m_created     = false;
+  m_luaOk       = false;
+  mx_root       = nullptr;
 
   m_lua = luaL_newstate( );  
 
-  mx_root   = NULL;
   m_library = std::unique_ptr<Library>( new Library( this ) );
   m_term    = std::unique_ptr<PERSEUS::TermProfile>( new PERSEUS::TermProfile );
 
@@ -45,7 +47,6 @@ Gorgona::~Gorgona( )
 FXbool Gorgona::hasChild( FXint pid )     
 { 
   FXbool res = false;
-
 
   if( !m_session.empty( ) ) {
     if( pid == 0 ) { res = true; } // Is there even one descendant of the Gorgon?
