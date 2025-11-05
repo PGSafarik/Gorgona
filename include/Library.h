@@ -60,7 +60,7 @@ public :
   FXbool run( const FXString &id );
 
   tinyxml2::XMLElement* first_item_element( );
-  tinyxml2::XMLElement* find_item_element( const Identifier &id );
+  tinyxml2::XMLElement* find_item_element( const ECHIDNA::Identifier &id );
 
   FXint save( );
   FXint load( ); 
