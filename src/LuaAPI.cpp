@@ -84,6 +84,9 @@ FXbool l_open( Gorgona *app )
 
 void l_close( )
 {
+  lua_State *state = _inst->getLua( );
+  if( state ) { lua_close( state ); }
+  state = NULL;
   _inst = NULL;
 }
 
