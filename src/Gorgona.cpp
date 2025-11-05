@@ -100,17 +100,16 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   Welcome( this );
   FXApp::init( argc, argv, connect );
 
-  FXStringList buff;
-
   m_localdatadir = PERSEUS::HomeDataDirectory( ) + PATHSEPSTRING + getAppName( );
   m_localconfdir = PERSEUS::HomeConfigDirectory( ) + PATHSEPSTRING + getVendorName( ) + PATHSEPSTRING + getAppName( );
 
+  FXStringList buff;
   PERSEUS::SystemConfigDirectories( buff );
-  m_configdir = FindSubDirectory( buff, getAppName( ) );
+  m_configdir = FindSubDirectory( buff, SYS_APPLICATION_NAME );
   buff.clear( );
 
   PERSEUS::SystemDataDirectories( buff );
-  m_datadir = FindSubDirectory( buff, getAppName( ) );
+  m_datadir = FindSubDirectory( buff, SYS_APPLICATION_NAME );
   buff.clear( );
 
   m_session.start( getUtilsDir( false ) + PATHSEPSTRING + GROUP_CHECKER );
@@ -128,7 +127,6 @@ void Gorgona::init( int& argc, char** argv, FXbool connect )
   m_term->p_workdir = FXString::null;
 
   m_session.check( );
-
 
   m_initialized = true;
 

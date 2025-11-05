@@ -70,6 +70,8 @@ typedef FXArray<FXGameItem*> FXGameItemArray;
 #define ID_NORMAL_MAX 99
 #define ID_RESERVED_MAX 10
 
+#define SYS_APPLICATION_NAME "gorgona"
+
 /* Data separators */
 #define ENVPATHSEPSTRING ":"
 
