@@ -28,14 +28,15 @@
 #include <string>
 #include <memory>
 
-// The LUA interpreter
 extern "C" {
+// System calls
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
 
+// The LUA interpreter
 #include<lua5.4/lualib.h>
 #include<lua5.4/lauxlib.h>
 }
