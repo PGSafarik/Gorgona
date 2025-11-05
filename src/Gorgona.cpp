@@ -32,13 +32,13 @@ Gorgona::Gorgona( const FXString& name, const FXString& vendor )
   m_term    = std::unique_ptr<PERSEUS::TermProfile>( new PERSEUS::TermProfile );
 
   addSignal( SIGCHLD, this, Gorgona::SIGNAL_CHLD, false, 0 );
-
   sig_child_exit = new GSignal( this, SEL_SIGNAL );
 }
 
 Gorgona::~Gorgona( )
 {
   m_library->close( );
+  delete sig_child_exit;
 }
 
 /**************************************************************************************************/
