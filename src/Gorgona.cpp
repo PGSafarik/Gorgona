@@ -19,13 +19,15 @@ FXIMPLEMENT( Gorgona, FXApp, GORGONAMAP, ARRAYNUMBER( GORGONAMAP ) )
 Gorgona::Gorgona( const FXString& name, const FXString& vendor )
        : FXApp( name, vendor )
 {
+  m_verbose     = true;
+  m_created     = false;
+  m_initialized = false;
+  m_luaOk       = false;
+
   m_initscript  = FXString::null;
   m_profiledir  = FXString::null;
   m_gamelist    = FXString::null;
-  m_verbose     = true;
-  m_initialized = false;
-  m_created     = false;
-  m_luaOk       = false;
+
   mx_root       = nullptr;
 
   m_lua = luaL_newstate( );
