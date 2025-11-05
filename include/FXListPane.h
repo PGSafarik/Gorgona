@@ -21,6 +21,8 @@
 * Panel zobrazujici herni polozky                                        *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
+class Gorgona;
+
 class FXListPane : public FXHorizontalFrame {
 FXDECLARE( FXListPane )
   ::Gorgona *m_app;

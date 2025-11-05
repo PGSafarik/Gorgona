@@ -23,6 +23,7 @@
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 * ./FoxGHICP --name Gorgona --vendor GorgonaWindow                       * 
 *************************************************************************/
+class Gorgona;
 class FindBar;
 class FXGameItem;
 class FXListPane;

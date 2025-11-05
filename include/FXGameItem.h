@@ -25,9 +25,10 @@
 namespace PERSEUS {
   class Game;
 }
+class Gorgona;
 
 struct FXGameItem {
-  ::Gorgona *m_app;
+  Gorgona *m_app;
 
   ECHIDNA::Identifier m_id;         // Item identifier
   FXString            m_name;       // Name of item

@@ -24,9 +24,10 @@
 * Knihovna polozek                                                       *
 * Copyright (c) 05/08/2023 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
+class Gorgona;
 
 class Library : public ECHIDNA::ObjectListOf<FXGameItem> {
-  ::Gorgona     *m_app;
+  Gorgona     *m_app;
   ECHIDNA::FSM_Changes  m_change;
 
   FXbool       m_opened; // Flag indicate open library 

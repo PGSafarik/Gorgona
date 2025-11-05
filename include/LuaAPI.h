@@ -21,7 +21,9 @@
 * Data a funkce pro moduly spoustecu (Lua)                               *
 * Copyright (c) 24/03/2019 D.A.Tiger <drakarax@seznam.cz>                *
 *************************************************************************/
-FXbool     l_open( ::Gorgona *app );
+class Gorgona;
+
+FXbool     l_open( Gorgona *app );
 void       l_close( );
 
 // Pomocne rutiny
