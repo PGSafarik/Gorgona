@@ -60,7 +60,6 @@ namespace ECHIDNA { }
 #include<Utils.h>
 
 /* Definitions of Global types */
-class Gorgona;      // The Application object
 class IconsTheme;   // Icons theme manager
 class FXGameItem;   // Game object representation
 
